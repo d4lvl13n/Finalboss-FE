@@ -2,32 +2,142 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/* Custom styles */
+html, body {
+  @apply bg-gray-900 text-white;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+h1, h2, h3, h4, h5, h6 {
+  @apply font-heading;
+}
+
+p {
+  @apply font-body;
+}
+
+/* Swiper Pagination */
+.swiper-pagination-custom, .swiper-pagination-reviews {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.swiper-pagination-custom .swiper-pagination-bullet, 
+.swiper-pagination-reviews .swiper-pagination-bullet {
+  background-color: rgba(255, 255, 255, 0.6);
+  width: 12px;
+  height: 12px;
+  margin: 0 4px;
+  opacity: 1;
+  transition: background-color 0.3s;
+}
+
+.swiper-pagination-custom .swiper-pagination-bullet-active, 
+.swiper-pagination-reviews .swiper-pagination-bullet-active {
+  background-color: #ffbb1a;
+}
+
+/* Neon Text Effect */
+.neon-text-yellow {
+  text-shadow: 0 0 8px rgba(255, 187, 26, 0.8),
+               0 0 16px rgba(255, 187, 26, 0.6),
+               0 0 24px rgba(255, 187, 26, 0.6),
+               0 0 32px rgba(255, 187, 26, 0.6);
+}
+
+/* Pixelated Font */
+@font-face {
+  font-family: 'PixelFont';
+  src: url('/fonts/pixel-font.ttf') format('truetype');
+}
+
+.pixel-font {
+  font-family: 'PixelFont', sans-serif;
+}
+
+/* Loader Styles */
+.loader {
+  background-color: #1a1a1a; /* Dark gray to match the gaming theme */
+  color: #ffbb1a; /* Bright yellow for a striking contrast */
+}
+
+.loader h1 {
+  text-shadow: 0 0 10px rgba(255, 187, 26, 0.8);
+}
+
+.loader .progress-bar {
+  background-color: #333; /* Dark background for the progress bar */
+  border-radius: 10px;
+}
+
+.loader .progress-bar-inner {
+  background-color: #ffbb1a; /* Bright yellow to match the loader */
+  animation: glowing 2s linear infinite;
+  border-radius: 10px;
+}
+
+/* Glowing effect for the progress bar */
+@keyframes glowing {
+  0% { box-shadow: 0 0 10px rgba(255, 187, 26, 0.6); }
+  50% { box-shadow: 0 0 20px rgba(255, 187, 26, 0.8); }
+  100% { box-shadow: 0 0 10px rgba(255, 187, 26, 0.6); }
+}
+
+/* Range styles */
+.loader-range {
+  position: relative;
+  background-color: #333;
+  width: 300px;
+  height: 30px;
+  transform: skew(30deg);
+  font-family: 'Orbitron', monospace;
+  border-radius: 10px;
+}
+
+.loader-range::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #ffbb19;
+  z-index: 0;
+  animation: load 0.5s forwards linear, glitch 2s infinite linear;
+  box-shadow: 0 0 20px #00bfff, 0 0 10px #e01919;
+}
+
+.loader-range::after {
+  counter-reset: progress var(--p);
+  content: counter(progress) '%';
+  color: #000;
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%) skewX(-30deg);
+  z-index: 1;
+}
+
+@keyframes load {
+  to {
+    width: var(--width);
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@keyframes glitch {
+  0%, 5% {
+    transform: translate(0, 0);
+  }
+  1% {
+    transform: translate(-5%, -10%);
+  }
+  2% {
+    transform: translate(10%, 30%);
+  }
+  3% {
+    transform: translate(-43%, 10%);
+  }
+  4% {
+    transform: translate(2%, -23%);
   }
 }
