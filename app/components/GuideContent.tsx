@@ -1,73 +1,71 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import Link from 'next/link';
+import { useQuery } from '@apollo/client';
+import { GET_LATEST_GUIDES } from '../lib/queries/getLatestGuides';
+import client from '../lib/apolloClient';
+import Loader from './Loader';
 
-interface GuideContentProps {
+interface GuideArticle {
+  id: string;
   title: string;
-  author: string;
-  date: string;
-  content: string;
-  image: string;
+  slug: string;
+  excerpt: string;
+  featuredImage?: {
+    node: {
+      sourceUrl: string;
+    };
+  };
 }
 
-export default function GuideContent({ title, author, date, content, image }: GuideContentProps) {
-  const paragraphs = content.split('\n\n');
-  const [readingTime, setReadingTime] = useState(0);
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  // Scroll progress logic
-  const { scrollYProgress } = useScroll({
-    target: contentRef,
-    offset: ['start start', 'end end'],
+const GuideContent = () => {
+  const { data, loading, error } = useQuery(GET_LATEST_GUIDES, {
+    variables: { first: 4 },
+    client,
   });
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  const [guides, setGuides] = useState<GuideArticle[]>([]);
 
   useEffect(() => {
-    // Calculate reading time based on word count (assuming 200 words per minute)
-    const wordCount = content.split(/\s+/).length;
-    const time = Math.ceil(wordCount / 200);
-    setReadingTime(time);
-  }, [content]);
+    if (data) {
+      setGuides(data.posts.nodes);
+    }
+  }, [data]);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error loading guides...</p>;
 
   return (
-    <div ref={contentRef} className="min-h-screen bg-gray-900 text-white pt-24">
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-2 bg-yellow-400"
-        style={{ scaleX, transformOrigin: '0%' }}
-      />
-      <div className="max-w-4xl mx-auto px-4 py-16">
-        <h1 className="text-5xl font-bold mb-4">{title}</h1>
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <p className="text-accent">{author}</p>
-            <p className="text-sm text-gray-400">{date}</p>
-          </div>
-          <div className="text-sm text-gray-400">
-            {readingTime} min read
-          </div>
-        </div>
-        <div className="relative w-full h-96 mb-8">
-          <Image 
-            src={image} 
-            alt={title} 
-            fill 
-            sizes="100vw" 
-            style={{ objectFit: 'cover' }} 
-            className="rounded-lg"
-          />
-        </div>
-        <div className="leading-relaxed text-lg">
-          {paragraphs.map((paragraph, index) => (
-            <p key={index} className="mb-6">{paragraph}</p>
+    <section className="py-16 bg-gray-900">
+      <div className="container mx-auto px-4">
+        <h2 className="text-4xl font-bold text-yellow-400 mb-8">Latest Guides</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {guides.map((guide) => (
+            <Link
+              href={`/guide/${guide.slug}`}
+              key={guide.id}
+              className="block bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+            >
+              <div className="relative h-48">
+                {guide.featuredImage && (
+                  <Image
+                    src={guide.featuredImage.node.sourceUrl}
+                    alt={guide.title}
+                    layout="fill"
+                    objectFit="cover"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                )}
+              </div>
+              <div className="p-4">
+                <h3 className="text-xl font-bold text-white mb-2">{guide.title}</h3>
+                <p className="text-gray-400" dangerouslySetInnerHTML={{ __html: guide.excerpt }} />
+              </div>
+            </Link>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

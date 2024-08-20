@@ -1,41 +1,43 @@
-// components/GuidesSection.tsx
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useQuery } from '@apollo/client';
+import { GET_LATEST_GUIDES } from '../lib/queries/getLatestGuides';
+import client from '../lib/apolloClient';
+import Loader from './Loader'; 
+import { stripHtmlTags } from '../lib/utils/stripHtmlTags';
 
-// components/GuidesSection.tsx
-const guides = [
-  {
-    id: 1,
-    title: "Baldur's Gate 3: Best Builds for Each Class",
-    image: "/images/bg3-class-builds.jpg",
-    excerpt: "Optimize your character for maximum effectiveness",
-    slug: "baldurs-gate-3-class-builds"
-  },
-  {
-    id: 2,
-    title: "Zelda: Tears of the Kingdom - All Shrine Locations",
-    image: "/images/zelda-totk-shrines.jpg",
-    excerpt: "Complete guide to finding and solving every shrine",
-    slug: "zelda-totk-shrine-locations"
-  },
-  {
-    id: 3,
-    title: "Starfield: Essential Tips for Space Exploration",
-    image: "/images/starfield-exploration-tips.jpg",
-    excerpt: "Navigate the cosmos like a pro with these tips",
-    slug: "starfield-exploration-guide"
-  },
-  {
-    id: 4,
-    title: "Elden Ring: How to Defeat Every Boss",
-    image: "/images/elden-ring-boss-guide.jpg",
-    excerpt: "Strategies and tactics for overcoming every challenge",
-    slug: "elden-ring-boss-guide"
-  }
-];
+
+interface GuideArticle {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  featuredImage?: {
+    node: {
+      sourceUrl: string;
+    };
+  };
+}
 
 const GuidesSection = () => {
+  const { data, loading, error } = useQuery(GET_LATEST_GUIDES, {
+    variables: { first: 4 },
+    client,
+  });
+  const [guides, setGuides] = useState<GuideArticle[]>([]);
+
+  useEffect(() => {
+    if (data) {
+      setGuides(data.posts.nodes);
+    }
+  }, [data]);
+
+  if (loading) return <Loader />; // Show loader while fetching data
+  if (error) return <p>Error loading guides...</p>; // Show error if any
+
   return (
     <section className="py-16 bg-gray-900">
       <div className="container mx-auto px-4">
@@ -43,19 +45,26 @@ const GuidesSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {guides.map((guide) => (
             <Link href={`/guide/${guide.slug}`} key={guide.id} className="block bg-gray-800 rounded-lg overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105">
-                <div className="relative h-40">
-                  <Image src={guide.image} layout="fill" objectFit="cover" alt={guide.title} />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold text-white mb-2">{guide.title}</h3>
-                  <p className="text-gray-400 text-sm">{guide.excerpt}</p>
-                </div>
+              <div className="relative h-40">
+                {guide.featuredImage && (
+                  <Image
+                    src={guide.featuredImage.node.sourceUrl}
+                    layout="fill"
+                    objectFit="cover"
+                    alt={guide.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                )}
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-white mb-2">{guide.title}</h3>
+              </div>
             </Link>
           ))}
         </div>
         <div className="text-center mt-12">
           <Link href="/guides" className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors">
-              View All Guides
+            View All Guides
           </Link>
         </div>
       </div>

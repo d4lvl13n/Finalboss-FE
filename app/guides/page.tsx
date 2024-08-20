@@ -1,57 +1,75 @@
-// app/guides/page.tsx
+'use client';
 
+import React, { useEffect, useState } from 'react';
+import { useQuery } from '@apollo/client';
 import Link from 'next/link';
 import Image from 'next/image';
+import { GET_GUIDE_CATEGORIES_WITH_POSTS } from '../lib/queries/getGuideCategories';
+import client from '../lib/apolloClient';
+import Loader from '../components/Loader';
 
-interface Guide {
+interface Category {
+  id: string;
+  name: string;
   slug: string;
-  title: string;
-  author: string;
-  date: string;
-  image: string;
-  excerpt: string;
-  category: string;
+  posts: {
+    nodes: {
+      featuredImage?: {
+        node: {
+          sourceUrl: string;
+        };
+      };
+    }[];
+  };
 }
 
-const guides: Guide[] = [
-  {
-    slug: 'elden-ring-guide',
-    title: 'Elden Ring: Beginner\'s Guide',
-    author: 'Jane Doe',
-    date: 'March 20, 2024',
-    image: '/images/elden-ring-boss-guide.jpg',
-    excerpt: 'Everything you need to survive in the Lands Between.',
-    category: 'guides',
-  },
-  {
-    slug: 'baldurs-gate-3-guide',
-    title: "Baldur's Gate 3: Class builds",
-    author: 'John Smith',
-    date: 'August 25, 2024',
-    image: '/images/bg3-class-builds.jpg',
-    excerpt: 'Mastering the combat system in Baldur\'s Gate 3.',
-    category: 'guides',
-  },
-  // Add more guide entries here
-];
+const GuidePage = () => {
+  const { data, loading, error } = useQuery(GET_GUIDE_CATEGORIES_WITH_POSTS, { client });
+  const [subcategories, setSubcategories] = useState<Category[]>([]);
 
-export default function GuidesPage() {
+  useEffect(() => {
+    if (data) {
+      const parentCategory = data.categories.nodes[0]; // 'gaming-guide' category
+      setSubcategories(parentCategory.children.nodes); // Get subcategories
+    }
+  }, [data]);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error loading guide categories...</p>;
+
   return (
-    <div className="max-w-6xl mx-auto px-4 py-24"> {/* Adjusted padding to prevent header overlap */}
-      <h1 className="text-4xl font-bold mb-8 text-yellow-400">Guides</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {guides.map((guide) => (
-          <Link href={`/guides/${guide.slug}`} key={guide.slug} className="block bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-            <div className="relative h-48">
-              <Image src={guide.image} layout="fill" objectFit="cover" alt={guide.title} />
-            </div>
-            <div className="p-4">
-              <h2 className="text-xl font-bold text-white mb-2">{guide.title}</h2>
-              <p className="text-gray-400">{guide.excerpt}</p>
-            </div>
-          </Link>
-        ))}
+    <div className="min-h-screen bg-gray-900 text-white py-24">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-5xl font-bold mb-8 text-center text-yellow-400">Guides</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {subcategories.map((category: Category) => (
+            <Link key={category.id} href={`/guide/${category.slug}`}>
+              <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                <div className="relative h-48">
+                  {category.posts.nodes.length > 0 && category.posts.nodes[0].featuredImage ? (
+                    <Image
+                      src={category.posts.nodes[0].featuredImage.node.sourceUrl}
+                      alt={category.name}
+                      layout="fill"
+                      objectFit="cover"
+                      className="absolute inset-0"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gray-700 flex items-center justify-center text-gray-500">
+                      No Image
+                    </div>
+                  )}
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-white mb-2">{category.name}</h3>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default GuidePage;
