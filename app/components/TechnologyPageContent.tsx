@@ -1,60 +1,71 @@
-// components/LatestArticles.tsx
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { useQuery } from '@apollo/client';
-import { GET_LATEST_POSTS } from '../lib/queries/getLatestPosts';
+import { GET_TECH_ARTICLES } from '../lib/queries/getTechArticles';
 import client from '../lib/apolloClient';
-import Loader from './Loader'; // Assuming you have a Loader component
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaArrowRight } from 'react-icons/fa';
 
-// Define the Article interface
 interface Article {
   id: string;
   title: string;
-  excerpt: string;
   slug: string;
-  categories?: {
-    nodes?: {
-      name: string;
-    }[];
-  };
+  excerpt: string;
   featuredImage?: {
     node: {
       sourceUrl: string;
     };
   };
+  categories?: {
+    nodes?: {
+      name: string;
+    }[];
+  };
 }
 
-const LatestArticles = () => {
-  const { loading, error, data } = useQuery(GET_LATEST_POSTS, {
-    variables: { first: 6 },
+interface TechnologyPageContentProps {
+  initialArticles: Article[];
+  initialHasNextPage: boolean;
+}
+
+export default function TechnologyPageContent({ initialArticles, initialHasNextPage }: TechnologyPageContentProps) {
+  const [articles, setArticles] = useState<Article[]>(initialArticles);
+  const [hasNextPage, setHasNextPage] = useState(initialHasNextPage);
+  const [afterCursor, setAfterCursor] = useState<string | null>(null);
+
+  const { data, loading, error, fetchMore } = useQuery(GET_TECH_ARTICLES, {
+    variables: { limit: 24, after: afterCursor },
     client,
+    skip: !afterCursor,
   });
-  
-  const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
     if (data) {
-      setArticles(data.posts.nodes);
+      setArticles((prevArticles) => [...prevArticles, ...data.posts.nodes]);
+      setHasNextPage(data.posts.pageInfo.hasNextPage);
     }
   }, [data]);
 
-  if (loading) return <Loader />;
-  if (error) return <p>Error loading latest articles...</p>;
+  const handleLoadMore = () => {
+    if (hasNextPage) {
+      fetchMore({
+        variables: {
+          after: afterCursor || data?.posts.pageInfo.endCursor,
+        },
+      }).then((fetchMoreResult) => {
+        setAfterCursor(fetchMoreResult.data.posts.pageInfo.endCursor);
+      });
+    }
+  };
 
   return (
-    <section className="py-16 bg-gray-900">
+    <div className="min-h-screen bg-gray-900 text-white py-24">
       <div className="container mx-auto px-4">
         <div className="flex items-center mb-12">
-          <h2 className="text-4xl font-bold text-yellow-400 mr-4">Latest Articles</h2>
+          <h1 className="text-5xl font-bold text-yellow-400 mr-4">Gaming Technology</h1>
           <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
-          <Link href="/articles" className="ml-4 bg-yellow-400 text-black p-2 rounded-full hover:bg-yellow-300 transition-colors">
-            <FaArrowRight />
-          </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article, index) => (
@@ -65,7 +76,7 @@ const LatestArticles = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="relative group h-64 overflow-hidden rounded-lg"
             >
-              <Link href={`/articles/${article.slug}`} className="block h-full">
+              <Link href={`/technology/${article.slug}`} className="block h-full">
                 <Image
                   src={article.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
                   alt={article.title}
@@ -82,16 +93,16 @@ const LatestArticles = () => {
                   )}
                 </div>
                 <div className="absolute inset-0 flex flex-col justify-end p-6">
-                  <h3 className="text-xl font-semibold text-white mb-2">
+                  <h2 className="text-xl font-semibold text-white mb-2">
                     {article.title}
-                  </h3>
+                  </h2>
                 </div>
                 <div className="absolute inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center p-6">
-                  <h3 className="text-xl font-semibold text-white mb-2">
+                  <h2 className="text-xl font-semibold text-white mb-2">
                     {article.title}
-                  </h3>
+                  </h2>
                   <p className="text-gray-300 text-sm mb-4" dangerouslySetInnerHTML={{ __html: article.excerpt }} />
-                  <span className="inline-block bg-yellow-400 text-black font-bold px-2 py-1 rounded hover:bg-yellow-300 transition-colors">
+                  <span className="inline-block bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded hover:bg-yellow-300 transition-colors">
                     Read More
                   </span>
                 </div>
@@ -99,9 +110,19 @@ const LatestArticles = () => {
             </motion.div>
           ))}
         </div>
-      </div>
-    </section>
-  );
-};
 
-export default LatestArticles;
+        {hasNextPage && (
+          <div className="text-center mt-12">
+            <button
+              onClick={handleLoadMore}
+              className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
+              disabled={loading}
+            >
+              {loading ? 'Loading...' : 'Load More Articles'}
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

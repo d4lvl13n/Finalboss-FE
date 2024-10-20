@@ -32,7 +32,9 @@ const Header: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 80);
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -40,9 +42,11 @@ const Header: React.FC = () => {
   const toggleMegaMenu = () => setMegaMenuOpen(!isMegaMenuOpen);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-black bg-opacity-70 backdrop-blur-lg' : 'bg-transparent'
-    }`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-gray-900 shadow-lg' : 'bg-transparent'
+      }`}
+    >
       <div className="container mx-auto px-4">
         <div className="flex items-center py-4">
           <motion.button
@@ -56,6 +60,10 @@ const Header: React.FC = () => {
           <Link href="/">
             <Image src="/finalboss.png" width={120} height={40} alt="FinalBoss.io" />
           </Link>
+          <div className="ml-auto flex items-center">
+            <FaSearch className="text-white cursor-pointer" />
+            {/* Toggle search input visibility on icon click */}
+          </div>
         </div>
       </div>
 

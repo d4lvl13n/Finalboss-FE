@@ -141,3 +141,20 @@ p {
     transform: translate(2%, -23%);
   }
 }
+.bg-fixed {
+  background-attachment: fixed;
+}
+
+.glow-effect {
+  box-shadow: 0 0 10px #fbbf24, 0 0 20px #fbbf24, 0 0 30px #fbbf24;
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px #fbbf24, 0 0 10px #fbbf24, 0 0 15px #fbbf24;
+  }
+  to {
+    box-shadow: 0 0 10px #fbbf24, 0 0 20px #fbbf24, 0 0 30px #fbbf24;
+  }
+}
