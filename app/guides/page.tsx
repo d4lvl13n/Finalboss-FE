@@ -43,7 +43,7 @@ const GuidePage = () => {
         <h1 className="text-5xl font-bold mb-8 text-center text-yellow-400">Guides</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {subcategories.map((category: Category) => (
-            <Link key={category.id} href={`/guide/${category.slug}`}>
+            <Link key={category.id} href={`/guides/${category.slug}`}>
               <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                 <div className="relative h-48">
                   {category.posts.nodes.length > 0 && category.posts.nodes[0].featuredImage ? (

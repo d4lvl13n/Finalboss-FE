@@ -47,8 +47,8 @@ const ReviewsPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {allReviews.map((review) => (
           <Link
-            href={`/reviews/${review.slug}`}
             key={review.id}
+            href={`/reviews/${review.slug}`}
             className="block bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
           >
             <div className="relative h-48">

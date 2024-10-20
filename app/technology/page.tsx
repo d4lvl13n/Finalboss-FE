@@ -57,7 +57,7 @@ export default function TechnologyPage() {
         <h1 className="text-5xl font-bold mb-8 text-yellow-400">Technology</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {allArticles.map((article) => (
-            <Link key={article.id} href={`/technology/${article.slug}`} className="block bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+            <Link key={article.id} href={`/technology/${article.slug}`}>
               <div className="relative h-48">
                 {article.featuredImage && (
                   <Image

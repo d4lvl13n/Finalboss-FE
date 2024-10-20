@@ -54,7 +54,7 @@ export default function GuideCategoryPage({ params }: { params: { slug: string }
         <h1 className="text-5xl font-bold mb-8 text-center text-yellow-400">{slug} Guides</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article) => (
-            <Link key={article.id} href={`/guide/${slug}/${article.slug}`}>
+            <Link key={article.id} href={`/guides/${slug}/${article.slug}`}>
               <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                 <div className="relative h-48">
                   {article.featuredImage && (

@@ -1,13 +1,12 @@
 import { gql } from '@apollo/client';
 
-export const GET_POST_BY_SLUG = gql`
-  query GetPostBySlug($id: ID!) {
-    post(id: $id, idType: SLUG) {
+export const GET_POST_BY_SLUG_AND_CATEGORY = gql`
+  query GetPostBySlugAndCategory($slug: String!, $category: String!) {
+    post(where: { slug: $slug, categoryName: $category }) {
       id
       title
       content
       date
-      slug
       featuredImage {
         node {
           sourceUrl
@@ -16,12 +15,6 @@ export const GET_POST_BY_SLUG = gql`
       author {
         node {
           name
-        }
-      }
-      categories {
-        nodes {
-          name
-          slug
         }
       }
     }
