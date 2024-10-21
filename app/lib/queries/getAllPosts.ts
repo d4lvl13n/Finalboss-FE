@@ -2,8 +2,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_ALL_POSTS = gql`
-  query GetAllPosts($limit: Int!) {
-    posts(first: $limit) {
+  query GetAllPosts($first: Int!, $after: String) {
+    posts(first: $first, after: $after) {
       nodes {
         id
         title
@@ -14,6 +14,10 @@ export const GET_ALL_POSTS = gql`
             sourceUrl
           }
         }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }

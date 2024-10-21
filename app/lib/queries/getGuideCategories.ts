@@ -1,12 +1,9 @@
 import { gql } from '@apollo/client';
 
-export const GET_GUIDE_CATEGORIES_WITH_POSTS = gql`
-  query GetGuideCategoriesWithPosts {
+export const GET_GUIDE_CATEGORIES_AND_POSTS = gql`
+  query GetGuideCategoriesAndPosts($first: Int!) {
     categories(where: { slug: "gaming-guide" }) {
       nodes {
-        id
-        name
-        slug
         children {
           nodes {
             id
@@ -14,8 +11,6 @@ export const GET_GUIDE_CATEGORIES_WITH_POSTS = gql`
             slug
             posts(first: 1, where: { orderby: { field: DATE, order: DESC } }) {
               nodes {
-                id
-                title
                 featuredImage {
                   node {
                     sourceUrl
@@ -25,6 +20,23 @@ export const GET_GUIDE_CATEGORIES_WITH_POSTS = gql`
             }
           }
         }
+      }
+    }
+    posts(first: $first, where: { categoryName: "gaming-guide" }) {
+      nodes {
+        id
+        title
+        slug
+        excerpt
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }

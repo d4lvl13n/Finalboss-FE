@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import client from '../../lib/apolloClient';
 import { GET_SUBCATEGORY_ARTICLES } from '../../lib/queries/getSubcategoryArticles';
+import { motion } from 'framer-motion';
 
 export default function GuideCategoryPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
@@ -49,33 +50,48 @@ export default function GuideCategoryPage({ params }: { params: { slug: string }
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white px-4 py-24">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-5xl font-bold mb-8 text-center text-yellow-400">{slug} Guides</h1>
+    <section className="py-16 bg-gray-900 text-white">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center mb-12">
+          <h2 className="text-4xl font-bold text-yellow-400 mr-4">{slug} Guides</h2>
+          <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article) => (
-            <Link key={article.id} href={`/guides/${slug}/${article.slug}`}>
-              <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                <div className="relative h-48">
-                  {article.featuredImage && (
-                    <Image
-                      src={article.featuredImage.node.sourceUrl}
-                      alt={article.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  )}
+            <motion.div
+              key={article.id}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="relative group h-64 overflow-hidden rounded-lg"
+            >
+              <Link href={`/guide/${article.slug}`} className="block h-full">
+                <Image
+                  src={article.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
+                  alt={article.title}
+                  layout="fill"
+                  objectFit="cover"
+                  className="transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
+                <div className="absolute inset-0 flex flex-col justify-end p-6">
+                  <h3 className="text-xl font-semibold text-white mb-2">
+                    {article.title}
+                  </h3>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-2">{article.title}</h3>
-                  <p className="text-gray-400" dangerouslySetInnerHTML={{ __html: article.excerpt }} />
+                <div className="absolute inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center p-6">
+                  <h3 className="text-xl font-semibold text-white mb-2">
+                    {article.title}
+                  </h3>
+                  <p className="text-gray-300 text-sm mb-4" dangerouslySetInnerHTML={{ __html: article.excerpt }} />
+                  <span className="inline-block bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded hover:bg-yellow-300 transition-colors">
+                    Read Guide
+                  </span>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </motion.div>
           ))}
         </div>
-
         {data?.posts.pageInfo.hasNextPage && (
           <div className="text-center mt-12">
             <button
@@ -87,6 +103,6 @@ export default function GuideCategoryPage({ params }: { params: { slug: string }
           </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }

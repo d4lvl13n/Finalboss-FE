@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useQuery } from '@apollo/client';
 import { GET_LATEST_POSTS } from '../lib/queries/getLatestPosts';
 import client from '../lib/apolloClient';
-import Loader from './Loader'; // Assuming you have a Loader component
+import Loader from './Loader'; 
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
 
@@ -54,6 +54,11 @@ const LatestArticles = () => {
           <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
           <Link href="/articles" className="ml-4 bg-yellow-400 text-black p-2 rounded-full hover:bg-yellow-300 transition-colors">
             <FaArrowRight />
+          </Link>
+        </div>
+        <div className="text-center mb-8">
+          <Link href="/articles" className="inline-block bg-yellow-400 text-black font-bold py-2 px-4 rounded-full hover:bg-yellow-300 transition-colors">
+            View All Articles
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
