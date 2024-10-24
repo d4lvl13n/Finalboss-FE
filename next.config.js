@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['damienl10.sg-host.com', 'finalbossio.local', 'i.ytimg.com', 'localhost'],
+    domains: ['finalboss.io', 'finalbossio.local', 'i.ytimg.com', 'localhost'],
   },
   webpack: (config) => {
     config.module.rules.push({
