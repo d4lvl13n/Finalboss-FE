@@ -12,6 +12,22 @@ const nextConfig = {
     });
     return config;
   },
+  async redirects() {
+    return [
+      {
+        // Match any slug that doesn't already start with "/articles/"
+        source: '/:slug',
+        has: [
+          {
+            type: 'path',
+            value: '^(?!articles/).*',  // Exclude paths already starting with /articles/
+          },
+        ],
+        destination: '/articles/:slug',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
