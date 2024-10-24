@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import FeaturedSlider from './components/FeaturedSlider';
 import LatestArticles from './components/LatestArticles';
-import GameCalendar from './components/GameCalendar';
+// import GameCalendar from './components/GameCalendar';
 import VideoSection from './components/VideoSection';
 import GuidesSection from './components/GuidesSection';
 import TechnologySection from './components/TechnologySection';
@@ -50,7 +50,6 @@ export default function HomePage() {
             <LatestArticles />
             <ReviewsSlider />
             <GamingSection />
-            <GameCalendar />
             <VideoSection />
             <TechnologySection />
             <GuidesSection />

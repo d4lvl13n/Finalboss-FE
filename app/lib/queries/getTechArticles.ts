@@ -2,9 +2,9 @@
 import { gql } from '@apollo/client';
 
 export const GET_TECH_ARTICLES = gql`
-  query GetTechArticles($limit: Int!, $after: String) {
+  query GetTechArticles($first: Int!, $after: String) {
     posts(
-      first: $limit, 
+      first: $first, 
       after: $after, 
       where: { categoryName: "Tech", orderby: { field: DATE, order: DESC } }
     ) {

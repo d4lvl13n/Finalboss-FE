@@ -35,7 +35,7 @@ interface Article {
 
 const TechnologySection = () => {
   const { data, loading, error } = useQuery(GET_TECH_ARTICLES, {
-    variables: { limit: 6 },
+    variables: { first: 6 },  // Changed from limit to first
     client,
   });
   

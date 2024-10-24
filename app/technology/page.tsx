@@ -34,7 +34,7 @@ export async function generateMetadata() {
 export default async function TechnologyPage() {
   const { data } = await client.query({
     query: GET_TECH_ARTICLES,
-    variables: { limit: 24, after: null },
+    variables: { first: 24, after: null },
   });
 
   const articles = data.posts.nodes;

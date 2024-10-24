@@ -1,44 +1,73 @@
 'use client';
 
 import React from 'react';
+import SocialShare from './SocialShare';
+import VideoComments from './VideoComments';
 
 interface VideoContentProps {
   title: string;
   author: string;
   date: string;
-  videoUrl: string;
-  image: string;
+  videoId: string;
+  description: string;
+  viewCount: string;
+  thumbnail: {
+    url: string;
+    width: number;
+    height: number;
+  };
 }
 
-export default function VideoContent({ title, author, date, videoUrl }: VideoContentProps) {
+export default function VideoContent({ 
+  title, 
+  author, 
+  date, 
+  videoId,
+  description,
+  viewCount 
+}: VideoContentProps) {
+  const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+  const shareUrl = `https://finalbossio.local/videos/${videoId}`; // Update with your domain
+
   return (
     <div className="min-h-screen bg-gray-900 text-white pt-24">
       <div className="max-w-4xl mx-auto px-4 py-16">
         <h1 className="text-5xl font-bold mb-4">{title}</h1>
         <div className="flex items-center justify-between mb-8">
           <div>
-            <p className="text-accent">{author}</p>
+            <p className="text-yellow-400">{author}</p>
             <p className="text-sm text-gray-400">{date}</p>
+          </div>
+          <div className="text-gray-400">
+            {viewCount} views
           </div>
         </div>
 
         {/* Video Player */}
-        <div className="relative w-full h-96 mb-8">
+        <div className="relative w-full aspect-video mb-8">
           <iframe
             width="100%"
             height="100%"
-            src={videoUrl}
+            src={embedUrl}
             title={title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             className="rounded-lg"
-          ></iframe>
+          />
         </div>
 
-        {/* Additional description or video content */}
-        <div className="leading-relaxed text-lg">
-          <p>Watch the latest trailer for Final Fantasy XVI. Dive into the epic world of this beloved franchise and experience the stunning visuals and gameplay.</p>
+        {/* Social Share Buttons */}
+        <div className="mb-8">
+          <SocialShare url={shareUrl} title={title} />
         </div>
+
+        {/* Video description */}
+        <div className="leading-relaxed text-lg bg-gray-800 p-6 rounded-lg mb-8">
+          <p className="whitespace-pre-wrap">{description}</p>
+        </div>
+
+        {/* Comments Section */}
+        <VideoComments videoId={videoId} />
       </div>
     </div>
   );

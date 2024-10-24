@@ -10,26 +10,29 @@
    - Updated to use Server-Side Rendering (SSR)
    - Implemented consistent UI across these pages
    - Added pagination with "Load More" functionality
+   - Created AllArticles page
+   - Added "View All Articles" link to LatestArticles component
+   - Added "View All Guides" link to GuidesPageContent component
+   
 
-## Remaining Tasks
+## Remaining Tasksl
 1. Finish Home Page
    - Implement remaining sections
    - Optimize performance
 2. Update Featured Slider
    - Improve design and functionality
-3. Connect Guides page to the appropriate query
 4. Integrate Featured Videos section with YouTube channel
 5. Connect Upcoming Games section to IGDB plugin
 6. Implement Server-Side Rendering for Home Page
 7. Reorganize project file structure for better maintainability
 8. Implement search functionality across the site
+
+
 9. Add user authentication and profile management
 10. Implement commenting system for articles and reviews
-11. Create an admin dashboard for content management
 12. Optimize images and implement lazy loading
 13. Implement error handling and 404 page
 14. Add accessibility features (ARIA labels, keyboard navigation)
-15. Implement dark mode toggle
 16. Add social media sharing buttons
 17. Implement SEO best practices (meta tags, sitemap, robots.txt)
 18. Set up analytics to track user engagement
