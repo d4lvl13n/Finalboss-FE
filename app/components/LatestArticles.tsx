@@ -57,11 +57,7 @@ const LatestArticles = ({ posts }: LatestArticlesProps) => {
             <FaArrowRight />
           </Link>
         </div>
-        <div className="text-center mb-8">
-          <Link href="/articles" className="inline-block bg-yellow-400 text-black font-bold py-2 px-4 rounded-full hover:bg-yellow-300 transition-colors">
-            View All Articles
-          </Link>
-        </div>
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article, index) => (
             <motion.div

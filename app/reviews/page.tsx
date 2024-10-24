@@ -10,7 +10,7 @@ export const revalidate = 3600; // Revalidate every hour (optional)
 
 export async function generateMetadata() {
   return {
-    title: 'Game Reviews | Your Site Name',
+    title: 'Game Reviews | FinalBoss.io',
     description: 'Read our latest game reviews and ratings for the hottest new releases.',
   };
 }

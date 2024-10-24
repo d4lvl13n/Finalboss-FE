@@ -13,13 +13,13 @@ export default function GamingStructuredData({ articles }: { articles: Article[]
     "@type": "CollectionPage",
     "name": "Gaming News and Articles",
     "description": "Stay updated with the latest gaming news, reviews, and in-depth articles about your favorite games.",
-    "url": "https://yoursite.com/gaming",
+    "url": "https://finalboss.io/gaming",
     "mainEntity": {
       "@type": "ItemList",
       "itemListElement": articles.map((article, index) => ({
         "@type": "ListItem",
         "position": index + 1,
-        "url": `https://yoursite.com/gaming/${article.slug}`,
+        "url": `https://finalboss.io/${article.slug}`,
         "name": article.title
       }))
     }

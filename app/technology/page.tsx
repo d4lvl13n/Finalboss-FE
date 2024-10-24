@@ -26,7 +26,7 @@ interface Article {
 
 export async function generateMetadata() {
   return {
-    title: 'Gaming Technology Articles | Your Site Name',
+    title: 'Gaming & Tech Articles | FinalBoss.io',
     description: 'Explore the latest in gaming technology, hardware reviews, and tech trends in the gaming industry.',
   };
 }

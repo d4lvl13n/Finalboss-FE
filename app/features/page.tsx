@@ -35,7 +35,7 @@ export default function NewsPage() {
       <h1 className="text-4xl font-bold mb-8">News</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {newsArticles.map((article) => (
-          <Link key={article.slug} href={`/features/${article.slug}`}>
+          <Link key={article.slug} href={`/${article.slug}`}>
             <div className="cursor-pointer border border-gray-700 p-4 rounded-lg hover:shadow-lg transition-shadow">
               <img src={article.image} alt={article.title} className="w-full h-40 object-cover rounded-lg mb-4" />
               <h2 className="text-xl font-semibold text-white">{article.title}</h2>

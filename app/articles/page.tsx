@@ -8,7 +8,7 @@ const AllArticlesPageContent = dynamic(() => import('../components/AllArticles/A
 
 export async function generateMetadata() {
   return {
-    title: 'All Articles | Your Site Name',
+    title: 'All Articles | FinalBoss.io',
     description: 'Explore all our articles across various categories.',
   };
 }

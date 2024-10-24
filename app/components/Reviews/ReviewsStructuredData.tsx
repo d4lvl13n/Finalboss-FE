@@ -17,7 +17,7 @@ export default function ReviewsStructuredData({ reviews }: { reviews: Review[] }
       "item": {
         "@type": "Review",
         "name": review.title,
-        "url": `https://finalboss.io/reviews/${review.slug}`,
+        "url": `https://finalboss.io/${review.slug}`,
         "description": review.excerpt
       }
     }))

@@ -15,15 +15,28 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/:slug',
-        has: [
-          {
-            type: 'query',
-            key: 'slug',
-            value: '^(?!articles/).*', // Exclude already redirected URLs
-          },
-        ],
-        destination: '/articles/:slug',
+        source: '/articles/:slug',
+        destination: '/:slug',
+        permanent: true,
+      },
+      {
+        source: '/gaming/:slug',
+        destination: '/:slug',
+        permanent: true,
+      },
+      {
+        source: '/guides/:slug',
+        destination: '/:slug',
+        permanent: true,
+      },
+      {
+        source: '/reviews/:slug',
+        destination: '/:slug',
+        permanent: true,
+      },
+      {
+        source: '/technology/:slug',
+        destination: '/:slug',
         permanent: true,
       },
     ];

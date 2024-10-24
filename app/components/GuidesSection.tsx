@@ -62,7 +62,7 @@ const GuidesSection = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="relative group h-64 overflow-hidden rounded-lg"
             >
-              <Link href={`/guide/${guide.slug}`} className="block h-full">
+              <Link href={`/${guide.slug}`} className="block h-full">
                 <Image
                   src={guide.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
                   alt={guide.title}

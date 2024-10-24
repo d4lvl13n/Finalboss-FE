@@ -66,7 +66,7 @@ const GamingSection = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="relative group h-64 overflow-hidden rounded-lg"
             >
-              <Link href={`/gaming/${article.slug}`} className="block h-full">
+              <Link href={`/${article.slug}`} className="block h-full">
                 <Image
                   src={article.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
                   alt={article.title}

@@ -28,7 +28,7 @@ export default function GuidesStructuredData({ categories, guides }: GuidesStruc
         "item": {
           "@type": "Article",
           "name": category.name,
-          "url": `https://yoursite.com/guides/${category.slug}`
+          "url": `https://finalboss.io/guides/${category.slug}`
         }
       })),
       ...guides.map((guide, index) => ({
@@ -37,7 +37,7 @@ export default function GuidesStructuredData({ categories, guides }: GuidesStruc
         "item": {
           "@type": "Article",
           "name": guide.title,
-          "url": `https://yoursite.com/guides/${guide.slug}`
+          "url": `https://finalboss.io/${guide.slug}`
         }
       }))
     ]

@@ -9,6 +9,7 @@ import client from '../lib/apolloClient';
 import Loader from './Loader';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { FeaturedSliderProps } from '../types';
+import Link from 'next/link';
 
 export default function FeaturedSlider({ posts }: FeaturedSliderProps) {
   const { data, loading, error } = useQuery(GET_FEATURED_POSTS, {
@@ -89,14 +90,16 @@ export default function FeaturedSlider({ posts }: FeaturedSliderProps) {
                   className="text-2xl text-gray-300 mb-8"
                   dangerouslySetInnerHTML={{ __html: featuredArticles[currentIndex].excerpt }}
                 />
-                <motion.button
-                  initial={{ y: 50, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.6 }}
-                  className="bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors w-max"
-                >
-                  Read More
-                </motion.button>
+                <Link href={`/${featuredArticles[currentIndex].slug}`}>
+                  <motion.button
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                    className="bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors w-max"
+                  >
+                    Read More
+                  </motion.button>
+                </Link>
               </div>
             </div>
           </motion.div>

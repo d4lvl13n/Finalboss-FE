@@ -74,21 +74,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })) || []),
     // Dynamic articles
     ...articlesData.data.posts.nodes.map((post: WordPressPost) => ({
-      url: `${baseUrl}/articles/${post.slug}`,
+      url: `${baseUrl}/${post.slug}`,
       lastModified: new Date().toISOString(),
       changeFrequency: 'monthly',
       priority: 0.7,
     })),
     // Dynamic tech articles
     ...techData.data.posts.nodes.map((post: WordPressPost) => ({
-      url: `${baseUrl}/technology/${post.slug}`,
+      url: `${baseUrl}/${post.slug}`,
       lastModified: new Date().toISOString(),
       changeFrequency: 'monthly',
       priority: 0.7,
     })),
     // Dynamic reviews
     ...reviewsData.data.posts.nodes.map((post: WordPressPost) => ({
-      url: `${baseUrl}/reviews/${post.slug}`,
+      url: `${baseUrl}/${post.slug}`,
       lastModified: new Date().toISOString(),
       changeFrequency: 'monthly',
       priority: 0.7,

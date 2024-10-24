@@ -51,7 +51,7 @@ const ReviewsSlider = () => {
                 transition={{ duration: 0.5 }}
                 className="relative group h-[500px] overflow-hidden rounded-lg"
               >
-                <Link href={`/reviews/${latestReview.slug}`} className="block h-full">
+                <Link href={`/${latestReview.slug}`} className="block h-full">
                   {latestReview.featuredImage && latestReview.featuredImage.node && (
                     <Image
                       src={latestReview.featuredImage.node.sourceUrl}
@@ -90,7 +90,7 @@ const ReviewsSlider = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="relative group h-48 overflow-hidden rounded-lg"
                 >
-                  <Link href={`/reviews/${review.slug}`} className="block h-full">
+                  <Link href={`/${review.slug}`} className="block h-full">
                     {review.featuredImage && review.featuredImage.node && (
                       <Image
                         src={review.featuredImage.node.sourceUrl}

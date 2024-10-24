@@ -43,7 +43,7 @@ const GuideContent = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {guides.map((guide) => (
             <Link
-              href={`/guide/${guide.slug}`}
+              href={`/${guide.slug}`}
               key={guide.id}
               className="block bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
             >

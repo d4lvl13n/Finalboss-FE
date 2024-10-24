@@ -13,13 +13,13 @@ export default function TechnologyStructuredData({ articles }: { articles: Artic
     "@type": "CollectionPage",
     "name": "Gaming Technology Articles",
     "description": "Explore the latest in gaming technology, hardware reviews, and tech trends in the gaming industry.",
-    "url": "https://yoursite.com/technology",
+    "url": "https://finalboss.io/technology",
     "mainEntity": {
       "@type": "ItemList",
       "itemListElement": articles.map((article, index) => ({
         "@type": "ListItem",
         "position": index + 1,
-        "url": `https://yoursite.com/technology/${article.slug}`,
+        "url": `https://finalboss.io/${article.slug}`,
         "name": article.title
       }))
     }

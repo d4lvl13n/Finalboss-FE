@@ -9,7 +9,7 @@ const GuidesStructuredData = dynamic(() => import('../components/Guides/GuidesSt
 
 export async function generateMetadata() {
   return {
-    title: 'Game Guides | Your Site Name',
+    title: 'Game Guides | FinalBoss.io',
     description: 'Explore our comprehensive game guides and walkthroughs for your favorite games.',
   };
 }
