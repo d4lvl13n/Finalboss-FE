@@ -16,13 +16,7 @@ const nextConfig = {
     return [
       {
         // Match any slug that doesn't start with "/articles/", "/guides/", "/reviews/", "/gaming/", or "/technology/"
-        source: '/:slug',
-        has: [
-          {
-            type: 'path',
-            value: '^(?!articles/|guides/|reviews/|gaming/|technology/).*',  // Exclude all these paths
-          },
-        ],
+        source: '/((?!articles|guides|reviews|gaming|technology).*)',  // Use regex directly in source
         destination: '/articles/:slug',
         permanent: true,
       },
