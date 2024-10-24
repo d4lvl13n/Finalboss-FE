@@ -15,8 +15,14 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        // This excludes certain top-level paths such as "articles", "guides", "reviews", etc.
-        source: '/:slug((?!articles|guides|reviews|gaming|technology).*)',
+        source: '/:slug',
+        has: [
+          {
+            type: 'query',
+            key: 'slug',
+            value: '^(?!articles/).*', // Exclude already redirected URLs
+          },
+        ],
         destination: '/articles/:slug',
         permanent: true,
       },
