@@ -83,7 +83,7 @@ const Header: React.FC = () => {
               </div>
               
               <nav className="flex-grow">
-                {['News', 'Reviews', 'Guides', 'Videos', 'Tech'].map((item) => (
+                {['News', 'Reviews', 'Guides', 'Videos', 'Technology'].map((item) => (
                   <MenuItem key={item} href={`/${item.toLowerCase()}`}>
                     {item}
                   </MenuItem>

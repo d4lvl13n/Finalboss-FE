@@ -1,6 +1,7 @@
+// app/components/Reviews/ReviewsPageContent.tsx
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -25,33 +26,32 @@ interface ReviewsPageContentProps {
   initialHasNextPage: boolean;
 }
 
-export default function ReviewsPageContent({ initialReviews, initialHasNextPage }: ReviewsPageContentProps) {
+export default function ReviewsPageContent({
+  initialReviews,
+  initialHasNextPage,
+}: ReviewsPageContentProps) {
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   const [hasNextPage, setHasNextPage] = useState(initialHasNextPage);
   const [afterCursor, setAfterCursor] = useState<string | null>(null);
 
-  const { data, loading, error, fetchMore } = useQuery(GET_REVIEWS, {
+  const { fetchMore } = useQuery(GET_REVIEWS, {
     variables: { first: 24, after: afterCursor },
     client,
-    skip: !afterCursor,
+    skip: true, // Skip the initial query
   });
 
-  useEffect(() => {
-    if (data) {
+  const handleLoadMore = async () => {
+    try {
+      const { data } = await fetchMore({
+        variables: {
+          after: afterCursor || initialReviews[initialReviews.length - 1]?.id,
+        },
+      });
       setReviews((prevReviews) => [...prevReviews, ...data.posts.nodes]);
       setHasNextPage(data.posts.pageInfo.hasNextPage);
-    }
-  }, [data]);
-
-  const handleLoadMore = () => {
-    if (hasNextPage) {
-      fetchMore({
-        variables: {
-          after: afterCursor || data?.posts.pageInfo.endCursor,
-        },
-      }).then((fetchMoreResult) => {
-        setAfterCursor(fetchMoreResult.data.posts.pageInfo.endCursor);
-      });
+      setAfterCursor(data.posts.pageInfo.endCursor);
+    } catch (error) {
+      console.error('Error fetching more reviews:', error);
     }
   };
 
@@ -75,9 +75,8 @@ export default function ReviewsPageContent({ initialReviews, initialHasNextPage 
                 <Image
                   src={review.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
                   alt={review.title}
-                  layout="fill"
-                  objectFit="cover"
-                  className="transition-transform duration-300 group-hover:scale-110"
+                  fill
+                  className="transition-transform duration-300 group-hover:scale-110 object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
                 <div className="absolute inset-0 flex flex-col justify-end p-6">
@@ -89,7 +88,10 @@ export default function ReviewsPageContent({ initialReviews, initialHasNextPage 
                   <h3 className="text-xl font-semibold text-white mb-2">
                     {review.title}
                   </h3>
-                  <p className="text-gray-300 text-sm mb-4" dangerouslySetInnerHTML={{ __html: review.excerpt }} />
+                  <p
+                    className="text-gray-300 text-sm mb-4"
+                    dangerouslySetInnerHTML={{ __html: review.excerpt }}
+                  />
                   <span className="inline-block bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded hover:bg-yellow-300 transition-colors">
                     Read Review
                   </span>
@@ -104,9 +106,8 @@ export default function ReviewsPageContent({ initialReviews, initialHasNextPage 
             <button
               onClick={handleLoadMore}
               className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
-              disabled={loading}
             >
-              {loading ? 'Loading...' : 'Load More Reviews'}
+              Load More Reviews
             </button>
           </div>
         )}

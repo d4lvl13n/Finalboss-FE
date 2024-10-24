@@ -10,6 +10,7 @@ import client from '../lib/apolloClient';
 import Loader from './Loader'; 
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
+import { LatestArticlesProps } from '../types';
 
 // Define the Article interface
 interface Article {
@@ -29,7 +30,7 @@ interface Article {
   };
 }
 
-const LatestArticles = () => {
+const LatestArticles = ({ posts }: LatestArticlesProps) => {
   const { loading, error, data } = useQuery(GET_LATEST_POSTS, {
     variables: { first: 6 },
     client,

@@ -1,80 +1,103 @@
-'use client';
-
-import { useState, useEffect } from 'react';
+import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
-import FeaturedSlider from './components/FeaturedSlider';
-import LatestArticles from './components/LatestArticles';
-// import GameCalendar from './components/GameCalendar';
-import VideoSection from './components/VideoSection';
-import GuidesSection from './components/GuidesSection';
-import TechnologySection from './components/TechnologySection';
-import NewsTicker from './components/NewsTicker';
+import { Inter } from 'next/font/google';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import Loader from './components/Loader';
-import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
-import GamingSection from './components/GamingSection';
+import { getHomePageData } from './components/HomePage/HomePageData';
 
-const ReviewsSlider = dynamic(() => import('./components/ReviewsSlider'), {
-  ssr: false,
+// Import critical components
+const FeaturedSlider = dynamic(() => import('./components/FeaturedSlider'));
+const LatestArticles = dynamic(() => import('./components/LatestArticles'));
+
+// Dynamically import non-critical components
+const ReviewsSlider = dynamic(() => import('./components/ReviewsSlider'));
+const GamingSection = dynamic(() => import('./components/GamingSection'));
+const VideoSection = dynamic(() => import('./components/VideoSection'));
+const TechnologySection = dynamic(() => import('./components/TechnologySection'));
+const GuidesSection = dynamic(() => import('./components/GuidesSection'));
+
+// Newsletter form component (client-side)
+const NewsletterForm = dynamic(() => import('./components/NewsletterForm'), {
+  ssr: false
 });
 
-export default function HomePage() {
-  const [loading, setLoading] = useState(true);
+const inter = Inter({ subsets: ['latin'] });
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
+export const revalidate = 3600;
 
-    return () => clearTimeout(timer);
-  }, []);
+export const metadata = {
+  title: 'FinalBoss.io - Your Ultimate Gaming Destination',
+  description: 'Discover the latest gaming news, reviews, guides, and cutting-edge technology at FinalBoss.io. Stay ahead in the gaming world.',
+  openGraph: {
+    title: 'FinalBoss.io - Your Ultimate Gaming Destination',
+    description: 'Discover the latest gaming news, reviews, guides, and cutting-edge technology at FinalBoss.io. Stay ahead in the gaming world.',
+    images: ['/images/finalboss-og-image.jpg'],
+    url: 'https://finalboss.io',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
+};
 
-  return (
-    <>
-      <Head>
-        <title>FinalBoss.io - Your Ultimate Gaming Destination</title>
-        <meta name="description" content="Discover the latest gaming news, reviews, guides, and cutting-edge technology at FinalBoss.io. Stay ahead in the gaming world." />
-        <meta property="og:title" content="FinalBoss.io - Your Ultimate Gaming Destination" />
-        <meta property="og:description" content="Discover the latest gaming news, reviews, guides, and cutting-edge technology at FinalBoss.io. Stay ahead in the gaming world." />
-        <meta property="og:image" content="/images/finalboss-og-image.jpg" />
-        <meta property="og:url" content="https://finalboss.io" />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Head>
-      <div className="bg-gray-900 text-white">
-        {loading ? (
-          <Loader />
-        ) : (
-          <>
-            <FeaturedSlider />
-            <LatestArticles />
+export default async function HomePage() {
+  try {
+    const { featuredPosts, latestPosts } = await getHomePageData();
+
+    return (
+      <>
+        <Header />
+        <main className={`${inter.className} bg-gray-900 text-white min-h-screen`}>
+          <Suspense fallback={<Loader />}>
+            <FeaturedSlider posts={featuredPosts} />
+          </Suspense>
+
+          <Suspense fallback={<Loader />}>
+            <LatestArticles posts={latestPosts} />
+          </Suspense>
+
+          <Suspense fallback={<Loader />}>
             <ReviewsSlider />
+          </Suspense>
+          
+          <Suspense fallback={<Loader />}>
             <GamingSection />
+          </Suspense>
+          
+          <Suspense fallback={<Loader />}>
             <VideoSection />
+          </Suspense>
+          
+          <Suspense fallback={<Loader />}>
             <TechnologySection />
+          </Suspense>
+          
+          <Suspense fallback={<Loader />}>
             <GuidesSection />
-            <section className="py-16 bg-gray-800">
-              <div className="container mx-auto px-4 text-center">
-                <h2 className="text-4xl font-bold mb-8 text-yellow-400">Join the FinalBoss Community</h2>
-                <p className="text-xl text-gray-300 mb-8">Stay updated with the latest gaming news, reviews, and exclusive content.</p>
-                <form className="max-w-md mx-auto">
-                  <div className="flex">
-                    <input
-                      type="email"
-                      placeholder="Enter your email"
-                      className="flex-grow px-4 py-2 rounded-l-full text-black focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                      required
-                    />
-                    <button type="submit" className="bg-yellow-400 text-black px-6 py-2 rounded-r-full font-semibold hover:bg-yellow-300 transition-colors">
-                      Subscribe
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </section>
-          </>
-        )}
+          </Suspense>
+
+          <section className="py-16 bg-gray-800">
+            <div className="container mx-auto px-4 text-center">
+              <h2 className="text-4xl font-bold mb-8 text-yellow-400">
+                Join the FinalBoss Community
+              </h2>
+              <p className="text-xl text-gray-300 mb-8">
+                Stay updated with the latest gaming news, reviews, and exclusive
+                content.
+              </p>
+              <NewsletterForm />
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </>
+    );
+  } catch (error) {
+    console.error('Error in HomePage:', error);
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <h1 className="text-3xl font-bold">Something went wrong. Please try again later.</h1>
       </div>
-    </>
-  );
+    );
+  }
 }

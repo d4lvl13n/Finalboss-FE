@@ -4,8 +4,8 @@ import { gql } from '@apollo/client';
 export const GET_REVIEWS = gql`
   query GetReviews($first: Int!, $after: String) {
     posts(
-      first: $first, 
-      after: $after, 
+      first: $first
+      after: $after
       where: { categoryName: "Reviews", orderby: { field: DATE, order: DESC } }
     ) {
       nodes {
@@ -20,8 +20,8 @@ export const GET_REVIEWS = gql`
         }
       }
       pageInfo {
-        endCursor
         hasNextPage
+        endCursor
       }
     }
   }

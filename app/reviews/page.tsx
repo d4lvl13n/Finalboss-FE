@@ -1,23 +1,12 @@
-import React, { Suspense } from 'react';
+// app/reviews/page.tsx
 import { GET_REVIEWS } from '../lib/queries/getReviews';
 import client from '../lib/apolloClient';
-import dynamic from 'next/dynamic';
-import Loader from '../components/Loader';
+import ReviewsPageContent from '../components/Reviews/ReviewsPageContent';
+import ReviewsStructuredData from '../components/Reviews/ReviewsStructuredData';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
-const ReviewsPageContent = dynamic(() => import('../components/Reviews/ReviewsPageContent'), { ssr: false });
-const ReviewsStructuredData = dynamic(() => import('../components/Reviews/ReviewsStructuredData'), { ssr: false });
-
-interface Review {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  featuredImage?: {
-    node: {
-      sourceUrl: string;
-    };
-  };
-}
+export const revalidate = 3600; // Revalidate every hour (optional)
 
 export async function generateMetadata() {
   return {
@@ -27,18 +16,29 @@ export async function generateMetadata() {
 }
 
 export default async function ReviewsPage() {
-  const { data } = await client.query({
-    query: GET_REVIEWS,
-    variables: { first: 24, after: null },
-  });
+  try {
+    const { data } = await client.query({
+      query: GET_REVIEWS,
+      variables: { first: 24, after: null },
+    });
 
-  const reviews = data.posts.nodes;
-  const hasNextPage = data.posts.pageInfo.hasNextPage;
+    const reviews = data.posts.nodes;
+    const hasNextPage = data.posts.pageInfo.hasNextPage;
 
-  return (
-    <Suspense fallback={<Loader />}>
-      <ReviewsStructuredData reviews={reviews} />
-      <ReviewsPageContent initialReviews={reviews} initialHasNextPage={hasNextPage} />
-    </Suspense>
-  );
+    return (
+      <>
+        <Header />
+        <ReviewsStructuredData reviews={reviews} />
+        <ReviewsPageContent initialReviews={reviews} initialHasNextPage={hasNextPage} />
+        <Footer />
+      </>
+    );
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <h1 className="text-3xl font-bold">Something went wrong. Please try again later.</h1>
+      </div>
+    );
+  }
 }

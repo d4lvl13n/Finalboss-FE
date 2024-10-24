@@ -8,8 +8,9 @@ import { GET_FEATURED_POSTS } from '../lib/queries/getFeaturedPosts';
 import client from '../lib/apolloClient';
 import Loader from './Loader';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FeaturedSliderProps } from '../types';
 
-export default function FeaturedSlider() {
+export default function FeaturedSlider({ posts }: FeaturedSliderProps) {
   const { data, loading, error } = useQuery(GET_FEATURED_POSTS, {
     variables: { first: 5 },
     client,

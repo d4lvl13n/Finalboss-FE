@@ -2,6 +2,8 @@ import { GET_POST_BY_SLUG } from '../../lib/queries/getPostBySlug';
 import client from '../../lib/apolloClient';
 import ArticleContent from '../../components/Article/ArticleContent';
 import { Metadata } from 'next';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 interface PageProps {
   params: { category: string; slug: string };
@@ -48,6 +50,7 @@ export default async function ArticlePage({ params }: PageProps) {
 
   return (
     <>
+      <Header />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -70,6 +73,7 @@ export default async function ArticlePage({ params }: PageProps) {
         }}
       />
       <ArticleContent article={article} />
+      <Footer />
     </>
   );
 }

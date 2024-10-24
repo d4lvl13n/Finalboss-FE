@@ -44,7 +44,6 @@ const Footer = () => {
                 <span className="hover:text-yellow transition-colors">Terms of Service</span>
               </Link>
             </li>
-          
           </ul>
         </div>
 
@@ -66,11 +65,18 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-bold mb-4 text-futuristic-blue">Follow Us</h3>
           <div className="flex space-x-4">
-            {[FaTwitter, FaFacebookF, FaInstagram, FaYoutube].map((Icon, index) => (
-              <a key={index} href="#" className="text-2xl text-gray-400 hover:text-futuristic-blue transition-colors">
-                <Icon />
-              </a>
-            ))}
+            <a href="https://x.com/FinalBoss_io" className="text-2xl text-gray-400 hover:text-futuristic-blue transition-colors" target="_blank" rel="noopener noreferrer">
+              <FaTwitter />
+            </a>
+            <a href="https://www.facebook.com/FinalBoss.io/" className="text-2xl text-gray-400 hover:text-futuristic-blue transition-colors" target="_blank" rel="noopener noreferrer">
+              <FaFacebookF />
+            </a>
+            <a href="https://www.instagram.com/finalboss.io/" className="text-2xl text-gray-400 hover:text-futuristic-blue transition-colors" target="_blank" rel="noopener noreferrer">
+              <FaInstagram />
+            </a>
+            <a href="https://www.youtube.com/@finalboss6969" className="text-2xl text-gray-400 hover:text-futuristic-blue transition-colors" target="_blank" rel="noopener noreferrer">
+              <FaYoutube />
+            </a>
           </div>
         </div>
 
