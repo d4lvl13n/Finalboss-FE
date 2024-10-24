@@ -15,8 +15,8 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        // Match any slug that doesn't start with "/articles/", "/guides/", "/reviews/", "/gaming/", or "/technology/"
-        source: '/((?!articles|guides|reviews|gaming|technology).*)',  // Use regex directly in source
+        // Capture the slug in the source path
+        source: '/:slug((?!articles|guides|reviews|gaming|technology).*)',
         destination: '/articles/:slug',
         permanent: true,
       },
