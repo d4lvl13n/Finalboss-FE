@@ -74,6 +74,7 @@ export default async function ArticlePage({ params }: PageProps) {
       />
       <ArticleContent article={article} />
       <Footer />
+      <link rel="canonical" href={`https://finalboss.io/${article.slug}`} />
     </>
   );
 }
