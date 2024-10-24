@@ -15,12 +15,12 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        // Match any slug that doesn't already start with "/articles/"
+        // Match any slug that doesn't start with "/articles/", "/guides/", "/reviews/", "/gaming/", or "/technology/"
         source: '/:slug',
         has: [
           {
             type: 'path',
-            value: '^(?!articles/).*',  // Exclude paths already starting with /articles/
+            value: '^(?!articles/|guides/|reviews/|gaming/|technology/).*',  // Exclude all these paths
           },
         ],
         destination: '/articles/:slug',
