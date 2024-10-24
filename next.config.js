@@ -15,7 +15,7 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        // Capture the slug in the source path
+        // This excludes certain top-level paths such as "articles", "guides", "reviews", etc.
         source: '/:slug((?!articles|guides|reviews|gaming|technology).*)',
         destination: '/articles/:slug',
         permanent: true,
