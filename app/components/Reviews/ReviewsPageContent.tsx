@@ -71,7 +71,7 @@ export default function ReviewsPageContent({
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="relative group h-64 overflow-hidden rounded-lg"
             >
-              <Link href={`/${review.slug}`} className="block h-full">
+              <Link href={`/reviews/${review.slug}`} className="block h-full">
                 <Image
                   src={review.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
                   alt={review.title}
