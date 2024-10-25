@@ -27,7 +27,8 @@
     "react-swipeable": "^7.0.1",
     "react-use": "^17.5.1",
     "swiper": "^11.1.9",
-    "three": "^0.167.1"
+    "three": "^0.167.1",
+    "web-vitals": "^4.2.4"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
