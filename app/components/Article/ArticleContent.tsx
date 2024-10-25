@@ -4,41 +4,9 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import '../../styles/article.css';
-import AuthorBio from './AuthorBio';
 
 interface ArticleContentProps {
-  article: {
-    title: string;
-    content: string;
-    date: string;
-    featuredImage?: {
-      node: {
-        sourceUrl: string;
-      };
-    };
-    author: {
-      node: {
-        name: string;
-        description: string;
-        avatar: {
-          url: string;
-        };
-        posts: {
-          nodes: Array<{
-            title: string;
-            slug: string;
-            date: string;
-          }>;
-        };
-      };
-    };
-    categories?: {
-      nodes: Array<{
-        name: string;
-        slug: string;
-      }>;
-    };
-  };
+  article: any; // Replace 'any' with a proper type for your article
 }
 
 export default function ArticleContent({ article }: ArticleContentProps) {
@@ -102,20 +70,55 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             >
               {article.title}
             </motion.h1>
+
+            {/* Author and Date Section */}
             <motion.div
-              className="flex items-center text-gray-400 text-sm mb-8"
+              className="inline-block rounded-xl bg-gray-800/50 border border-gray-700/50 backdrop-blur-sm shadow-xl p-4 mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <span>{new Date(article.date).toLocaleDateString()}</span>
-              {article.author?.node?.name && (
-                <>
-                  <span className="mx-2">•</span>
-                  <span>{article.author.node.name}</span>
-                </>
-              )}
+              <div className="flex items-center gap-6">
+                {/* Author Info */}
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-gray-700/70 border-2 border-yellow-400/20 flex items-center justify-center text-yellow-400 text-lg font-semibold shadow-lg">
+                    {article.author?.node?.name?.charAt(0)}
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-yellow-400 font-medium tracking-wide">
+                      {article.author?.node?.name}
+                    </span>
+                    <span className="text-sm text-gray-400">
+                      {new Date(article.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Divider */}
+                <div className="h-8 w-px bg-gray-700/50"></div>
+
+                {/* Reading Time Indicator */}
+                <div className="flex items-center gap-2 text-sm text-gray-400">
+                  <svg 
+                    className="w-5 h-5 text-yellow-400/70" 
+                    fill="currentColor" 
+                    viewBox="0 0 20 20"
+                  >
+                    <path 
+                      fillRule="evenodd" 
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" 
+                      clipRule="evenodd" 
+                    />
+                  </svg>
+                  <span>{Math.ceil(article.content.split(' ').length / 200)} min read</span>
+                </div>
+              </div>
             </motion.div>
+
             <motion.div
               className="prose prose-lg prose-invert max-w-none"
               initial={{ opacity: 0, y: 20 }}
@@ -127,7 +130,6 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 dangerouslySetInnerHTML={{ __html: article.content }}
               />
             </motion.div>
-            <AuthorBio author={article.author.node} />
           </div>
         </div>
       </div>

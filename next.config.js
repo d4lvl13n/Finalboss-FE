@@ -2,7 +2,18 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['backend.finalboss.io', 'finalboss.io', 'finalbossio.local', 'i.ytimg.com', 'localhost'],
+    domains: ['backend.finalboss.io', 'finalboss.io', 'finalboss.local', 'i.ytimg.com', 'localhost'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60,
+  },
+  experimental: {
+    optimizeFonts: true,
+    optimizeImages: true,
+    scrollRestoration: true,
+  },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
   },
   async headers() {
     return [
@@ -74,5 +85,16 @@ const nextConfig = {
   },
 };
 
-// Change from ES modules to CommonJS
-module.exports = nextConfig;
+// Optimize production builds
+if (process.env.NODE_ENV === 'production') {
+  nextConfig.compiler = {
+    ...nextConfig.compiler,
+    removeConsole: true,
+  };
+}
+
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+module.exports = withBundleAnalyzer(nextConfig);

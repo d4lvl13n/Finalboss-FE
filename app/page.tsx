@@ -7,33 +7,59 @@ import Footer from './components/Footer';
 import Loader from './components/Loader';
 import { getHomePageData } from './components/HomePage/HomePageData';
 
-// Import critical components
-const FeaturedSlider = dynamic(() => import('./components/FeaturedSlider'));
-const LatestArticles = dynamic(() => import('./components/LatestArticles'));
+// Import critical components with loading priority
+const FeaturedSlider = dynamic(() => import('./components/FeaturedSlider'), {
+  loading: () => <div className="h-[600px] bg-gray-800 animate-pulse" />,
+  ssr: true
+});
 
-// Dynamically import non-critical components
-const ReviewsSlider = dynamic(() => import('./components/ReviewsSlider'));
-const GamingSection = dynamic(() => import('./components/GamingSection'));
-const VideoSection = dynamic(() => import('./components/VideoSection'));
-const TechnologySection = dynamic(() => import('./components/TechnologySection'));
-const GuidesSection = dynamic(() => import('./components/GuidesSection'));
+const LatestArticles = dynamic(() => import('./components/LatestArticles'), {
+  loading: () => <div className="h-[400px] bg-gray-800 animate-pulse" />,
+  ssr: true
+});
 
-// Newsletter form component (client-side)
-const NewsletterForm = dynamic(() => import('./components/NewsletterForm'), {
+// Optimize non-critical components loading
+const ReviewsSlider = dynamic(() => import('./components/ReviewsSlider'), {
+  loading: () => <div className="h-[300px] bg-gray-800 animate-pulse" />,
   ssr: false
 });
 
-const inter = Inter({ subsets: ['latin'] });
+// Group similar sections for better code splitting
+const ContentSections = dynamic(
+  () => import('./components/ContentSections').then(mod => mod.default),
+  {
+    loading: () => <div className="h-[400px] bg-gray-800 animate-pulse" />,
+    ssr: false
+  }
+);
+
+// Newsletter form with reduced priority
+const NewsletterForm = dynamic(() => import('./components/NewsletterForm'), {
+  loading: () => <div className="h-[200px] bg-gray-800 animate-pulse" />,
+  ssr: false
+});
+
+// Optimize font loading
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap'
+});
 
 export const revalidate = 3600;
 
+// Metadata optimization
 export const metadata = {
   title: 'FinalBoss.io - Your Ultimate Gaming Destination',
   description: 'Discover the latest gaming news, reviews, guides, and cutting-edge technology at FinalBoss.io. Stay ahead in the gaming world.',
   openGraph: {
     title: 'FinalBoss.io - Your Ultimate Gaming Destination',
     description: 'Discover the latest gaming news, reviews, guides, and cutting-edge technology at FinalBoss.io. Stay ahead in the gaming world.',
-    images: ['/images/finalboss-og-image.jpg'],
+    images: [{
+      url: '/images/finalboss-og-image.jpg',
+      width: 1200,
+      height: 630,
+      alt: 'FinalBoss.io'
+    }],
     url: 'https://finalboss.io',
   },
   twitter: {
@@ -49,37 +75,38 @@ export default async function HomePage() {
       <>
         <Header />
         <main className={`${inter.className} bg-gray-900 text-white min-h-screen`}>
-          <Suspense fallback={<Loader />}>
-            {/* Remove the posts prop */}
+          {/* Critical content with priority loading */}
+          <Suspense 
+            fallback={
+              <div className="h-[600px] bg-gray-800 animate-pulse" />
+            }
+          >
             <FeaturedSlider />
           </Suspense>
 
-          <Suspense fallback={<Loader />}>
+          <Suspense
+            fallback={
+              <div className="h-[400px] bg-gray-800 animate-pulse" />
+            }
+          >
             <LatestArticles posts={latestPosts} />
           </Suspense>
 
-          <Suspense fallback={<Loader />}>
+          {/* Non-critical content with deferred loading */}
+          <Suspense
+            fallback={
+              <div className="h-[300px] bg-gray-800 animate-pulse" />
+            }
+          >
             <ReviewsSlider />
           </Suspense>
-          
-          <Suspense fallback={<Loader />}>
-            <GamingSection />
-          </Suspense>
-          
-          <Suspense fallback={<Loader />}>
-            <VideoSection />
-          </Suspense>
-          
-          <Suspense fallback={<Loader />}>
-            <TechnologySection />
-          </Suspense>
-          
-          <Suspense fallback={<Loader />}>
-            <GuidesSection />
-          </Suspense>
 
+          {/* Group similar sections for better performance */}
+          <ContentSections />
+
+          {/* Newsletter section with reserved space */}
           <section className="py-16 bg-gray-800">
-            <div className="container mx-auto px-4 text-center">
+            <div className="container mx-auto px-4 text-center min-h-[300px]">
               <h2 className="text-4xl font-bold mb-8 text-yellow-400">
                 Join the FinalBoss Community
               </h2>
@@ -87,7 +114,13 @@ export default async function HomePage() {
                 Stay updated with the latest gaming news, reviews, and exclusive
                 content.
               </p>
-              <NewsletterForm />
+              <Suspense
+                fallback={
+                  <div className="h-[100px] bg-gray-700 rounded animate-pulse" />
+                }
+              >
+                <NewsletterForm />
+              </Suspense>
             </div>
           </section>
         </main>
