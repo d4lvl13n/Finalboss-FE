@@ -22,12 +22,12 @@ const nextConfig = {
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.google-analytics.com",
-              "style-src 'self' 'unsafe-inline'",
-              "img-src 'self' data: *.finalboss.io i.ytimg.com localhost:3000",
-              "font-src 'self'",
-              "connect-src 'self' *.google-analytics.com localhost:3000 backend.finalboss.io",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "font-src 'self' https://fonts.gstatic.com data:",
+              "img-src 'self' data: *.finalboss.io i.ytimg.com localhost:3000 https:",
+              "connect-src 'self' *.google-analytics.com localhost:3000 backend.finalboss.io https://www.googleapis.com",
               "media-src 'self'",
-              "frame-src 'self'",
+              "frame-src 'self' https://www.youtube.com",
               "frame-ancestors 'none'",
             ].join('; '),
           },
@@ -74,4 +74,5 @@ const nextConfig = {
   },
 };
 
+// Change from ES modules to CommonJS
 module.exports = nextConfig;

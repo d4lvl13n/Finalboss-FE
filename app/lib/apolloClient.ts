@@ -3,7 +3,10 @@ import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 
 const httpLink = createHttpLink({
   uri: 'https://backend.finalboss.io/graphql',
-  credentials: 'include'
+  credentials: 'same-origin',
+  headers: {
+    'Content-Type': 'application/json',
+  }
 });
 
 const client = new ApolloClient({

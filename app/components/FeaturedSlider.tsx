@@ -182,6 +182,17 @@ export default function FeaturedSlider() {
   // Loading state
   if (loading) return <SkeletonSlide />;
 
+  // Add this check before the return statement
+  if (!featuredArticles || featuredArticles.length === 0) {
+    return (
+      <div className="relative w-full h-[60vh] bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-white mb-4">No featured articles available</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div 
       role="region"
@@ -209,8 +220,8 @@ export default function FeaturedSlider() {
               {/* Image with blur placeholder */}
               <div className="relative w-full h-full">
                 <Image
-                  src={featuredArticles[currentIndex].featuredImage?.node.sourceUrl || '/images/placeholder.jpg'}
-                  alt={featuredArticles[currentIndex].title}
+                  src={featuredArticles[currentIndex]?.featuredImage?.node?.sourceUrl || '/images/placeholder.jpg'}
+                  alt={featuredArticles[currentIndex]?.title || 'Featured article'}
                   fill
                   priority={currentIndex === 0}
                   sizes="100vw"
@@ -231,7 +242,7 @@ export default function FeaturedSlider() {
                   className="max-w-4xl"
                 >
                   {/* Category tag */}
-                  {featuredArticles[currentIndex].categories?.nodes?.[0] && (
+                  {featuredArticles[currentIndex]?.categories?.nodes?.[0] && (
                     <span className="inline-block bg-yellow-400 text-black text-sm font-bold px-3 py-1 rounded-full mb-4">
                       {featuredArticles[currentIndex].categories.nodes[0].name}
                     </span>
@@ -239,18 +250,11 @@ export default function FeaturedSlider() {
 
                   {/* Title */}
                   <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
-                    {featuredArticles[currentIndex].title}
+                    {featuredArticles[currentIndex]?.title}
                   </h1>
 
-                  {/* Excerpt - Hidden on mobile */}
-                  <div className="hidden md:block">
-                    <p className="text-lg md:text-xl text-gray-300 mb-6"
-                       dangerouslySetInnerHTML={{ __html: featuredArticles[currentIndex].excerpt }}
-                    />
-                  </div>
-
                   {/* CTA Button */}
-                  <Link href={`/${featuredArticles[currentIndex].slug}`}>
+                  <Link href={`/${featuredArticles[currentIndex]?.slug}`}>
                     <button className="bg-yellow-400 text-black font-bold py-2 px-6 md:py-3 md:px-8 rounded-full hover:bg-yellow-300 transition-colors">
                       Read More
                     </button>
@@ -313,7 +317,7 @@ export default function FeaturedSlider() {
           <>
             <div className="absolute left-0 top-0 w-24 h-full opacity-30 blur-sm">
               <Image
-                src={featuredArticles[(currentIndex - 1 + featuredArticles.length) % featuredArticles.length]?.featuredImage?.node.sourceUrl || '/images/placeholder.jpg'}
+                src={featuredArticles[(currentIndex - 1 + featuredArticles.length) % featuredArticles.length]?.featuredImage?.node?.sourceUrl || '/images/placeholder.jpg'}
                 alt="Previous"
                 fill
                 className="object-cover"
@@ -321,7 +325,7 @@ export default function FeaturedSlider() {
             </div>
             <div className="absolute right-0 top-0 w-24 h-full opacity-30 blur-sm">
               <Image
-                src={featuredArticles[(currentIndex + 1) % featuredArticles.length]?.featuredImage?.node.sourceUrl || '/images/placeholder.jpg'}
+                src={featuredArticles[(currentIndex + 1) % featuredArticles.length]?.featuredImage?.node?.sourceUrl || '/images/placeholder.jpg'}
                 alt="Next"
                 fill
                 className="object-cover"
@@ -329,6 +333,77 @@ export default function FeaturedSlider() {
             </div>
           </>
         )}
+
+        {/* Navigation indicators - Add this after the content div */}
+        <div className="hidden md:flex items-center justify-between absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 gap-8">
+          {/* Slide counter */}
+          <div className="text-white/80 font-medium">
+            <span className="text-yellow-400">{currentIndex + 1}</span>
+            <span className="mx-2">/</span>
+            <span>{featuredArticles.length}</span>
+          </div>
+
+          {/* Slide dots */}
+          <div className="flex items-center gap-2">
+            {featuredArticles.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  setDirection(index > currentIndex ? 1 : -1);
+                  setCurrentIndex(index);
+                  setProgress(0);
+                }}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentIndex 
+                    ? 'w-6 bg-yellow-400' 
+                    : 'bg-white/50 hover:bg-white/80'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+
+          {/* Slide arrows with labels */}
+          <div className="flex items-center gap-4 text-white/80">
+            <button
+              onClick={handlePrev}
+              className="group flex items-center gap-2 hover:text-yellow-400 transition-colors"
+              aria-label="Previous slide"
+            >
+              <motion.div
+                animate={{ x: [-5, 0, -5] }}
+                transition={{ 
+                  duration: 1.5, 
+                  repeat: Infinity,
+                  ease: "easeInOut" 
+                }}
+              >
+                <FaChevronLeft size={20} />
+              </motion.div>
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity">Prev</span>
+            </button>
+            <button
+              onClick={handleNext}
+              className="group flex items-center gap-2 hover:text-yellow-400 transition-colors"
+              aria-label="Next slide"
+            >
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity">Next</span>
+              <motion.div
+                animate={{ x: [0, 5, 0] }}
+                transition={{ 
+                  duration: 1.5, 
+                  repeat: Infinity,
+                  ease: "easeInOut" 
+                }}
+              >
+                <FaChevronRight size={20} />
+              </motion.div>
+            </button>
+          </div>
+        </div>
+
+        {/* Add a subtle gradient overlay to ensure text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
       </div>
     </div>
   );
