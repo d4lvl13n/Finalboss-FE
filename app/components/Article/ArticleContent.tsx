@@ -7,7 +7,38 @@ import '../../styles/article.css';
 import AuthorBio from './AuthorBio';
 
 interface ArticleContentProps {
-  article: any; // Replace 'any' with a proper type for your article
+  article: {
+    title: string;
+    content: string;
+    date: string;
+    featuredImage?: {
+      node: {
+        sourceUrl: string;
+      };
+    };
+    author: {
+      node: {
+        name: string;
+        description: string;
+        avatar: {
+          url: string;
+        };
+        posts: {
+          nodes: Array<{
+            title: string;
+            slug: string;
+            date: string;
+          }>;
+        };
+      };
+    };
+    categories?: {
+      nodes: Array<{
+        name: string;
+        slug: string;
+      }>;
+    };
+  };
 }
 
 export default function ArticleContent({ article }: ArticleContentProps) {
