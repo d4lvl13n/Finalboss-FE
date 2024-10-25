@@ -16,6 +16,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 
   const article = data?.post;
+  const seo = article?.seo;
 
   if (!article) {
     return {
@@ -24,14 +25,33 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${article.title} | FinalBoss.io`,
-    description: article.excerpt || article.title,
+    title: seo?.title || `${article.title} | FinalBoss.io`,
+    description: seo?.metaDesc || article.excerpt || article.title,
+    robots: {
+      index: !seo?.metaRobotsNoindex,
+      follow: !seo?.metaRobotsNofollow,
+    },
     openGraph: {
-      title: article.title,
-      description: article.excerpt || article.title,
-      images: [{ url: article.featuredImage?.node?.sourceUrl }],
+      title: seo?.opengraphTitle || article.title,
+      description: seo?.opengraphDescription || article.excerpt,
+      images: [{ 
+        url: seo?.opengraphImage?.sourceUrl || article.featuredImage?.node?.sourceUrl 
+      }],
       url: `https://finalboss.io/${article.slug}`,
       type: 'article',
+      publishedTime: article.date,
+      modifiedTime: article.modified,
+      authors: [article.author?.node?.name],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      site: '@finalbossio',
+      title: seo?.twitterTitle || article.title,
+      description: seo?.twitterDescription || article.excerpt,
+      images: [seo?.twitterImage?.sourceUrl || article.featuredImage?.node?.sourceUrl],
+    },
+    alternates: {
+      canonical: seo?.canonical || `https://finalboss.io/${article.slug}`,
     },
   };
 }
@@ -62,8 +82,17 @@ export default async function ArticlePage({ params }: PageProps) {
             author: {
               '@type': 'Person',
               name: article.author?.node?.name,
+              description: article.author?.node?.description,
+              image: article.author?.node?.avatar?.url,
+              sameAs: [
+                article.author?.node?.social?.twitter && 
+                  `https://twitter.com/${article.author.node.social.twitter}`,
+                article.author?.node?.social?.linkedin,
+                article.author?.node?.social?.website,
+              ].filter(Boolean),
             },
             datePublished: article.date,
+            dateModified: article.modified,
             description: article.excerpt || article.title,
             mainEntityOfPage: {
               '@type': 'WebPage',

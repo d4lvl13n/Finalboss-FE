@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import '../../styles/article.css';
+import AuthorBio from './AuthorBio';
 
 interface ArticleContentProps {
   article: any; // Replace 'any' with a proper type for your article
@@ -95,6 +96,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 dangerouslySetInnerHTML={{ __html: article.content }}
               />
             </motion.div>
+            <AuthorBio author={article.author.node} />
           </div>
         </div>
       </div>

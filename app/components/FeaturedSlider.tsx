@@ -56,7 +56,7 @@ interface FeaturedSliderProps {
   posts: Post[];
 }
 
-// Slide transition variants for desktop
+// Slide transition variants for desktop 
 const slideVariants = {
   enter: (direction: number) => ({
     x: direction > 0 ? 1000 : -1000,
