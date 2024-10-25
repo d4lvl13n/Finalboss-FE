@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Loader from './components/Loader';
 import { getHomePageData } from './components/HomePage/HomePageData';
 
 // Import critical components with loading priority
@@ -78,7 +77,7 @@ export default async function HomePage() {
           {/* Critical content with priority loading */}
           <Suspense 
             fallback={
-              <div className="h-[600px] bg-gray-800 animate-pulse" />
+              <div className="h-[600px] bg-gray-800 animate-pulse opacity-40" />
             }
           >
             <FeaturedSlider />
