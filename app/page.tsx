@@ -1,3 +1,4 @@
+// Homepage
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google';
@@ -49,7 +50,8 @@ export default async function HomePage() {
         <Header />
         <main className={`${inter.className} bg-gray-900 text-white min-h-screen`}>
           <Suspense fallback={<Loader />}>
-            <FeaturedSlider posts={featuredPosts} />
+            {/* Remove the posts prop */}
+            <FeaturedSlider />
           </Suspense>
 
           <Suspense fallback={<Loader />}>

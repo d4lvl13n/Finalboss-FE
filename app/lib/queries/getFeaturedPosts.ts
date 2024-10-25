@@ -8,9 +8,16 @@ export const GET_FEATURED_POSTS = gql`
         id
         title
         slug
+        excerpt
         featuredImage {
           node {
             sourceUrl
+          }
+        }
+        categories {
+          nodes {
+            name
+            slug
           }
         }
       }
