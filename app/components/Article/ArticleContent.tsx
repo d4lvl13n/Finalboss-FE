@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import '../../styles/article.css';
+import ProcessedContent from '../../components/ProcessedContent';
 
 interface ArticleContentProps {
   article: any; // Replace 'any' with a proper type for your article
@@ -129,10 +130,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <div
-                className="article-content"
-                dangerouslySetInnerHTML={{ __html: article.content }}
-              />
+              <ProcessedContent content={article.content} />
             </motion.div>
           </div>
         </div>
