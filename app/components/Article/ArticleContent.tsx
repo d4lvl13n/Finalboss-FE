@@ -10,6 +10,8 @@ interface ArticleContentProps {
 }
 
 export default function ArticleContent({ article }: ArticleContentProps) {
+  // Add after line 12 in ArticleContent.tsx
+  console.log('Raw article content:', article.content);
   const [readingProgress, setReadingProgress] = useState(0);
 
   const { scrollY } = useScroll();
@@ -28,6 +30,8 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       window.removeEventListener('scroll', updateReadingProgress);
     };
   }, []);
+
+
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">

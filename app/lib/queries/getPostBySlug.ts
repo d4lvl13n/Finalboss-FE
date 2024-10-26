@@ -11,6 +11,11 @@ export const GET_POST_BY_SLUG = gql`
       featuredImage {
         node {
           sourceUrl
+          # Add these fields to see full image data
+          mediaDetails {
+            width
+            height
+          }
         }
       }
       author {
