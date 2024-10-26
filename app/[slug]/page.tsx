@@ -86,7 +86,7 @@ export default async function ArticlePage({ params }: PageProps) {
               image: article.author?.node?.avatar?.url,
               sameAs: [
                 article.author?.node?.social?.twitter && 
-                  `https://twitter.com/${article.author.node.social.twitter}`,
+                  `https://x.com/${article.author.node.social.twitter}`,
                 article.author?.node?.social?.linkedin,
                 article.author?.node?.social?.website,
               ].filter(Boolean),

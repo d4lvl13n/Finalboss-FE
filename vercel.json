@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/skull-and-bones-guide/(.*)",
+      "dest": "/skull-and-bones-guide/index.html"
+    }
+  ]
+}

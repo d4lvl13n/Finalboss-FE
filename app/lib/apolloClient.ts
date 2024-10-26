@@ -10,13 +10,12 @@ const httpLink = createHttpLink({
 });
 
 const client = new ApolloClient({
-  link: httpLink,
+  uri: 'https://backend.finalboss.io/graphql',
   cache: new InMemoryCache(),
-  defaultOptions: {
-    query: {
-      fetchPolicy: 'network-only',
-      errorPolicy: 'all',
-    },
+  credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json',
+    // The nonce will be automatically handled by WordPress
   },
 });
 
