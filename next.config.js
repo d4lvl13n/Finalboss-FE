@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['backend.finalboss.io', 'finalboss.io', 'finalboss.local', 'i.ytimg.com', 'localhost'],
+    domains: ['images.finalboss.io', 'backend.finalboss.io', 'finalboss.io', 'finalboss.local', 'i.ytimg.com', 'localhost'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
@@ -35,7 +35,7 @@ const nextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.google-analytics.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com data:",
-              "img-src 'self' data: *.finalboss.io i.ytimg.com localhost:3000 https:",
+              "img-src 'self' data: https://images.finalboss.io https://finalboss.io i.ytimg.com",
               "connect-src 'self' *.google-analytics.com localhost:3000 backend.finalboss.io https://www.googleapis.com",
               "media-src 'self'",
               "frame-src 'self' https://www.youtube.com",
