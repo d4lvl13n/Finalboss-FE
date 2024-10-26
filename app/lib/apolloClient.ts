@@ -4,7 +4,7 @@ import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
   uri: 'https://backend.finalboss.io/graphql',
-  credentials: 'include',
+  credentials: 'include', // Keep this to include cookies in requests
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -12,10 +12,7 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       'Content-Type': 'application/json',
-      'Origin': 'https://finalboss.io',
-      'Access-Control-Allow-Credentials': 'true',
     },
-    errorPolicy: 'all',
   };
 });
 
@@ -25,9 +22,11 @@ const client = new ApolloClient({
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'network-only',
+      errorPolicy: 'all',
     },
     query: {
       fetchPolicy: 'network-only',
+      errorPolicy: 'all',
     },
   },
 });
