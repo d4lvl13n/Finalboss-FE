@@ -14,7 +14,8 @@ const authLink = setContext((_, { headers }) => {
       'Content-Type': 'application/json',
       'Origin': 'https://finalboss.io',
       'Access-Control-Allow-Credentials': 'true',
-    }
+    },
+    errorPolicy: 'all',
   };
 });
 
