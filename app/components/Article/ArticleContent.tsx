@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import ProcessedContent from '../ProcessedContent';
 import '../../styles/article.css';
 
 interface ArticleContentProps {
@@ -11,6 +10,8 @@ interface ArticleContentProps {
 }
 
 export default function ArticleContent({ article }: ArticleContentProps) {
+  // Add after line 12 in ArticleContent.tsx
+  console.log('Raw article content:', article.content);
   const [readingProgress, setReadingProgress] = useState(0);
 
   const { scrollY } = useScroll();
@@ -29,6 +30,8 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       window.removeEventListener('scroll', updateReadingProgress);
     };
   }, []);
+
+
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
@@ -120,13 +123,16 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               </div>
             </motion.div>
 
-            {/* Article Content with ProcessedContent */}
             <motion.div
+              className="prose prose-lg prose-invert max-w-none"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <ProcessedContent content={article.content} />
+              <div
+                className="article-content"
+                dangerouslySetInnerHTML={{ __html: article.content }}
+              />
             </motion.div>
           </div>
         </div>
@@ -134,3 +140,4 @@ export default function ArticleContent({ article }: ArticleContentProps) {
     </div>
   );
 }
+
