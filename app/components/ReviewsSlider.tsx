@@ -74,12 +74,7 @@ const ReviewsSlider = () => {
                       Read Full Review
                     </span>
                   </div>
-                  <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
-                    {latestReview.categories?.nodes?.[0] && (
-                      <span className="bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded">
-                        {latestReview.categories.nodes[0].name}
-                      </span>
-                    )}
+                  <div className="absolute top-4 right-4 z-10">
                     {latestReview.author?.node && (
                       <span className="bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded">
                         {latestReview.author.node.name}
@@ -121,6 +116,13 @@ const ReviewsSlider = () => {
                       <span className="inline-block bg-yellow-400 text-black text-sm font-bold px-2 py-1 rounded hover:bg-yellow-300 transition-colors">
                         Read Review
                       </span>
+                    </div>
+                    <div className="absolute top-4 right-4 z-10">
+                      {review.author?.node && (
+                        <span className="bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded">
+                          {review.author.node.name}
+                        </span>
+                      )}
                     </div>
                   </Link>
                 </motion.div>
