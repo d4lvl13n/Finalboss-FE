@@ -81,16 +81,7 @@ const ReviewsSlider = () => {
                       </span>
                     )}
                     {latestReview.author?.node && (
-                      <span className="bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded flex items-center gap-1">
-                        {latestReview.author.node.avatar?.url && (
-                          <Image
-                            src={latestReview.author.node.avatar.url}
-                            alt={latestReview.author.node.name}
-                            width={16}
-                            height={16}
-                            className="rounded-full"
-                          />
-                        )}
+                      <span className="bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded">
                         {latestReview.author.node.name}
                       </span>
                     )}
