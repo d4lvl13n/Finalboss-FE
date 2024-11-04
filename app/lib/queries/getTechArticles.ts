@@ -18,6 +18,14 @@ export const GET_TECH_ARTICLES = gql`
             sourceUrl
           }
         }
+        author {
+          node {
+            name
+            avatar {
+              url
+            }
+          }
+        }
       }
       pageInfo {
         hasNextPage

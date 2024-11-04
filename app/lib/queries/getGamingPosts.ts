@@ -17,6 +17,14 @@ export const GET_GAMING_POSTS = gql`
             sourceUrl
           }
         }
+        author {
+          node {
+            name
+            avatar {
+              url
+            }
+          }
+        }
       }
     }
   }

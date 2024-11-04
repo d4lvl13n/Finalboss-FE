@@ -64,6 +64,9 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
   },
+  alternates: {
+    canonical: 'https://finalboss.io',
+  },
 };
 
 export default async function HomePage() {

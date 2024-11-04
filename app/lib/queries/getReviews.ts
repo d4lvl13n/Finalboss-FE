@@ -18,6 +18,16 @@ export const GET_REVIEWS = gql`
             sourceUrl
           }
         }
+        author {
+          node {
+            name
+            avatar {
+              url
+            }
+            description
+          }
+        }
+        date
       }
       pageInfo {
         hasNextPage

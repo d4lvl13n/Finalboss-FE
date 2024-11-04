@@ -19,6 +19,16 @@ interface Review {
       sourceUrl: string;
     };
   };
+  author?: {
+    node: {
+      name: string;
+      avatar?: {
+        url: string;
+      };
+      description?: string;
+    };
+  };
+  date: string;
 }
 
 interface ReviewsPageContentProps {
@@ -83,6 +93,29 @@ export default function ReviewsPageContent({
                   <h3 className="text-xl font-semibold text-white mb-2">
                     {review.title}
                   </h3>
+                  <div className="flex items-center space-x-2 mb-2">
+                    {review.author?.node?.avatar?.url ? (
+                      <Image
+                        src={review.author.node.avatar.url}
+                        alt={review.author.node.name}
+                        width={24}
+                        height={24}
+                        className="rounded-full"
+                      />
+                    ) : (
+                      <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center">
+                        <span className="text-xs font-bold text-black">
+                          {review.author?.node?.name?.charAt(0)}
+                        </span>
+                      </div>
+                    )}
+                    <span className="text-sm text-gray-300">
+                      {review.author?.node?.name}
+                    </span>
+                    <span className="text-sm text-gray-400">
+                      {new Date(review.date).toLocaleDateString()}
+                    </span>
+                  </div>
                 </div>
                 <div className="absolute inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center p-6">
                   <h3 className="text-xl font-semibold text-white mb-2">

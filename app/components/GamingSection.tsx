@@ -25,6 +25,14 @@ interface Article {
       name: string;
     }[];
   };
+  author?: {
+    node: {
+      name: string;
+      avatar?: {
+        url: string;
+      };
+    };
+  };
 }
 
 const GamingSection = () => {
@@ -75,10 +83,24 @@ const GamingSection = () => {
                   className="transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
-                <div className="absolute top-4 right-4 z-10">
+                <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
                   {article.categories?.nodes?.[0] && (
                     <span className="bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded">
                       {article.categories.nodes[0].name}
+                    </span>
+                  )}
+                  {article.author?.node && (
+                    <span className="bg-gray-800 text-white text-xs font-bold px-2 py-1 rounded flex items-center gap-1">
+                      {article.author.node.avatar?.url && (
+                        <Image
+                          src={article.author.node.avatar.url}
+                          alt={article.author.node.name}
+                          width={16}
+                          height={16}
+                          className="rounded-full"
+                        />
+                      )}
+                      {article.author.node.name}
                     </span>
                   )}
                 </div>
