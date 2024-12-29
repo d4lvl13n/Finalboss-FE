@@ -4,6 +4,7 @@ import { ReactNode } from 'react';
 import Script from 'next/script';
 import RouteLoader from './components/RouteLoader';
 import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 // Optimize font loading
 const inter = Inter({ 
@@ -46,6 +47,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <RouteLoader />
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
