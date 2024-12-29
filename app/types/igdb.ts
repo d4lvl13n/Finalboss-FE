@@ -3,17 +3,20 @@ export interface IGDBPlatform {
   name: string;
 }
 
+export interface IGDBImage {
+  id: string;
+  image_id: string;
+}
+
 export interface IGDBGame {
   id: number;
   name: string;
-  // URL can be full (https://...) or relative (/wp-content/...)
   cover_url?: string;
   release_date?: string;
   rating?: number;
-  platforms?: (string | IGDBPlatform)[];
+  platforms?: IGDBPlatform[];
   genres?: string[];
   description?: string;
-  // Array of image URLs that can be full or relative paths
   screenshots?: string[];
   videos?: {
     id: string;
