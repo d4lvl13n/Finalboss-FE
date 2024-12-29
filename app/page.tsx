@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { getHomePageData } from './components/HomePage/HomePageData';
+import GameDatabaseSection from './components/GameDatabaseSection';
 
 // Import critical components with loading priority
 const FeaturedSlider = dynamic(() => import('./components/FeaturedSlider'), {
@@ -105,6 +106,15 @@ export default async function HomePage() {
 
           {/* Group similar sections for better performance */}
           <ContentSections />
+
+          {/* Game Database Section */}
+          <Suspense
+            fallback={
+              <div className="h-[400px] bg-gray-800 animate-pulse" />
+            }
+          >
+            <GameDatabaseSection />
+          </Suspense>
 
           {/* Newsletter section with reserved space */}
           <section className="py-16 bg-gray-800">

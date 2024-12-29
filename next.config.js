@@ -20,8 +20,6 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
   experimental: {
-    optimizeFonts: true,
-    optimizeImages: true,
     scrollRestoration: true,
   },
   compiler: {
