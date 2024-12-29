@@ -28,14 +28,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GamePage({ params }: Props) {
   try {
+    console.log('Attempting to fetch game with ID:', params.id);
+    
     if (!params.id || isNaN(parseInt(params.id))) {
+      console.log('Invalid ID:', params.id);
       notFound();
     }
 
     const client = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
     const game = await client.getGameDetails(parseInt(params.id));
     
+    console.log('Game data received:', game);
+    
     if (!game || !game.data) {
+      console.log('No game data found');
       notFound();
     }
     

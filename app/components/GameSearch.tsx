@@ -48,6 +48,7 @@ const getPlatformName = (platform: any): string => {
 
 // Game card component to isolate potential rendering issues
 const GameCard = ({ game }: { game: IGDBGame }) => {
+  console.log('Game ID:', game.id);
   try {
     // Safely handle platforms that might be objects instead of strings
     const platforms = Array.isArray(game.platforms) 

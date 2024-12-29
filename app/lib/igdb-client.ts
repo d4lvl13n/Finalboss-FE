@@ -6,89 +6,51 @@ export class IGDBClient {
 
   constructor(baseUrl: string) {
     if (!baseUrl) {
-      // Default to production URL if environment variable is not set
-      this.baseUrl = 'https://backend.finalboss.io/wp-json/igdb/v1';
+      this.baseUrl = 'https://backend.finalboss.io';
     } else {
-      this.baseUrl = `${baseUrl}/wp-json/igdb/v1`;
+      this.baseUrl = baseUrl;
     }
   }
 
   private async fetchApi<T>(endpoint: string): Promise<IGDBResponse<T>> {
     try {
-      console.log('Fetching:', `${this.baseUrl}${endpoint}`); // Debug log
+      const url = `${this.baseUrl}/wp-json/igdb/v1${endpoint}`;
+      console.log('Fetching:', url);
 
-      const response = await fetch(`${this.baseUrl}${endpoint}`, {
+      const response = await fetch(url, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        credentials: 'include', // Important for CORS
-        cache: 'no-store', // Disable caching for debugging
+        next: { revalidate: 3600 }, // Cache for 1 hour
       });
 
-      const contentType = response.headers.get('content-type');
-      if (!contentType?.includes('application/json')) {
-        console.error('Non-JSON response:', await response.text());
-        throw new Error('Invalid response format from server');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
-      console.log('API Response:', data); // Debug log
-
-      if (!response.ok) {
-        const errorMessage = data.message || `API request failed with status ${response.status}`;
-        console.error('API Error:', errorMessage);
-        throw new Error(errorMessage);
-      }
-
+      
       if (!data.success) {
-        const errorMessage = data.message || 'API request was not successful';
-        console.error('API Success False:', errorMessage);
-        throw new Error(errorMessage);
+        throw new Error(data.message || 'API request failed');
       }
 
       return data as IGDBResponse<T>;
     } catch (error) {
       console.error('Fetch Error:', error);
-      if (error instanceof Error) {
-        throw new Error(`API Request Failed: ${error.message}`);
-      }
-      throw new Error('Unknown error occurred during API request');
+      throw error;
     }
   }
 
   async searchGames(query: string, limit = 10): Promise<IGDBResponse<IGDBGame[]>> {
-    if (!query.trim()) {
-      throw new Error('Search query is required');
-    }
-    try {
-      return await this.fetchApi<IGDBGame[]>(
-        `/search?s=${encodeURIComponent(query)}&limit=${limit}`
-      );
-    } catch (error) {
-      console.error('Search Games Error:', error);
-      throw error;
-    }
+    return this.fetchApi<IGDBGame[]>(`/search?s=${encodeURIComponent(query)}&limit=${limit}`);
   }
 
   async getGameDetails(id: number): Promise<IGDBResponse<IGDBGame>> {
-    if (!id) {
-      throw new Error('Game ID is required');
-    }
-    try {
-      return await this.fetchApi<IGDBGame>(`/game/${id}`);
-    } catch (error) {
-      console.error('Get Game Details Error:', error);
-      throw error;
-    }
+    return this.fetchApi<IGDBGame>(`/game/${id}`);
   }
 
   async getPopularGames(limit = 10): Promise<IGDBResponse<IGDBGame[]>> {
-    try {
-      return await this.fetchApi<IGDBGame[]>(`/popular?limit=${limit}`);
-    } catch (error) {
-      console.error('Get Popular Games Error:', error);
-      throw error;
-    }
+    return this.fetchApi<IGDBGame[]>(`/popular?limit=${limit}`);
   }
 }
