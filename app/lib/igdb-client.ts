@@ -6,9 +6,11 @@ export class IGDBClient {
 
   constructor(baseUrl: string) {
     if (!baseUrl) {
-      throw new Error('WordPress URL is required for IGDB client');
+      // Default to production URL if environment variable is not set
+      this.baseUrl = 'https://backend.finalboss.io/wp-json/igdb/v1';
+    } else {
+      this.baseUrl = `${baseUrl}/wp-json/igdb/v1`;
     }
-    this.baseUrl = `${baseUrl}/wp-json/igdb/v1`;
   }
 
   private async fetchApi<T>(endpoint: string): Promise<IGDBResponse<T>> {
