@@ -10,20 +10,25 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  try {
-    const client = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
-    const game = await client.getGameDetails(parseInt(params.id));
-    
-    return {
-      title: `${game.data.name} - Game Details | FinalBoss.io`,
-      description: game.data.description?.slice(0, 160) || `Details about ${game.data.name}`,
-    };
-  } catch (error) {
-    return {
-      title: 'Game Not Found | FinalBoss.io',
-      description: 'The requested game could not be found.',
-    };
-  }
+  const client = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
+  const game = await client.getGameDetails(parseInt(params.id));
+  
+  return {
+    title: `${game.data.name} - Game Details | FinalBoss.io`,
+    description: game.data.description?.slice(0, 160),
+    openGraph: {
+      title: game.data.name,
+      description: game.data.description?.slice(0, 160),
+      images: [game.data.cover_url || ''],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: game.data.name,
+      description: game.data.description?.slice(0, 160),
+      images: [game.data.cover_url || ''],
+    },
+  };
 }
 
 export default async function GamePage({ params }: Props) {
