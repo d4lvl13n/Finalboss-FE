@@ -37,14 +37,15 @@ export function GameDetails({ game }: { game: IGDBGame }) {
         <div className="bg-gray-800 rounded-lg overflow-hidden shadow-xl">
           <div className="relative">
             {game.cover_url ? (
-              <div className="relative h-[500px]">
+              <div className="relative h-[500px] w-full">
                 <Image
-                  src={getValidImageUrl(game.cover_url)}
+                  src={game.cover_url}
                   alt={game.name}
                   fill
                   className="object-cover"
                   priority
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  unoptimized
                 />
               </div>
             ) : (
@@ -106,11 +107,12 @@ export function GameDetails({ game }: { game: IGDBGame }) {
                   {game.screenshots.map((screenshot, index) => (
                     <div key={index} className="relative h-48 group">
                       <Image
-                        src={getValidImageUrl(screenshot)}
+                        src={screenshot}
                         alt={`${game.name} screenshot ${index + 1}`}
                         fill
                         className="object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        unoptimized
                       />
                     </div>
                   ))}
