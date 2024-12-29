@@ -7,7 +7,29 @@ import Header from './Header';
 import Footer from './Footer';
 import { format } from 'date-fns';
 
+// Helper function to ensure valid image URL
+const getValidImageUrl = (url: string | undefined) => {
+  if (!url) return '';
+  
+  // If it's already a full URL, return it
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
+  }
+  
+  // If it's a relative URL, prepend the WordPress base URL
+  if (url.startsWith('/')) {
+    return `${process.env.NEXT_PUBLIC_WORDPRESS_URL}${url}`;
+  }
+  
+  // If it's just a path, add necessary prefixes
+  return `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/${url}`;
+};
+
 export function GameDetails({ game }: { game: IGDBGame }) {
+  // Log the image URLs for debugging
+  console.log('Cover URL:', game.cover_url);
+  console.log('Screenshots:', game.screenshots);
+
   return (
     <>
       <Header />
@@ -17,7 +39,7 @@ export function GameDetails({ game }: { game: IGDBGame }) {
             {game.cover_url ? (
               <div className="relative h-[500px]">
                 <Image
-                  src={game.cover_url}
+                  src={getValidImageUrl(game.cover_url)}
                   alt={game.name}
                   fill
                   className="object-cover"
@@ -84,7 +106,7 @@ export function GameDetails({ game }: { game: IGDBGame }) {
                   {game.screenshots.map((screenshot, index) => (
                     <div key={index} className="relative h-48 group">
                       <Image
-                        src={screenshot}
+                        src={getValidImageUrl(screenshot)}
                         alt={`${game.name} screenshot ${index + 1}`}
                         fill
                         className="object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"

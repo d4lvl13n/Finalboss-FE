@@ -6,12 +6,14 @@ export interface IGDBPlatform {
 export interface IGDBGame {
   id: number;
   name: string;
+  // URL can be full (https://...) or relative (/wp-content/...)
   cover_url?: string;
   release_date?: string;
   rating?: number;
   platforms?: (string | IGDBPlatform)[];
   genres?: string[];
   description?: string;
+  // Array of image URLs that can be full or relative paths
   screenshots?: string[];
   videos?: {
     id: string;
