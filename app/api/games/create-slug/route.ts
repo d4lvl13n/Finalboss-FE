@@ -12,10 +12,10 @@ export async function POST(request: Request) {
       variables: { igdbId: igdb_id }
     });
 
-    if (existingGame?.games?.nodes?.[0]) {
+    if (existingGame?.posts?.nodes?.[0]) {
       return NextResponse.json({ 
         success: true, 
-        slug: existingGame.games.nodes[0].slug 
+        slug: existingGame.posts.nodes[0].slug 
       });
     }
 
@@ -26,7 +26,10 @@ export async function POST(request: Request) {
         input: {
           title: game_name,
           status: "PUBLISH",
-          gameDetails: {
+          categories: {
+            nodes: [{ name: "Games" }]
+          },
+          customFields: {
             igdbId: igdb_id
           }
         }
@@ -35,7 +38,7 @@ export async function POST(request: Request) {
     
     return NextResponse.json({ 
       success: true, 
-      slug: data.createGame.game.slug 
+      slug: data.createPost.post.slug 
     });
   } catch (error) {
     console.error('Error creating game mapping:', error);
