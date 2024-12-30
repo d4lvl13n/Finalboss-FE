@@ -7,10 +7,6 @@ export const CREATE_GAME_MAPPING = gql`
         databaseId
         slug
         title
-        metaFields {
-          key
-          value
-        }
       }
     }
   }
@@ -22,10 +18,6 @@ export const GET_GAME_BY_SLUG = gql`
       databaseId
       slug
       title
-      metaFields {
-        key
-        value
-      }
     }
   }
 `;
@@ -49,10 +41,6 @@ export const GET_GAME_BY_IGDB_ID = gql`
         databaseId
         slug
         title
-        metaFields {
-          key
-          value
-        }
       }
     }
   }
