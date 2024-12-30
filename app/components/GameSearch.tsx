@@ -7,6 +7,7 @@ import { IGDBClient } from '../lib/igdb-client';
 import { IGDBGame, IGDBResponse } from '../types/igdb';
 import debounce from 'lodash/debounce';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const client = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
 
@@ -117,6 +118,7 @@ export function GameSearch() {
   const [results, setResults] = useState<IGDBGame[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const debouncedSearch = useCallback(
     debounce(async (searchQuery: string) => {
@@ -130,29 +132,13 @@ export function GameSearch() {
 
       try {
         const response = await client.searchGames(searchQuery);
-        console.log('API Response:', response); // Debug log
+        console.log('API Response:', response);
 
-        if (!response) {
-          throw new Error('No response from server');
+        if (!response || !response.data) {
+          throw new Error('Invalid response format');
         }
 
-        if (!response.data) {
-          throw new Error('Invalid response format: missing data');
-        }
-
-        if (!Array.isArray(response.data)) {
-          throw new Error('Invalid response format: data is not an array');
-        }
-
-        // Validate each game object
-        const validGames = response.data.filter(game => 
-          game && 
-          typeof game === 'object' && 
-          (typeof game.id === 'string' || typeof game.id === 'number') &&
-          typeof game.name === 'string'
-        );
-
-        setResults(validGames);
+        setResults(response.data);
       } catch (err: any) {
         console.error('Search error:', err);
         setError(err.message || 'An error occurred while searching');
@@ -163,6 +149,33 @@ export function GameSearch() {
     }, 300),
     []
   );
+
+  const handleGameClick = async (game: IGDBGame) => {
+    try {
+      // Create or get game mapping
+      const response = await fetch('/api/games/create-slug', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          igdb_id: game.id,
+          game_name: game.name
+        })
+      });
+
+      const { success, slug, error } = await response.json();
+      
+      if (!success) {
+        throw new Error(error || 'Failed to create game mapping');
+      }
+
+      // Navigate to the game page using the slug
+      router.push(`/game/${slug}`);
+    } catch (error) {
+      console.error('Error handling game click:', error);
+      // Fall back to ID-based routing if slug creation fails
+      router.push(`/game/${game.id}`);
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -199,7 +212,9 @@ export function GameSearch() {
           {results.length > 0 ? (
             results.map((game) => (
               <ErrorBoundary key={game.id?.toString()}>
-                <GameCard game={game} />
+                <div onClick={() => handleGameClick(game)} className="cursor-pointer">
+                  <GameCard game={game} />
+                </div>
               </ErrorBoundary>
             ))
           ) : (
