@@ -49,59 +49,54 @@ const getPlatformName = (platform: any): string => {
 
 // Game card component to isolate potential rendering issues
 const GameCard = ({ game }: { game: IGDBGame }) => {
-  console.log('Game ID:', game.id);
   try {
-    // Safely handle platforms that might be objects instead of strings
     const platforms = Array.isArray(game.platforms) 
       ? game.platforms.map(getPlatformName)
       : [];
 
     return (
-      <Link href={`/game/${game.id}`} className="block">
-        <div
-          key={game.id?.toString()}
-          className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-        >
-          {game.cover_url && (
-            <div className="relative h-48">
-              <Image
-                src={game.cover_url}
-                alt={game.name || 'Game cover'}
-                fill
-                className="object-cover"
-              />
+      <div
+        className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+      >
+        {game.cover_url && (
+          <div className="relative h-48">
+            <Image
+              src={game.cover_url}
+              alt={game.name || 'Game cover'}
+              fill
+              className="object-cover"
+            />
+          </div>
+        )}
+        <div className="p-4">
+          <h3 className="text-xl font-bold text-white mb-2">
+            {game.name || 'Untitled Game'}
+          </h3>
+          {game.release_date && (
+            <p className="text-gray-400 text-sm mb-2">
+              Released: {new Date(game.release_date).toLocaleDateString()}
+            </p>
+          )}
+          {game.rating && (
+            <div className="flex items-center mb-2">
+              <span className="text-yellow-400 mr-1">★</span>
+              <span className="text-white">{Math.round(game.rating)}/100</span>
             </div>
           )}
-          <div className="p-4">
-            <h3 className="text-xl font-bold text-white mb-2">
-              {game.name || 'Untitled Game'}
-            </h3>
-            {game.release_date && (
-              <p className="text-gray-400 text-sm mb-2">
-                Released: {new Date(game.release_date).toLocaleDateString()}
-              </p>
-            )}
-            {game.rating && (
-              <div className="flex items-center mb-2">
-                <span className="text-yellow-400 mr-1">★</span>
-                <span className="text-white">{Math.round(game.rating)}/100</span>
-              </div>
-            )}
-            {platforms.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {platforms.map((platformName, index) => (
-                  <span
-                    key={`${game.id}-${index}`}
-                    className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded"
-                  >
-                    {platformName}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
+          {platforms.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {platforms.map((platformName, index) => (
+                <span
+                  key={`${game.id}-${index}`}
+                  className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded"
+                >
+                  {platformName}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
-      </Link>
+      </div>
     );
   } catch (error) {
     console.error('Error rendering game card:', error, game);
