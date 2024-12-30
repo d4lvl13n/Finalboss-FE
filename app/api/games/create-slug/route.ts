@@ -5,22 +5,24 @@ import { CREATE_GAME_MAPPING, GET_GAME_BY_IGDB_ID } from '@/app/lib/queries/game
 export async function POST(request: Request) {
   try {
     const { igdb_id, game_name } = await request.json();
-    
-    // First, check if game already exists
-    const { data: existingGame } = await client.query({
+    console.log('Processing request for:', { igdb_id, game_name });
+
+    // Check existing game
+    const existingGameResult = await client.query({
       query: GET_GAME_BY_IGDB_ID,
       variables: { igdbId: igdb_id }
     });
+    console.log('Existing game query result:', existingGameResult);
 
-    if (existingGame?.posts?.nodes?.[0]) {
+    if (existingGameResult?.data?.posts?.nodes?.[0]) {
       return NextResponse.json({ 
         success: true, 
-        slug: existingGame.posts.nodes[0].slug 
+        slug: existingGameResult.data.posts.nodes[0].slug 
       });
     }
 
-    // If game doesn't exist, create it
-    const { data } = await client.mutate({
+    // Create new game
+    const createResult = await client.mutate({
       mutation: CREATE_GAME_MAPPING,
       variables: {
         input: {
@@ -35,15 +37,29 @@ export async function POST(request: Request) {
         }
       }
     });
-    
+    console.log('Create game result:', createResult);
+
+    if (!createResult?.data?.createPost?.post?.slug) {
+      throw new Error('Failed to get slug from created post');
+    }
+
     return NextResponse.json({ 
       success: true, 
-      slug: data.createPost.post.slug 
+      slug: createResult.data.createPost.post.slug 
     });
-  } catch (error) {
-    console.error('Error creating game mapping:', error);
+  } catch (error: any) {
+    console.error('Detailed error:', {
+      message: error.message,
+      stack: error.stack,
+      graphqlErrors: error.graphQLErrors,
+      networkError: error.networkError
+    });
     return NextResponse.json(
-      { success: false, error: 'Failed to create game mapping' },
+      { 
+        success: false, 
+        error: error.message || 'Failed to create game mapping',
+        details: error.graphQLErrors || error.networkError
+      },
       { status: 500 }
     );
   }
