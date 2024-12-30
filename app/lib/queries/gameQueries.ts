@@ -7,7 +7,10 @@ export const CREATE_GAME_MAPPING = gql`
         databaseId
         slug
         title
-        igdbId @customField
+        metaFields {
+          key
+          value
+        }
       }
     }
   }
@@ -19,7 +22,10 @@ export const GET_GAME_BY_SLUG = gql`
       databaseId
       slug
       title
-      igdbId @customField
+      metaFields {
+        key
+        value
+      }
     }
   }
 `;
@@ -32,7 +38,7 @@ export const GET_GAME_BY_IGDB_ID = gql`
         relation: "AND",
         metaArray: [
           {
-            key: "igdbId",
+            key: "igdb_id",
             value: $igdbId,
             compare: "="
           }
@@ -43,7 +49,10 @@ export const GET_GAME_BY_IGDB_ID = gql`
         databaseId
         slug
         title
-        igdbId @customField
+        metaFields {
+          key
+          value
+        }
       }
     }
   }

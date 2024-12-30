@@ -31,9 +31,12 @@ export async function POST(request: Request) {
           categories: {
             nodes: [{ name: "Games" }]
           },
-          metaInput: {
-            igdbId: igdb_id
-          }
+          metaInput: [
+            {
+              key: "igdb_id",
+              value: igdb_id.toString()
+            }
+          ]
         }
       }
     });
