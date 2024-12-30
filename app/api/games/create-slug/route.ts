@@ -31,7 +31,7 @@ export async function POST(request: Request) {
           categories: {
             nodes: [{ name: "Games" }]
           },
-          customFields: {
+          metaInput: {
             igdbId: igdb_id
           }
         }

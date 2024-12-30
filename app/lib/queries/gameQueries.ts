@@ -7,9 +7,7 @@ export const CREATE_GAME_MAPPING = gql`
         databaseId
         slug
         title
-        customFields {
-          igdbId
-        }
+        igdbId @customField
       }
     }
   }
@@ -21,9 +19,7 @@ export const GET_GAME_BY_SLUG = gql`
       databaseId
       slug
       title
-      customFields {
-        igdbId
-      }
+      igdbId @customField
     }
   }
 `;
@@ -32,15 +28,22 @@ export const GET_GAME_BY_IGDB_ID = gql`
   query GetGameByIgdbId($igdbId: Int!) {
     posts(where: { 
       categoryName: "Games",
-      customFields: { igdbId: $igdbId }
+      metaQuery: {
+        relation: "AND",
+        metaArray: [
+          {
+            key: "igdbId",
+            value: $igdbId,
+            compare: "="
+          }
+        ]
+      }
     }, first: 1) {
       nodes {
         databaseId
         slug
         title
-        customFields {
-          igdbId
-        }
+        igdbId @customField
       }
     }
   }
