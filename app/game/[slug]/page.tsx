@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import client from '@/app/lib/apolloClient';
 import { GET_GAME } from '@/app/lib/queries/gameQueries';
+import { IGDBGame, IGDBGameMeta } from '@/app/types/igdb';
 
 interface Props {
   params: {
@@ -71,19 +72,53 @@ export default async function GamePage({ params }: Props) {
 
     if (data?.post) {
       // Extract game meta data from content
-      const metaMatch = data.post.content.match(/<div class="game-meta"[^>]*>(.*?)<\/div>/);
-      const gameMeta = metaMatch ? JSON.parse(metaMatch[1]) : null;
+      const metaMatch = data.post.content.match(/<div class="game-meta"[^>]*>(.*?)<\/div>/s);
+      let gameMeta: IGDBGameMeta = {
+        igdb_id: 0,  // Default value
+        platforms: [],
+        screenshots: [],
+        videos: [],
+        websites: []
+      };
+      
+      if (metaMatch) {
+        try {
+          const parsedMeta = JSON.parse(metaMatch[1].trim());
+          gameMeta = {
+            igdb_id: parsedMeta.igdb_id,
+            rating: parsedMeta.rating,
+            release_date: parsedMeta.release_date,
+            platforms: parsedMeta.platforms || [],
+            screenshots: parsedMeta.screenshots || [],
+            videos: parsedMeta.videos || [],
+            websites: parsedMeta.websites || []
+          };
+        } catch (e) {
+          console.error('Error parsing game meta:', e);
+        }
+      }
+
+      // Clean content by removing meta div
+      const cleanContent = data.post.content.replace(/<div class="game-meta".*?<\/div>/s, '').trim();
+
+      // Construct game data in IGDBGame format
+      const gameData: IGDBGame = {
+        id: gameMeta.igdb_id,
+        name: data.post.title,
+        description: cleanContent,
+        cover_url: data.post.featuredImage?.node?.sourceUrl,
+        rating: gameMeta.rating,
+        release_date: gameMeta.release_date,
+        platforms: gameMeta.platforms,
+        screenshots: gameMeta.screenshots,
+        videos: gameMeta.videos,
+        websites: gameMeta.websites,
+        meta: gameMeta
+      };
 
       return (
         <div className="min-h-screen bg-gray-900">
-          <GameDetails 
-            game={{
-              ...gameMeta,
-              name: data.post.title,
-              description: data.post.content,
-              cover_url: data.post.featuredImage?.node?.sourceUrl
-            }} 
-          />
+          <GameDetails game={gameData} />
         </div>
       );
     }
