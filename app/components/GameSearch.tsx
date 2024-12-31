@@ -147,36 +147,19 @@ export function GameSearch() {
 
   const handleGameClick = async (game: IGDBGame) => {
     try {
+      router.push(`/game/${game.id}`);
+
       const response = await fetch('/api/games/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          game: {
-            title: game.name,
-            content: game.description || '',
-            meta: {
-              igdb_id: game.id,
-              rating: game.rating,
-              release_date: game.release_date,
-              platforms: game.platforms,
-              screenshots: game.screenshots,
-              videos: game.videos,
-              websites: game.websites
-            }
-          }
-        })
+        body: JSON.stringify(game)
       });
 
-      const { success, slug } = await response.json();
-      if (success) {
-        router.push(`/game/${slug}`);
-      } else {
+      if (!response.ok) {
         throw new Error('Failed to create game post');
       }
     } catch (error) {
-      console.error('Error saving game:', error);
-      // Fallback to direct IGDB ID route
-      router.push(`/game/${game.id}`);
+      console.error('Error creating game post:', error);
     }
   };
 

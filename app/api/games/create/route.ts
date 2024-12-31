@@ -6,7 +6,7 @@ const AUTH_TOKEN = 'YWRtaW46RW5weiBvVEtLIFFoM3YgdTFTYyBRUlZlIDZWNWQ=';
 
 export async function POST(request: Request) {
   try {
-    const { game } = await request.json();
+    const game: IGDBGame = await request.json();
     
     // Create a structured content block that preserves all IGDB data
     const content = `
@@ -66,7 +66,8 @@ export async function POST(request: Request) {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to create WordPress post');
+      const errorText = await response.text();
+      throw new Error(`WordPress API error: ${errorText}`);
     }
 
     const post = await response.json();
