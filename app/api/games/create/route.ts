@@ -48,4 +48,15 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
+}
+
+export async function OPTIONS() {
+  return NextResponse.json({}, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+    }
+  });
 } 
