@@ -32,18 +32,38 @@ export async function generateMetadata() {
 }
 
 export default async function TechnologyPage() {
-  const { data } = await client.query({
-    query: GET_TECH_ARTICLES,
-    variables: { first: 24, after: null },
-  });
+  try {
+    const { data, error } = await client.query({
+      query: GET_TECH_ARTICLES,
+      variables: { first: 24, after: null },
+    });
 
-  const articles = data.posts.nodes;
-  const hasNextPage = data.posts.pageInfo.hasNextPage;
+    if (error || !data?.posts?.nodes) {
+      console.error('Error fetching tech articles:', error);
+      return (
+        <div className="min-h-screen bg-gray-900 text-white">
+          <h1 className="text-3xl font-bold p-8">Technology Articles</h1>
+          <p className="p-8">Loading technology articles...</p>
+        </div>
+      );
+    }
 
-  return (
-    <Suspense fallback={<Loader />}>
-      <TechnologyStructuredData articles={articles} />
-      <TechnologyPageContent initialArticles={articles} initialHasNextPage={hasNextPage} />
-    </Suspense>
-  );
+    const articles = data.posts.nodes;
+    const hasNextPage = data.posts.pageInfo?.hasNextPage || false;
+
+    return (
+      <Suspense fallback={<Loader />}>
+        <TechnologyStructuredData articles={articles} />
+        <TechnologyPageContent initialArticles={articles} initialHasNextPage={hasNextPage} />
+      </Suspense>
+    );
+  } catch (error) {
+    console.error('Error in TechnologyPage:', error);
+    return (
+      <div className="min-h-screen bg-gray-900 text-white">
+        <h1 className="text-3xl font-bold p-8">Technology Articles</h1>
+        <p className="p-8">Unable to load articles. Please try again later.</p>
+      </div>
+    );
+  }
 }

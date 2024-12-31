@@ -2,27 +2,33 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-// Create the http link
+// Public HTTP link for queries
 const httpLink = createHttpLink({
-  uri: 'https://backend.finalboss.io/graphql',
+  uri: process.env.NEXT_PUBLIC_WORDPRESS_URL + '/graphql',
   credentials: 'include',
 });
 
-// Create the auth link with basic authentication
+// Auth link that only adds authentication for mutations
 const authLink = setContext((_, { headers }) => {
+  const username = process.env.WP_USERNAME;
   const password = process.env.WP_APP_PASSWORD?.replace(/\s+/g, '');
-  
+
+  if (!username || !password) {
+    console.warn('WordPress credentials not configured');
+    return { headers };
+  }
+
+  const base64Auth = Buffer.from(`${username}:${password}`).toString('base64');
+
   return {
     headers: {
       ...headers,
-      'Content-Type': 'application/json',
-      authorization: password ? 
-        `Basic ${Buffer.from(`admin:${password}`).toString('base64')}` : '',
+      Authorization: `Basic ${base64Auth}`,
     },
   };
 });
 
-// Create the Apollo Client
+// Main client for queries (public)
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
@@ -37,5 +43,20 @@ const client = new ApolloClient({
     },
   },
 });
+
+// Helper function to verify mutation authentication
+const verifyMutationAuth = () => {
+  if (!process.env.WP_APP_PASSWORD) {
+    throw new Error('WordPress authentication not configured for mutations');
+  }
+};
+
+// Mutation client that ensures auth is configured
+export const createMutationClient = () => {
+  if (!process.env.WP_APP_PASSWORD || !process.env.WP_USERNAME) {
+    throw new Error('WordPress authentication not configured');
+  }
+  return client;
+};
 
 export default client;

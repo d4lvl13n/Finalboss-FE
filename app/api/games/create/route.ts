@@ -6,6 +6,10 @@ export async function POST(request: Request) {
   try {
     const { game } = await request.json();
     
+    if (!process.env.WP_APP_PASSWORD) {
+      throw new Error('WordPress authentication not configured');
+    }
+    
     const mutationClient = createMutationClient();
     
     // Create slug from game title
@@ -16,7 +20,7 @@ export async function POST(request: Request) {
       .substring(0, 200);
     
     // Create the game post in WordPress
-    const createResult = await mutationClient.mutate({
+    const { data, errors } = await mutationClient.mutate({
       mutation: CREATE_GAME,
       variables: {
         input: {
@@ -36,17 +40,36 @@ export async function POST(request: Request) {
 </div>
 <!-- /wp:group -->`
         }
+      },
+      // Add context to ensure headers are passed
+      context: {
+        headers: {
+          'Content-Type': 'application/json',
+        }
       }
     });
 
+    if (errors?.length) {
+      console.error('GraphQL Errors:', errors);
+      return NextResponse.json({ 
+        success: false, 
+        error: errors[0].message,
+        details: errors
+      }, { status: 400 });
+    }
+
     return NextResponse.json({ 
       success: true, 
-      slug: createResult.data.createPost.post.slug 
+      slug: data.createPost.post.slug 
     });
   } catch (error: any) {
     console.error('Error creating game:', error);
     return NextResponse.json(
-      { success: false, error: error.message },
+      { 
+        success: false, 
+        error: error.message,
+        details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      },
       { status: 500 }
     );
   }

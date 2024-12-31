@@ -32,18 +32,40 @@ export async function generateMetadata() {
 }
 
 export default async function GamingPage() {
-  const { data } = await client.query({
-    query: GET_GAMING_POSTS,
-    variables: { first: 24, after: null },
-  });
+  try {
+    const { data, error } = await client.query({
+      query: GET_GAMING_POSTS,
+      variables: { first: 24, after: null },
+    });
 
-  const articles = data.posts.nodes;
-  const hasNextPage = data.posts.pageInfo.hasNextPage;
+    if (error || !data?.posts?.nodes) {
+      console.error('Error fetching gaming posts:', error);
+      // Return a fallback UI
+      return (
+        <div className="min-h-screen bg-gray-900 text-white">
+          <h1 className="text-3xl font-bold p-8">Gaming News</h1>
+          <p className="p-8">Loading latest gaming news...</p>
+        </div>
+      );
+    }
 
-  return (
-    <Suspense fallback={<Loader />}>
-      <GamingStructuredData articles={articles} />
-      <GamingPageContent initialArticles={articles} initialHasNextPage={hasNextPage} />
-    </Suspense>
-  );
+    const articles = data.posts.nodes;
+    const hasNextPage = data.posts.pageInfo?.hasNextPage || false;
+
+    return (
+      <Suspense fallback={<Loader />}>
+        <GamingStructuredData articles={articles} />
+        <GamingPageContent initialArticles={articles} initialHasNextPage={hasNextPage} />
+      </Suspense>
+    );
+  } catch (error) {
+    console.error('Error in GamingPage:', error);
+    // Return error UI
+    return (
+      <div className="min-h-screen bg-gray-900 text-white">
+        <h1 className="text-3xl font-bold p-8">Gaming News</h1>
+        <p className="p-8">Unable to load gaming news. Please try again later.</p>
+      </div>
+    );
+  }
 }
