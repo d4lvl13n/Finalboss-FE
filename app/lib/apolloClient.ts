@@ -1,5 +1,17 @@
 // lib/apolloClient.ts
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { ApolloClient, InMemoryCache, createHttpLink, from } from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
+
+// Error handling link
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+    );
+  if (networkError) console.log(`[Network error]: ${networkError}`);
+});
 
 // Regular client for queries
 const httpLink = createHttpLink({
@@ -7,12 +19,12 @@ const httpLink = createHttpLink({
 });
 
 const client = new ApolloClient({
-  link: httpLink,
+  link: from([errorLink, httpLink]),
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'no-cache',
-      errorPolicy: 'ignore',
+      errorPolicy: 'all',
     },
     query: {
       fetchPolicy: 'no-cache',
@@ -33,7 +45,7 @@ const createMutationClient = () => {
   });
 
   return new ApolloClient({
-    link: authLink,
+    link: from([errorLink, authLink]),
     cache: new InMemoryCache(),
   });
 };

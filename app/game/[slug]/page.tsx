@@ -65,16 +65,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function GamePage({ params }: Props) {
   try {
     // First try WordPress
-    const { data } = await client.query({
+    const { data, error } = await client.query({
       query: GET_GAME,
-      variables: { slug: params.slug }
+      variables: { slug: params.slug },
+      errorPolicy: 'all'
     });
+
+    if (error) {
+      console.error('GraphQL Error:', error);
+    }
 
     if (data?.post) {
       // Extract game meta data from content
       const metaMatch = data.post.content.match(/<div class="game-meta"[^>]*>(.*?)<\/div>/s);
       let gameMeta: IGDBGameMeta = {
-        igdb_id: 0,  // Default value
+        igdb_id: 0,
         platforms: [],
         screenshots: [],
         videos: [],
@@ -104,8 +109,8 @@ export default async function GamePage({ params }: Props) {
       // Construct game data in IGDBGame format
       const gameData: IGDBGame = {
         id: gameMeta.igdb_id,
-        name: data.post.title,
-        description: cleanContent,
+        name: data.post.title || 'Untitled Game',
+        description: cleanContent || '',
         cover_url: data.post.featuredImage?.node?.sourceUrl,
         rating: gameMeta.rating,
         release_date: gameMeta.release_date,
