@@ -1,20 +1,22 @@
 import { NextResponse } from 'next/server';
-import client from '@/app/lib/apolloClient';
+import { createMutationClient } from '@/app/lib/apolloClient';
 import { CREATE_GAME } from '@/app/lib/queries/gameQueries';
 
 export async function POST(request: Request) {
   try {
     const { game } = await request.json();
     
-    // Create slug from game title (ES2015 compatible)
+    const mutationClient = createMutationClient();
+    
+    // Create slug from game title
     const slug = game.title
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')  // Replace non-alphanumeric chars with dash
-      .replace(/^-+|-+$/g, '')      // Remove leading/trailing dashes
-      .substring(0, 200);           // Limit length
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .substring(0, 200);
     
     // Create the game post in WordPress
-    const createResult = await client.mutate({
+    const createResult = await mutationClient.mutate({
       mutation: CREATE_GAME,
       variables: {
         input: {

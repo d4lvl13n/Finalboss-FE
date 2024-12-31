@@ -1,31 +1,13 @@
 // lib/apolloClient.ts
-import { ApolloClient, InMemoryCache, createHttpLink, split } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 
+// Regular client for queries
 const httpLink = createHttpLink({
   uri: 'https://backend.finalboss.io/graphql',
 });
 
-// Auth link for mutations only
-const authLink = setContext((operation, { headers }) => {
-  // Only add auth headers for mutations
-  if (operation.query.definitions.some(def => 
-    def.kind === 'OperationDefinition' && def.operation === 'mutation'
-  )) {
-    const password = process.env.WP_APP_PASSWORD?.replace(/\s+/g, '');
-    return {
-      headers: {
-        ...headers,
-        authorization: `Basic ${Buffer.from(`admin:${password}`).toString('base64')}`,
-      }
-    };
-  }
-  // Return regular headers for queries
-  return { headers };
-});
-
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: httpLink,
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {
@@ -39,4 +21,22 @@ const client = new ApolloClient({
   },
 });
 
+// Separate client for mutations with authentication
+const createMutationClient = () => {
+  const password = process.env.WP_APP_PASSWORD?.replace(/\s+/g, '');
+  
+  const authLink = createHttpLink({
+    uri: 'https://backend.finalboss.io/graphql',
+    headers: {
+      authorization: `Basic ${Buffer.from(`admin:${password}`).toString('base64')}`,
+    }
+  });
+
+  return new ApolloClient({
+    link: authLink,
+    cache: new InMemoryCache(),
+  });
+};
+
+export { createMutationClient };
 export default client;
