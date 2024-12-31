@@ -23,6 +23,8 @@ export async function POST(request: Request) {
     const password = process.env.WP_APP_PASSWORD?.trim();
     const base64Creds = Buffer.from(`${username}:${password}`).toString('base64');
     
+    console.log('Sending request with auth:', `Basic ${base64Creds}`); // For debugging
+    
     // Create the game post in WordPress
     const { data, errors } = await mutationClient.mutate({
       mutation: CREATE_GAME,

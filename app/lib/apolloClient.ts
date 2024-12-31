@@ -19,6 +19,7 @@ const authLink = setContext((_, { headers }) => {
   }
 
   const base64Auth = Buffer.from(`${username}:${password}`).toString('base64');
+  console.log('Setting up auth with credentials:', { username, hasPassword: !!password });
 
   return {
     headers: {
