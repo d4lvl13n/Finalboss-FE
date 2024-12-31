@@ -1,84 +1,85 @@
 import { NextResponse } from 'next/server';
-import { createMutationClient } from '@/app/lib/apolloClient';
-import { CREATE_GAME } from '@/app/lib/queries/gameQueries';
+import { IGDBGame } from '@/app/types/igdb';
+
+// Pre-encode the credentials
+const AUTH_TOKEN = 'YWRtaW46RW5weiBvVEtLIFFoM3YgdTFTYyBRUlZlIDZWNWQ=';
 
 export async function POST(request: Request) {
   try {
     const { game } = await request.json();
     
-    if (!process.env.WP_APP_PASSWORD) {
-      throw new Error('WordPress authentication not configured');
-    }
-    
-    const mutationClient = createMutationClient();
-    
-    // Create slug from game title
-    const slug = game.title
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '')
-      .substring(0, 200);
-    
-    const username = process.env.WP_USERNAME;
-    const password = process.env.WP_APP_PASSWORD?.trim();
-    const base64Creds = Buffer.from(`${username}:${password}`).toString('base64');
-    
-    console.log('Sending request with auth:', `Basic ${base64Creds}`); // For debugging
-    
-    // Create the game post in WordPress
-    const { data, errors } = await mutationClient.mutate({
-      mutation: CREATE_GAME,
-      variables: {
-        input: {
-          title: game.title,
-          status: "PUBLISH",
-          slug: slug,
-          categories: {
-            nodes: [{ name: "Games" }]
-          },
-          content: `<!-- wp:group -->
-<div class="game-details">
-  ${game.content}
-  <!-- Game Meta Data -->
-  <div class="game-meta" style="display:none">
-    ${JSON.stringify(game.meta)}
-  </div>
-</div>
-<!-- /wp:group -->`
-        }
+    // Create a structured content block that preserves all IGDB data
+    const content = `
+      <!-- wp:group {"className":"game-details"} -->
+      <div class="game-details">
+        <!-- wp:group {"className":"game-header"} -->
+        <div class="game-header">
+          ${game.cover_url ? `<img src="${game.cover_url}" alt="${game.name}" />` : ''}
+          <h1>${game.name}</h1>
+          ${game.rating ? `<div class="rating">${Math.round(game.rating)}/100</div>` : ''}
+        </div>
+        <!-- /wp:group -->
+
+        <!-- wp:group {"className":"game-description"} -->
+        <div class="game-description">
+          ${game.description || ''}
+        </div>
+        <!-- /wp:group -->
+
+        <!-- wp:group {"className":"game-meta","style":{"display":"none"}} -->
+        <div class="game-meta" style="display:none">
+          ${JSON.stringify({
+            igdb_id: game.id,
+            name: game.name,
+            cover_url: game.cover_url,
+            rating: game.rating,
+            release_date: game.release_date,
+            platforms: game.platforms,
+            genres: game.genres,
+            screenshots: game.screenshots,
+            videos: game.videos,
+            websites: game.websites
+          })}
+        </div>
+        <!-- /wp:group -->
+      </div>
+      <!-- /wp:group -->
+    `;
+
+    // Create WordPress post
+    const response = await fetch('https://backend.finalboss.io/wp-json/wp/v2/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${AUTH_TOKEN}`
       },
-      // Add context to ensure headers are passed
-      context: {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Basic ${base64Creds}`
+      body: JSON.stringify({
+        title: game.name,
+        content: content,
+        status: 'publish',
+        categories: [8], // Games category
+        slug: `${game.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${game.id}`,
+        meta: {
+          igdb_id: game.id
         }
-      }
+      })
     });
 
-    if (errors?.length) {
-      console.error('GraphQL Errors:', errors);
-      return NextResponse.json({ 
-        success: false, 
-        error: errors[0].message,
-        details: errors
-      }, { status: 400 });
+    if (!response.ok) {
+      throw new Error('Failed to create WordPress post');
     }
 
+    const post = await response.json();
     return NextResponse.json({ 
       success: true, 
-      slug: data.createPost.post.slug 
+      slug: post.slug 
     });
   } catch (error: any) {
     console.error('Error creating game:', error);
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: error.message,
-        details: process.env.NODE_ENV === 'development' ? error.stack : undefined
-      },
-      { status: 500 }
-    );
+    return NextResponse.json({ 
+      success: false, 
+      error: error.message 
+    }, { status: 500 });
   }
 }
 
