@@ -147,8 +147,10 @@ export function GameSearch() {
 
   const handleGameClick = async (game: IGDBGame) => {
     try {
-      router.push(`/game/${game.id}`);
-
+      // Create slug in the same format as WordPress will use
+      const slug = `${game.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${game.id}`;
+      
+      // First create the post
       const response = await fetch('/api/games/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -158,6 +160,9 @@ export function GameSearch() {
       if (!response.ok) {
         throw new Error('Failed to create game post');
       }
+
+      // Then navigate using the same slug format
+      router.push(`/game/${slug}`);
     } catch (error) {
       console.error('Error creating game post:', error);
     }

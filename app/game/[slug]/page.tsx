@@ -96,7 +96,6 @@ export default async function GamePage({ params }: { params: { slug: string } })
       gameData = extractGameData(wpPosts[0].content.rendered);
     } else {
       // If not in WordPress, try IGDB
-      // Assume slug ends with IGDB ID (game-name-12345)
       const idMatch = params.slug.match(/-(\d+)$/);
       if (!idMatch) throw new Error('Invalid game slug');
 
@@ -113,7 +112,7 @@ export default async function GamePage({ params }: { params: { slug: string } })
 
     return (
       <div className="game-page">
-        {/* Hero Section */}
+        {/* Hero Section with first screenshot */}
         <div className="hero-section relative h-[60vh] overflow-hidden">
           {gameData.screenshots?.[0] && (
             <Image
@@ -198,6 +197,28 @@ export default async function GamePage({ params }: { params: { slug: string } })
                       alt={`${gameData.name} screenshot ${index + 1}`}
                       fill
                       className="object-cover rounded-lg"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Videos Section */}
+          {gameData.videos && gameData.videos.length > 0 && (
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold mb-6">Videos</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {gameData.videos.map((video) => (
+                  <div key={video.id} className="aspect-video">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={`https://www.youtube.com/embed/${video.video_id}`}
+                      title={video.name}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
                     />
                   </div>
                 ))}
