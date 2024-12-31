@@ -4,31 +4,25 @@ import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
   uri: 'https://backend.finalboss.io/graphql',
-  credentials: 'include', // Keep this to include cookies in requests
 });
 
 const authLink = setContext((_, { headers }) => {
+  // Remove spaces from the password as they're not needed in Basic Auth
+  const password = process.env.WP_APP_PASSWORD?.replace(/\s+/g, '');
+  
   return {
     headers: {
       ...headers,
-      'Content-Type': 'application/json',
-    },
-  };
+      authorization: `Basic ${Buffer.from(
+        `admin:${password}`
+      ).toString('base64')}`,
+    }
+  }
 });
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-  defaultOptions: {
-    watchQuery: {
-      fetchPolicy: 'network-only',
-      errorPolicy: 'all',
-    },
-    query: {
-      fetchPolicy: 'network-only',
-      errorPolicy: 'all',
-    },
-  },
 });
 
 export default client;
