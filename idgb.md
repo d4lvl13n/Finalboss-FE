@@ -51,3 +51,32 @@ Current Issues
 CORS configuration needs fixing
 WordPress storage structure could be improved (custom post type vs regular posts)
 Need proper error handling and fallback strategies
+
+
+
+
+Let me break down what we're trying to achieve and what's currently happening:
+Goal:
+User searches for a game using the GameSearch component
+2. When they click on a game, we want to:
+Create a WordPress post with the game details
+Store it in our WordPress backend
+Redirect user to the new game page
+Current Flow:
+User searches game ✅ (Working)
+IGDB API returns results ✅ (Working)
+User clicks on a game ✅ (Working)
+4. Frontend makes POST request to /api/games/create ✅ (Working)
+Our API route tries to create WordPress post ❌ (Failing)
+Error: "Sorry, you are not allowed to create posts"
+Why It's Failing:
+The WordPress GraphQL mutation requires authentication
+Even though we have WP_USERNAME and WP_APP_PASSWORD in our environment
+The authentication isn't being properly passed through to WordPress
+Expected Behavior:
+graph LR
+    A[User Clicks Game] --> B[API Route]
+    B --> C[WordPress Authentication]
+    C --> D[Create Post]
+    D --> E[Return Slug]
+    E --> F[Redirect to Game Page]

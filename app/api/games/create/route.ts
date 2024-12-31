@@ -19,6 +19,10 @@ export async function POST(request: Request) {
       .replace(/^-+|-+$/g, '')
       .substring(0, 200);
     
+    const username = process.env.WP_USERNAME;
+    const password = process.env.WP_APP_PASSWORD?.trim();
+    const base64Creds = Buffer.from(`${username}:${password}`).toString('base64');
+    
     // Create the game post in WordPress
     const { data, errors } = await mutationClient.mutate({
       mutation: CREATE_GAME,
@@ -45,6 +49,7 @@ export async function POST(request: Request) {
       context: {
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Basic ${base64Creds}`
         }
       }
     });
