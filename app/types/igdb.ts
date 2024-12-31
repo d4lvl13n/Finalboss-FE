@@ -9,28 +9,26 @@ export interface IGDBImage {
 }
 
 export interface IGDBGame {
-  id: number;
+  id?: number;
   name: string;
   cover_url?: string;
+  description?: string;
   release_date?: string;
   rating?: number;
-  platforms?: IGDBPlatform[];
+  platforms?: Array<{ id: number; name: string }>;
   genres?: string[];
-  description?: string;
   screenshots?: string[];
-  videos?: {
-    id: string;
-    name: string;
-    video_id: string;
-  }[];
-  websites?: {
-    url: string;
-    category: string;
-  }[];
-  dlcs?: {
-    id: number;
-    name: string;
-  }[];
+  videos?: Array<{ id: number; name: string; video_id: string }>;
+  websites?: Array<{ url: string; category: string }>;
+  meta?: {
+    igdb_id: number;
+    rating?: number;
+    release_date?: string;
+    platforms?: Array<{ id: number; name: string }>;
+    screenshots?: string[];
+    videos?: Array<{ id: number; name: string; video_id: string }>;
+    websites?: Array<{ url: string; category: string }>;
+  };
 }
 
 export interface IGDBResponse<T> {

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-export const CREATE_GAME_MAPPING = gql`
-  mutation CreateGameMapping($input: CreatePostInput!) {
+export const CREATE_GAME = gql`
+  mutation CreateGame($input: CreatePostInput!) {
     createPost(input: $input) {
       post {
         databaseId
@@ -12,35 +12,17 @@ export const CREATE_GAME_MAPPING = gql`
   }
 `;
 
-export const GET_GAME_BY_SLUG = gql`
-  query GetGameBySlug($slug: ID!) {
+export const GET_GAME = gql`
+  query GetGame($slug: ID!) {
     post(id: $slug, idType: SLUG) {
       databaseId
-      slug
       title
-    }
-  }
-`;
-
-export const GET_GAME_BY_IGDB_ID = gql`
-  query GetGameByIgdbId($igdbId: Int!) {
-    posts(where: { 
-      categoryName: "Games",
-      metaQuery: {
-        relation: "AND",
-        metaArray: [
-          {
-            key: "igdb_id",
-            value: $igdbId,
-            compare: "="
-          }
-        ]
-      }
-    }, first: 1) {
-      nodes {
-        databaseId
-        slug
-        title
+      content
+      slug
+      featuredImage {
+        node {
+          sourceUrl
+        }
       }
     }
   }

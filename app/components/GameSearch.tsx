@@ -147,27 +147,35 @@ export function GameSearch() {
 
   const handleGameClick = async (game: IGDBGame) => {
     try {
-      // Create or get game mapping
-      const response = await fetch('/api/games/create-slug', {
+      const response = await fetch('/api/games/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          igdb_id: game.id,
-          game_name: game.name
+          game: {
+            title: game.name,
+            content: game.description || '',
+            meta: {
+              igdb_id: game.id,
+              rating: game.rating,
+              release_date: game.release_date,
+              platforms: game.platforms,
+              screenshots: game.screenshots,
+              videos: game.videos,
+              websites: game.websites
+            }
+          }
         })
       });
 
-      const { success, slug, error } = await response.json();
-      
-      if (!success) {
-        throw new Error(error || 'Failed to create game mapping');
+      const { success, slug } = await response.json();
+      if (success) {
+        router.push(`/game/${slug}`);
+      } else {
+        throw new Error('Failed to create game post');
       }
-
-      // Navigate to the game page using the slug
-      router.push(`/game/${slug}`);
     } catch (error) {
-      console.error('Error handling game click:', error);
-      // Fall back to ID-based routing if slug creation fails
+      console.error('Error saving game:', error);
+      // Fallback to direct IGDB ID route
       router.push(`/game/${game.id}`);
     }
   };
