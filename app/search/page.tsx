@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@apollo/client';
 import { SEARCH_POSTS } from '../lib/queries/searchPosts';
@@ -14,7 +14,17 @@ import { FaSearch } from 'react-icons/fa';
 import { SearchResult } from '@/app/types/search';
 import { useRouter } from 'next/navigation';
 
-export default function SearchResultsPage() {
+// Loading component to use while search results are loading
+function SearchLoading() {
+  return (
+    <div className="text-center text-gray-400 mt-12">
+      <p>Searching...</p>
+    </div>
+  );
+}
+
+// Main search content component
+function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
   const [isLoading, setIsLoading] = useState(true);
@@ -77,7 +87,6 @@ export default function SearchResultsPage() {
 
   return (
     <>
-      <Header />
       <main className="min-h-screen bg-gray-900 pt-24 pb-12">
         <div className="container mx-auto px-4">
           <div className="mb-12">
@@ -182,6 +191,18 @@ export default function SearchResultsPage() {
           </div>
         </div>
       </main>
+    </>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function SearchResultsPage() {
+  return (
+    <>
+      <Header />
+      <Suspense fallback={<SearchLoading />}>
+        <SearchContent />
+      </Suspense>
       <Footer />
     </>
   );
