@@ -2,7 +2,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_FEATURED_POSTS = gql`
-  query GetFeaturedPosts($first: Int!) {
+  query GetFeaturedPostsQuery($first: Int = 5) {
     posts(first: $first, where: { orderby: { field: DATE, order: DESC } }) {
       nodes {
         id

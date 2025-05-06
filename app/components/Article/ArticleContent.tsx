@@ -13,6 +13,9 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   // Add after line 12 in ArticleContent.tsx
   console.log('Raw article content:', article.content);
   const [readingProgress, setReadingProgress] = useState(0);
+  const [featuredImageError, setFeaturedImageError] = useState(false);
+  // Process content to handle image loading errors
+  const [processedContent, setProcessedContent] = useState(article.content);
 
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, -250]);
@@ -31,7 +34,26 @@ export default function ArticleContent({ article }: ArticleContentProps) {
     };
   }, []);
 
-
+  // Process content to fix image URLs and add error handling to images
+  useEffect(() => {
+    if (!article.content) return;
+    
+    // Create a temp div to parse and modify the HTML content
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = article.content;
+    
+    // Process all images in content
+    const images = tempDiv.querySelectorAll('img');
+    images.forEach(img => {
+      // Add loading="lazy" to improve performance
+      img.setAttribute('loading', 'lazy');
+      
+      // Add onerror handler to replace broken images
+      img.setAttribute('onerror', `this.onerror=null; this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='; this.style.opacity=0.5;`);
+    });
+    
+    setProcessedContent(tempDiv.innerHTML);
+  }, [article.content]);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
@@ -47,7 +69,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
       {/* Parallax Featured Image */}
       <div className="relative h-[60vh] overflow-hidden">
-        {article.featuredImage && (
+        {article.featuredImage && !featuredImageError ? (
           <motion.div className="absolute inset-0" style={{ y }}>
             <Image
               src={article.featuredImage.node.sourceUrl}
@@ -56,7 +78,14 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               sizes="100vw"
               style={{ objectFit: 'cover' }}
               className=""
+              onError={() => setFeaturedImageError(true)}
             />
+          </motion.div>
+        ) : (
+          <motion.div className="absolute inset-0 bg-gray-800 flex items-center justify-center" style={{ y }}>
+            <div className="text-gray-600 text-lg">
+              {article.title}
+            </div>
           </motion.div>
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900/90" />
@@ -131,7 +160,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             >
               <div
                 className="article-content"
-                dangerouslySetInnerHTML={{ __html: article.content }}
+                dangerouslySetInnerHTML={{ __html: processedContent }}
               />
             </motion.div>
           </div>

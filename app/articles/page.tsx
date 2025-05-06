@@ -14,17 +14,31 @@ export async function generateMetadata() {
 }
 
 export default async function AllArticlesPage() {
-  const { data } = await client.query({
-    query: GET_ALL_POSTS,
-    variables: { first: 24 }, // Adjust this number as needed
-  });
+  let articles = [];
+  let hasNextPage = false;
+  let endCursor = null;
 
-  const articles = data.posts.nodes;
-  const hasNextPage = data.posts.pageInfo.hasNextPage;
+  try {
+    const { data } = await client.query({
+      query: GET_ALL_POSTS,
+      variables: { first: 24 }, // Adjust this number as needed
+    });
+
+    articles = data.posts.nodes;
+    hasNextPage = data.posts.pageInfo.hasNextPage;
+    endCursor = data.posts.pageInfo.endCursor;
+  } catch (error) {
+    console.error('Error fetching articles:', error);
+    // Continue with empty articles array
+  }
 
   return (
     <Suspense fallback={<Loader />}>
-      <AllArticlesPageContent initialArticles={articles} initialHasNextPage={hasNextPage} />
+      <AllArticlesPageContent 
+        initialArticles={articles} 
+        initialHasNextPage={hasNextPage}
+        initialEndCursor={endCursor}
+      />
     </Suspense>
   );
 }

@@ -26,7 +26,7 @@ interface Article {
 
 export async function generateMetadata() {
   return {
-    title: 'Gaming News and Articles | Your Site Name',
+    title: 'Gaming News and Articles | FinalBoss.io',
     description: 'Stay updated with the latest gaming news, reviews, and in-depth articles about your favorite games.',
   };
 }

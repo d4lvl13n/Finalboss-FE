@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GiGamepadCross } from 'react-icons/gi';
 import { FaSearch, FaTimes } from 'react-icons/fa';
+import { useSearch } from './Search/SearchContext';
 
 interface MenuItemProps {
   href: string;
@@ -29,6 +30,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ href, children }) => (
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
+  const { openSearch } = useSearch();
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -61,8 +63,15 @@ const Header: React.FC = () => {
             <Image src="/finalboss.png" width={120} height={40} alt="FinalBoss.io" />
           </Link>
           <div className="ml-auto flex items-center">
-            <FaSearch className="text-white cursor-pointer" />
-            {/* Toggle search input visibility on icon click */}
+            <motion.button 
+              onClick={openSearch}
+              className="text-white hover:text-yellow-400 transition-colors"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label="Open search"
+            >
+              <FaSearch size={20} />
+            </motion.button>
           </div>
         </div>
       </div>
@@ -83,7 +92,10 @@ const Header: React.FC = () => {
               </div>
               
               <nav className="flex-grow">
-                {['News', 'Reviews', 'Guides', 'Videos', 'Technology'].map((item) => (
+                <MenuItem href="/articles">
+                  News
+                </MenuItem>
+                {['Reviews', 'Guides', 'Videos', 'Technology'].map((item) => (
                   <MenuItem key={item} href={`/${item.toLowerCase()}`}>
                     {item}
                   </MenuItem>

@@ -9,7 +9,7 @@ interface HomePageData {
 
 // GraphQL query for featured posts
 const GET_FEATURED_POSTS = gql`
-  query GetFeaturedPosts($first: Int!) {
+  query GetHomePageFeaturedPosts($first: Int!) {
     posts(
       first: $first
       where: { categoryName: "Editor's Pick" }
@@ -37,7 +37,7 @@ const GET_FEATURED_POSTS = gql`
 
 // GraphQL query for latest posts
 const GET_LATEST_POSTS = gql`
-  query GetLatestPosts($first: Int!) {
+  query GetHomePageLatestPosts($first: Int!) {
     posts(
       first: $first
       where: { orderby: { field: DATE, order: DESC } }

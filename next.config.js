@@ -2,7 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['images.finalboss.io', 'backend.finalboss.io', 'finalboss.io', 'finalboss.local', 'i.ytimg.com', 'localhost'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -18,6 +17,26 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.igdb.com',
         pathname: '/igdb/image/upload/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'finalboss.io',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'finalboss.local',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ytimg.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        pathname: '/**',
       },
     ],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

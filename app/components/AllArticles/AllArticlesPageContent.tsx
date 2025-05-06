@@ -23,12 +23,14 @@ interface Article {
 interface AllArticlesPageContentProps {
   initialArticles: Article[];
   initialHasNextPage: boolean;
+  initialEndCursor?: string;
 }
 
-export default function AllArticlesPageContent({ initialArticles, initialHasNextPage }: AllArticlesPageContentProps) {
+export default function AllArticlesPageContent({ initialArticles, initialHasNextPage, initialEndCursor }: AllArticlesPageContentProps) {
   const [articles, setArticles] = useState<Article[]>(initialArticles);
   const [hasNextPage, setHasNextPage] = useState(initialHasNextPage);
-  const [afterCursor, setAfterCursor] = useState<string | null>(null);
+  const [afterCursor, setAfterCursor] = useState<string | null>(initialEndCursor || null);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   const { fetchMore } = useQuery(GET_ALL_POSTS, {
     variables: { first: 24, after: afterCursor },
@@ -38,12 +40,18 @@ export default function AllArticlesPageContent({ initialArticles, initialHasNext
 
   const handleLoadMore = () => {
     if (hasNextPage) {
+      setIsLoadingMore(true);
       fetchMore({
         variables: { after: afterCursor },
       }).then((fetchMoreResult) => {
         setArticles([...articles, ...fetchMoreResult.data.posts.nodes]);
         setHasNextPage(fetchMoreResult.data.posts.pageInfo.hasNextPage);
         setAfterCursor(fetchMoreResult.data.posts.pageInfo.endCursor);
+        setIsLoadingMore(false);
+      }).catch(error => {
+        console.error('Error loading more articles:', error);
+        setIsLoadingMore(false);
+        // Optionally display error message to user
       });
     }
   };
@@ -62,6 +70,17 @@ export default function AllArticlesPageContent({ initialArticles, initialHasNext
           alt={article.title}
           layout="fill"
           objectFit="cover"
+          onError={(e) => {
+            // If image fails to load, replace with placeholder
+            const target = e.target as HTMLImageElement;
+            console.log('Image failed to load:', target.src);
+            target.src = '/images/placeholder.png';
+            // If placeholder also fails, use inline data URL
+            target.onerror = () => {
+              target.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+              target.onerror = null; // Prevent infinite loop
+            };
+          }}
           className="transition-transform duration-300 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
@@ -92,16 +111,24 @@ export default function AllArticlesPageContent({ initialArticles, initialHasNext
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((article, index) => renderArticle(article, index))}
+          {articles.length > 0 ? (
+            articles.map((article, index) => renderArticle(article, index))
+          ) : (
+            <div className="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12">
+              <h3 className="text-xl text-white mb-4">No articles to display</h3>
+              <p className="text-gray-400">Check back later for new content</p>
+            </div>
+          )}
         </div>
         
         {hasNextPage && (
           <div className="text-center mt-12">
             <button
               onClick={handleLoadMore}
+              disabled={isLoadingMore}
               className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
             >
-              Load More Articles
+              {isLoadingMore ? 'Loading...' : 'Load More Articles'}
             </button>
           </div>
         )}

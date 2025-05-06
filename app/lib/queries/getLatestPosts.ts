@@ -2,7 +2,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_LATEST_POSTS = gql`
-  query GetLatestPosts {
+  query GetLatestPostsQuery {
   posts(first: 6, where: { orderby: { field: DATE, order: DESC } }) {
     nodes {
       id
