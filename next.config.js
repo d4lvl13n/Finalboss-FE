@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -69,13 +74,13 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.google-analytics.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.google-analytics.com *.cloudflareinsights.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com data:",
-              "img-src 'self' data: https://images.finalboss.io https://backend.finalboss.io https://finalboss.io i.ytimg.com https://images.igdb.com",
-              "connect-src 'self' *.google-analytics.com localhost:3000 backend.finalboss.io https://www.googleapis.com",
+              "img-src 'self' data: https://images.finalboss.io https://backend.finalboss.io https://finalboss.io i.ytimg.com https://images.igdb.com *.cloudflareinsights.com",
+              "connect-src 'self' *.google-analytics.com *.google.com *.googleapis.com localhost:3000 backend.finalboss.io https://www.googleapis.com *.cloudflareinsights.com",
               "media-src 'self'",
-              "frame-src 'self' https://www.youtube.com",
+              "frame-src 'self' https://www.youtube.com https://www.googletagmanager.com",
               "frame-ancestors 'none'",
             ].join('; '),
           },
@@ -137,9 +142,5 @@ if (process.env.NODE_ENV === 'production') {
     removeConsole: true,
   };
 }
-
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
 
 module.exports = withBundleAnalyzer(nextConfig);
