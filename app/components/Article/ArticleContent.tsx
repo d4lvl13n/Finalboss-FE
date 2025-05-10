@@ -2,11 +2,29 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion /*, useScroll, useTransform*/ } from 'framer-motion'; // Temporarily commented out useScroll and useTransform
 import '../../styles/article.css';
 
+// Define a more specific type for the article object
+interface ArticleData {
+  title: string;
+  content: string;
+  date: string; // Or Date, depending on what it actually is
+  author?: {
+    node?: {
+      name?: string;
+    };
+  };
+  featuredImage?: {
+    node: {
+      sourceUrl: string;
+    };
+  };
+  // Add other fields as necessary based on actual data structure
+}
+
 interface ArticleContentProps {
-  article: any; // Replace 'any' with a proper type for your article
+  article: ArticleData; // Use the more specific type here
 }
 
 export default function ArticleContent({ article }: ArticleContentProps) {
@@ -17,8 +35,8 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   // Process content to handle image loading errors
   const [processedContent, setProcessedContent] = useState(article.content);
 
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, -250]);
+  // const { scrollY } = useScroll(); // Temporarily commented out as scrollY is not used
+  // const y = useTransform(scrollY, [0, 500], [0, -250]); // Temporarily commented out as y is not used
 
   useEffect(() => {
     const updateReadingProgress = () => {
@@ -70,7 +88,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       {/* Parallax Featured Image */}
       <div className="relative h-[60vh] overflow-hidden">
         {article.featuredImage && !featuredImageError ? (
-          <motion.div className="absolute inset-0" style={{ y }}>
+          <motion.div className="absolute inset-0" /* style={{ y }} - Temporarily removed for testing */ >
             <Image
               src={article.featuredImage.node.sourceUrl}
               alt={article.title}
@@ -82,7 +100,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             />
           </motion.div>
         ) : (
-          <motion.div className="absolute inset-0 bg-gray-800 flex items-center justify-center" style={{ y }}>
+          <motion.div className="absolute inset-0 bg-gray-800 flex items-center justify-center" /* style={{ y }} - Temporarily removed for testing */ >
             <div className="text-gray-600 text-lg">
               {article.title}
             </div>
@@ -94,7 +112,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       {/* Article Content */}
       <div className="relative z-10 px-4 -mt-24">
         <div className="max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-2xl overflow-hidden">
-          <div className="p-8">
+          <div className="p-4 sm:p-6 md:p-8">
             <motion.h1
               className="text-4xl sm:text-5xl font-bold mb-4 text-yellow-400"
               initial={{ opacity: 0, y: 20 }}
@@ -106,7 +124,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
             {/* Author and Date Section */}
             <motion.div
-              className="inline-block rounded-xl bg-gray-800/50 border border-gray-700/50 backdrop-blur-sm shadow-xl p-4 mb-8"
+              className="inline-block rounded-xl bg-gray-800/50 border border-gray-700/50 backdrop-blur-sm shadow-xl p-4 mb-6 sm:mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}

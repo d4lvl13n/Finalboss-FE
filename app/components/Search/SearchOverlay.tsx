@@ -117,7 +117,7 @@ export default function SearchOverlay() {
             ) : hasResults ? (
               <div className="space-y-6">
                 <h2 className="text-2xl font-bold text-white">
-                  {results.length} result{results.length !== 1 ? 's' : ''} for "{debouncedQuery}"
+                  {results.length} result{results.length !== 1 ? 's' : ''} for &quot;{debouncedQuery}&quot;
                 </h2>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -171,7 +171,7 @@ export default function SearchOverlay() {
               </div>
             ) : (
               <div className="text-center text-gray-400 mt-12">
-                <p>No results found for "{debouncedQuery}"</p>
+                <p>No results found for &quot;{debouncedQuery}&quot;</p>
                 <p className="mt-2 text-sm">Try different keywords or check your spelling</p>
               </div>
             )}

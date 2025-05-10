@@ -21,5 +21,4 @@ export interface FeaturedSliderProps {
 }
 
 export interface LatestArticlesProps {
-  posts: Post[];
 }
