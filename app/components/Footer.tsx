@@ -5,7 +5,9 @@ import { FaTwitter, FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="relative bg-gray-900 text-white pt-12 pb-12">
+      {/* Decorative gradient bar */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-pink-500 to-futuristic-blue" />
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Logo and Description */}
         <div className="flex flex-col items-center md:items-start">
@@ -65,16 +67,16 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-bold mb-4 text-futuristic-blue">Follow Us</h3>
           <div className="flex space-x-4">
-            <a href="https://x.com/FinalBoss_io" className="text-2xl text-gray-400 hover:text-futuristic-blue transition-colors" target="_blank" rel="noopener noreferrer">
+            <a href="https://x.com/FinalBoss_io" className="text-2xl text-gray-400 hover:text-futuristic-blue transform hover:-translate-y-1 transition-transform duration-200" target="_blank" rel="noopener noreferrer">
               <FaTwitter />
             </a>
-            <a href="https://www.facebook.com/FinalBoss.io/" className="text-2xl text-gray-400 hover:text-futuristic-blue transition-colors" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.facebook.com/FinalBoss.io/" className="text-2xl text-gray-400 hover:text-futuristic-blue transform hover:-translate-y-1 transition-transform duration-200" target="_blank" rel="noopener noreferrer">
               <FaFacebookF />
             </a>
-            <a href="https://www.instagram.com/finalboss.io/" className="text-2xl text-gray-400 hover:text-futuristic-blue transition-colors" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/finalboss.io/" className="text-2xl text-gray-400 hover:text-futuristic-blue transform hover:-translate-y-1 transition-transform duration-200" target="_blank" rel="noopener noreferrer">
               <FaInstagram />
             </a>
-            <a href="https://www.youtube.com/@finalboss6969" className="text-2xl text-gray-400 hover:text-futuristic-blue transition-colors" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.youtube.com/@finalboss6969" className="text-2xl text-gray-400 hover:text-futuristic-blue transform hover:-translate-y-1 transition-transform duration-200" target="_blank" rel="noopener noreferrer">
               <FaYoutube />
             </a>
           </div>

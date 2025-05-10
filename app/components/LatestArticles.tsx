@@ -10,6 +10,7 @@ import client from '../lib/apolloClient';
 import Loader from './Loader'; 
 import { motion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
+import { PLACEHOLDER_BASE64 } from '../utils/placeholder';
 
 // Define the Article interface  
 interface Article {  
@@ -72,6 +73,8 @@ const LatestArticles = () => {
                   alt={article.title}
                   layout="fill"
                   objectFit="cover"
+                  placeholder="blur"
+                  blurDataURL={PLACEHOLDER_BASE64}
                   className="transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>

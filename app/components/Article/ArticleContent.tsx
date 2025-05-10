@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion /*, useScroll, useTransform*/ } from 'framer-motion'; // Temporarily commented out useScroll and useTransform
+import { motion } from 'framer-motion'; // Removed useScroll and useTransform
 import '../../styles/article.css';
+import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
 
 // Define a more specific type for the article object
 interface ArticleData {
@@ -34,9 +35,6 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   const [featuredImageError, setFeaturedImageError] = useState(false);
   // Process content to handle image loading errors
   const [processedContent, setProcessedContent] = useState(article.content);
-
-  // const { scrollY } = useScroll(); // Temporarily commented out as scrollY is not used
-  // const y = useTransform(scrollY, [0, 500], [0, -250]); // Temporarily commented out as y is not used
 
   useEffect(() => {
     const updateReadingProgress = () => {
@@ -88,19 +86,21 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       {/* Parallax Featured Image */}
       <div className="relative h-[60vh] overflow-hidden">
         {article.featuredImage && !featuredImageError ? (
-          <motion.div className="absolute inset-0" /* style={{ y }} - Temporarily removed for testing */ >
+          <motion.div className="absolute inset-0" >
             <Image
               src={article.featuredImage.node.sourceUrl}
               alt={article.title}
               fill
               sizes="100vw"
               style={{ objectFit: 'cover' }}
+              placeholder="blur"
+              blurDataURL={PLACEHOLDER_BASE64}
               className=""
               onError={() => setFeaturedImageError(true)}
             />
           </motion.div>
         ) : (
-          <motion.div className="absolute inset-0 bg-gray-800 flex items-center justify-center" /* style={{ y }} - Temporarily removed for testing */ >
+          <motion.div className="absolute inset-0 bg-gray-800 flex items-center justify-center" >
             <div className="text-gray-600 text-lg">
               {article.title}
             </div>

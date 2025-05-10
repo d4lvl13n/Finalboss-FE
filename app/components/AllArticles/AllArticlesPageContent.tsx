@@ -7,6 +7,8 @@ import { motion } from 'framer-motion';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_POSTS } from '../../lib/queries/getAllPosts';
 import client from '../../lib/apolloClient';
+import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
+import Header from '../Header';
 
 interface Article {
   id: string;
@@ -70,6 +72,8 @@ export default function AllArticlesPageContent({ initialArticles, initialHasNext
           alt={article.title}
           layout="fill"
           objectFit="cover"
+          placeholder="blur"
+          blurDataURL={PLACEHOLDER_BASE64}
           onError={(e) => {
             // If image fails to load, replace with placeholder
             const target = e.target as HTMLImageElement;
@@ -103,36 +107,39 @@ export default function AllArticlesPageContent({ initialArticles, initialHasNext
   );
 
   return (
-    <section className="py-16 bg-gray-900">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center mb-12">
-          <h2 className="text-4xl font-bold text-yellow-400 mr-4">All Articles</h2>
-          <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.length > 0 ? (
-            articles.map((article, index) => renderArticle(article, index))
-          ) : (
-            <div className="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12">
-              <h3 className="text-xl text-white mb-4">No articles to display</h3>
-              <p className="text-gray-400">Check back later for new content</p>
+    <>
+      <Header />
+      <section className="pt-32 pb-16 bg-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center mb-12">
+            <h2 className="text-4xl font-bold text-yellow-400 mr-4">All Articles</h2>
+            <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {articles.length > 0 ? (
+              articles.map((article, index) => renderArticle(article, index))
+            ) : (
+              <div className="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12">
+                <h3 className="text-xl text-white mb-4">No articles to display</h3>
+                <p className="text-gray-400">Check back later for new content</p>
+              </div>
+            )}
+          </div>
+          
+          {hasNextPage && (
+            <div className="text-center mt-12">
+              <button
+                onClick={handleLoadMore}
+                disabled={isLoadingMore}
+                className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
+              >
+                {isLoadingMore ? 'Loading...' : 'Load More Articles'}
+              </button>
             </div>
           )}
         </div>
-        
-        {hasNextPage && (
-          <div className="text-center mt-12">
-            <button
-              onClick={handleLoadMore}
-              disabled={isLoadingMore}
-              className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
-            >
-              {isLoadingMore ? 'Loading...' : 'Load More Articles'}
-            </button>
-          </div>
-        )}
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

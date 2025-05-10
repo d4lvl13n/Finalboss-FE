@@ -17,7 +17,7 @@ const inter = Inter({
 
 export const metadata = {
   title: 'FinalBoss.io - Your Ultimate Gaming Destination',
-  description: 'Discover the latest gaming news, reviews, guides, and cutting-edge technology at FinalBoss.io. Stay ahead in the gaming world.',
+  description: 'Discover the latest gaming news, reviews, guides, and technology insights at FinalBoss.io. Stay ahead in the gaming world.',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

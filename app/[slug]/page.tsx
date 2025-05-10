@@ -101,6 +101,30 @@ export default async function ArticlePage({ params }: PageProps) {
           }),
         }}
       />
+      {/* Breadcrumb structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://finalboss.io/',
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: article.title,
+                item: `https://finalboss.io/${article.slug}`,
+              },
+            ],
+          }),
+        }}
+      />
       <ArticleContent article={article} />
       <Footer />
       <link rel="canonical" href={`https://finalboss.io/${article.slug}`} />

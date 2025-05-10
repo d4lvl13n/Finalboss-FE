@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface SearchContextType {
   isSearchOpen: boolean;
@@ -28,6 +28,32 @@ export function SearchProvider({ children }: { children: ReactNode }) {
     // Re-enable scrolling
     document.body.style.overflow = '';
   };
+
+  // Keyboard shortcut listener – '/'  or cmd/ctrl + k
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const activeTag = (document.activeElement as HTMLElement)?.tagName?.toLowerCase();
+      const isEditable = activeTag === 'input' || activeTag === 'textarea' || (document.activeElement as HTMLElement)?.isContentEditable;
+      // Ignore when user is already typing in a field
+      if (isEditable) return;
+
+      if (e.key === '/' && !isSearchOpen) {
+        e.preventDefault();
+        openSearch();
+      }
+      if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey) && !isSearchOpen) {
+        e.preventDefault();
+        openSearch();
+      }
+      if (e.key === 'Escape' && isSearchOpen) {
+        e.preventDefault();
+        closeSearch();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isSearchOpen]);
 
   return (
     <SearchContext.Provider
