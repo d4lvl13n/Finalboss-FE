@@ -92,7 +92,7 @@ export default async function HomePage() {
               <div className="h-[400px] bg-gray-800 animate-pulse" />
             }
           >
-            <LatestArticles posts={latestPosts} />
+            <LatestArticles />
           </Suspense>
 
           {/* Non-critical content with deferred loading */}
