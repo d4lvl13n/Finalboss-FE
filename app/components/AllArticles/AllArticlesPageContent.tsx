@@ -110,13 +110,13 @@ export default function AllArticlesPageContent({ initialArticles, initialHasNext
     <>
       <Header />
       <section className="pt-32 pb-16 bg-gray-900">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center mb-12">
-            <h2 className="text-4xl font-bold text-yellow-400 mr-4">All Articles</h2>
-            <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center mb-12">
+          <h2 className="text-4xl font-bold text-yellow-400 mr-4">All Articles</h2>
+          <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {articles.length > 0 ? (
               articles.map((article, index) => renderArticle(article, index))
             ) : (
@@ -125,21 +125,21 @@ export default function AllArticlesPageContent({ initialArticles, initialHasNext
                 <p className="text-gray-400">Check back later for new content</p>
               </div>
             )}
-          </div>
-          
-          {hasNextPage && (
-            <div className="text-center mt-12">
-              <button
-                onClick={handleLoadMore}
-                disabled={isLoadingMore}
-                className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
-              >
-                {isLoadingMore ? 'Loading...' : 'Load More Articles'}
-              </button>
-            </div>
-          )}
         </div>
-      </section>
+        
+        {hasNextPage && (
+          <div className="text-center mt-12">
+            <button
+              onClick={handleLoadMore}
+                disabled={isLoadingMore}
+              className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
+            >
+                {isLoadingMore ? 'Loading...' : 'Load More Articles'}
+            </button>
+          </div>
+        )}
+      </div>
+    </section>
     </>
   );
 }

@@ -12,22 +12,22 @@ import { motion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
 import { PLACEHOLDER_BASE64 } from '../utils/placeholder';
 
-// Define the Article interface  
-interface Article {  
-  id: string;  
-  title: string;  
-  excerpt: string;  
-  slug: string;  
-  categories?: {  
-    nodes?: {  
-      name: string;  
-    }[];  
-  };  
-  featuredImage?: {  
-    node: {  
-      sourceUrl: string;  
-    };  
-  };  
+// Define the Article interface
+interface Article {
+  id: string;
+  title: string;
+  excerpt: string;
+  slug: string;
+  categories?: {
+    nodes?: {
+      name: string;
+    }[];
+  };
+  featuredImage?: {
+    node: {
+      sourceUrl: string;
+    };
+  };
 }
 
 const LatestArticles = () => {

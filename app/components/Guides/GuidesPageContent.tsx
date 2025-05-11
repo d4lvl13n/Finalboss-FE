@@ -146,41 +146,41 @@ export default function GuidesPageContent({ initialSubcategories, initialGuides,
     <>
       <Header />
       <section className="pt-32 pb-16 bg-gray-900">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center mb-12">
-            <h2 className="text-4xl font-bold text-yellow-400 mr-4">Game Guides</h2>
-            <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
-          </div>
-          
-          {/* Subcategories Section */}
-          <div className="mb-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {initialSubcategories.map((category, index) => renderSubcategory(category, index))}
-            </div>
-          </div>
-
-          {/* All Guides Section */}
-          <div className="container mx-auto px-4">
-            <div className="flex items-center mb-12">
-              <h2 className="text-4xl font-bold text-yellow-400 mr-4">All Guides</h2>
-            <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
-          </div>
+      <div className="container mx-auto px-4">
+        <div className="flex items-center mb-12">
+          <h2 className="text-4xl font-bold text-yellow-400 mr-4">Game Guides</h2>
+          <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
+        </div>
+        
+        {/* Subcategories Section */}
+        <div className="mb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {guides.map((guide, index) => renderGuide(guide, index))}
-          </div>
-            {hasNextPage && (
-              <div className="text-center mt-12">
-                <button
-                  onClick={handleLoadMore}
-                  className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
-                >
-                  Load More Guides
-                </button>
-              </div>
-            )}
+            {initialSubcategories.map((category, index) => renderSubcategory(category, index))}
           </div>
         </div>
-      </section>
+
+        {/* All Guides Section */}
+        <div className="container mx-auto px-4">
+          <div className="flex items-center mb-12">
+            <h2 className="text-4xl font-bold text-yellow-400 mr-4">All Guides</h2>
+          <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {guides.map((guide, index) => renderGuide(guide, index))}
+        </div>
+          {hasNextPage && (
+            <div className="text-center mt-12">
+              <button
+                onClick={handleLoadMore}
+                className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
+              >
+                Load More Guides
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
     </>
   );
 }

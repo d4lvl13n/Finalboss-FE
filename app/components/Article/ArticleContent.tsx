@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion'; // Removed useScroll and useTransform
 import '../../styles/article.css';
 import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
+import ProcessedContent from '../ProcessedContent';
 
 // Define a more specific type for the article object
 interface ArticleData {
@@ -33,8 +34,6 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   console.log('Raw article content:', article.content);
   const [readingProgress, setReadingProgress] = useState(0);
   const [featuredImageError, setFeaturedImageError] = useState(false);
-  // Process content to handle image loading errors
-  const [processedContent, setProcessedContent] = useState(article.content);
 
   useEffect(() => {
     const updateReadingProgress = () => {
@@ -49,27 +48,6 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       window.removeEventListener('scroll', updateReadingProgress);
     };
   }, []);
-
-  // Process content to fix image URLs and add error handling to images
-  useEffect(() => {
-    if (!article.content) return;
-    
-    // Create a temp div to parse and modify the HTML content
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = article.content;
-    
-    // Process all images in content
-    const images = tempDiv.querySelectorAll('img');
-    images.forEach(img => {
-      // Add loading="lazy" to improve performance
-      img.setAttribute('loading', 'lazy');
-      
-      // Add onerror handler to replace broken images
-      img.setAttribute('onerror', `this.onerror=null; this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='; this.style.opacity=0.5;`);
-    });
-    
-    setProcessedContent(tempDiv.innerHTML);
-  }, [article.content]);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
@@ -176,10 +154,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <div
-                className="article-content"
-                dangerouslySetInnerHTML={{ __html: processedContent }}
-              />
+              <ProcessedContent content={article.content} />
             </motion.div>
           </div>
         </div>

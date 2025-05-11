@@ -19,10 +19,10 @@ export default async function AllArticlesPage() {
   let endCursor = null;
 
   try {
-    const { data } = await client.query({
-      query: GET_ALL_POSTS,
-      variables: { first: 24 }, // Adjust this number as needed
-    });
+  const { data } = await client.query({
+    query: GET_ALL_POSTS,
+    variables: { first: 24 }, // Adjust this number as needed
+  });
 
     articles = data.posts.nodes;
     hasNextPage = data.posts.pageInfo.hasNextPage;
