@@ -36,7 +36,7 @@ export default function TechnologyPageContent({ initialArticles, initialHasNextP
   const [hasNextPage, setHasNextPage] = useState(initialHasNextPage);
   const [afterCursor, setAfterCursor] = useState<string | null>(null);
 
-  const { data, loading, error, fetchMore } = useQuery(GET_TECH_ARTICLES, {
+  const { data, loading, fetchMore } = useQuery(GET_TECH_ARTICLES, {
     variables: { limit: 24, after: afterCursor },
     client,
     skip: !afterCursor,

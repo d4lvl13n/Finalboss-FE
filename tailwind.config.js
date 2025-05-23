@@ -14,6 +14,9 @@ module.exports = {
         neonBlue: '#0ff',
         neonGreen: '#0f0',
         neonPurple: '#a00fff',
+        gray: {
+          750: '#374151', // Additional gray between 700 and 800
+        },
       },
       fontFamily: {
         body: ['Inter', 'sans-serif'],
@@ -21,5 +24,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ],
 };

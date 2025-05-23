@@ -35,7 +35,7 @@ export default function GamingPageContent({ initialArticles, initialHasNextPage 
   const [hasNextPage, setHasNextPage] = useState(initialHasNextPage);
   const [afterCursor, setAfterCursor] = useState<string | null>(null);
 
-  const { data, loading, error, fetchMore } = useQuery(GET_GAMING_POSTS, {
+  const { data, loading, fetchMore } = useQuery(GET_GAMING_POSTS, {
     variables: { first: 24, after: afterCursor },
     client,
     skip: !afterCursor,

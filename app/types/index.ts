@@ -21,4 +21,6 @@ export interface FeaturedSliderProps {
 }
 
 export interface LatestArticlesProps {
+  showTitle?: boolean;
+  limit?: number;
 }

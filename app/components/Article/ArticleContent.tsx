@@ -2,18 +2,25 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion'; // Removed useScroll and useTransform
+import { motion } from 'framer-motion';
+import { useQuery } from '@apollo/client';
 import '../../styles/article.css';
 import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
 import ProcessedContent from '../ProcessedContent';
+import RelatedArticles from './RelatedArticles';
+import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../../lib/queries/getRelatedPosts';
+import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
+import client from '../../lib/apolloClient';
 
 // Define a more specific type for the article object
 interface ArticleData {
+  id?: string;
   title: string;
   content: string;
-  date: string; // Or Date, depending on what it actually is
+  date: string;
   author?: {
     node?: {
+      id?: string;
       name?: string;
     };
   };
@@ -22,18 +29,73 @@ interface ArticleData {
       sourceUrl: string;
     };
   };
-  // Add other fields as necessary based on actual data structure
+  categories?: {
+    nodes?: {
+      id: string;
+      name: string;
+    }[];
+  };
 }
 
 interface ArticleContentProps {
-  article: ArticleData; // Use the more specific type here
+  article: ArticleData;
 }
 
 export default function ArticleContent({ article }: ArticleContentProps) {
-  // Add after line 12 in ArticleContent.tsx
   console.log('Raw article content:', article.content);
   const [readingProgress, setReadingProgress] = useState(0);
   const [featuredImageError, setFeaturedImageError] = useState(false);
+
+  // Get the primary category for related posts
+  const primaryCategory = article.categories?.nodes?.[0];
+
+  // Fetch related articles by category with error handling
+  const { data: relatedData, loading: relatedLoading, error: relatedError } = useQuery(GET_RELATED_POSTS, {
+    variables: { 
+      excludeId: article.id || '0',
+      categoryId: primaryCategory?.id,
+      first: 4 
+    },
+    client,
+    skip: !article.id || !primaryCategory?.id,
+    fetchPolicy: 'cache-first',
+    errorPolicy: 'ignore', // Don't fail completely if this query fails
+  });
+
+  // Fetch sequential posts (previous/next by date) with error handling
+  const { data: sequentialData, loading: sequentialLoading, error: sequentialError } = useQuery(GET_SEQUENTIAL_POSTS, {
+    variables: {
+      currentDate: article.date,
+      first: 1
+    },
+    client,
+    fetchPolicy: 'cache-first',
+    errorPolicy: 'ignore',
+  });
+
+  // Fetch more articles by the same author with error handling
+  const { data: authorData, loading: authorLoading, error: authorError } = useQuery(GET_AUTHOR_POSTS, {
+    variables: {
+      authorId: article.author?.node?.id || '0',
+      excludeId: article.id || '0',
+      first: 3
+    },
+    client,
+    skip: !article.author?.node?.id || !article.id,
+    fetchPolicy: 'cache-first',
+    errorPolicy: 'ignore',
+  });
+
+  // Fallback to latest posts if other queries fail
+  const { data: latestData, loading: latestLoading } = useQuery(GET_LATEST_POSTS, {
+    variables: { first: 4 },
+    client,
+    fetchPolicy: 'cache-first',
+    // Only fetch if we have no other recommendations
+    skip: (relatedData?.posts?.nodes?.length > 0) || 
+          (authorData?.posts?.nodes?.length > 0) ||
+          relatedLoading || authorLoading,
+  });
 
   useEffect(() => {
     const updateReadingProgress = () => {
@@ -48,6 +110,17 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       window.removeEventListener('scroll', updateReadingProgress);
     };
   }, []);
+
+  // Debug logging
+  useEffect(() => {
+    if (relatedError) console.log('Related posts error:', relatedError);
+    if (sequentialError) console.log('Sequential posts error:', sequentialError);
+    if (authorError) console.log('Author posts error:', authorError);
+  }, [relatedError, sequentialError, authorError]);
+
+  // Determine what articles to show
+  const articlesToShow = relatedData?.posts?.nodes || latestData?.posts?.nodes || [];
+  const isLoading = relatedLoading || sequentialLoading || authorLoading || latestLoading;
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
@@ -145,6 +218,20 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                   </svg>
                   <span>{Math.ceil(article.content.split(' ').length / 200)} min read</span>
                 </div>
+
+                {/* Category Tags */}
+                {article.categories?.nodes && article.categories.nodes.length > 0 && (
+                  <>
+                    <div className="h-8 w-px bg-gray-700/50"></div>
+                    <div className="flex gap-2">
+                      {article.categories.nodes.slice(0, 2).map((category) => (
+                        <span key={category.id} className="bg-yellow-400/20 text-yellow-400 text-xs px-2 py-1 rounded-full">
+                          {category.name}
+                        </span>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </motion.div>
 
@@ -159,6 +246,24 @@ export default function ArticleContent({ article }: ArticleContentProps) {
           </div>
         </div>
       </div>
+
+      {/* Enhanced Related Articles Section */}
+      <RelatedArticles 
+        articles={articlesToShow}
+        isLoading={isLoading}
+        sequentialPosts={sequentialData ? {
+          newer: sequentialData.newer?.nodes,
+          older: sequentialData.older?.nodes
+        } : undefined}
+        authorPosts={authorData?.posts?.nodes || []}
+        sectionTitle={
+          relatedData?.posts?.nodes?.length > 0 && primaryCategory 
+            ? `Related to ${primaryCategory.name}` 
+            : articlesToShow?.length > 0 
+              ? 'You Might Also Like' 
+              : 'Related Articles'
+        }
+      />
     </div>
   );
 }

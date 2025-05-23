@@ -7,23 +7,6 @@ import Loader from '../components/Loader';
 const GamingPageContent = dynamic(() => import('../components/Gaming/GamingPageContent'), { ssr: false });
 const GamingStructuredData = dynamic(() => import('../components/Gaming/GamingStructuredData'), { ssr: false });
 
-interface Article {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  featuredImage?: {
-    node: {
-      sourceUrl: string;
-    };
-  };
-  categories?: {
-    nodes?: {
-      name: string;
-    }[];
-  };
-}
-
 export async function generateMetadata() {
   return {
     title: 'Gaming News and Articles | FinalBoss.io',

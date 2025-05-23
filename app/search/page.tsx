@@ -123,7 +123,7 @@ function SearchContent() {
               </div>
             ) : results.length === 0 ? (
               <div className="text-center text-gray-400 mt-12">
-                <p>No results found for "{query}"</p>
+                <p>No results found for &quot;{query}&quot;</p>
                 <p className="mt-2 text-sm">Try different keywords or check your spelling</p>
               </div>
             ) : (

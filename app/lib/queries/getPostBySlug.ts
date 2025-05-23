@@ -20,11 +20,13 @@ export const GET_POST_BY_SLUG = gql`
       }
       author {
         node {
+          id
           name
         }
       }
       categories {
         nodes {
+          id
           name
           slug
         }

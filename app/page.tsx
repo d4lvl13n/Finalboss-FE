@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { getHomePageData } from './components/HomePage/HomePageData';
 import GameDatabaseSection from './components/GameDatabaseSection';
 
 // Import critical components with loading priority
@@ -72,8 +71,6 @@ export const metadata = {
 
 export default async function HomePage() {
   try {
-    const { featuredPosts, latestPosts } = await getHomePageData();
-
     return (
       <>
         <Header />
