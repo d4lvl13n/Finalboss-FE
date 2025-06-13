@@ -79,30 +79,49 @@
   }
 }
 
+/* Ensure sidebar ads don't interfere with smaller desktop screens */
+@media (max-width: 1279px) {
+  .sidebar-ad-sticky {
+    display: none;
+  }
+}
+
+/* Fine-tune spacing for very large screens */
+@media (min-width: 1536px) {
+  .sidebar-ad-sticky {
+    max-width: 200px;
+  }
+  
+  .vertical-ad {
+    max-width: 200px;
+  }
+}
+
 /* Sticky Sidebar Ad */
 .sidebar-ad-sticky {
   position: sticky;
   top: 120px;
   z-index: 10;
-  background: rgba(31, 41, 55, 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(251, 191, 36, 0.1);
+  background: rgba(17, 24, 39, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(75, 85, 99, 0.2);
   transition: all 0.3s ease;
 }
 
 .sidebar-ad-sticky:hover {
-  border-color: rgba(251, 191, 36, 0.2);
-  background: rgba(31, 41, 55, 0.9);
+  border-color: rgba(251, 191, 36, 0.15);
+  background: rgba(17, 24, 39, 0.6);
 }
 
 /* Vertical Ad Specific Styles */
 .vertical-ad {
   width: 100%;
-  max-width: 300px;
+  max-width: 180px;
 }
 
 .vertical-ad .adsbygoogle {
-  min-height: 600px !important;
+  min-height: 400px !important;
+  max-height: 600px !important;
   width: 100% !important;
 }
 

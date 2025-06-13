@@ -164,7 +164,22 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
       {/* Article Content */}
       <div className="relative z-10 px-4 -mt-24">
-        <div className="flex max-w-7xl mx-auto gap-8">
+        <div className="flex justify-center max-w-7xl mx-auto">
+          {/* Left Sidebar - Desktop Only */}
+          <div className="hidden xl:block w-48 flex-shrink-0 mr-6">
+            <div className="sticky top-32">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 1.2 }}
+                className="sidebar-ad-sticky bg-gray-800/20 rounded-lg p-3 border border-gray-700/20"
+              >
+                <div className="ad-label text-xs mb-3">Advertisement</div>
+                <VerticalAd adSlot="1258229391" />
+              </motion.div>
+            </div>
+          </div>
+
           {/* Main Content */}
           <div className="flex-1 max-w-4xl bg-gray-900 rounded-lg shadow-2xl overflow-hidden">
           <div className="p-4 sm:p-6 md:p-8">
@@ -271,22 +286,22 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             </motion.div>
           </div>
         </div>
-        
-        {/* Desktop Sidebar with Vertical Ads */}
-        <div className="hidden xl:block w-80 flex-shrink-0">
-          <div className="sticky top-32">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 1.0 }}
-              className="sidebar-ad-sticky bg-gray-800/30 rounded-lg p-4 border border-gray-700/30"
-            >
-              <div className="ad-label mb-4">Advertisement</div>
-              <VerticalAd adSlot="1258229391" />
-            </motion.div>
+
+          {/* Right Sidebar - Desktop Only */}
+          <div className="hidden xl:block w-48 flex-shrink-0 ml-6">
+            <div className="sticky top-32">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 1.0 }}
+                className="sidebar-ad-sticky bg-gray-800/20 rounded-lg p-3 border border-gray-700/20"
+              >
+                <div className="ad-label text-xs mb-3">Advertisement</div>
+                <VerticalAd adSlot="1258229391" />
+              </motion.div>
+            </div>
           </div>
         </div>
-      </div>
       </div>
 
       {/* 🎯 AD PLACEMENT 3: Before related articles - premium position */}

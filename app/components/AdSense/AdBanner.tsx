@@ -97,7 +97,7 @@ export function VerticalAd({ adSlot, className = '' }: { adSlot: string; classNa
       adSlot={adSlot}
       adFormat="auto"
       className={`vertical-ad ${className}`}
-      style={{ width: '300px', minHeight: '600px' }}
+      style={{ width: '180px', minHeight: '400px', maxHeight: '600px' }}
     />
   );
 } 
