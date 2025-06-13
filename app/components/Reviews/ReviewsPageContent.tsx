@@ -10,6 +10,7 @@ import { GET_REVIEWS } from '../../lib/queries/getReviews';
 import client from '../../lib/apolloClient';
 import { ResponsiveAd } from '../AdSense/AdBanner';
 import '../../styles/ads.css';
+import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
 
 interface Review {
   id: string;
@@ -76,15 +77,17 @@ export default function ReviewsPageContent({
         </div>
 
         {/* 🎯 AD PLACEMENT: Reviews page header ad */}
+        {SHOW_MANUAL_ADS && (
         <div className="reviews-ad-header">
           <div className="ad-label">Advertisement</div>
           <ResponsiveAd adSlot="5844341661" />
         </div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {reviews.map((review, index) => (
             <React.Fragment key={review.id}>
               {/* Insert ad every 6 reviews */}
-              {index === 5 && (
+              {SHOW_MANUAL_ADS && index === 5 && (
                 <div className="reviews-ad-grid">
                   <div className="ad-label">Advertisement</div>
                   <ResponsiveAd adSlot="6510556072" />

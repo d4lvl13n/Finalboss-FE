@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SearchProvider } from './components/Search/SearchContext';
 import SearchOverlay from './components/Search/SearchOverlay';
+import { ENABLE_AUTO_ADS } from './lib/adsConfig';
 
 // Optimize font loading
 const inter = Inter({ 
@@ -45,12 +46,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           `}
         </Script>
 
-        {/* Google AdSense */}
+        {/* Google AdSense base script */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7494322760704385"
           strategy="afterInteractive"
           crossOrigin="anonymous"
         />
+        {ENABLE_AUTO_ADS && (
+          <Script id="adsense-auto" strategy="afterInteractive">
+            {`
+              (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-7494322760704385",
+                enable_page_level_ads: true
+              });
+            `}
+          </Script>
+        )}
       </head>
       <body>
         <SearchProvider>

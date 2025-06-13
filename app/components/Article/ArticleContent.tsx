@@ -13,6 +13,7 @@ import { ResponsiveAd, VerticalAd } from '../AdSense/AdBanner';
 import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../../lib/queries/getRelatedPosts';
 import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
 import client from '../../lib/apolloClient';
+import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
 
 // Define a more specific type for the article object
 interface ArticleData {
@@ -176,7 +177,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       <div className="relative z-10 px-4 -mt-24">
         <div className="flex justify-center max-w-7xl mx-auto">
           {/* Left Sidebar - Desktop Only */}
-          {isDesktop && (
+          {isDesktop && SHOW_MANUAL_ADS && (
             <div className="hidden xl:block w-48 flex-shrink-0 mr-6">
               <div className="sticky top-32">
                 <motion.div
@@ -267,6 +268,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               </motion.div>
 
               {/* 🎯 AD PLACEMENT 1: High-performing above-the-fold ad */}
+              {SHOW_MANUAL_ADS && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -276,6 +278,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 <div className="ad-label">Advertisement</div>
                 <ResponsiveAd adSlot="5844341661" />
               </motion.div>
+              )}
 
               <motion.div
                 className="prose prose-lg prose-invert max-w-none"
@@ -287,6 +290,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               </motion.div>
 
               {/* 🎯 AD PLACEMENT 2: End of content, high engagement */}
+              {SHOW_MANUAL_ADS && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -296,11 +300,12 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 <div className="ad-label">Advertisement</div>
                 <ResponsiveAd adSlot="6510556072" />
               </motion.div>
+              )}
             </div>
           </div>
 
           {/* Right Sidebar - Desktop Only */}
-          {isDesktop && (
+          {isDesktop && SHOW_MANUAL_ADS && (
             <div className="hidden xl:block w-48 flex-shrink-0 ml-6">
               <div className="sticky top-32">
                 <motion.div
@@ -319,6 +324,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       </div>
 
       {/* 🎯 AD PLACEMENT 3: Before related articles - premium position */}
+      {SHOW_MANUAL_ADS && (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -328,6 +334,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         <div className="ad-label">Advertisement</div>
         <ResponsiveAd adSlot="9184820874" />
       </motion.div>
+      )}
 
       {/* Enhanced Related Articles Section */}
       <RelatedArticles 

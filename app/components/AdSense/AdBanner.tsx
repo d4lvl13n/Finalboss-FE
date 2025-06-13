@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
 
 interface AdBannerProps {
   adSlot: string;
@@ -25,13 +26,19 @@ export default function AdBanner({
   className = '',
   style = {}
 }: AdBannerProps) {
+  // Always run the hook to satisfy React rules
   useEffect(() => {
+    if (!SHOW_MANUAL_ADS) return;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (err) {
       console.error('AdSense error:', err);
     }
   }, []);
+
+  if (!SHOW_MANUAL_ADS) {
+    return null;
+  }
 
   return (
     <div className={`ad-container ${className}`} style={style}>
