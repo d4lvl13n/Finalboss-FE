@@ -74,7 +74,7 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.google-analytics.com *.googlesyndication.com *.googleadservices.com *.cloudflareinsights.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' *.googletagmanager.com *.google-analytics.com *.googlesyndication.com *.googleadservices.com *.google.com *.cloudflareinsights.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com data:",
               "img-src 'self' data: https://images.finalboss.io https://backend.finalboss.io https://finalboss.io i.ytimg.com https://images.igdb.com *.googlesyndication.com *.googleadservices.com *.cloudflareinsights.com",
