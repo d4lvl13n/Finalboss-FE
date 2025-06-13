@@ -26,16 +26,16 @@
                }}
                className="article-img-wrapper"
              >
-               <Image
-                 src={processedSrc}
-                 alt={alt || ''}
+             <Image
+               src={processedSrc}
+               alt={alt || ''}
                  fill
                  style={{ objectFit: 'contain' }}
                  placeholder="blur"
                  blurDataURL={PLACEHOLDER_BASE64}
-                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
-                 unoptimized={process.env.NODE_ENV === 'development'}
-               />
+               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
+               unoptimized={process.env.NODE_ENV === 'development'}
+             />
              </div>
            );
          }

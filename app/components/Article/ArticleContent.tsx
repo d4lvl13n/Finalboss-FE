@@ -5,9 +5,11 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useQuery } from '@apollo/client';
 import '../../styles/article.css';
+import '../../styles/ads.css';
 import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
 import ProcessedContent from '../ProcessedContent';
 import RelatedArticles from './RelatedArticles';
+import { ResponsiveAd, VerticalAd } from '../AdSense/AdBanner';
 import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../../lib/queries/getRelatedPosts';
 import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
 import client from '../../lib/apolloClient';
@@ -162,7 +164,9 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
       {/* Article Content */}
       <div className="relative z-10 px-4 -mt-24">
-        <div className="max-w-4xl mx-auto bg-gray-900 rounded-lg shadow-2xl overflow-hidden">
+        <div className="flex max-w-7xl mx-auto gap-8">
+          {/* Main Content */}
+          <div className="flex-1 max-w-4xl bg-gray-900 rounded-lg shadow-2xl overflow-hidden">
           <div className="p-4 sm:p-6 md:p-8">
             <motion.h1
               className="text-4xl sm:text-5xl font-bold mb-4 text-yellow-400"
@@ -235,6 +239,17 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               </div>
             </motion.div>
 
+            {/* 🎯 AD PLACEMENT 1: High-performing above-the-fold ad */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="article-ad-top"
+            >
+              <div className="ad-label">Advertisement</div>
+              <ResponsiveAd adSlot="5844341661" />
+            </motion.div>
+
             <motion.div
               className="prose prose-lg prose-invert max-w-none"
               initial={{ opacity: 0, y: 20 }}
@@ -243,9 +258,47 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             >
               <ProcessedContent content={article.content} />
             </motion.div>
+
+            {/* 🎯 AD PLACEMENT 2: End of content, high engagement */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="article-ad-content"
+            >
+              <div className="ad-label">Advertisement</div>
+              <ResponsiveAd adSlot="6510556072" />
+            </motion.div>
+          </div>
+        </div>
+        
+        {/* Desktop Sidebar with Vertical Ads */}
+        <div className="hidden xl:block w-80 flex-shrink-0">
+          <div className="sticky top-32">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 1.0 }}
+              className="sidebar-ad-sticky bg-gray-800/30 rounded-lg p-4 border border-gray-700/30"
+            >
+              <div className="ad-label mb-4">Advertisement</div>
+              <VerticalAd adSlot="1258229391" />
+            </motion.div>
           </div>
         </div>
       </div>
+      </div>
+
+      {/* 🎯 AD PLACEMENT 3: Before related articles - premium position */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.8 }}
+        className="article-ad-bottom max-w-4xl mx-auto px-4"
+      >
+        <div className="ad-label">Advertisement</div>
+        <ResponsiveAd adSlot="9184820874" />
+      </motion.div>
 
       {/* Enhanced Related Articles Section */}
       <RelatedArticles 

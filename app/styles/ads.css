@@ -1,0 +1,134 @@
+/* AdSense Styles */
+.ad-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: rgba(55, 65, 81, 0.3);
+  border: 1px solid rgba(75, 85, 99, 0.3);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.ad-container:hover {
+  background: rgba(55, 65, 81, 0.4);
+  border-color: rgba(251, 191, 36, 0.2);
+}
+
+/* Article Ads */
+.article-ad-top {
+  margin: 2rem 0;
+  background: rgba(17, 24, 39, 0.8);
+}
+
+.article-ad-content {
+  margin: 3rem 0;
+  background: rgba(31, 41, 55, 0.6);
+}
+
+.article-ad-bottom {
+  margin: 2rem 0 3rem 0;
+  background: rgba(17, 24, 39, 0.8);
+}
+
+/* Reviews Page Ads */
+.reviews-ad-header {
+  margin: 2rem 0 3rem 0;
+}
+
+.reviews-ad-grid {
+  grid-column: 1 / -1;
+  margin: 1rem 0;
+}
+
+/* Homepage Ads */
+.homepage-ad-section {
+  padding: 2rem 0;
+  margin: 3rem 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ad-container {
+    margin: 1.5rem auto;
+    padding: 0.75rem;
+  }
+  
+  .leaderboard-ad {
+    display: none; /* Hide leaderboard on mobile */
+  }
+  
+  .mobile-banner-ad {
+    display: block;
+  }
+  
+  .article-ad-content {
+    margin: 2rem 0;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-banner-ad {
+    display: none; /* Hide mobile banner on desktop */
+  }
+  
+  .leaderboard-ad {
+    display: block;
+  }
+}
+
+/* Sticky Sidebar Ad */
+.sidebar-ad-sticky {
+  position: sticky;
+  top: 120px;
+  z-index: 10;
+  background: rgba(31, 41, 55, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(251, 191, 36, 0.1);
+  transition: all 0.3s ease;
+}
+
+.sidebar-ad-sticky:hover {
+  border-color: rgba(251, 191, 36, 0.2);
+  background: rgba(31, 41, 55, 0.9);
+}
+
+/* Vertical Ad Specific Styles */
+.vertical-ad {
+  width: 100%;
+  max-width: 300px;
+}
+
+.vertical-ad .adsbygoogle {
+  min-height: 600px !important;
+  width: 100% !important;
+}
+
+/* Ad Labels */
+.ad-label {
+  font-size: 0.75rem;
+  color: #9CA3AF;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Loading placeholder */
+.ad-placeholder {
+  background: linear-gradient(90deg, rgba(55, 65, 81, 0.3) 0%, rgba(75, 85, 99, 0.3) 50%, rgba(55, 65, 81, 0.3) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+} 
