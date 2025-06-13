@@ -78,7 +78,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com data:",
               "img-src 'self' data: https://images.finalboss.io https://backend.finalboss.io https://finalboss.io i.ytimg.com https://images.igdb.com *.googlesyndication.com *.googleadservices.com *.google.com *.cloudflareinsights.com *.doubleclick.net",
-              "connect-src 'self' *.google-analytics.com *.google.com *.googleapis.com *.googlesyndication.com *.googleadservices.com https://*.adtrafficquality.google.com localhost:3000 backend.finalboss.io https://www.googleapis.com *.cloudflareinsights.com",
+              "connect-src 'self' *.google-analytics.com *.google.com *.googleapis.com *.googlesyndication.com *.googleadservices.com https://*.adtrafficquality.google.com localhost:3000 backend.finalboss.io https://www.googleapis.com *.cloudflareinsights.com https://*.adtrafficquality.google",
               "media-src 'self'",
               "frame-src 'self' https://www.youtube.com https://www.googletagmanager.com *.googlesyndication.com *.googleadservices.com *.doubleclick.net",
               "frame-ancestors 'none'",
