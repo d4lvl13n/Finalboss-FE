@@ -28,12 +28,6 @@ export default async function AllArticlesPage() {
     const { data } = await client.query({
       query: GET_ALL_POSTS,
       variables: { first: 24 },
-      fetchPolicy: 'network-only', // Always fetch fresh data
-      context: {
-        fetchOptions: {
-          cache: 'no-store' // Disable HTTP caching
-        }
-      }
     });
 
     articles = data.posts.nodes;
