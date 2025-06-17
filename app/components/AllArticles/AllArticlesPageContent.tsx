@@ -38,6 +38,7 @@ export default function AllArticlesPageContent({ initialArticles, initialHasNext
     variables: { first: 24, after: afterCursor },
     client,
     skip: true,
+    fetchPolicy: 'network-only',
   });
 
   const handleLoadMore = () => {

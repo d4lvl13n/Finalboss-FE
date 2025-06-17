@@ -6,6 +6,12 @@ import Loader from '../components/Loader';
 
 const AllArticlesPageContent = dynamic(() => import('../components/AllArticles/AllArticlesPageContent'), { ssr: false });
 
+// Force revalidation every 60 seconds
+export const revalidate = 60;
+
+// Opt out of static generation for development
+export const runtime = process.env.NODE_ENV === 'development' ? 'edge' : 'nodejs';
+
 export async function generateMetadata() {
   return {
     title: 'All Articles | FinalBoss.io',
@@ -19,10 +25,16 @@ export default async function AllArticlesPage() {
   let endCursor = null;
 
   try {
-  const { data } = await client.query({
-    query: GET_ALL_POSTS,
-    variables: { first: 24 }, // Adjust this number as needed
-  });
+    const { data } = await client.query({
+      query: GET_ALL_POSTS,
+      variables: { first: 24 },
+      fetchPolicy: 'network-only', // Always fetch fresh data
+      context: {
+        fetchOptions: {
+          cache: 'no-store' // Disable HTTP caching
+        }
+      }
+    });
 
     articles = data.posts.nodes;
     hasNextPage = data.posts.pageInfo.hasNextPage;

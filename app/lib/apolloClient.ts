@@ -26,6 +26,12 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       'Content-Type': 'application/json',
+      // Force Vercel to not cache GraphQL responses
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      // Add a timestamp to make each request unique
+      'X-Request-ID': Date.now().toString(),
     },
   };
 });

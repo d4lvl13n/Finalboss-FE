@@ -93,62 +93,62 @@ export default function ReviewsPageContent({
                   <ResponsiveAd adSlot="6510556072" />
                 </div>
               )}
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative group h-64 overflow-hidden rounded-lg"
-              >
-                <Link href={`/reviews/${review.slug}`} className="block h-full">
-                  <Image
-                    src={review.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
-                    alt={review.title}
-                    fill
-                    className="transition-transform duration-300 group-hover:scale-110 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
-                  <div className="absolute inset-0 flex flex-col justify-end p-6">
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                      {review.title}
-                    </h3>
-                    <div className="flex items-center space-x-2 mb-2">
-                      {review.author?.node?.avatar?.url ? (
-                        <Image
-                          src={review.author.node.avatar.url}
-                          alt={review.author.node.name}
-                          width={24}
-                          height={24}
-                          className="rounded-full"
-                        />
-                      ) : (
-                        <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center">
-                          <span className="text-xs font-bold text-black">
-                            {review.author?.node?.name?.charAt(0)}
-                          </span>
-                        </div>
-                      )}
-                      <span className="text-sm text-gray-300">
-                        {review.author?.node?.name}
-                      </span>
-                      <span className="text-sm text-gray-400">
-                        {new Date(review.date).toLocaleDateString()}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="absolute inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center p-6">
-                    <h3 className="text-xl font-semibold text-white mb-2">
-                      {review.title}
-                    </h3>
-                    <p
-                      className="text-gray-300 text-sm mb-4"
-                      dangerouslySetInnerHTML={{ __html: review.excerpt }}
-                    />
-                    <span className="inline-block bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded hover:bg-yellow-300 transition-colors">
-                      Read Review
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="relative group h-64 overflow-hidden rounded-lg"
+            >
+              <Link href={`/reviews/${review.slug}`} className="block h-full">
+                <Image
+                  src={review.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
+                  alt={review.title}
+                  fill
+                  className="transition-transform duration-300 group-hover:scale-110 object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
+                <div className="absolute inset-0 flex flex-col justify-end p-6">
+                  <h3 className="text-xl font-semibold text-white mb-2">
+                    {review.title}
+                  </h3>
+                  <div className="flex items-center space-x-2 mb-2">
+                    {review.author?.node?.avatar?.url ? (
+                      <Image
+                        src={review.author.node.avatar.url}
+                        alt={review.author.node.name}
+                        width={24}
+                        height={24}
+                        className="rounded-full"
+                      />
+                    ) : (
+                      <div className="w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center">
+                        <span className="text-xs font-bold text-black">
+                          {review.author?.node?.name?.charAt(0)}
+                        </span>
+                      </div>
+                    )}
+                    <span className="text-sm text-gray-300">
+                      {review.author?.node?.name}
+                    </span>
+                    <span className="text-sm text-gray-400">
+                      {new Date(review.date).toLocaleDateString()}
                     </span>
                   </div>
-                </Link>
-              </motion.div>
+                </div>
+                <div className="absolute inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center p-6">
+                  <h3 className="text-xl font-semibold text-white mb-2">
+                    {review.title}
+                  </h3>
+                  <p
+                    className="text-gray-300 text-sm mb-4"
+                    dangerouslySetInnerHTML={{ __html: review.excerpt }}
+                  />
+                  <span className="inline-block bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded hover:bg-yellow-300 transition-colors">
+                    Read Review
+                  </span>
+                </div>
+              </Link>
+            </motion.div>
             </React.Fragment>
           ))}
         </div>
