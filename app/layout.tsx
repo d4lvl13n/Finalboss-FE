@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SearchProvider } from './components/Search/SearchContext';
 import SearchOverlay from './components/Search/SearchOverlay';
+import LeadCaptureManager from './components/LeadCapture/LeadCaptureManager';
 import { ENABLE_AUTO_ADS } from './lib/adsConfig';
 
 // Optimize font loading
@@ -66,6 +67,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <SearchProvider>
           <RouteLoader />
+          <LeadCaptureManager />
           {children}
           <SearchOverlay />
         </SearchProvider>

@@ -1,97 +1,195 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaTwitter, FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
+import { FaTwitter, FaFacebookF, FaInstagram, FaYoutube, FaGamepad, FaNewspaper, FaStar, FaBookOpen, FaVideo, FaCog } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="relative bg-gray-900 text-white pt-12 pb-12">
-      {/* Decorative gradient bar */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-pink-500 to-futuristic-blue" />
-      <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Logo and Description */}
-        <div className="flex flex-col items-center md:items-start">
-          <Image src="/finalboss.png" width={150} height={50} alt="FinalBoss.io" />
-          <p className="mt-4 text-center md:text-left text-gray-400">
-            Your ultimate destination for gaming news, reviews, and more.
-          </p>
-        </div>
+    <footer className="relative bg-gray-900 overflow-hidden">
+      {/* Dynamic Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-500/5 rounded-full blur-2xl"></div>
+      </div>
+      
+      {/* Top Gradient Border */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-purple-500 to-blue-500 opacity-80"></div>
+      
+      <div className="relative z-10 px-4 py-16 md:py-20">
+        <div className="container mx-auto">
+          {/* Main Footer Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-12">
+            
+            {/* Brand Section - Enhanced */}
+            <div className="lg:col-span-4 text-center lg:text-left">
+              <div className="inline-block p-6 rounded-3xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10 shadow-2xl">
+                <Image 
+                  src="/finalboss.png" 
+                  width={180} 
+                  height={60} 
+                  alt="FinalBoss.io" 
+                  className="mx-auto lg:mx-0 mb-4"
+                />
+                <p className="text-gray-300 leading-relaxed mb-6 max-w-sm mx-auto lg:mx-0">
+                  Your ultimate destination for cutting-edge gaming content, reviews, and the latest industry insights.
+                </p>
+                
+                {/* Newsletter Signup */}
+                <div className="space-y-3">
+                  <h4 className="text-yellow-400 font-semibold text-sm uppercase tracking-wider">Stay Updated</h4>
+                  <form 
+                    action="https://formspree.io/f/xjkronpd" 
+                    method="POST" 
+                    className="flex flex-col sm:flex-row gap-2"
+                  >
+                    <input 
+                      type="email" 
+                      name="email"
+                      placeholder="Enter your email"
+                      required
+                      className="flex-1 px-4 py-2 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-yellow-400/50 focus:bg-white/10 transition-all"
+                    />
+                    <input type="hidden" name="source" value="Footer Newsletter" />
+                    <input type="hidden" name="message" value="User signed up for newsletter via footer" />
+                    <button 
+                      type="submit"
+                      className="px-6 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold rounded-xl hover:from-yellow-300 hover:to-orange-400 transition-all transform hover:scale-105 shadow-lg"
+                    >
+                      Join
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
 
-        {/* Quick Links */}
-        <div>
-          <h3 className="text-xl font-bold mb-4 text-futuristic-blue">Quick Links</h3>
-          <ul className="space-y-2">
-            <li>
-              <Link href="/write-for-us">
-                <span className="hover:text-yellow transition-colors">Write For Us</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/about">
-                <span className="hover:text-yellow transition-colors">About Us</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact">
-                <span className="hover:text-yellow transition-colors">Contact</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/privacy-policy">
-                <span className="hover:text-yellow transition-colors">Privacy Policy</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/terms-of-service">
-                <span className="hover:text-yellow transition-colors">Terms of Service</span>
-              </Link>
-            </li>
-          </ul>
-        </div>
+            {/* Navigation Cards */}
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              
+              {/* Quick Links Card */}
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10 hover:from-white/10 hover:to-white/15 transition-all duration-300 group">
+                <div className="flex items-center mb-4">
+                  <FaGamepad className="text-yellow-400 text-xl mr-3" />
+                  <h3 className="text-white font-bold text-lg">Quick Links</h3>
+                </div>
+                <ul className="space-y-3">
+                  {[
+                    { href: '/write-for-us', label: 'Write For Us' },
+                    { href: '/about', label: 'About Us' },
+                    { href: '/contact', label: 'Contact' },
+                    { href: '/privacy-policy', label: 'Privacy Policy' },
+                    { href: '/terms-of-service', label: 'Terms of Service' }
+                  ].map((link) => (
+                    <li key={link.href}>
+                      <Link href={link.href}>
+                                                 <span className="text-gray-300 hover:text-yellow-400 transition-all duration-200 text-sm flex items-center group-hover:translate-x-1">
+                          <span className="w-1 h-1 bg-yellow-400/60 rounded-full mr-2 group-hover:bg-yellow-400 transition-colors"></span>
+                          {link.label}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-        {/* Categories */}
-        <div>
-          <h3 className="text-xl font-bold mb-4 text-futuristic-blue">Categories</h3>
-          <ul className="space-y-2">
-            {['News', 'Reviews', 'Guides', 'Videos', 'Technology'].map((item) => (
-              <li key={item}>
-                <Link href={`/${item.toLowerCase()}`}>
-                  <span className="hover:text-futuristic-blue transition-colors">{item}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+              {/* Categories Card */}
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10 hover:from-white/10 hover:to-white/15 transition-all duration-300 group">
+                <div className="flex items-center mb-4">
+                  <FaNewspaper className="text-purple-400 text-xl mr-3" />
+                  <h3 className="text-white font-bold text-lg">Categories</h3>
+                </div>
+                <ul className="space-y-3">
+                  {[
+                    { href: '/articles', label: 'News', icon: FaNewspaper },
+                    { href: '/reviews', label: 'Reviews', icon: FaStar },
+                    { href: '/guides', label: 'Guides', icon: FaBookOpen },
+                    { href: '/videos', label: 'Videos', icon: FaVideo },
+                    { href: '/technology', label: 'Technology', icon: FaCog }
+                  ].map((item) => (
+                    <li key={item.href}>
+                      <Link href={item.href}>
+                                                 <span className="text-gray-300 hover:text-purple-400 transition-all duration-200 text-sm flex items-center group-hover:translate-x-1">
+                          <item.icon className="w-3 h-3 mr-2 opacity-60" />
+                          {item.label}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-        {/* Social Media */}
-        <div>
-          <h3 className="text-xl font-bold mb-4 text-futuristic-blue">Follow Us</h3>
-          <div className="flex space-x-4">
-            <a href="https://x.com/FinalBoss_io" className="text-2xl text-gray-400 hover:text-futuristic-blue transform hover:-translate-y-1 transition-transform duration-200" target="_blank" rel="noopener noreferrer">
-              <FaTwitter />
-            </a>
-            <a href="https://www.facebook.com/FinalBoss.io/" className="text-2xl text-gray-400 hover:text-futuristic-blue transform hover:-translate-y-1 transition-transform duration-200" target="_blank" rel="noopener noreferrer">
-              <FaFacebookF />
-            </a>
-            <a href="https://www.instagram.com/finalboss.io/" className="text-2xl text-gray-400 hover:text-futuristic-blue transform hover:-translate-y-1 transition-transform duration-200" target="_blank" rel="noopener noreferrer">
-              <FaInstagram />
-            </a>
-            <a href="https://www.youtube.com/@finalboss6969" className="text-2xl text-gray-400 hover:text-futuristic-blue transform hover:-translate-y-1 transition-transform duration-200" target="_blank" rel="noopener noreferrer">
-              <FaYoutube />
-            </a>
+              {/* Social & Contact Card */}
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10 hover:from-white/10 hover:to-white/15 transition-all duration-300 group">
+                <div className="flex items-center mb-4">
+                  <div className="w-6 h-6 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full mr-3"></div>
+                  <h3 className="text-white font-bold text-lg">Connect</h3>
+                </div>
+                
+                {/* Social Media */}
+                <div className="mb-6">
+                  <h4 className="text-blue-400 font-semibold text-sm uppercase tracking-wider mb-3">Follow Us</h4>
+                  <div className="flex flex-wrap gap-3">
+                    {[
+                      { href: "https://x.com/FinalBoss_io", icon: FaTwitter, color: "hover:text-blue-400" },
+                      { href: "https://www.facebook.com/FinalBoss.io/", icon: FaFacebookF, color: "hover:text-blue-600" },
+                      { href: "https://www.instagram.com/finalboss.io/", icon: FaInstagram, color: "hover:text-pink-400" },
+                      { href: "https://www.youtube.com/@finalboss6969", icon: FaYoutube, color: "hover:text-red-500" }
+                    ].map((social, index) => (
+                      <a 
+                        key={index}
+                        href={social.href} 
+                        className={`p-2 bg-white/5 border border-white/10 rounded-xl text-gray-400 ${social.color} transform hover:scale-110 hover:bg-white/10 transition-all duration-200 shadow-lg`}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        <social.icon className="w-5 h-5" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Contact Info */}
+                <div>
+                  <h4 className="text-green-400 font-semibold text-sm uppercase tracking-wider mb-3">Contact</h4>
+                  <div className="space-y-2 text-sm text-gray-300">
+                    <p className="flex items-center">
+                      <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
+                      support@finalboss.io
+                    </p>
+                    <p className="flex items-center">
+                      <span className="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
+                      @FinalBoss_io
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Section */}
+          <div className="pt-8 border-t border-white/10">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="text-center md:text-left">
+                <p className="text-gray-400 text-sm">
+                  &copy; {new Date().getFullYear()} <span className="text-yellow-400 font-semibold">FinalBoss.io</span>. All rights reserved.
+                </p>
+                <p className="text-gray-500 text-xs mt-1">
+                  Powering the future of gaming content
+                </p>
+              </div>
+              
+              {/* Powered by badge */}
+              <div className="flex items-center space-x-3">
+                <div className="px-4 py-2 bg-gradient-to-r from-yellow-400/10 to-purple-500/10 border border-yellow-400/20 rounded-full">
+                  <span className="text-xs text-yellow-400 font-semibold tracking-wider">GAMING FIRST</span>
+                </div>
+                <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
+                  <FaGamepad className="w-4 h-4 text-black" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        {/* Additional Section: Contact Us */}
-        <div>
-          <h3 className="text-xl font-bold mb-4">Contact Us</h3>
-          <p>Email: support@finalboss.io</p>
-          <p>Twitter: @FinalBossIO</p>
-          {/* ...other contact info */}
-        </div>
-      </div>
-      <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-        <p>&copy; {new Date().getFullYear()} FinalBoss.io. All rights reserved.</p>
       </div>
     </footer>
   );

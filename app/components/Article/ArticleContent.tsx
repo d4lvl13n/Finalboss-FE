@@ -10,6 +10,7 @@ import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
 import ProcessedContent from '../ProcessedContent';
 import RelatedArticles from './RelatedArticles';
 import { ResponsiveAd, VerticalAd } from '../AdSense/AdBanner';
+import InlineContentUpgrade from '../LeadCapture/InlineContentUpgrade';
 import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../../lib/queries/getRelatedPosts';
 import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
 import client from '../../lib/apolloClient';
@@ -287,6 +288,20 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <ProcessedContent content={article.content} />
+            </motion.div>
+
+            {/* Inline Content Upgrade - Strategic Placement */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+            >
+              <InlineContentUpgrade
+                title="Want to Level Up Your Gaming?"
+                description="Get access to exclusive strategies, hidden tips, and pro-level insights that we don't share publicly."
+                bonusContent={`Ultimate ${primaryCategory?.name || 'Gaming'} Strategy Guide + Weekly Pro Tips`}
+                articleTopic={article.title}
+              />
             </motion.div>
 
               {/* 🎯 AD PLACEMENT 2: End of content, high engagement */}
