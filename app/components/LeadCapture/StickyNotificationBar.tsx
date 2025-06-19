@@ -66,7 +66,7 @@ const StickyNotificationBar: React.FC = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -100, opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-purple-900/95 to-blue-900/95 backdrop-blur-md border-b border-purple-400/30 shadow-xl"
+          className="fixed top-20 left-0 right-0 z-40 bg-gradient-to-r from-purple-900/95 to-blue-900/95 backdrop-blur-md border-b border-purple-400/30 shadow-xl"
         >
           <div className="container mx-auto px-4 py-3">
             {isSuccess ? (
@@ -85,11 +85,11 @@ const StickyNotificationBar: React.FC = () => {
                   </div>
                   
                   <div className="hidden sm:block text-white text-sm">
-                    Get instant alerts for gaming deals up to 90% off!
+                    Get instant alerts for gaming deals up to 90% off + free game keys every month!
                   </div>
                   
                   <div className="sm:hidden text-white text-xs">
-                    Gaming deals up to 90% off!
+                    Gaming deals up to 90% off + free keys!
                   </div>
                 </div>
 

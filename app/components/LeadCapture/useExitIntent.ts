@@ -24,8 +24,8 @@ export const useExitIntent = (options: UseExitIntentOptions = {}) => {
     }
 
     const handleMouseLeave = (e: MouseEvent) => {
-      // Only trigger if mouse leaves from the top of the viewport
-      if (e.clientY <= 0 && !hasShownBefore && !hasTriggered) {
+      // Only trigger if mouse leaves from the top of the viewport and moves fast
+      if (e.clientY <= 0 && e.relatedTarget === null && !hasShownBefore && !hasTriggered) {
         timeoutId = setTimeout(() => {
           setHasTriggered(true);
           onExitIntent?.();
@@ -44,17 +44,17 @@ export const useExitIntent = (options: UseExitIntentOptions = {}) => {
       }
     };
 
-    // Add minimum time on page before enabling exit intent (5 seconds)
+    // Add minimum time on page before enabling exit intent (3 seconds)
     const enableExitIntent = () => {
-      document.addEventListener('mouseleave', handleMouseLeave);
-      document.addEventListener('mouseenter', handleMouseEnter);
+      document.documentElement.addEventListener('mouseleave', handleMouseLeave);
+      document.documentElement.addEventListener('mouseenter', handleMouseEnter);
     };
 
-    const minTimeTimeout = setTimeout(enableExitIntent, 5000);
+    const minTimeTimeout = setTimeout(enableExitIntent, 3000);
 
     return () => {
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      document.removeEventListener('mouseenter', handleMouseEnter);
+      document.documentElement.removeEventListener('mouseleave', handleMouseLeave);
+      document.documentElement.removeEventListener('mouseenter', handleMouseEnter);
       clearTimeout(timeoutId);
       clearTimeout(minTimeTimeout);
     };

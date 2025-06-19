@@ -152,10 +152,26 @@ const Footer = () => {
                 <div>
                   <h4 className="text-green-400 font-semibold text-sm uppercase tracking-wider mb-3">Contact</h4>
                   <div className="space-y-2 text-sm text-gray-300">
-                    <p className="flex items-center">
+                    <div className="flex items-center">
                       <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
-                      support@finalboss.io
-                    </p>
+                      <button 
+                        onClick={() => {
+                          const parts = ['thebosses', 'finalboss.io'];
+                          window.location.href = `mailto:${parts[0]}@${parts[1]}`;
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.title = 'Click to send email to thebosses@finalboss.io';
+                        }}
+                        className="hover:text-green-400 transition-colors cursor-pointer underline-offset-2 hover:underline flex items-center"
+                      >
+                        <span>✉️</span>
+                        <span className="ml-1" data-reverse="oi.ssoblanif@sessohbeht">
+                          <span style={{display: 'inline-block', transform: 'scaleX(-1)', direction: 'rtl'}}>
+                            oi.ssoblanif@sessohbeht
+                          </span>
+                        </span>
+                      </button>
+                    </div>
                     <p className="flex items-center">
                       <span className="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>
                       @FinalBoss_io
