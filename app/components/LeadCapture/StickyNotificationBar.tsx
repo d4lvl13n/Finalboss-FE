@@ -77,23 +77,23 @@ const StickyNotificationBar: React.FC = () => {
                 </span>
               </div>
             ) : (
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-4 flex-1">
-                  <div className="flex items-center text-yellow-400">
-                    <FaFire className="animate-pulse mr-2" />
-                    <span className="font-bold text-sm">HOT DEALS</span>
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center space-x-2 sm:space-x-4 flex-1 min-w-0">
+                  <div className="flex items-center text-yellow-400 flex-shrink-0">
+                    <FaFire className="animate-pulse mr-1 sm:mr-2" />
+                    <span className="font-bold text-xs sm:text-sm">HOT DEALS</span>
                   </div>
                   
                   <div className="hidden sm:block text-white text-sm">
                     Get instant alerts for gaming deals up to 90% off + free game keys every month!
                   </div>
                   
-                  <div className="sm:hidden text-white text-xs">
+                  <div className="sm:hidden text-white text-xs truncate">
                     Gaming deals up to 90% off + free keys!
                   </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="flex items-center space-x-2 mx-4">
+                <form onSubmit={handleSubmit} className="flex items-center space-x-2 flex-shrink-0">
                   <input
                     type="email"
                     value={email}
@@ -124,10 +124,10 @@ const StickyNotificationBar: React.FC = () => {
 
                 <button
                   onClick={handleDismiss}
-                  className="text-gray-400 hover:text-white transition-colors p-1"
+                  className="text-gray-400 hover:text-white transition-colors p-3 sm:p-1 -m-2 sm:m-0 flex-shrink-0"
                   aria-label="Close notification"
                 >
-                  <FaTimes className="w-4 h-4" />
+                  <FaTimes className="w-5 h-5 sm:w-4 sm:h-4" />
                 </button>
               </div>
             )}
