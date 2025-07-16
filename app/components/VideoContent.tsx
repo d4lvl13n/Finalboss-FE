@@ -4,6 +4,7 @@ import React from 'react';
 import SocialShare from './SocialShare';
 import Header from './Header';
 import Footer from './Footer';
+import { processTextWithLinks } from '../utils/linkProcessor';
 
 interface VideoContentProps {
   title: string;
@@ -66,7 +67,9 @@ export default function VideoContent({
 
           {/* Video description */}
           <div className="leading-relaxed text-lg bg-gray-800 p-6 rounded-lg mb-8">
-            <p className="whitespace-pre-wrap">{description}</p>
+            <div className="whitespace-pre-wrap">
+              {processTextWithLinks(description)}
+            </div>
           </div>
         </div>
       </div>
