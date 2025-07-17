@@ -27,7 +27,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={inter.className}>
       <head>
         {/* Verification */}
-        {/* e2c216ee3e6ae9705e843d5a227568c93d21a3ac */}
+        <div
+          dangerouslySetInnerHTML={{
+            __html: '<!-- e2c216ee3e6ae9705e843d5a227568c93d21a3ac -->',
+          }}
+          style={{ display: 'none' }}   // keep it invisible
+        />
         
         {/* Google Analytics */}
         <Script
