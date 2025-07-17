@@ -10,7 +10,7 @@ export function processTextWithLinks(text: string): React.ReactNode[] {
 
   // Regex to match URLs (http/https, www, and basic domains)
   const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+|(?:[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}(?:\/[^\s]*)?)/g;
-  
+
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
   let match;

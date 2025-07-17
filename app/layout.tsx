@@ -26,6 +26,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.className}>
       <head>
+        {/* Verification */}
+        {/* e2c216ee3e6ae9705e843d5a227568c93d21a3ac */}
+        
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-HV2MVVJDN4"
