@@ -36,6 +36,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   ])
 
+  // Aggregate and deduplicate WordPress posts by slug
+  const postNodes: WordPressPost[] = [
+    ...(articlesData?.data?.posts?.nodes || []),
+    ...(techData?.data?.posts?.nodes || []),
+    ...(reviewsData?.data?.posts?.nodes || []),
+  ]
+
+  const uniquePostsBySlug = new Map<string, WordPressPost>()
+  for (const post of postNodes) {
+    if (post && post.slug && !uniquePostsBySlug.has(post.slug)) {
+      uniquePostsBySlug.set(post.slug, post)
+    }
+  }
+  const uniquePosts = Array.from(uniquePostsBySlug.values())
+
   // Gather all URLs
   const urls: MetadataRoute.Sitemap = [
     // Static pages
@@ -69,28 +84,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...(videos.items?.map((video: YouTubeVideo) => ({
       url: `${baseUrl}/videos/${video.id}`,
       lastModified: new Date(video.publishedAt).toISOString(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.8,
     })) || []),
-    // Dynamic articles
-    ...articlesData.data.posts.nodes.map((post: WordPressPost) => ({
+    // Dynamic posts (deduplicated)
+    ...uniquePosts.map((post: WordPressPost) => ({
       url: `${baseUrl}/${post.slug}`,
       lastModified: new Date().toISOString(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    })),
-    // Dynamic tech articles
-    ...techData.data.posts.nodes.map((post: WordPressPost) => ({
-      url: `${baseUrl}/${post.slug}`,
-      lastModified: new Date().toISOString(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    })),
-    // Dynamic reviews
-    ...reviewsData.data.posts.nodes.map((post: WordPressPost) => ({
-      url: `${baseUrl}/${post.slug}`,
-      lastModified: new Date().toISOString(),
-      changeFrequency: 'monthly',
+      changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
   ]

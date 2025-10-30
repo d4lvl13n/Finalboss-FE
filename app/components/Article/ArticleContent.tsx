@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useQuery } from '@apollo/client';
+import { Source_Serif_4 } from 'next/font/google';
 import '../../styles/article.css';
 import '../../styles/ads.css';
 import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
@@ -15,6 +16,12 @@ import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../..
 import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
 import client from '../../lib/apolloClient';
 import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
+
+const sourceSerif = Source_Serif_4({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['400', '600', '700'],
+});
 
 // Define a more specific type for the article object
 interface ArticleData {
@@ -137,7 +144,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   const isLoading = relatedLoading || sequentialLoading || authorLoading || latestLoading;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-gray-900 text-gray-200">
       {/* Reading Progress Bar */}
       <div className="fixed top-0 left-0 w-full h-1 bg-gray-700 z-50">
         <motion.div
@@ -282,7 +289,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               )}
 
             <motion.div
-              className="prose prose-lg prose-invert max-w-none"
+              className={`${sourceSerif.className} prose prose-lg prose-invert mx-auto max-w-3xl text-[18px] md:text-[19px] leading-8 tracking-[0.005em]`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
