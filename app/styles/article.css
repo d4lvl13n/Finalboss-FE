@@ -75,6 +75,12 @@
   hyphens: auto;
 }
 
+.prose strong,
+.prose b {
+  color: #e5e7eb; /* slightly brighter on dark bg */
+  font-weight: 700;
+}
+
 .article-content {
   font-size: 1.125rem;
   line-height: 1.8;

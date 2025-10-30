@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useQuery } from '@apollo/client';
-import { Source_Serif_4 } from 'next/font/google';
+import { Source_Sans_3 } from 'next/font/google';
 import '../../styles/article.css';
 import '../../styles/ads.css';
 import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
@@ -17,7 +17,7 @@ import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
 import client from '../../lib/apolloClient';
 import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
 
-const sourceSerif = Source_Serif_4({
+const sourceSans = Source_Sans_3({
   subsets: ['latin'],
   display: 'swap',
   weight: ['400', '600', '700'],
@@ -289,7 +289,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               )}
 
             <motion.div
-              className={`${sourceSerif.className} prose prose-lg prose-invert mx-auto max-w-3xl text-[18px] md:text-[19px] leading-8 tracking-[0.005em]`}
+              className={`${sourceSans.className} prose prose-lg prose-invert mx-auto max-w-3xl text-[18px] md:text-[19px] leading-8 tracking-[0.0025em]`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
