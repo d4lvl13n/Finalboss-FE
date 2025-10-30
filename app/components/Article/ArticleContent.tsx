@@ -165,6 +165,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               fill
               sizes="100vw"
               style={{ objectFit: 'cover' }}
+              priority
               placeholder="blur"
               blurDataURL={PLACEHOLDER_BASE64}
               className=""
@@ -212,6 +213,8 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             >
               {article.title}
             </motion.h1>
+
+            
 
             {/* Author and Date Section */}
             <motion.div

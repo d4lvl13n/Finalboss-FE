@@ -10,6 +10,7 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
   const { data } = await client.query({
     query: GET_POST_BY_SLUG,
     variables: { id: params.slug },
@@ -27,6 +28,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: seo?.title || `${article.title} | FinalBoss.io`,
     description: seo?.metaDesc || article.excerpt || article.title,
+    keywords: article.categories?.nodes?.map((c: { name: string }) => c.name),
+    authors: article.author?.node?.name ? [{ name: article.author.node.name }] : undefined,
     robots: {
       index: !seo?.metaRobotsNoindex,
       follow: !seo?.metaRobotsNofollow,
@@ -37,7 +40,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       images: [{ 
         url: seo?.opengraphImage?.sourceUrl || article.featuredImage?.node?.sourceUrl 
       }],
-      url: `https://finalboss.io/${article.slug}`,
+      url: `${baseUrl}/${article.slug}`,
       type: 'article',
       publishedTime: article.date,
       modifiedTime: article.modified,
@@ -51,7 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       images: [seo?.twitterImage?.sourceUrl || article.featuredImage?.node?.sourceUrl],
     },
     alternates: {
-      canonical: seo?.canonical || `https://finalboss.io/${article.slug}`,
+      canonical: seo?.canonical || `${baseUrl}/${article.slug}`,
     },
   };
 }
@@ -96,7 +99,7 @@ export default async function ArticlePage({ params }: PageProps) {
             description: article.excerpt || article.title,
             mainEntityOfPage: {
               '@type': 'WebPage',
-              '@id': `https://finalboss.io/${article.slug}`,
+              '@id': `${process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'}/${article.slug}`,
             },
           }),
         }}
@@ -108,26 +111,40 @@ export default async function ArticlePage({ params }: PageProps) {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'BreadcrumbList',
-            itemListElement: [
-              {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Home',
-                item: 'https://finalboss.io/',
-              },
-              {
-                '@type': 'ListItem',
-                position: 2,
-                name: article.title,
-                item: `https://finalboss.io/${article.slug}`,
-              },
-            ],
+            itemListElement: (function () {
+              const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+              const category = article.categories?.nodes?.[0];
+              const items = [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: `${base}/` },
+              ];
+              if (category?.name && category?.slug) {
+                items.push({
+                  '@type': 'ListItem',
+                  position: 2,
+                  name: category.name,
+                  item: `${base}/articles?category=${category.slug}`,
+                });
+                items.push({
+                  '@type': 'ListItem',
+                  position: 3,
+                  name: article.title,
+                  item: `${base}/${article.slug}`,
+                });
+              } else {
+                items.push({
+                  '@type': 'ListItem',
+                  position: 2,
+                  name: article.title,
+                  item: `${base}/${article.slug}`,
+                });
+              }
+              return items;
+            })(),
           }),
         }}
       />
       <ArticleContent article={article} />
       <Footer />
-      <link rel="canonical" href={`https://finalboss.io/${article.slug}`} />
     </>
   );
 }

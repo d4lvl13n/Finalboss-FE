@@ -125,6 +125,17 @@
   width: 100% !important;
 }
 
+/* Reserve space to reduce CLS for responsive in-content ads */
+.responsive-ad .adsbygoogle {
+  min-height: 250px !important;
+}
+
+@media (max-width: 640px) {
+  .responsive-ad .adsbygoogle {
+    min-height: 90px !important; /* mobile banner height */
+  }
+}
+
 /* Ad Labels */
 .ad-label {
   font-size: 0.75rem;

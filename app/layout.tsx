@@ -1,6 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
+import type { Metadata } from 'next';
 import Script from 'next/script';
 import RouteLoader from './components/RouteLoader';
 import { Analytics } from '@vercel/analytics/next';
@@ -17,15 +18,40 @@ const inter = Inter({
   preload: true
 });
 
-export const metadata = {
-  title: 'FinalBoss.io - Your Ultimate Gaming Destination',
-  description: 'Discover the latest gaming news, reviews, guides, and technology insights at FinalBoss.io. Stay ahead in the gaming world.',
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+
+export const metadata: Metadata = {
+  metadataBase: new URL(baseUrl),
+  title: {
+    default: 'FinalBoss.io - Your Ultimate Gaming Destination',
+    template: '%s | FinalBoss.io',
+  },
+  description:
+    'Discover the latest gaming news, reviews, guides, and technology insights at FinalBoss.io. Stay ahead in the gaming world.',
+  openGraph: {
+    type: 'website',
+    siteName: 'FinalBoss.io',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
+  alternates: {
+    canonical: '/',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={inter.className}>
       <head>
+        {/* Preconnects for third-parties to reduce connection latency */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="preconnect" href="https://i.ytimg.com" />
         {/* Verification */}
         <div
           dangerouslySetInnerHTML={{
