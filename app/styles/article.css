@@ -37,7 +37,7 @@
 .prose a {
   color: #60a5fa;
   text-decoration: underline;
-g  text-underline-offset: 3px;
+  text-underline-offset: 3px;
   text-decoration-thickness: 2px;
 }
 
