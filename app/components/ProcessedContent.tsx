@@ -127,11 +127,7 @@
                   );
                 }
                 if (node instanceof Element && node.name === 'li') {
-                  return (
-                    <li>
-                      {domToReact(node.children as unknown as DOMNode[], relatedOptions)}
-                    </li>
-                  );
+                  return <>{domToReact(node.children as unknown as DOMNode[], relatedOptions)}</>;
                 }
                 if (node instanceof Element && node.name === 'a') {
                   const href = node.attribs?.href || '#';
@@ -144,30 +140,25 @@
                   return (
                     <a 
                       href={normalized} 
-                      className="group flex items-center gap-4 text-white no-underline py-3 px-4 rounded-lg bg-white/5 hover:bg-yellow-400/10 hover:translate-x-2 transition-all duration-300" 
+                      className="group flex items-center gap-4 py-3 px-4 rounded-lg bg-white/5 hover:bg-yellow-400/10 hover:translate-x-2 transition-all duration-300" 
                       rel="noopener"
-                      style={{ textDecoration: 'none' }}
+                      style={{ textDecoration: 'none', color: 'inherit' }}
                     >
-                      {/* Arrow */}
-                      <span className="text-yellow-400 text-xl font-bold group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
-                        →
-                      </span>
-                      
                       {/* Thumbnail */}
                       {mini?.image && (
-                        <div className="relative h-16 w-24 flex-shrink-0 rounded overflow-hidden">
+                        <div className="relative h-full w-32 flex-shrink-0 rounded overflow-hidden self-stretch my-[-0.75rem]">
                           <Image 
                             src={mini.image} 
                             alt={mini.title || titleFallback} 
                             fill 
-                            sizes="96px" 
+                            sizes="128px" 
                             className="object-cover group-hover:brightness-110 transition-all duration-300" 
                           />
                         </div>
                       )}
                       
                       {/* Title */}
-                      <span className="flex-1 text-lg group-hover:text-yellow-400 transition-colors duration-300" style={{ textDecoration: 'none' }}>
+                      <span className="flex-1 text-lg text-white group-hover:text-yellow-400 transition-colors duration-300">
                         {mini?.title || titleFallback}
                       </span>
                     </a>
