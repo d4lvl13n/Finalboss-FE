@@ -114,16 +114,16 @@
               replace: (node) => {
                 if (node instanceof Element && node.name === 'h3') {
                   return (
-                    <h3 className="text-xl font-bold text-white mb-6 pb-3 border-b border-gray-700/30">
-                      {domToReact(node.children as unknown as DOMNode[])}
-                    </h3>
+                    <h2 className="text-center mb-6 text-2xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-200 bg-clip-text text-transparent uppercase tracking-wide">
+                      ⚡ {domToReact(node.children as unknown as DOMNode[])} ⚡
+                    </h2>
                   );
                 }
                 if (node instanceof Element && node.name === 'ul') {
                   return (
-                    <ul className="space-y-3">
+                    <div className="space-y-3">
                       {domToReact(node.children as unknown as DOMNode[], relatedOptions)}
-                    </ul>
+                    </div>
                   );
                 }
                 if (node instanceof Element && node.name === 'li') {
@@ -142,32 +142,34 @@
                   const mini = miniPosts[slug];
                   const titleFallback = String(domToReact(node.children as unknown as DOMNode[]));
                   return (
-                    <a href={normalized} className="group flex items-start gap-4 no-underline" rel="noopener">
+                    <a 
+                      href={normalized} 
+                      className="group flex items-center gap-4 text-white no-underline py-3 px-4 rounded-lg bg-white/5 hover:bg-yellow-400/10 hover:translate-x-2 transition-all duration-300" 
+                      rel="noopener"
+                      style={{ textDecoration: 'none' }}
+                    >
+                      {/* Arrow */}
+                      <span className="text-yellow-400 text-xl font-bold group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0">
+                        →
+                      </span>
+                      
                       {/* Thumbnail */}
                       {mini?.image && (
-                        <div className="relative h-20 w-28 flex-shrink-0 rounded overflow-hidden">
+                        <div className="relative h-16 w-24 flex-shrink-0 rounded overflow-hidden">
                           <Image 
                             src={mini.image} 
                             alt={mini.title || titleFallback} 
                             fill 
-                            sizes="112px" 
-                            className="object-cover brightness-90 group-hover:brightness-100 group-hover:scale-105 transition-all duration-300" 
+                            sizes="96px" 
+                            className="object-cover group-hover:brightness-110 transition-all duration-300" 
                           />
                         </div>
                       )}
                       
-                      {/* Content */}
-                      <div className="flex-1 min-w-0 pt-1">
-                        <h4 className="text-base font-semibold text-yellow-400 group-hover:text-yellow-300 line-clamp-2 leading-tight transition-colors mb-1">
-                          {mini?.title || titleFallback}
-                        </h4>
-                        <span className="inline-flex items-center gap-1 text-xs text-gray-400 group-hover:text-gray-300 transition-colors">
-                          Read more
-                          <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
-                        </span>
-                      </div>
+                      {/* Title */}
+                      <span className="flex-1 text-lg group-hover:text-yellow-400 transition-colors duration-300" style={{ textDecoration: 'none' }}>
+                        {mini?.title || titleFallback}
+                      </span>
                     </a>
                   );
                 }
@@ -176,8 +178,8 @@
             };
 
             return (
-              <section className="not-prose my-12">
-                <div className="py-6">
+              <section className="not-prose my-8">
+                <div className="bg-gray-900 p-8 rounded-2xl border-l-6 border-yellow-400 shadow-2xl">
                   {domToReact(domNode.children as unknown as DOMNode[], relatedOptions)}
                 </div>
               </section>
