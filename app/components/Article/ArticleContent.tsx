@@ -16,6 +16,8 @@ import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../..
 import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
 import client from '../../lib/apolloClient';
 import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
+import ReviewSummary, { ReviewConfig } from '../Review/ReviewSummary';
+import ReviewJsonLd from '../Seo/ReviewJsonLd';
 
 const sourceSans = Source_Sans_3({
   subsets: ['latin'],
@@ -142,6 +144,93 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   // Determine what articles to show
   const articlesToShow = relatedData?.posts?.nodes || latestData?.posts?.nodes || [];
   const isLoading = relatedLoading || sequentialLoading || authorLoading || latestLoading;
+
+  // Detect review category
+  const isReview = Boolean(
+    article.categories?.nodes?.some(
+      (c) => c?.name?.toLowerCase() === 'reviews' || (c as unknown as { slug?: string }).slug === 'reviews'
+    )
+  );
+
+  // Extract optional embedded review config from HTML comments
+  function extractReviewConfig(html: string): { config?: ReviewConfig; cleaned: string } {
+    if (!html) return { cleaned: html };
+    // 1) JSON-in-comment method
+    const jsonRegex = /<!--\s*(?:fb-)?review\s*:?\s*(\{[\s\S]*?\})\s*-->/i;
+    const jsonMatch = html.match(jsonRegex);
+    if (jsonMatch) {
+      try {
+        const parsed = JSON.parse(jsonMatch[1]) as ReviewConfig;
+        const cleaned = html.replace(jsonMatch[0], '');
+        return { config: parsed, cleaned };
+      } catch {
+        // fall through
+      }
+    }
+
+    // 2) fb-review HTML block method
+    const blockRegex = /<div[^>]*class=["'][^"']*fb-review[^"']*["'][^>]*>([\s\S]*?)<\/div>/i;
+    const blockMatch = html.match(blockRegex);
+    if (blockMatch) {
+      const wholeDiv = blockMatch[0];
+      const inner = blockMatch[1];
+      const openTagMatch = wholeDiv.match(/<div[^>]*>/i);
+      const openTag = openTagMatch ? openTagMatch[0] : '';
+      const getAttr = (name: string) => {
+        const m = openTag.match(new RegExp(`data-${name}=["']([^"']*)["']`, 'i'));
+        return m ? m[1] : undefined;
+      };
+      const scoreStr = getAttr('score');
+      const score = scoreStr != null ? Number(scoreStr) : undefined;
+      const backgroundImage = getAttr('bg') || getAttr('background') || getAttr('backgroundImage');
+      const verdictTitle = getAttr('verdict');
+
+      const extractList = (className: string): string[] => {
+        const ulMatch = inner.match(new RegExp(`<ul[^>]*class=["'][^"']*${className}[^"']*["'][^>]*>([\\s\\S]*?)<\\/ul>`, 'i'));
+        if (!ulMatch) return [];
+        const items = Array.from(ulMatch[1].matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi));
+        return items.map((m) => m[1].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()).filter(Boolean);
+      };
+
+      const pros = extractList('fb-pros');
+      const cons = extractList('fb-cons');
+
+      // ratings as <ul class="fb-ratings"><li data-label="Gameplay" data-score="8.5"></li>...</ul>
+      const ratings: ReviewConfig['ratings'] = [];
+      const ratingsUl = inner.match(/<ul[^>]*class=["'][^"']*fb-ratings[^"']*["'][^>]*>([\s\S]*?)<\/ul>/i);
+      if (ratingsUl) {
+        const liMatches = Array.from(ratingsUl[1].matchAll(/<li([^>]*)>([\s\S]*?)<\/li>/gi));
+        for (const m of liMatches) {
+          const attrs = m[1] || '';
+          const labelMatch = attrs.match(/data-label=["']([^"']*)["']/i);
+          const scoreMatch = attrs.match(/data-score=["']([^"']*)["']/i);
+          const label = labelMatch ? labelMatch[1] : m[2].replace(/<[^>]*>/g, ' ').trim().split(':')[0];
+          const s = scoreMatch ? Number(scoreMatch[1]) : Number((m[2].match(/([0-9]+(?:\.[0-9]+)?)/) || [])[1]);
+          if (label && !Number.isNaN(s)) ratings.push({ label, score: s });
+        }
+      }
+
+      // conclusion paragraph: <p class="fb-conclusion">...</p>
+      const conclMatch = inner.match(/<p[^>]*class=["'][^"']*fb-conclusion[^"']*["'][^>]*>([\s\S]*?)<\/p>/i);
+      const conclusion = conclMatch ? conclMatch[1].replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() : undefined;
+
+      const config: ReviewConfig = {
+        score,
+        backgroundImage,
+        verdictTitle,
+        pros,
+        cons,
+        ratings,
+        ...(conclusion ? { conclusion } : {}),
+      };
+      const cleaned = html.replace(wholeDiv, '');
+      return { config, cleaned };
+    }
+
+    return { cleaned: html };
+  }
+
+  const { config: reviewConfig, cleaned: contentCleaned } = extractReviewConfig(article.content);
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200">
@@ -297,8 +386,27 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <ProcessedContent content={article.content} />
+              <ProcessedContent content={contentCleaned} />
             </motion.div>
+
+            {/* Conditional Review summary block at end of content */}
+            {isReview && reviewConfig && (
+              <>
+                <ReviewSummary
+                  articleTitle={article.title}
+                  fallbackImage={article.featuredImage?.node?.sourceUrl}
+                  config={reviewConfig}
+                />
+                <ReviewJsonLd
+                  articleUrl={`${process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'}/${(article as unknown as { slug?: string }).slug || ''}`}
+                  articleTitle={article.title}
+                  authorName={article.author?.node?.name}
+                  rating={typeof reviewConfig.score === 'number' ? reviewConfig.score : undefined}
+                  reviewBody={reviewConfig.conclusion}
+                  imageUrl={reviewConfig.backgroundImage || article.featuredImage?.node?.sourceUrl}
+                />
+              </>
+            )}
 
             {/* Inline Content Upgrade - Strategic Placement */}
             <motion.div
