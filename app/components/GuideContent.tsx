@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useQuery } from '@apollo/client';
 import { GET_LATEST_GUIDES } from '../lib/queries/getLatestGuides';
 import client from '../lib/apolloClient';
-import Loader from './Loader';
 
 interface GuideArticle {
   id: string;
@@ -33,7 +32,20 @@ const GuideContent = () => {
     }
   }, [data]);
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <section className="py-16 bg-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="h-12 w-64 bg-gray-800 animate-pulse mb-8" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <div key={idx} className="h-64 bg-gray-800 rounded-lg animate-pulse" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
   if (error) return <p>Error loading guides...</p>;
 
   return (
@@ -52,9 +64,9 @@ const GuideContent = () => {
                   <Image
                     src={guide.featuredImage.node.sourceUrl}
                     alt={guide.title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 25vw"
+                    className="absolute inset-0 object-cover"
                   />
                 )}
               </div>
@@ -69,3 +81,5 @@ const GuideContent = () => {
     </section>
   );
 }
+
+export default GuideContent;

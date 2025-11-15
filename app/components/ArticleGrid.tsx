@@ -1,29 +1,68 @@
 // app/components/ArticleGrid.tsx
 import React, { useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, DocumentNode } from '@apollo/client';
 import Link from 'next/link';
 import Image from 'next/image';
-import Loader from './Loader';
 
-interface ArticleGridProps {
-  query: any;
-  variables: any;
+interface ArticleNode {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  featuredImage?: {
+    node?: {
+      sourceUrl?: string;
+    };
+  };
+}
+
+interface ArticleQueryData {
+  posts: {
+    nodes: ArticleNode[];
+    pageInfo: {
+      hasNextPage: boolean;
+      endCursor: string | null;
+    };
+  };
+}
+
+interface ArticleGridProps<Vars extends Record<string, unknown> = Record<string, unknown>> {
+  query: DocumentNode;
+  variables: Vars;
   title: string;
   linkPrefix: string;
 }
 
-const ArticleGrid: React.FC<ArticleGridProps> = ({ query, variables, title, linkPrefix }) => {
+const ArticleGrid = <Vars extends Record<string, unknown>>({
+  query,
+  variables,
+  title,
+  linkPrefix,
+}: ArticleGridProps<Vars>) => {
   const [afterCursor, setAfterCursor] = useState<string | null>(null);
-  const [allArticles, setAllArticles] = useState<any[]>([]);
+  const [allArticles, setAllArticles] = useState<ArticleNode[]>([]);
 
-  const { data, loading, error, fetchMore } = useQuery(query, {
+  const { data, loading, error, fetchMore } = useQuery<ArticleQueryData, Vars & { after?: string | null }>(query, {
     variables: { ...variables, after: afterCursor },
-    onCompleted: (data) => {
-      setAllArticles((prevArticles) => [...prevArticles, ...data.posts.nodes]);
+    onCompleted: (result) => {
+      setAllArticles((prevArticles) => [...prevArticles, ...result.posts.nodes]);
     },
   });
 
-  if (loading && allArticles.length === 0) return <Loader />;
+  if (loading && allArticles.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-900 text-white px-4 py-24">
+        <div className="max-w-7xl mx-auto">
+          <div className="h-12 w-64 bg-gray-800 animate-pulse mb-8 mx-auto" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: 6 }).map((_, idx) => (
+              <div key={idx} className="h-64 bg-gray-800 rounded-lg animate-pulse" />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (error) return <p>Error loading articles...</p>;
 
   const handleLoadMore = () => {
@@ -51,9 +90,9 @@ const ArticleGrid: React.FC<ArticleGridProps> = ({ query, variables, title, link
                     <Image
                       src={article.featuredImage.node.sourceUrl}
                       alt={article.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="absolute inset-0 w-full h-full object-cover"
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 33vw"
+                      className="absolute inset-0 object-cover"
                     />
                   )}
                 </div>

@@ -2,6 +2,13 @@
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { buildPageMetadata } from '../lib/seo';
+
+export const metadata = buildPageMetadata({
+  title: 'Write for FinalBoss.io',
+  description: 'Pitch your gaming or technology guest post to the FinalBoss.io editorial team.',
+  path: '/write-for-us',
+});
 
 export default function WriteForUsPage() {
   return (
@@ -78,6 +85,7 @@ export default function WriteForUsPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

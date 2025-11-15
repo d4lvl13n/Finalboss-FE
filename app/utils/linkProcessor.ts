@@ -23,7 +23,7 @@ export function processTextWithLinks(text: string): React.ReactNode[] {
 
     // Process the URL
     let url = match[0];
-    let displayUrl = url;
+    const displayUrl = url;
 
     // Add protocol if missing
     if (!url.startsWith('http://') && !url.startsWith('https://')) {

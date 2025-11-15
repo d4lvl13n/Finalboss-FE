@@ -1,13 +1,19 @@
- import { Suspense } from 'react';
+import { Suspense } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { GameSearch } from '../components/GameSearch';
-import Loader from '../components/Loader';
+import { Suspense } from 'react';
+import { buildPageMetadata } from '../lib/seo';
 
-export const metadata = {
-  title: 'Game Database | FinalBoss.io',
-  description: 'Search and explore our comprehensive game database with ratings, release dates, and platform information.',
-};
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+
+export async function generateMetadata() {
+  return buildPageMetadata({
+    title: 'Game Database | FinalBoss.io',
+    description: 'Search and explore our comprehensive game database with ratings, release dates, and platform information.',
+    path: '/games',
+  });
+}
 
 export default function GamesPage() {
   return (
@@ -19,11 +25,28 @@ export default function GamesPage() {
             <h1 className="text-5xl font-bold text-yellow-400 mr-4">Game Database</h1>
             <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
           </div>
-          <Suspense fallback={<Loader />}>
+          <Suspense
+            fallback={
+              <div className="h-48 bg-gray-800 rounded-2xl animate-pulse" />
+            }
+          >
             <GameSearch />
           </Suspense>
         </div>
       </main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Home', item: `${baseUrl}/` },
+              { '@type': 'ListItem', position: 2, name: 'Game Database', item: `${baseUrl}/games` },
+            ],
+          }),
+        }}
+      />
       <Footer />
     </>
   );

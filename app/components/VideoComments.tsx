@@ -34,7 +34,7 @@ export default function VideoComments({ videoId }: VideoCommentsProps) {
   };
 
   return (
-    <div className="mt-8 bg-gray-800 rounded-lg p-6">
+    <div id={`comments-${videoId}`} className="mt-8 bg-gray-800 rounded-lg p-6">
       <h3 className="text-2xl font-bold mb-6">Comments</h3>
       
       <form onSubmit={handleSubmit} className="mb-8">

@@ -2,16 +2,17 @@ import React, { Suspense } from 'react';
 import { GET_GAMING_POSTS } from '../lib/queries/getGamingPosts';
 import client from '../lib/apolloClient';
 import dynamic from 'next/dynamic';
-import Loader from '../components/Loader';
+import { buildPageMetadata } from '../lib/seo';
 
 const GamingPageContent = dynamic(() => import('../components/Gaming/GamingPageContent'), { ssr: false });
 const GamingStructuredData = dynamic(() => import('../components/Gaming/GamingStructuredData'), { ssr: false });
 
 export async function generateMetadata() {
-  return {
+  return buildPageMetadata({
     title: 'Gaming News and Articles | FinalBoss.io',
-    description: 'Stay updated with the latest gaming news, reviews, and in-depth articles about your favorite games.',
-  };
+    description: 'Stay updated with the latest gaming news, releases, esports, and community stories.',
+    path: '/gaming',
+  });
 }
 
 export default async function GamingPage() {
@@ -24,7 +25,7 @@ export default async function GamingPage() {
   const hasNextPage = data.posts.pageInfo.hasNextPage;
 
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={null}>
       <GamingStructuredData articles={articles} />
       <GamingPageContent initialArticles={articles} initialHasNextPage={hasNextPage} />
     </Suspense>

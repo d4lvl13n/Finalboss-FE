@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import client from '@/app/lib/apolloClient';
 import { GET_GAME } from '@/app/lib/queries/gameQueries';
+import { buildPageMetadata } from '@/app/lib/seo';
 
 interface Props {
   params: {
@@ -20,16 +21,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     });
 
     if (data?.post) {
-      return {
+      const description = data.post.excerpt || data.post.title;
+      return buildPageMetadata({
         title: `${data.post.title} - Game Details | FinalBoss.io`,
-        description: data.post.excerpt || data.post.title,
-        openGraph: {
-          title: data.post.title,
-          description: data.post.excerpt || data.post.title,
-          images: [data.post.featuredImage?.node?.sourceUrl || ''],
-          type: 'article',
-        }
-      };
+        description,
+        path: `/game/${params.slug}`,
+        image: data.post.featuredImage?.node?.sourceUrl || undefined,
+        type: 'article',
+      });
     }
 
     // Fallback to IGDB if it's an ID
@@ -38,16 +37,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
       const game = await igdbClient.getGameDetails(igdbId);
       
-      return {
+      const description = game.data.description?.slice(0, 160) || game.data.name;
+      return buildPageMetadata({
         title: `${game.data.name} - Game Details | FinalBoss.io`,
-        description: game.data.description?.slice(0, 160),
-        openGraph: {
-          title: game.data.name,
-          description: game.data.description?.slice(0, 160),
-          images: [game.data.cover_url || ''],
-          type: 'article',
-        }
-      };
+        description,
+        path: `/game/${params.slug}`,
+        image: game.data.cover_url || undefined,
+        type: 'article',
+      });
     }
 
     return {

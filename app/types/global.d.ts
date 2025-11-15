@@ -13,9 +13,9 @@ declare global {
         page_path?: string;
         send_page_view?: boolean;
         transport_type?: string;
-        [key: string]: any;
+        [key: string]: string | number | boolean | undefined;
       }
     ) => void;
-    dataLayer: any[];
+    dataLayer: Array<Record<string, unknown>>;
   }
 }

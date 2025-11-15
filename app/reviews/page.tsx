@@ -5,14 +5,16 @@ import ReviewsPageContent from '../components/Reviews/ReviewsPageContent';
 import ReviewsStructuredData from '../components/Reviews/ReviewsStructuredData';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { buildPageMetadata } from '../lib/seo';
 
 export const revalidate = 3600; // Revalidate every hour (optional)
 
 export async function generateMetadata() {
-  return {
+  return buildPageMetadata({
     title: 'Game Reviews | FinalBoss.io',
-    description: 'Read our latest game reviews and ratings for the hottest new releases.',
-  };
+    description: 'Read in-depth game reviews, verdicts, and ratings from the FinalBoss.io editorial team.',
+    path: '/reviews',
+  });
 }
 
 export default async function ReviewsPage() {

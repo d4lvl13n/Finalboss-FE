@@ -7,16 +7,33 @@ import Image from 'next/image';
 import { useQuery } from '@apollo/client';
 import { GET_REVIEWS } from '../lib/queries/getReviews';
 import client from '../lib/apolloClient';
-import Loader from './Loader';
 import { motion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
+
+interface ReviewNode {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  featuredImage?: {
+    node?: {
+      sourceUrl?: string;
+    };
+  };
+  author?: {
+    node?: {
+      name?: string;
+    };
+  };
+  date: string;
+}
 
 const ReviewsSlider = () => {
   const { data, loading, error } = useQuery(GET_REVIEWS, {
     variables: { first: 7 },
     client,
   });
-  const [reviews, setReviews] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<ReviewNode[]>([]);
 
   useEffect(() => {
     if (data && data.posts && data.posts.nodes) {
@@ -24,7 +41,20 @@ const ReviewsSlider = () => {
     }
   }, [data]);
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <section className="py-16 bg-gray-800">
+        <div className="container mx-auto px-4">
+          <div className="h-12 w-64 bg-gray-700 animate-pulse mb-8" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {Array.from({ length: 2 }).map((_, idx) => (
+              <div key={idx} className="h-64 bg-gray-700 rounded-lg animate-pulse" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
   if (error) return <p>Error loading reviews...</p>;
   if (reviews.length === 0) return <p>No reviews available.</p>;
 
@@ -56,9 +86,9 @@ const ReviewsSlider = () => {
                     <Image
                       src={latestReview.featuredImage.node.sourceUrl}
                       alt={latestReview.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="transition-transform duration-300 group-hover:scale-110"
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
@@ -102,9 +132,9 @@ const ReviewsSlider = () => {
                       <Image
                         src={review.featuredImage.node.sourceUrl}
                         alt={review.title}
-                        layout="fill"
-                        objectFit="cover"
-                        className="transition-transform duration-300 group-hover:scale-110"
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 33vw"
+                        className="object-cover transition-transform duration-300 group-hover:scale-110"
                       />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>

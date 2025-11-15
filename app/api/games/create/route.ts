@@ -41,10 +41,11 @@ export async function POST(request: Request) {
       success: true, 
       slug: createResult.data.createPost.post.slug 
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating game:', error);
+    const message = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: message },
       { status: 500 }
     );
   }

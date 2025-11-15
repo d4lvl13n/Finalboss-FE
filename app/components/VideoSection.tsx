@@ -6,13 +6,25 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useYouTubeVideos } from '../hooks/useYouTubeVideos';
 import { YouTubeService } from '../lib/youtube/service';
-import Loader from './Loader';
 import { FaArrowRight, FaPlay, FaClock, FaEye } from 'react-icons/fa';
 
 const VideoSection = () => {
   const { videos, loading, error } = useYouTubeVideos(3);
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <section className="py-16 bg-gradient-to-b from-gray-900 to-gray-800">
+        <div className="container mx-auto px-4">
+          <div className="h-12 w-64 bg-gray-800 animate-pulse mb-8" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <div key={idx} className="aspect-video bg-gray-800 rounded-xl animate-pulse" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
   if (error) return <p>Error loading videos...</p>;
 
   return (

@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       images: [seo?.twitterImage?.sourceUrl || article.featuredImage?.node?.sourceUrl],
     },
     alternates: {
-      canonical: seo?.canonical || `${baseUrl}/${article.slug}`,
+      canonical: `${baseUrl}/${article.slug}`,
     },
   };
 }

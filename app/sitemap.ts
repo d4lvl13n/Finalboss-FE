@@ -18,6 +18,7 @@ interface YouTubeVideo {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'
+  const ARTICLE_PAGE_SIZE = 24
 
   // Fetch your dynamic content
   const [videos, articlesData, techData, reviewsData] = await Promise.all([
@@ -80,6 +81,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/feeds/articles`,
+      changeFrequency: 'daily',
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/feeds/reviews`,
+      changeFrequency: 'daily',
+      priority: 0.3,
+    },
     // Dynamic videos
     ...(videos.items?.map((video: YouTubeVideo) => ({
       url: `${baseUrl}/videos/${video.id}`,
@@ -94,6 +105,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
+    // Paginated articles
+    ...(() => {
+      const total =
+        articlesData.data.posts.pageInfo?.offsetPagination?.total ??
+        articlesData.data.posts.nodes.length
+      const totalPages = Math.max(1, Math.ceil(total / ARTICLE_PAGE_SIZE))
+      if (totalPages <= 1) return []
+      return Array.from({ length: totalPages - 1 }, (_, idx) => idx + 2).map((pageNumber) => ({
+        url: `${baseUrl}/articles/page/${pageNumber}`,
+        changeFrequency: 'weekly',
+        priority: 0.5,
+      }))
+    })(),
   ]
 
   return urls

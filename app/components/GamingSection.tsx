@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { useQuery } from '@apollo/client';
 import { GET_GAMING_POSTS } from '../lib/queries/getGamingPosts';
 import client from '../lib/apolloClient';
-import Loader from './Loader';
 import { motion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
 
@@ -49,7 +48,15 @@ const GamingSection = () => {
     }
   }, [data]);
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <section className="py-16 bg-gray-900">
+        <div className="container mx-auto px-4 text-center text-gray-400">
+          Fetching the latest gaming news…
+        </div>
+      </section>
+    );
+  }
   if (error) {
     console.error('Error fetching gaming articles:', error);
     return <p>Error loading gaming articles...</p>;
@@ -78,9 +85,9 @@ const GamingSection = () => {
                 <Image
                   src={article.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
                   alt={article.title}
-                  layout="fill"
-                  objectFit="cover"
-                  className="transition-transform duration-300 group-hover:scale-110"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
                 <div className="absolute top-4 right-4 z-10">

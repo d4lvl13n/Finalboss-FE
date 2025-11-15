@@ -1,16 +1,15 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@apollo/client';
 import { GET_FEATURED_POSTS } from '../lib/queries/getFeaturedPosts';
 import client from '../lib/apolloClient';
-import Loader from './Loader';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Link from 'next/link';
 import { useMediaQuery } from 'react-responsive';
-import { useSwipeable, SwipeEventData } from 'react-swipeable';
+import { useSwipeable } from 'react-swipeable';
 
 // Define interfaces for our data structure
 interface FeaturedImage {
@@ -35,27 +34,6 @@ interface Article {
 }
 
 // Add these interfaces at the top of the file
-interface Post {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  featuredImage?: {
-    node: {
-      sourceUrl: string;
-    };
-  };
-  categories?: {
-    nodes: {
-      name: string;
-    }[];
-  };
-}
-
-interface FeaturedSliderProps {
-  posts: Post[];
-}
-
 // Slide transition variants for desktop 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -109,7 +87,6 @@ export default function FeaturedSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [progress, setProgress] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true); // Add this state
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
   // Restore Apollo query
@@ -121,22 +98,22 @@ export default function FeaturedSlider() {
   const featuredArticles: Article[] = data?.posts?.nodes || [];
 
   // Navigation handlers - define these only once
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % featuredArticles.length);
     setProgress(0);
-  };
+  }, [featuredArticles.length]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + featuredArticles.length) % featuredArticles.length);
     setProgress(0);
-  };
+  }, [featuredArticles.length]);
 
   // Swipe handlers - define only once
   const swipeHandlers = useSwipeable({
-    onSwipedLeft: (eventData: SwipeEventData) => handleNext(),
-    onSwipedRight: (eventData: SwipeEventData) => handlePrev(),
+    onSwipedLeft: () => handleNext(),
+    onSwipedRight: () => handlePrev(),
     preventScrollOnSwipe: true,
     trackTouch: true,
     delta: 10,
@@ -153,7 +130,7 @@ export default function FeaturedSlider() {
 
     window.addEventListener('keydown', handleKeydown);
     return () => window.removeEventListener('keydown', handleKeydown);
-  }, []);
+  }, [handleNext, handlePrev]);
 
   // Progress bar animation
   useEffect(() => {

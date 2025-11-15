@@ -70,22 +70,20 @@ export default function AllArticlesPageContent({ initialArticles, initialHasNext
         <Image
           src={article.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
           alt={article.title}
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="(max-width: 1024px) 100vw, 33vw"
           placeholder="blur"
           blurDataURL={PLACEHOLDER_BASE64}
           onError={(e) => {
-            // If image fails to load, replace with placeholder
             const target = e.target as HTMLImageElement;
             console.log('Image failed to load:', target.src);
             target.src = '/images/placeholder.png';
-            // If placeholder also fails, use inline data URL
             target.onerror = () => {
               target.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
-              target.onerror = null; // Prevent infinite loop
+              target.onerror = null;
             };
           }}
-          className="transition-transform duration-300 group-hover:scale-110"
+          className="object-cover transition-transform duration-300 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
         <div className="absolute inset-0 flex flex-col justify-end p-6">

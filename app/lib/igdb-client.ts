@@ -1,6 +1,35 @@
 // lib/igdb-client.ts
 import { IGDBGame, IGDBResponse } from '../types/igdb';
 
+interface IGDBRawImage {
+  image_id: string;
+}
+
+interface IGDBRawVideo {
+  id: number;
+  name: string;
+  video_id: string;
+}
+
+interface IGDBRawWebsite {
+  url: string;
+  category: string;
+}
+
+interface IGDBRawGame {
+  id: number;
+  name: string;
+  cover?: IGDBRawImage;
+  summary?: string;
+  first_release_date?: number;
+  rating?: number;
+  platforms?: Array<{ id: number; name: string }>;
+  genres?: Array<{ name: string }>;
+  screenshots?: IGDBRawImage[];
+  videos?: IGDBRawVideo[];
+  websites?: IGDBRawWebsite[];
+}
+
 export class IGDBClient {
   private baseUrl: string;
 
@@ -46,7 +75,7 @@ export class IGDBClient {
     return `https://images.igdb.com/igdb/image/upload/t_${size}/${imageId}.jpg`;
   }
 
-  private transformGameData(game: any): IGDBGame {
+  private transformGameData(game: IGDBRawGame): IGDBGame {
     return {
       id: game.id,
       name: game.name,
@@ -58,20 +87,20 @@ export class IGDBClient {
         ? new Date(game.first_release_date * 1000).toISOString()
         : undefined,
       rating: game.rating,
-      platforms: game.platforms?.map((p: any) => ({
+      platforms: game.platforms?.map((p) => ({
         id: p.id,
         name: p.name
       })),
-      genres: game.genres?.map((g: any) => g.name),
-      screenshots: game.screenshots?.map((s: any) => 
+      genres: game.genres?.map((g) => g.name),
+      screenshots: game.screenshots?.map((s) => 
         this.getImageUrl(s.image_id, 'screenshot_big')
       ),
-      videos: game.videos?.map((v: any) => ({
+      videos: game.videos?.map((v) => ({
         id: v.id,
         name: v.name,
         video_id: v.video_id
       })),
-      websites: game.websites?.map((w: any) => ({
+      websites: game.websites?.map((w) => ({
         url: w.url,
         category: w.category
       }))
@@ -79,7 +108,7 @@ export class IGDBClient {
   }
 
   async searchGames(query: string, limit = 10): Promise<IGDBResponse<IGDBGame[]>> {
-    const response = await this.fetchApi<any[]>(`/search?s=${encodeURIComponent(query)}&limit=${limit}`);
+    const response = await this.fetchApi<IGDBRawGame[]>(`/search?s=${encodeURIComponent(query)}&limit=${limit}`);
     return {
       success: response.success,
       data: response.data.map(game => this.transformGameData(game))
@@ -87,7 +116,7 @@ export class IGDBClient {
   }
 
   async getGameDetails(id: number): Promise<IGDBResponse<IGDBGame>> {
-    const response = await this.fetchApi<any>(`/game/${id}`);
+    const response = await this.fetchApi<IGDBRawGame>(`/game/${id}`);
     return {
       success: response.success,
       data: this.transformGameData(response.data)

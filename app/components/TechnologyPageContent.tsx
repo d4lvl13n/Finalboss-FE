@@ -83,9 +83,9 @@ export default function TechnologyPageContent({ initialArticles, initialHasNextP
                 <Image
                   src={article.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
                   alt={article.title}
-                  layout="fill"
-                  objectFit="cover"
-                  className="transition-transform duration-300 group-hover:scale-110"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
                 <div className="absolute top-4 right-4 z-10">

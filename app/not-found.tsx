@@ -71,7 +71,7 @@ const NotFoundPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        "Shenmue Flashbacks..."
+        &quot;Shenmue Flashbacks...&quot;
       </motion.div>
       <motion.p 
         className="text-2xl mt-4 text-gray-400 font-poppins"
@@ -89,7 +89,7 @@ const NotFoundPage: React.FC = () => {
         animate={{ scale: [1.5, 1.1, 1.5] }}
         transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
       >
-        {countdown > 0 ? `${countdown}` : "Time's up!"}
+        {countdown > 0 ? `${countdown}` : 'Time&apos;s up!'}
       </motion.div>
 
       {/* Dart Game */}

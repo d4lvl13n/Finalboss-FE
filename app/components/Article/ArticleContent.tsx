@@ -8,10 +8,12 @@ import { Source_Sans_3 } from 'next/font/google';
 import '../../styles/article.css';
 import '../../styles/ads.css';
 import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
+import { formatDate } from '../../utils/formatDate';
 import ProcessedContent from '../ProcessedContent';
 import RelatedArticles from './RelatedArticles';
 import { ResponsiveAd, VerticalAd } from '../AdSense/AdBanner';
 import InlineContentUpgrade from '../LeadCapture/InlineContentUpgrade';
+import InlineRelatedLinks from './InlineRelatedLinks';
 import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../../lib/queries/getRelatedPosts';
 import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
 import client from '../../lib/apolloClient';
@@ -31,6 +33,7 @@ interface ArticleData {
   title: string;
   content: string;
   date: string;
+  modified?: string;
   author?: {
     node?: {
       id?: string;
@@ -144,6 +147,10 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   // Determine what articles to show
   const articlesToShow = relatedData?.posts?.nodes || latestData?.posts?.nodes || [];
   const isLoading = relatedLoading || sequentialLoading || authorLoading || latestLoading;
+  const publishedDate = formatDate(article.date);
+  const updatedDate = article.modified ? formatDate(article.modified) : null;
+  const showUpdatedTimestamp =
+    article.modified && new Date(article.modified).getTime() !== new Date(article.date).getTime();
 
   // Detect review category
   const isReview = Boolean(
@@ -322,13 +329,12 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                     <span className="text-yellow-400 font-medium tracking-wide">
                       {article.author?.node?.name}
                     </span>
-                    <span className="text-sm text-gray-400">
-                      {new Date(article.date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                      })}
-                    </span>
+                    <div className="text-sm text-gray-400 flex flex-col">
+                      <span>Published {publishedDate}</span>
+                      {showUpdatedTimestamp && updatedDate && (
+                        <span className="text-xs text-gray-500">Updated {updatedDate}</span>
+                      )}
+                    </div>
                   </div>
                 </div>
 
@@ -366,6 +372,10 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 )}
               </div>
             </motion.div>
+
+            {articlesToShow.length > 0 && (
+              <InlineRelatedLinks articles={articlesToShow.slice(0, 3)} />
+            )}
 
               {/* 🎯 AD PLACEMENT 1: High-performing above-the-fold ad */}
               {SHOW_MANUAL_ADS && (

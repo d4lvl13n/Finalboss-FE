@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import GameDatabaseSection from './components/GameDatabaseSection';
+import { buildPageMetadata } from './lib/seo';
 
 // Import critical components with loading priority
 const FeaturedSlider = dynamic(() => import('./components/FeaturedSlider'), {
@@ -46,28 +47,15 @@ const inter = Inter({
 
 export const revalidate = 3600;
 
-// Metadata optimization
-export const metadata = {
-  title: 'FinalBoss.io - Your Ultimate Gaming Destination',
-  description: 'Discover the latest gaming news, reviews, guides, and cutting-edge technology at FinalBoss.io. Stay ahead in the gaming world.',
-  openGraph: {
+export async function generateMetadata() {
+  return buildPageMetadata({
     title: 'FinalBoss.io - Your Ultimate Gaming Destination',
-    description: 'Discover the latest gaming news, reviews, guides, and cutting-edge technology at FinalBoss.io. Stay ahead in the gaming world.',
-    images: [{
-      url: '/images/finalboss-og-image.jpg',
-      width: 1200,
-      height: 630,
-      alt: 'FinalBoss.io'
-    }],
-    url: 'https://finalboss.io',
-  },
-  twitter: {
-    card: 'summary_large_image',
-  },
-  alternates: {
-    canonical: 'https://finalboss.io',
-  },
-};
+    description:
+      'Discover the latest gaming news, reviews, guides, and cutting-edge technology at FinalBoss.io. Stay ahead in the gaming world.',
+    path: '/',
+    image: '/images/finalboss-og-image.jpg',
+  });
+}
 
 export default async function HomePage() {
   try {

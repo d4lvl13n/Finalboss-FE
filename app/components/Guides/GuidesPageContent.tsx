@@ -80,9 +80,9 @@ export default function GuidesPageContent({ initialSubcategories, initialGuides,
               <Image
                 src={category.posts.nodes[0].featuredImage.node.sourceUrl}
                 alt={category.name}
-                layout="fill"
-                objectFit="cover"
-                className="absolute inset-0"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="absolute inset-0 object-cover"
               />
             ) : (
               <div className="absolute inset-0 bg-gray-700 flex items-center justify-center text-gray-500">
@@ -119,9 +119,9 @@ export default function GuidesPageContent({ initialSubcategories, initialGuides,
         <Image
           src={guide.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
           alt={guide.title}
-          layout="fill"
-          objectFit="cover"
-          className="transition-transform duration-300 group-hover:scale-110"
+          fill
+          sizes="(max-width: 1024px) 100vw, 33vw"
+          className="object-cover transition-transform duration-300 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
         <div className="absolute inset-0 flex flex-col justify-end p-6">

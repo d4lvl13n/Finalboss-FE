@@ -66,9 +66,10 @@ const GameCalendar = () => {
               <div className="relative h-48">
                 <Image 
                   src={game.image} 
-                  layout="fill" 
-                  objectFit="cover" 
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 33vw"
                   alt={game.title} 
+                  className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70" />
                 <div className="absolute bottom-0 left-0 right-0 p-4">

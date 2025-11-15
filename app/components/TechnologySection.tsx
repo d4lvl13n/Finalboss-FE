@@ -3,12 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
 import { useQuery } from '@apollo/client';
 import { GET_TECH_ARTICLES } from '../lib/queries/getTechArticles';
 import client from '../lib/apolloClient';
-import Loader from './Loader';
 import { motion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
 
@@ -55,7 +52,20 @@ const TechnologySection = () => {
     }
   }, [data]);
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <section className="py-16 bg-gray-900">
+        <div className="container mx-auto px-4">
+          <div className="h-12 w-64 bg-gray-800 animate-pulse mb-8" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <div key={idx} className="h-64 bg-gray-800 rounded-lg animate-pulse" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
   if (error) {
     console.error('Error fetching technology articles:', error);
     return <p>Error loading technology articles...</p>;
@@ -84,9 +94,9 @@ const TechnologySection = () => {
                 <Image
                   src={article.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
                   alt={article.title}
-                  layout="fill"
-                  objectFit="cover"
-                  className="transition-transform duration-300 group-hover:scale-110"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
                 <div className="absolute top-4 right-4 z-10">

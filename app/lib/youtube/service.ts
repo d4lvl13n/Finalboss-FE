@@ -1,10 +1,67 @@
 import { YOUTUBE_CONFIG, YouTubeVideo, YouTubeApiResponse } from './config';
 import { handleYouTubeError } from './errors';
-import { cache } from 'react';
+
+interface ChannelResponse {
+  items: Array<{
+    contentDetails: {
+      relatedPlaylists: {
+        uploads: string;
+      };
+    };
+  }>;
+}
+
+interface PlaylistItem {
+  snippet: {
+    resourceId: { videoId: string };
+    title: string;
+    description: string;
+    publishedAt: string;
+    channelTitle: string;
+    thumbnails: {
+      high: {
+        url: string;
+        width: number;
+        height: number;
+      };
+    };
+  };
+}
+
+interface PlaylistResponse {
+  items: PlaylistItem[];
+  nextPageToken?: string;
+  pageInfo: {
+    totalResults: number;
+    resultsPerPage: number;
+  };
+}
+
+interface VideoStats {
+  contentDetails: {
+    duration: string;
+  };
+  statistics: {
+    viewCount: string;
+  };
+}
+
+interface VideosResponse {
+  items: VideoStats[];
+}
+
+interface SingleVideoResponse {
+  items: Array<
+    {
+      id: string;
+      snippet: PlaylistItem['snippet'];
+    } & VideoStats
+  >;
+}
 
 export class YouTubeService {
   private static instance: YouTubeService;
-  private cache: Map<string, { data: any; timestamp: number }> = new Map();
+  private cache: Map<string, { data: unknown; timestamp: number }> = new Map();
 
   private constructor() {}
 
@@ -18,7 +75,7 @@ export class YouTubeService {
     return this.instance;
   }
 
-  private async fetchWithCache(url: string, cacheKey: string) {
+  private async fetchWithCache<T>(url: string, cacheKey: string): Promise<T> {
     // Add debug logging
     console.log('Config values:', {
       apiKey: YOUTUBE_CONFIG.apiKey,
@@ -30,7 +87,7 @@ export class YouTubeService {
       cached &&
       Date.now() - cached.timestamp < YOUTUBE_CONFIG.cacheTimeout * 1000
     ) {
-      return cached.data;
+      return cached.data as T;
     }
 
     try {
@@ -41,7 +98,7 @@ export class YouTubeService {
         console.error('YouTube API Error:', errorData);
         throw new Error(`YouTube API Error: ${response.statusText}`);
       }
-      const data = await response.json();
+      const data = (await response.json()) as T;
       this.cache.set(cacheKey, { data, timestamp: Date.now() });
       return data;
     } catch (error) {
@@ -53,21 +110,21 @@ export class YouTubeService {
   async getChannelUploads(maxResults: number = YOUTUBE_CONFIG.maxResults, pageToken?: string): Promise<YouTubeApiResponse> {
     // First, get the uploads playlist ID
     const channelUrl = `${YOUTUBE_CONFIG.baseUrl}/channels?part=contentDetails&id=${YOUTUBE_CONFIG.channelId}&key=${YOUTUBE_CONFIG.apiKey}`;
-    const channelData = await this.fetchWithCache(channelUrl, `channel_${YOUTUBE_CONFIG.channelId}`);
+    const channelData = await this.fetchWithCache<ChannelResponse>(channelUrl, `channel_${YOUTUBE_CONFIG.channelId}`);
     const uploadsPlaylistId = channelData.items[0].contentDetails.relatedPlaylists.uploads;
 
     // Then, get the videos from the uploads playlist
     const playlistUrl = `${YOUTUBE_CONFIG.baseUrl}/playlistItems?part=snippet&maxResults=${maxResults}&playlistId=${uploadsPlaylistId}&key=${YOUTUBE_CONFIG.apiKey}${pageToken ? `&pageToken=${pageToken}` : ''}`;
-    const playlistData = await this.fetchWithCache(playlistUrl, `playlist_${uploadsPlaylistId}_${maxResults}_${pageToken}`);
+    const playlistData = await this.fetchWithCache<PlaylistResponse>(playlistUrl, `playlist_${uploadsPlaylistId}_${maxResults}_${pageToken}`);
 
     // Get video IDs for additional details
-    const videoIds = playlistData.items.map((item: any) => item.snippet.resourceId.videoId).join(',');
+    const videoIds = playlistData.items.map((item) => item.snippet.resourceId.videoId).join(',');
     const videosUrl = `${YOUTUBE_CONFIG.baseUrl}/videos?part=contentDetails,statistics&id=${videoIds}&key=${YOUTUBE_CONFIG.apiKey}`;
-    const videosData = await this.fetchWithCache(videosUrl, `videos_${videoIds}`);
+    const videosData = await this.fetchWithCache<VideosResponse>(videosUrl, `videos_${videoIds}`);
 
     // Combine the data
     return {
-      items: playlistData.items.map((item: any, index: number) => {
+      items: playlistData.items.map((item, index: number) => {
         const videoDetails = videosData.items[index];
         return {
           id: item.snippet.resourceId.videoId,
@@ -91,7 +148,7 @@ export class YouTubeService {
 
   async getVideoById(videoId: string): Promise<YouTubeVideo> {
     const url = `${YOUTUBE_CONFIG.baseUrl}/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${YOUTUBE_CONFIG.apiKey}`;
-    const data = await this.fetchWithCache(url, `video_${videoId}`);
+    const data = await this.fetchWithCache<SingleVideoResponse>(url, `video_${videoId}`);
     
     const video = data.items[0];
     return {
@@ -130,7 +187,3 @@ export class YouTubeService {
 
 // Create a singleton instance
 export const youtubeService = YouTubeService.getInstance();
-
-export const getVideoById = cache(async (id: string) => {
-  // existing implementation
-});

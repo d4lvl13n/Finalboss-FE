@@ -1,12 +1,11 @@
 // components/GameSearch.tsx
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import { IGDBClient } from '../lib/igdb-client';
-import { IGDBGame, IGDBResponse } from '../types/igdb';
+import { IGDBGame } from '../types/igdb';
 import debounce from 'lodash/debounce';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 const client = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
@@ -21,7 +20,8 @@ class ErrorBoundary extends React.Component<
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(_: Error) {
+  static getDerivedStateFromError(error: Error) {
+    console.error('GameSearch error boundary captured an error:', error);
     return { hasError: true };
   }
 
@@ -39,10 +39,10 @@ class ErrorBoundary extends React.Component<
 }
 
 // Helper function to safely get platform name
-const getPlatformName = (platform: any): string => {
+const getPlatformName = (platform?: { name?: string } | string): string => {
   if (typeof platform === 'string') return platform;
   if (platform && typeof platform === 'object' && 'name' in platform) {
-    return platform.name;
+    return platform.name ?? 'Unknown Platform';
   }
   return 'Unknown Platform';
 };
@@ -115,8 +115,9 @@ export function GameSearch() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const debouncedSearch = useCallback(
-    debounce(async (searchQuery: string) => {
+  const debouncedSearch = useMemo(
+    () =>
+      debounce(async (searchQuery: string) => {
       if (!searchQuery.trim()) {
         setResults([]);
         return;
@@ -134,9 +135,10 @@ export function GameSearch() {
         }
 
         setResults(response.data);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error('Search error:', err);
-        setError(err.message || 'An error occurred while searching');
+        const message = err instanceof Error ? err.message : 'An error occurred while searching';
+        setError(message);
         setResults([]);
       } finally {
         setLoading(false);
@@ -144,6 +146,12 @@ export function GameSearch() {
     }, 300),
     []
   );
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   const handleGameClick = async (game: IGDBGame) => {
     try {

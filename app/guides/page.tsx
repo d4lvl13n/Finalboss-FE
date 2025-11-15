@@ -2,16 +2,17 @@ import React, { Suspense } from 'react';
 import { GET_GUIDE_CATEGORIES_AND_POSTS } from '../lib/queries/getGuideCategories';
 import client from '../lib/apolloClient';
 import dynamic from 'next/dynamic';
-import Loader from '../components/Loader';
+import { buildPageMetadata } from '../lib/seo';
 
 const GuidesPageContent = dynamic(() => import('../components/Guides/GuidesPageContent'), { ssr: false });
 const GuidesStructuredData = dynamic(() => import('../components/Guides/GuidesStructuredData'), { ssr: false });
 
 export async function generateMetadata() {
-  return {
-    title: 'Game Guides | FinalBoss.io',
-    description: 'Explore our comprehensive game guides and walkthroughs for your favorite games.',
-  };
+  return buildPageMetadata({
+    title: 'Game Guides & Walkthroughs | FinalBoss.io',
+    description: 'Master every quest with FinalBoss.io guides, walkthroughs, and strategy breakdowns.',
+    path: '/guides',
+  });
 }
 
 export default async function GuidesPage() {
@@ -25,7 +26,20 @@ export default async function GuidesPage() {
   const hasNextPage = data.posts.pageInfo.hasNextPage;
 
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense
+      fallback={
+        <section className="py-24 bg-gray-900">
+          <div className="container mx-auto px-4">
+            <div className="h-12 w-64 bg-gray-800 animate-pulse mb-8" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, idx) => (
+                <div key={idx} className="h-64 bg-gray-800 animate-pulse rounded-xl" />
+              ))}
+            </div>
+          </div>
+        </section>
+      }
+    >
       <GuidesStructuredData categories={subcategories} guides={guides} />
       <GuidesPageContent initialSubcategories={subcategories} initialGuides={guides} initialHasNextPage={hasNextPage} />
     </Suspense>

@@ -1,6 +1,8 @@
 // app/features/page.tsx
 
 import Link from 'next/link';
+import Image from 'next/image';
+import { buildPageMetadata } from '../lib/seo';
 
 interface Article {
   slug: string;
@@ -13,6 +15,12 @@ interface Article {
 }
 
 // Mock article data (replace with real data fetching in a real app)
+export const metadata = buildPageMetadata({
+  title: 'Featured Stories | FinalBoss.io',
+  description: 'Dive into curated long-form features covering gaming culture, tech, and creators.',
+  path: '/features',
+});
+
 const articles: Article[] = [
   // Example articles with categories
   {
@@ -37,7 +45,15 @@ export default function NewsPage() {
         {newsArticles.map((article) => (
           <Link key={article.slug} href={`/${article.slug}`}>
             <div className="cursor-pointer border border-gray-700 p-4 rounded-lg hover:shadow-lg transition-shadow">
-              <img src={article.image} alt={article.title} className="w-full h-40 object-cover rounded-lg mb-4" />
+              <div className="relative w-full h-40 mb-4">
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover rounded-lg"
+                />
+              </div>
               <h2 className="text-xl font-semibold text-white">{article.title}</h2>
               <p className="text-gray-400 text-sm">{article.date}</p>
             </div>

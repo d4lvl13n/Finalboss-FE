@@ -1,3 +1,15 @@
+import { buildPageMetadata } from '../lib/seo';
+
+export const metadata = buildPageMetadata({
+  title: 'Privacy Policy | FinalBoss.io',
+  description: 'Understand how FinalBoss.io collects, uses, and protects your information.',
+  path: '/privacy-policy',
+  robots: {
+    index: true,
+    follow: true,
+  },
+});
+
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white px-4 py-24">

@@ -1,3 +1,11 @@
+import { buildPageMetadata } from '../lib/seo';
+
+export const metadata = buildPageMetadata({
+  title: 'Terms of Service | FinalBoss.io',
+  description: 'Review the terms and conditions for using FinalBoss.io content and services.',
+  path: '/terms-of-service',
+});
+
 export default function TermsOfServicePage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white px-4 py-24">
@@ -16,7 +24,7 @@ export default function TermsOfServicePage() {
         </p>
         <h2 className="text-3xl font-bold mb-4">User Conduct</h2>
         <p className="text-gray-400 mb-4">
-          You agree not to use our website for any unlawful purpose or to engage in any conduct that may harm or interfere with our website's operation. This includes hacking, spamming, or distributing malware.
+          You agree not to use our website for any unlawful purpose or to engage in any conduct that may harm or interfere with our website&apos;s operation. This includes hacking, spamming, or distributing malware.
         </p>
         <h2 className="text-3xl font-bold mb-4">Changes to These Terms</h2>
         <p className="text-gray-400">

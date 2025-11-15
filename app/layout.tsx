@@ -19,6 +19,17 @@ const inter = Inter({
 });
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+const websiteStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'FinalBoss.io',
+  url: baseUrl,
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${baseUrl}/search?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -52,6 +63,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="alternate" type="application/rss+xml" title="FinalBoss.io Articles" href={`${baseUrl}/feeds/articles`} />
+        <link rel="alternate" type="application/rss+xml" title="FinalBoss.io Reviews" href={`${baseUrl}/feeds/reviews`} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }}
+        />
         {/* Verification */}
         <div
           dangerouslySetInnerHTML={{

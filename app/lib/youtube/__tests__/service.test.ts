@@ -1,5 +1,4 @@
 import { youtubeService } from '../service';
-import { YOUTUBE_CONFIG } from '../config';
 import { YouTubeService } from '../service';
 
 describe('YouTubeService', () => {

@@ -7,6 +7,7 @@ export const GET_POST_BY_SLUG = gql`
       title
       content
       date
+      modified
       slug
       featuredImage {
         node {
