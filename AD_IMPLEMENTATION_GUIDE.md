@@ -94,7 +94,6 @@ Vertical ads unit (only on desktop for side on the content)
 2. In-grid ad: After 6th review card
    - Responsive ad unit spanning full grid width
 ```
-
 ### 3. **Ad Slot Configuration** ✅ UPDATED
 
 | Location | Ad Slot ID | Recommended Size | Priority | Status |

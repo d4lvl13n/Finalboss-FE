@@ -10,16 +10,6 @@ interface AdBannerProps {
   style?: React.CSSProperties;
 }
 
-interface AdSenseObject {
-  [key: string]: unknown;
-}
-
-declare global {
-  interface Window {
-    adsbygoogle: AdSenseObject[];
-  }
-}
-
 export default function AdBanner({ 
   adSlot, 
   adFormat = 'auto', 
@@ -30,9 +20,10 @@ export default function AdBanner({
   useEffect(() => {
     if (!SHOW_MANUAL_ADS) return;
     try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      window.adsbygoogle = window.adsbygoogle || []
+      window.adsbygoogle.push({})
     } catch (err) {
-      console.error('AdSense error:', err);
+      console.error('AdSense error:', err)
     }
   }, []);
 
