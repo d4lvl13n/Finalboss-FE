@@ -19,8 +19,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        body: ['Inter', 'sans-serif'],
-        heading: ['Orbitron', 'sans-serif', 'Press Start 2P', 'Arial'], // Sci-fi inspired font for headings
+        body: ['var(--font-body)', 'Inter', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-heading)', 'Orbitron', 'system-ui', 'sans-serif'],
       },
     },
   },

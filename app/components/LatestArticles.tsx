@@ -65,8 +65,13 @@ const LatestArticles = () => {
         <div className="flex items-center mb-12">
           <h2 className="text-4xl font-bold text-yellow-400 mr-4">Latest Articles</h2>
           <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
-          <Link href="/articles" className="ml-4 bg-yellow-400 text-black p-2 rounded-full hover:bg-yellow-300 transition-colors">
-            <FaArrowRight />
+          <Link
+            href="/articles"
+            className="ml-4 bg-yellow-400 text-black p-2 rounded-full hover:bg-yellow-300 transition-colors"
+            aria-label="Browse all articles"
+            title="Browse all articles"
+          >
+            <FaArrowRight aria-hidden="true" />
           </Link>
         </div>
         
@@ -79,7 +84,7 @@ const LatestArticles = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="relative group h-64 overflow-hidden rounded-lg"
             >
-              <Link href={`/articles/${article.slug}`} className="block h-full">
+              <Link href={`/${article.slug}`} className="block h-full">
                 <Image
                   src={article.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
                   alt={article.title}
@@ -87,6 +92,7 @@ const LatestArticles = () => {
                   sizes="(max-width: 1024px) 100vw, 33vw"
                   placeholder="blur"
                   blurDataURL={PLACEHOLDER_BASE64}
+                  priority={index === 0}
                   className="object-cover transition-transform duration-300 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>

@@ -17,5 +17,8 @@ declare global {
       }
     ) => void;
     dataLayer: Array<Record<string, unknown>>;
+    adsbygoogle?: Array<Record<string, unknown>>;
+    __adScriptLoaded?: boolean;
+    requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
   }
 }

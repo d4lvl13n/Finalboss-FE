@@ -1,7 +1,6 @@
 // Homepage
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
-import { Inter } from 'next/font/google';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import GameDatabaseSection from './components/GameDatabaseSection';
@@ -39,12 +38,6 @@ const NewsletterForm = dynamic(() => import('./components/NewsletterForm'), {
   ssr: false
 });
 
-// Optimize font loading
-const inter = Inter({ 
-  subsets: ['latin'],
-  display: 'swap'
-});
-
 export const revalidate = 3600;
 
 export async function generateMetadata() {
@@ -62,7 +55,7 @@ export default async function HomePage() {
     return (
       <>
         <Header />
-        <main className={`${inter.className} bg-gray-900 text-white min-h-screen`}>
+        <main className="bg-gray-900 text-white min-h-screen font-body">
           {/* Critical content with priority loading */}
           <Suspense 
             fallback={
