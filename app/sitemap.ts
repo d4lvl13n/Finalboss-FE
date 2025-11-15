@@ -58,37 +58,37 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     {
       url: `${baseUrl}/`,
       lastModified: new Date().toISOString(),
-      changeFrequency: 'daily',
+      changeFrequency: 'daily' as const,
       priority: 1.0,
     },
     {
       url: `${baseUrl}/videos`,
-      changeFrequency: 'daily',
+      changeFrequency: 'daily' as const,
       priority: 0.9,
     },
     {
       url: `${baseUrl}/articles`,
-      changeFrequency: 'daily',
+      changeFrequency: 'daily' as const,
       priority: 0.9,
     },
     {
       url: `${baseUrl}/technology`,
-      changeFrequency: 'daily',
+      changeFrequency: 'daily' as const,
       priority: 0.9,
     },
     {
       url: `${baseUrl}/reviews`,
-      changeFrequency: 'weekly',
+      changeFrequency: 'weekly' as const,
       priority: 0.8,
     },
     {
       url: `${baseUrl}/feeds/articles`,
-      changeFrequency: 'daily',
+      changeFrequency: 'daily' as const,
       priority: 0.3,
     },
     {
       url: `${baseUrl}/feeds/reviews`,
-      changeFrequency: 'daily',
+      changeFrequency: 'daily' as const,
       priority: 0.3,
     },
     // Dynamic videos
@@ -108,13 +108,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Paginated articles
     ...(() => {
       const total =
-        articlesData.data.posts.pageInfo?.offsetPagination?.total ??
-        articlesData.data.posts.nodes.length
+        articlesData?.data?.posts?.pageInfo?.offsetPagination?.total ??
+        articlesData?.data?.posts?.nodes?.length ??
+        0
       const totalPages = Math.max(1, Math.ceil(total / ARTICLE_PAGE_SIZE))
       if (totalPages <= 1) return []
       return Array.from({ length: totalPages - 1 }, (_, idx) => idx + 2).map((pageNumber) => ({
         url: `${baseUrl}/articles/page/${pageNumber}`,
-        changeFrequency: 'weekly',
+        changeFrequency: 'weekly' as const,
         priority: 0.5,
       }))
     })(),

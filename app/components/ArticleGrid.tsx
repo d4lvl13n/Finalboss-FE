@@ -86,15 +86,13 @@ const ArticleGrid = <Vars extends Record<string, unknown>>({
             <Link key={article.id} href={`${linkPrefix}/${article.slug}`}>
               <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                 <div className="relative h-48">
-                  {article.featuredImage && (
-                    <Image
-                      src={article.featuredImage.node.sourceUrl}
-                      alt={article.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 33vw"
-                      className="absolute inset-0 object-cover"
-                    />
-                  )}
+                  <Image
+                    src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.png'}
+                    alt={article.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                    className="absolute inset-0 object-cover"
+                  />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-white mb-2">{article.title}</h3>

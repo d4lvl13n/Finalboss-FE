@@ -9,6 +9,18 @@ const AllArticlesPageContent = dynamic(() => import('../components/AllArticles/A
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
 const PAGE_SIZE = 24;
 
+interface ArticleListItem {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  featuredImage?: {
+    node: {
+      sourceUrl: string;
+    };
+  };
+}
+
 // Force revalidation every 60 seconds
 export const revalidate = 60;
 
@@ -24,7 +36,7 @@ export async function generateMetadata() {
 }
 
 export default async function AllArticlesPage() {
-  let articles = [];
+  let articles: ArticleListItem[] = [];
   let hasNextPage = false;
   let endCursor = null;
   let totalCount = 0;

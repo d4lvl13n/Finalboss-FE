@@ -2,8 +2,7 @@ import { Suspense } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { GameSearch } from '../components/GameSearch';
-import { Suspense } from 'react';
-import { buildPageMetadata } from '../lib/seo';
+gitimport { buildPageMetadata } from '../lib/seo';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
 

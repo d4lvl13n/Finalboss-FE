@@ -82,15 +82,13 @@ const ReviewsSlider = () => {
                 className="relative group h-[500px] overflow-hidden rounded-lg"
               >
                 <Link href={`/${latestReview.slug}`} className="block h-full">
-                  {latestReview.featuredImage && latestReview.featuredImage.node && (
-                    <Image
-                      src={latestReview.featuredImage.node.sourceUrl}
-                      alt={latestReview.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover transition-transform duration-300 group-hover:scale-110"
-                    />
-                  )}
+                  <Image
+                    src={latestReview.featuredImage?.node?.sourceUrl || '/images/placeholder.png'}
+                    alt={latestReview.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
                   <div className="absolute inset-0 flex flex-col justify-end p-6">
                     <h3 className="text-3xl font-bold text-white mb-2">{latestReview.title}</h3>
@@ -128,15 +126,13 @@ const ReviewsSlider = () => {
                   className="relative group h-48 overflow-hidden rounded-lg"
                 >
                   <Link href={`/${review.slug}`} className="block h-full">
-                    {review.featuredImage && review.featuredImage.node && (
-                      <Image
-                        src={review.featuredImage.node.sourceUrl}
-                        alt={review.title}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 33vw"
-                        className="object-cover transition-transform duration-300 group-hover:scale-110"
-                      />
-                    )}
+                    <Image
+                      src={review.featuredImage?.node?.sourceUrl || '/images/placeholder.png'}
+                      alt={review.title}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 33vw"
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
                     <div className="absolute inset-0 flex flex-col justify-end p-4">
                       <h3 className="text-lg font-bold text-white mb-2">{review.title}</h3>
