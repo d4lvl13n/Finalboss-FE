@@ -1,15 +1,6 @@
 import { MetadataRoute } from 'next'
 import { youtubeService } from './lib/youtube/service'
-import { GET_ALL_POSTS } from './lib/queries/getAllPosts'
-import { GET_TECH_ARTICLES } from './lib/queries/getTechArticles'
-import { GET_REVIEWS } from './lib/queries/getReviews'
-import client from './lib/apolloClient'
-
-// Interfaces
-interface WordPressPost {
-  id: string
-  slug: string
-}
+import { fetchAllPosts, WordPressPost } from './lib/fetchAllPosts'
 
 interface YouTubeVideo {
   id: string
@@ -20,32 +11,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'
   const ARTICLE_PAGE_SIZE = 24
 
-  // Fetch your dynamic content
-  const [videos, articlesData, techData, reviewsData] = await Promise.all([
+  // Fetch dynamic content
+  const [videos, { posts: allPosts, total: totalPosts }] = await Promise.all([
     youtubeService.getChannelUploads(50),
-    client.query({
-      query: GET_ALL_POSTS,
-      variables: { first: 100 },
-    }),
-    client.query({
-      query: GET_TECH_ARTICLES,
-      variables: { first: 100 },
-    }),
-    client.query({
-      query: GET_REVIEWS,
-      variables: { first: 100 },
-    }),
+    fetchAllPosts(),
   ])
 
-  // Aggregate and deduplicate WordPress posts by slug
-  const postNodes: WordPressPost[] = [
-    ...(articlesData?.data?.posts?.nodes || []),
-    ...(techData?.data?.posts?.nodes || []),
-    ...(reviewsData?.data?.posts?.nodes || []),
-  ]
-
+  // Deduplicate posts by slug
   const uniquePostsBySlug = new Map<string, WordPressPost>()
-  for (const post of postNodes) {
+  for (const post of allPosts) {
     if (post && post.slug && !uniquePostsBySlug.has(post.slug)) {
       uniquePostsBySlug.set(post.slug, post)
     }
@@ -101,16 +75,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Dynamic posts (deduplicated)
     ...uniquePosts.map((post: WordPressPost) => ({
       url: `${baseUrl}/${post.slug}`,
-      lastModified: new Date().toISOString(),
-      changeFrequency: 'monthly' as const,
+      lastModified:
+        (post.modified && new Date(post.modified).toISOString()) ||
+        (post.date && new Date(post.date).toISOString()) ||
+        new Date().toISOString(),
+      changeFrequency: 'weekly' as const,
       priority: 0.7,
     })),
     // Paginated articles
     ...(() => {
-      const total =
-        articlesData?.data?.posts?.pageInfo?.offsetPagination?.total ??
-        articlesData?.data?.posts?.nodes?.length ??
-        0
+      const total = totalPosts || uniquePosts.length
       const totalPages = Math.max(1, Math.ceil(total / ARTICLE_PAGE_SIZE))
       if (totalPages <= 1) return []
       return Array.from({ length: totalPages - 1 }, (_, idx) => idx + 2).map((pageNumber) => ({

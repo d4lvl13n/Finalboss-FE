@@ -9,6 +9,8 @@ export const GET_ALL_POSTS = gql`
         title
         slug
         excerpt
+        date
+        modified
         featuredImage {
           node {
             sourceUrl
