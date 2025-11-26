@@ -1,10 +1,16 @@
 import { MetadataRoute } from 'next'
 import { youtubeService } from './lib/youtube/service'
 import { fetchAllPosts, WordPressPost } from './lib/fetchAllPosts'
+import client from './lib/apolloClient'
+import { GET_ALL_AUTHORS } from './lib/queries/getAuthor'
 
 interface YouTubeVideo {
   id: string
   publishedAt: string
+}
+
+interface AuthorNode {
+  slug: string
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -12,10 +18,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const ARTICLE_PAGE_SIZE = 24
 
   // Fetch dynamic content
-  const [videos, { posts: allPosts, total: totalPosts }] = await Promise.all([
+  const [videos, { posts: allPosts, total: totalPosts }, authorsData] = await Promise.all([
     youtubeService.getChannelUploads(50),
     fetchAllPosts(),
+    client.query({ query: GET_ALL_AUTHORS }).catch(() => ({ data: { users: { nodes: [] } } })),
   ])
+  
+  const authors: AuthorNode[] = authorsData?.data?.users?.nodes || []
 
   // Deduplicate posts by slug
   const uniquePostsBySlug = new Map<string, WordPressPost>()
@@ -56,15 +65,44 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/feeds/articles`,
+      url: `${baseUrl}/gaming`,
       changeFrequency: 'daily' as const,
-      priority: 0.3,
+      priority: 0.9,
     },
     {
-      url: `${baseUrl}/feeds/reviews`,
+      url: `${baseUrl}/guides`,
       changeFrequency: 'daily' as const,
-      priority: 0.3,
+      priority: 0.9,
     },
+    {
+      url: `${baseUrl}/authors`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.4,
+    },
+    {
+      url: `${baseUrl}/write-for-us`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.4,
+    },
+    {
+      url: `${baseUrl}/privacy-policy`,
+      changeFrequency: 'yearly' as const,
+      priority: 0.2,
+    },
+    {
+      url: `${baseUrl}/terms-of-service`,
+      changeFrequency: 'yearly' as const,
+      priority: 0.2,
+    },
+    // Note: RSS feeds (/feeds/articles, /feeds/reviews) are intentionally excluded
+    // from the sitemap as they are data feeds, not HTML pages for indexing.
+    // They are linked in <head> via alternate links for feed discovery.
+    
     // Dynamic videos
     ...(videos.items?.map((video: YouTubeVideo) => ({
       url: `${baseUrl}/videos/${video.id}`,
@@ -93,6 +131,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.5,
       }))
     })(),
+    // Author pages
+    ...authors.map((author: AuthorNode) => ({
+      url: `${baseUrl}/author/${author.slug}`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
   ]
 
   return urls

@@ -24,9 +24,6 @@ interface ArticleListItem {
 // Force revalidation every 60 seconds
 export const revalidate = 60;
 
-// Opt out of static generation for development
-export const runtime = process.env.NODE_ENV === 'development' ? 'edge' : 'nodejs';
-
 export async function generateMetadata() {
   return buildPageMetadata({
     title: 'All Articles | FinalBoss.io',
@@ -45,12 +42,17 @@ export default async function AllArticlesPage() {
     const { data } = await client.query({
       query: GET_ALL_POSTS,
       variables: { first: 24 },
+      fetchPolicy: 'no-cache',
     });
 
-    articles = data.posts.nodes;
-    hasNextPage = data.posts.pageInfo.hasNextPage;
-    endCursor = data.posts.pageInfo.endCursor;
-    totalCount = data.posts.pageInfo?.offsetPagination?.total ?? articles.length;
+    console.log('Articles page data:', JSON.stringify(data, null, 2));
+
+    if (data?.posts?.nodes) {
+      articles = data.posts.nodes;
+      hasNextPage = data.posts.pageInfo?.hasNextPage || false;
+      endCursor = data.posts.pageInfo?.endCursor || null;
+      totalCount = data.posts.pageInfo?.offsetPagination?.total ?? articles.length;
+    }
   } catch (error) {
     console.error('Error fetching articles:', error);
     // Continue with empty articles array

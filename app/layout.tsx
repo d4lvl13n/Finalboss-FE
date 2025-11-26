@@ -11,6 +11,7 @@ import SearchOverlay from './components/Search/SearchOverlay';
 import LeadCaptureManager from './components/LeadCapture/LeadCaptureManager';
 import AdScriptLoader from './components/AdSense/AdScriptLoader';
 import { ENABLE_AUTO_ADS } from './lib/adsConfig';
+import BackToTop from './components/BackToTop';
 
 // Optimize font loading
 const inter = Inter({ 
@@ -118,6 +119,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <LeadCaptureManager />
           {children}
           <SearchOverlay />
+          <BackToTop />
         </SearchProvider>
         <AdScriptLoader enableAutoAds={ENABLE_AUTO_ADS} />
         <Analytics />

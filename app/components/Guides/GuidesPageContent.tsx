@@ -8,6 +8,8 @@ import { useQuery } from '@apollo/client';
 import { GET_GUIDE_CATEGORIES_AND_POSTS } from '../../lib/queries/getGuideCategories';
 import client from '../../lib/apolloClient';
 import Header from '../Header';
+import Footer from '../Footer';
+import PageHeader from '../PageHeader';
 
 interface Category {
   id: string;
@@ -115,9 +117,9 @@ export default function GuidesPageContent({ initialSubcategories, initialGuides,
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="relative group h-64 overflow-hidden rounded-lg"
     >
-      <Link href={`/guide/${guide.slug}`} className="block h-full">
+      <Link href={`/${guide.slug}`} className="block h-full">
         <Image
-          src={guide.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
+          src={guide.featuredImage?.node.sourceUrl || '/images/placeholder.svg'}
           alt={guide.title}
           fill
           sizes="(max-width: 1024px) 100vw, 33vw"
@@ -145,42 +147,42 @@ export default function GuidesPageContent({ initialSubcategories, initialGuides,
   return (
     <>
       <Header />
-      <section className="pt-32 pb-16 bg-gray-900">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center mb-12">
-          <h2 className="text-4xl font-bold text-yellow-400 mr-4">Game Guides</h2>
-          <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
-        </div>
-        
-        {/* Subcategories Section */}
-        <div className="mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {initialSubcategories.map((category, index) => renderSubcategory(category, index))}
+      <PageHeader 
+        title="Game Guides" 
+        description="Expert walkthroughs, tips, and strategies to help you conquer any game"
+        accentColor="blue"
+      />
+      
+      <section className="pb-16 bg-gray-900">
+        <div className="container mx-auto px-4">
+          {/* Subcategories Section */}
+          <div className="mb-16">
+            <h2 className="text-2xl font-bold text-white mb-8">Browse by Game</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {initialSubcategories.map((category, index) => renderSubcategory(category, index))}
+            </div>
+          </div>
+
+          {/* All Guides Section */}
+          <div>
+            <h2 className="text-2xl font-bold text-white mb-8">All Guides</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {guides.map((guide, index) => renderGuide(guide, index))}
+            </div>
+            {hasNextPage && (
+              <div className="text-center mt-12">
+                <button
+                  onClick={handleLoadMore}
+                  className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
+                >
+                  Load More Guides
+                </button>
+              </div>
+            )}
           </div>
         </div>
-
-        {/* All Guides Section */}
-        <div className="container mx-auto px-4">
-          <div className="flex items-center mb-12">
-            <h2 className="text-4xl font-bold text-yellow-400 mr-4">All Guides</h2>
-          <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {guides.map((guide, index) => renderGuide(guide, index))}
-        </div>
-          {hasNextPage && (
-            <div className="text-center mt-12">
-              <button
-                onClick={handleLoadMore}
-                className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
-              >
-                Load More Guides
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
+      </section>
+      <Footer />
     </>
   );
 }

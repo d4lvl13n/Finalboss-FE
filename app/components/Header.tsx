@@ -5,30 +5,40 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GiGamepadCross } from 'react-icons/gi';
-import { FaSearch, FaTimes } from 'react-icons/fa';
+import { FaSearch, FaTimes, FaBars } from 'react-icons/fa';
 import { useSearch } from './Search/SearchContext';
 
 interface MenuItemProps {
   href: string;
   children: ReactNode;
+  onClick?: () => void;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ href, children }) => (
+const MenuItem: React.FC<MenuItemProps> = ({ href, children, onClick }) => (
   <motion.div
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-    className="mb-4"
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.98 }}
   >
-    <Link href={href}>
-      <span className="block text-white text-2xl font-medium hover:text-futuristic-blue transition-colors p-2 rounded-lg hover:bg-gray-800 active:bg-gray-700">
+    <Link href={href} onClick={onClick}>
+      <span className="block text-white text-xl font-medium hover:text-yellow-400 transition-colors py-3 px-4 rounded-lg hover:bg-white/5 active:bg-white/10">
         {children}
       </span>
     </Link>
   </motion.div>
 );
 
+const navItems = [
+  { name: 'News', href: '/gaming' },
+  { name: 'Reviews', href: '/reviews' },
+  { name: 'Guides', href: '/guides' },
+  { name: 'Technology', href: '/technology' },
+  { name: 'Videos', href: '/videos' },
+  { name: 'Team', href: '/authors' },
+];
+
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
   const { openSearch } = useSearch();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -41,31 +51,71 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const toggleMegaMenu = () => setMegaMenuOpen(!isMegaMenuOpen);
+  const toggleMobileMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
+  const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-gray-900 shadow-lg' : 'bg-transparent'
+        isScrolled ? 'bg-gray-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
       }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center py-4">
+          {/* Desktop: Mega Menu Button */}
           <motion.button
             whileHover={{ scale: 1.1, rotate: 180 }}
             whileTap={{ scale: 0.9 }}
             onClick={toggleMegaMenu}
-            className="text-futuristic-blue z-50 mr-4"
+            className="hidden md:block text-futuristic-blue z-50 mr-4"
           >
             {isMegaMenuOpen ? <FaTimes size={28} /> : <GiGamepadCross size={28} />}
           </motion.button>
+          
+          {/* Mobile: Hamburger Menu Button */}
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={toggleMobileMenu}
+            className="md:hidden text-white z-50 mr-4 p-2 -ml-2"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </motion.button>
+          
           <Link href="/">
             <Image src="/finalboss.png" width={120} height={40} alt="FinalBoss.io" />
           </Link>
-          <div className="ml-auto flex items-center">
+          
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-1 ml-8">
+            {navItems.map((item) => (
+              <Link 
+                key={item.name} 
+                href={item.href}
+                className="px-3 py-2 text-sm font-medium text-gray-300 hover:text-yellow-400 transition-colors rounded-lg hover:bg-white/5"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+          
+          <div className="ml-auto flex items-center gap-4">
             <motion.button 
               onClick={openSearch}
-              className="text-white hover:text-yellow-400 transition-colors"
+              className="text-white hover:text-yellow-400 transition-colors p-2"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               aria-label="Open search"
@@ -75,6 +125,87 @@ const Header: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] md:hidden"
+              onClick={closeMobileMenu}
+            />
+            
+            {/* Mobile Menu Panel */}
+            <motion.div
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className="fixed top-0 left-0 h-full w-[280px] bg-gray-900/98 backdrop-blur-lg z-[9999] md:hidden overflow-y-auto"
+            >
+              <div className="flex flex-col h-full">
+                {/* Mobile Menu Header */}
+                <div className="flex items-center justify-between p-4 border-b border-gray-800">
+                  <Image src="/finalboss.png" width={100} height={33} alt="FinalBoss.io" />
+                  <button 
+                    onClick={closeMobileMenu}
+                    className="p-2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    <FaTimes size={20} />
+                  </button>
+                </div>
+                
+                {/* Mobile Menu Navigation */}
+                <nav className="flex-1 py-4">
+                  {navItems.map((item, index) => (
+                    <motion.div
+                      key={item.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.05 }}
+                    >
+                      <MenuItem href={item.href} onClick={closeMobileMenu}>
+                        {item.name}
+                      </MenuItem>
+                    </motion.div>
+                  ))}
+                </nav>
+                
+                {/* Mobile Menu Footer */}
+                <div className="p-4 border-t border-gray-800 space-y-3">
+                  <Link 
+                    href="/write-for-us" 
+                    onClick={closeMobileMenu}
+                    className="block text-sm text-gray-400 hover:text-yellow-400 transition-colors py-2"
+                  >
+                    Write For Us
+                  </Link>
+                  <Link 
+                    href="/contact" 
+                    onClick={closeMobileMenu}
+                    className="block text-sm text-gray-400 hover:text-yellow-400 transition-colors py-2"
+                  >
+                    Contact
+                  </Link>
+                </div>
+              </div>
+              
+              {/* Accent Line */}
+              <motion.div 
+                className="absolute top-0 right-0 w-1 h-full bg-gradient-to-b from-yellow-400 via-orange-500 to-red-500"
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: 1 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+              />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       <AnimatePresence>
         {isMegaMenuOpen && (
@@ -92,7 +223,7 @@ const Header: React.FC = () => {
               </div>
               
               <nav className="flex-grow">
-                <MenuItem href="/articles">
+                <MenuItem href="/gaming">
                   News
                 </MenuItem>
                 {['Reviews', 'Guides', 'Videos', 'Technology'].map((item) => (
@@ -100,8 +231,11 @@ const Header: React.FC = () => {
                     {item}
                   </MenuItem>
                 ))}
-                <MenuItem href="/skull-and-bones-guide">
-                  Skull And Bones Guide
+                <MenuItem href="/articles">
+                  All Articles
+                </MenuItem>
+                <MenuItem href="/authors">
+                  Team
                 </MenuItem>
               </nav>
               

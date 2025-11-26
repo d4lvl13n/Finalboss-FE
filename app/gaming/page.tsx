@@ -3,6 +3,8 @@ import { GET_GAMING_POSTS } from '../lib/queries/getGamingPosts';
 import client from '../lib/apolloClient';
 import dynamic from 'next/dynamic';
 import { buildPageMetadata } from '../lib/seo';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const GamingPageContent = dynamic(() => import('../components/Gaming/GamingPageContent'), { ssr: false });
 const GamingStructuredData = dynamic(() => import('../components/Gaming/GamingStructuredData'), { ssr: false });
@@ -16,18 +18,31 @@ export async function generateMetadata() {
 }
 
 export default async function GamingPage() {
-  const { data } = await client.query({
-    query: GET_GAMING_POSTS,
-    variables: { first: 24, after: null },
-  });
+  let articles = [];
+  let hasNextPage = false;
 
-  const articles = data.posts.nodes;
-  const hasNextPage = data.posts.pageInfo.hasNextPage;
+  try {
+    const { data } = await client.query({
+      query: GET_GAMING_POSTS,
+      variables: { first: 24, after: null },
+    });
+
+    articles = data?.posts?.nodes || [];
+    hasNextPage = data?.posts?.pageInfo?.hasNextPage || false;
+  } catch (error) {
+    console.error('Error fetching gaming posts:', error);
+  }
 
   return (
-    <Suspense fallback={null}>
-      <GamingStructuredData articles={articles} />
-      <GamingPageContent initialArticles={articles} initialHasNextPage={hasNextPage} />
-    </Suspense>
+    <>
+      <Header />
+      <Suspense fallback={null}>
+        <GamingStructuredData articles={articles} />
+        <GamingPageContent initialArticles={articles} initialHasNextPage={hasNextPage} />
+      </Suspense>
+      <Footer />
+    </>
   );
 }
+
+export const revalidate = 3600; // Revalidate every hour

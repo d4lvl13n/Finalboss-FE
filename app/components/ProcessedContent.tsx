@@ -67,9 +67,47 @@
        return () => { isCancelled = true; };
      }, [relatedSlugs, wpGraphql]);
 
-     const options: HTMLReactParserOptions = {
-       replace: (domNode) => {
-         if (domNode instanceof Element && domNode.name === 'img') {
+    // Counter for generating unique heading IDs
+    let headingCounter = 0;
+    
+    const options: HTMLReactParserOptions = {
+      replace: (domNode) => {
+        // Add IDs to headings for Table of Contents
+        if (domNode instanceof Element && ['h2', 'h3', 'h4'].includes(domNode.name)) {
+          const text = domToReact(domNode.children as unknown as DOMNode[]);
+          const textContent = typeof text === 'string' ? text : 
+            (Array.isArray(text) ? text.map(t => typeof t === 'string' ? t : '').join('') : '');
+          const id = domNode.attribs?.id || 
+            `heading-${headingCounter++}-${textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
+          
+          const HeadingTag = domNode.name as 'h2' | 'h3' | 'h4';
+          return (
+            <HeadingTag id={id} className={domNode.attribs?.class}>
+              {domToReact(domNode.children as unknown as DOMNode[], options)}
+            </HeadingTag>
+          );
+        }
+        
+        // Convert all internal links from backend to frontend domain
+        if (domNode instanceof Element && domNode.name === 'a') {
+          const href = domNode.attribs?.href || '';
+          // Check if it's a backend link that should point to frontend
+          if (href.includes('backend.finalboss.io') && !href.includes('/wp-admin') && !href.includes('/wp-content/uploads')) {
+            const normalizedHref = href.replace('https://backend.finalboss.io', frontendBase);
+            return (
+              <a 
+                href={normalizedHref}
+                className={domNode.attribs?.class}
+                target={domNode.attribs?.target}
+                rel={domNode.attribs?.rel}
+              >
+                {domToReact(domNode.children as unknown as DOMNode[], options)}
+              </a>
+            );
+          }
+        }
+        
+        if (domNode instanceof Element && domNode.name === 'img') {
            const { src, alt, width, height } = domNode.attribs;
            // Default aspect ratio if not provided
            const w = parseInt(width) || 800;

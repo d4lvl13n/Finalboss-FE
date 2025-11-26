@@ -88,7 +88,7 @@ export default function GuideCategoryClient({ slug }: { slug: string }) {
             >
               <Link href={`/${article.slug}`} className="block h-full">
                 <Image
-                  src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.png'}
+                  src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
                   alt={article.title}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-110"

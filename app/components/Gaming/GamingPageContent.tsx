@@ -1,18 +1,18 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { useQuery } from '@apollo/client';
 import { GET_GAMING_POSTS } from '../../lib/queries/getGamingPosts';
 import client from '../../lib/apolloClient';
+import PageHeader from '../PageHeader';
+import ResponsiveArticleGrid from '../ResponsiveArticleGrid';
 
 interface Article {
   id: string;
   title: string;
   slug: string;
   excerpt: string;
+  date?: string;
   featuredImage?: {
     node: {
       sourceUrl: string;
@@ -61,64 +61,28 @@ export default function GamingPageContent({ initialArticles, initialHasNextPage 
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white py-24">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center mb-12">
-          <h1 className="text-5xl font-bold text-yellow-400 mr-4">Gaming News</h1>
-          <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((article, index) => (
-            <motion.div
-              key={article.id}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative group h-64 overflow-hidden rounded-lg"
-            >
-              <Link href={`/${article.slug}`} className="block h-full">
-                <Image
-                  src={article.featuredImage?.node.sourceUrl || '/images/placeholder.png'}
-                  alt={article.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 33vw"
-                  className="object-cover transition-transform duration-300 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-70"></div>
-                <div className="absolute top-4 right-4 z-10">
-                  {article.categories?.nodes?.[0] && (
-                    <span className="bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded">
-                      {article.categories.nodes[0].name}
-                    </span>
-                  )}
-                </div>
-                <div className="absolute inset-0 flex flex-col justify-end p-6">
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    {article.title}
-                  </h3>
-                </div>
-                <div className="absolute inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center p-6">
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    {article.title}
-                  </h3>
-                  <p className="text-gray-300 text-sm mb-4" dangerouslySetInnerHTML={{ __html: article.excerpt }} />
-                  <span className="inline-block bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded hover:bg-yellow-300 transition-colors">
-                    Read More
-                  </span>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
+    <div className="min-h-screen bg-gray-900 text-white">
+      <PageHeader 
+        title="Gaming News" 
+        description="Breaking news, updates, and stories from the gaming world"
+        accentColor="green"
+      />
+      
+      <div className="container mx-auto px-3 md:px-4 pb-8 md:pb-16">
+        <ResponsiveArticleGrid 
+          articles={articles} 
+          showFeatured={true}
+          featuredCount={1}
+        />
 
         {hasNextPage && (
-          <div className="text-center mt-12">
+          <div className="text-center mt-8 md:mt-12">
             <button
               onClick={handleLoadMore}
-              className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
+              className="inline-block bg-yellow-400 text-black font-bold py-2.5 md:py-3 px-6 md:px-8 rounded-full hover:bg-yellow-300 transition-colors text-sm md:text-base"
               disabled={loading}
             >
-              {loading ? 'Loading...' : 'Load More Gaming Articles'}
+              {loading ? 'Loading...' : 'Load More'}
             </button>
           </div>
         )}

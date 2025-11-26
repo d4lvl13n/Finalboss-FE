@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useQuery } from '@apollo/client';
 import { Source_Sans_3 } from 'next/font/google';
@@ -20,6 +21,10 @@ import client from '../../lib/apolloClient';
 import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
 import ReviewSummary, { ReviewConfig } from '../Review/ReviewSummary';
 import ReviewJsonLd from '../Seo/ReviewJsonLd';
+import Breadcrumbs from '../Breadcrumbs';
+import TableOfContents from './TableOfContents';
+import ReadingProgressBar from '../ReadingProgressBar';
+import LatestSidebar from '../LatestSidebar';
 
 const sourceSans = Source_Sans_3({
   subsets: ['latin'],
@@ -38,6 +43,7 @@ interface ArticleData {
     node?: {
       id?: string;
       name?: string;
+      slug?: string;
     };
   };
   featuredImage?: {
@@ -59,7 +65,6 @@ interface ArticleContentProps {
 
 export default function ArticleContent({ article }: ArticleContentProps) {
   console.log('Raw article content:', article.content);
-  const [readingProgress, setReadingProgress] = useState(0);
   const [featuredImageError, setFeaturedImageError] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 
@@ -112,30 +117,13 @@ export default function ArticleContent({ article }: ArticleContentProps) {
     errorPolicy: 'ignore',
   });
 
-  // Fallback to latest posts if other queries fail
+  // Fetch latest posts for sidebar and fallback recommendations
   const { data: latestData, loading: latestLoading } = useQuery(GET_LATEST_POSTS, {
-    variables: { first: 4 },
+    variables: { first: 12 },
     client,
     fetchPolicy: 'cache-first',
-    // Only fetch if we have no other recommendations
-    skip: (relatedData?.posts?.nodes?.length > 0) || 
-          (authorData?.posts?.nodes?.length > 0) ||
-          relatedLoading || authorLoading,
   });
 
-  useEffect(() => {
-    const updateReadingProgress = () => {
-      const totalHeight =
-        document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress = (window.scrollY / totalHeight) * 100;
-      setReadingProgress(progress);
-    };
-
-    window.addEventListener('scroll', updateReadingProgress);
-    return () => {
-      window.removeEventListener('scroll', updateReadingProgress);
-    };
-  }, []);
 
   // Debug logging
   useEffect(() => {
@@ -144,8 +132,12 @@ export default function ArticleContent({ article }: ArticleContentProps) {
     if (authorError) console.log('Author posts error:', authorError);
   }, [relatedError, sequentialError, authorError]);
 
-  // Determine what articles to show
-  const articlesToShow = relatedData?.posts?.nodes || latestData?.posts?.nodes || [];
+  // Determine what articles to show (filter out current article)
+  const currentSlug = (article as unknown as { slug?: string }).slug;
+  const rawArticles = relatedData?.posts?.nodes || latestData?.posts?.nodes || [];
+  const articlesToShow = rawArticles.filter(
+    (a: { id?: string; slug?: string }) => a.id !== article.id && a.slug !== currentSlug
+  );
   const isLoading = relatedLoading || sequentialLoading || authorLoading || latestLoading;
   const publishedDate = formatDate(article.date);
   const updatedDate = article.modified ? formatDate(article.modified) : null;
@@ -242,14 +234,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200">
       {/* Reading Progress Bar */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-gray-700 z-50">
-        <motion.div
-          className="h-full bg-yellow-400"
-          style={{ width: `${readingProgress}%` }}
-          initial={{ width: 0 }}
-          animate={{ width: `${readingProgress}%` }}
-        />
-      </div>
+      <ReadingProgressBar />
 
       {/* Parallax Featured Image */}
       <div className="relative h-[60vh] overflow-hidden">
@@ -278,8 +263,18 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900/90" />
       </div>
 
+      {/* Breadcrumbs */}
+      <div className="relative z-10 px-4 -mt-16 mb-4 max-w-7xl mx-auto">
+        <Breadcrumbs 
+          items={[
+            ...(primaryCategory ? [{ label: primaryCategory.name, href: `/${primaryCategory.name.toLowerCase()}` }] : []),
+            { label: article.title }
+          ]}
+        />
+      </div>
+
       {/* Article Content */}
-      <div className="relative z-10 px-4 -mt-24">
+      <div className="relative z-10 px-4 -mt-8">
         <div className="flex justify-center max-w-7xl mx-auto">
           {/* Left Sidebar - Desktop Only */}
           {isDesktop && SHOW_MANUAL_ADS && (
@@ -319,16 +314,22 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-6">
                 {/* Author Info */}
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-gray-700/70 border-2 border-yellow-400/20 flex items-center justify-center text-yellow-400 text-lg font-semibold shadow-lg">
+                  <Link 
+                    href={`/author/${article.author?.node?.slug || ''}`}
+                    className="w-12 h-12 rounded-full bg-gray-700/70 border-2 border-yellow-400/20 flex items-center justify-center text-yellow-400 text-lg font-semibold shadow-lg hover:border-yellow-400/50 transition-colors"
+                  >
                     {article.author?.node?.name?.charAt(0)}
-                  </div>
+                  </Link>
                   <div className="flex flex-col">
-                    <span className="text-yellow-400 font-medium tracking-wide">
+                    <Link 
+                      href={`/author/${article.author?.node?.slug || ''}`}
+                      className="text-yellow-400 font-medium tracking-wide hover:text-yellow-300 transition-colors"
+                    >
                       {article.author?.node?.name}
-                    </span>
+                    </Link>
                     <div className="text-sm text-gray-400 flex flex-col">
                       <span>Published {publishedDate}</span>
                       {showUpdatedTimestamp && updatedDate && (
@@ -376,6 +377,9 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             {articlesToShow.length > 0 && (
               <InlineRelatedLinks articles={articlesToShow.slice(0, 3)} />
             )}
+
+            {/* Table of Contents for long articles */}
+            <TableOfContents content={contentCleaned} minHeadings={4} />
 
               {/* 🎯 AD PLACEMENT 1: High-performing above-the-fold ad */}
               {SHOW_MANUAL_ADS && (
@@ -448,18 +452,39 @@ export default function ArticleContent({ article }: ArticleContentProps) {
           </div>
 
           {/* Right Sidebar - Desktop Only */}
-          {isDesktop && SHOW_MANUAL_ADS && (
-            <div className="hidden xl:block w-48 flex-shrink-0 ml-6">
-              <div className="sticky top-32">
+          {isDesktop && (
+            <div className="hidden xl:block w-72 flex-shrink-0 ml-6">
+              <div className="sticky top-24 space-y-6">
+                {/* Latest Articles Sidebar */}
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 1.0 }}
-                  className="sidebar-ad-sticky bg-gray-800/20 rounded-lg p-3 border border-gray-700/20"
+                  transition={{ duration: 0.5, delay: 0.8 }}
+                  className="bg-gray-800/30 rounded-xl p-4 border border-gray-700/30"
                 >
-                  <div className="ad-label text-xs mb-3">Advertisement</div>
-                  <VerticalAd adSlot="1258229391" />
+                  <LatestSidebar 
+                    articles={latestData?.posts?.nodes || []}
+                    title="Latest"
+                    showAllLink="/gaming"
+                    showAllText="View All"
+                    maxItems={8}
+                    accentColor="yellow"
+                    maxHeight="650px"
+                  />
                 </motion.div>
+                
+                {/* Ad below sidebar */}
+                {SHOW_MANUAL_ADS && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 1.0 }}
+                    className="bg-gray-800/20 rounded-lg p-3 border border-gray-700/20"
+                  >
+                    <div className="ad-label text-xs mb-3">Advertisement</div>
+                    <VerticalAd adSlot="1258229391" />
+                  </motion.div>
+                )}
               </div>
             </div>
           )}

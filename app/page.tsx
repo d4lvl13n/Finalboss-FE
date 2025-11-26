@@ -7,11 +7,6 @@ import GameDatabaseSection from './components/GameDatabaseSection';
 import { buildPageMetadata } from './lib/seo';
 
 // Import critical components with loading priority
-const FeaturedSlider = dynamic(() => import('./components/FeaturedSlider'), {
-  loading: () => <div className="h-[600px] bg-gray-800 animate-pulse" />,
-  ssr: true
-});
-
 const LatestArticles = dynamic(() => import('./components/LatestArticles'), {
   loading: () => <div className="h-[400px] bg-gray-800 animate-pulse" />,
   ssr: true
@@ -56,14 +51,8 @@ export default async function HomePage() {
       <>
         <Header />
         <main className="bg-gray-900 text-white min-h-screen font-body">
-          {/* Critical content with priority loading */}
-          <Suspense 
-            fallback={
-              <div className="h-[600px] bg-gray-800 animate-pulse opacity-40" />
-            }
-          >
-            <FeaturedSlider />
-          </Suspense>
+          {/* Spacer for fixed header */}
+          <div className="h-16 md:h-20" />
 
           <Suspense
             fallback={
@@ -95,18 +84,30 @@ export default async function HomePage() {
           </Suspense>
 
           {/* Newsletter section with reserved space */}
-          <section className="py-16 bg-gray-800">
-            <div className="container mx-auto px-4 text-center min-h-[300px]">
-              <h2 className="text-4xl font-bold mb-8 text-yellow-400">
-                Join the FinalBoss Community
+          <section className="py-12 md:py-20 bg-gradient-to-b from-gray-900 via-gray-900 to-gray-950 relative overflow-hidden">
+            {/* Background decorations */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-400/5 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl" />
+            </div>
+            
+            <div className="container mx-auto px-4 text-center relative">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/20 rounded-full px-4 py-1.5 mb-6">
+                <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
+                <span className="text-yellow-400 text-sm font-medium">Join 10,000+ Gamers</span>
+              </div>
+              
+              <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
+                <span className="text-white">Level Up Your </span>
+                <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Gaming Knowledge</span>
               </h2>
-              <p className="text-xl text-gray-300 mb-8">
-                Stay updated with the latest gaming news, reviews, and exclusive
-                content.
+              <p className="text-sm md:text-lg text-gray-400 mb-8 md:mb-10 max-w-2xl mx-auto">
+                Get the latest gaming news, exclusive reviews, pro tips, and insider content delivered straight to your inbox every week.
               </p>
               <Suspense
                 fallback={
-                  <div className="h-[100px] bg-gray-700 rounded animate-pulse" />
+                  <div className="h-[100px] bg-gray-800 rounded-full max-w-xl mx-auto animate-pulse" />
                 }
               >
                 <NewsletterForm />

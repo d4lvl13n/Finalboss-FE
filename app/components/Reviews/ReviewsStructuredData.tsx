@@ -15,28 +15,34 @@ interface Review {
     };
   };
   date: string;
+  featuredImage?: {
+    node?: {
+      sourceUrl?: string;
+    };
+  };
 }
 
 export default function ReviewsStructuredData({ reviews }: { reviews: Review[] }) {
-  const structuredData = {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+  
+  // Use CollectionPage schema for the reviews listing page
+  // Individual review pages should have the Review schema with ratings
+  const collectionPageData = {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    "itemListElement": reviews.map((review, index) => ({
-      "@type": "ListItem",
-      "position": index + 1,
-      "item": {
-        "@type": "Review",
-        "name": review.title,
-        "url": `https://finalboss.io/${review.slug}`,
-        "description": review.excerpt,
-        "author": {
-          "@type": "Person",
-          "name": review.author?.node?.name,
-          "description": review.author?.node?.description
-        },
-        "datePublished": review.date
-      }
-    }))
+    "@type": "CollectionPage",
+    "name": "Game Reviews | FinalBoss.io",
+    "description": "Read in-depth game reviews, verdicts, and ratings from the FinalBoss.io editorial team.",
+    "url": `${baseUrl}/reviews`,
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": reviews.length,
+      "itemListElement": reviews.map((review, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `${baseUrl}/${review.slug}`,
+        "name": review.title
+      }))
+    }
   };
 
   const breadcrumbData = {
@@ -62,7 +68,7 @@ export default function ReviewsStructuredData({ reviews }: { reviews: Review[] }
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageData) }}
       />
       <script
         type="application/ld+json"

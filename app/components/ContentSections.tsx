@@ -1,7 +1,6 @@
 import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 
-const GamingSection = dynamic(() => import('./GamingSection'));
 const VideoSection = dynamic(() => import('./VideoSection'));
 const TechnologySection = dynamic(() => import('./TechnologySection'));
 const GuidesSection = dynamic(() => import('./GuidesSection'));
@@ -9,12 +8,6 @@ const GuidesSection = dynamic(() => import('./GuidesSection'));
 export default function ContentSections() {
   return (
     <>
-      <Suspense
-        fallback={<div className="h-[400px] bg-gray-800 animate-pulse" />}
-      >
-        <GamingSection />
-      </Suspense>
-      
       <Suspense
         fallback={<div className="h-[400px] bg-gray-800 animate-pulse" />}
       >

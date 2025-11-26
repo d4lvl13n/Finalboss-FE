@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaBell, FaFire, FaGamepad } from 'react-icons/fa';
 
+const DISMISS_DURATION_DAYS = 7;
+
 const StickyNotificationBar: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [email, setEmail] = useState('');
@@ -11,20 +13,31 @@ const StickyNotificationBar: React.FC = () => {
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
-    // Show after 3 seconds if not dismissed
+    // Show after 5 seconds if not dismissed within the last 7 days
     const timer = setTimeout(() => {
-      const dismissed = localStorage.getItem('notification-bar-dismissed');
-      if (!dismissed) {
-        setIsVisible(true);
+      const dismissedAt = localStorage.getItem('notification-bar-dismissed');
+      
+      if (dismissedAt) {
+        const dismissedDate = new Date(dismissedAt);
+        const now = new Date();
+        const daysSinceDismissed = (now.getTime() - dismissedDate.getTime()) / (1000 * 60 * 60 * 24);
+        
+        // Only show if more than 7 days have passed
+        if (daysSinceDismissed < DISMISS_DURATION_DAYS) {
+          return;
+        }
       }
-    }, 3000);
+      
+      setIsVisible(true);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
 
   const handleDismiss = () => {
     setIsVisible(false);
-    localStorage.setItem('notification-bar-dismissed', 'true');
+    // Store the dismissal timestamp instead of just 'true'
+    localStorage.setItem('notification-bar-dismissed', new Date().toISOString());
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

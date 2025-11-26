@@ -5,30 +5,51 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useYouTubeVideos } from '../../hooks/useYouTubeVideos';
 import { YouTubeService } from '../../lib/youtube/service';
+import PageHeader from '../PageHeader';
 
 export default function VideosPageClient() {
   const { videos, loading, error } = useYouTubeVideos(12);
 
   if (loading) {
     return (
-      <section className="max-w-6xl mx-auto px-4 pt-32 pb-16 text-center text-gray-400">
-        Loading the latest videos…
-      </section>
+      <>
+        <PageHeader 
+          title="Videos" 
+          description="Watch gameplay, reviews, and gaming content from FinalBoss"
+          accentColor="red"
+        />
+        <section className="max-w-6xl mx-auto px-4 pb-16 text-center text-gray-400">
+          Loading the latest videos…
+        </section>
+      </>
     );
   }
 
   if (error) {
     return (
-      <section className="max-w-6xl mx-auto px-4 pt-32 pb-16 text-center text-red-400">
-        Unable to load videos right now.
-      </section>
+      <>
+        <PageHeader 
+          title="Videos" 
+          description="Watch gameplay, reviews, and gaming content from FinalBoss"
+          accentColor="red"
+        />
+        <section className="max-w-6xl mx-auto px-4 pb-16 text-center text-red-400">
+          Unable to load videos right now.
+        </section>
+      </>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pt-32 pb-16">
-      <h1 className="text-4xl font-bold mb-8 text-yellow-400">Videos</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <>
+      <PageHeader 
+        title="Videos" 
+        description="Watch gameplay, reviews, and gaming content from FinalBoss"
+        accentColor="red"
+      />
+      
+      <div className="max-w-6xl mx-auto px-4 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {videos.map((video, index) => (
           <motion.div
             key={video.id}
@@ -67,8 +88,9 @@ export default function VideosPageClient() {
             </Link>
           </motion.div>
         ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

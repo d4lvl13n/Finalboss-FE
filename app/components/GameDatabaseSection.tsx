@@ -7,7 +7,7 @@ import { FaArrowRight } from 'react-icons/fa';
 
 export default function GameDatabaseSection() {
   return (
-    <section className="py-16 bg-gray-900">
+    <section className="py-10 md:py-16 bg-gray-900">
       <div className="container mx-auto px-4">
         <div className="flex items-center mb-12">
           <h2 className="text-4xl font-bold text-yellow-400 mr-4">Game Database</h2>

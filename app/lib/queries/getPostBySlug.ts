@@ -23,6 +23,7 @@ export const GET_POST_BY_SLUG = gql`
         node {
           id
           name
+          slug
         }
       }
       categories {
