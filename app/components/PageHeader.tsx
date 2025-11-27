@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 interface PageHeaderProps {
   title: string;
   description?: string;
-  accentColor?: 'yellow' | 'purple' | 'blue' | 'green' | 'red' | 'orange';
+  accentColor?: 'yellow' | 'purple' | 'blue' | 'green' | 'red' | 'orange' | 'cyan';
   compact?: boolean; // For even smaller header on some pages
 }
 
@@ -39,6 +39,11 @@ const accentColors = {
     gradient: 'from-orange-400 to-amber-500',
     glow: 'from-orange-400/20',
     text: 'text-orange-400',
+  },
+  cyan: {
+    gradient: 'from-cyan-400 to-blue-500',
+    glow: 'from-cyan-400/20',
+    text: 'text-cyan-400',
   },
 };
 
