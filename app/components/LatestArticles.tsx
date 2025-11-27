@@ -36,35 +36,33 @@ interface Article {
   };
 }
 
-// Featured article card (smaller than before) - Optimized for LCP
+// Featured article card (smaller than before) - Optimized for LCP and CLS
 const FeaturedArticle = ({ article }: { article: Article }) => (
   <Link href={`/${article.slug}`} className="group block">
-    <div className="relative">
-      {/* Image - Fixed aspect ratio to prevent CLS */}
-      <div className="relative aspect-[16/9] md:aspect-[16/10] rounded-xl overflow-hidden bg-gray-800">
-        <Image
-          src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
-          alt={article.title}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 680px"
-          className="object-cover"
-          priority
-          fetchPriority="high"
-          loading="eager"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-        
-        {/* Category badge */}
-        {article.categories?.nodes?.[0] && (
-          <span className="absolute top-4 left-4 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded">
-            {article.categories.nodes[0].name}
-          </span>
-        )}
-      </div>
+    {/* Fixed height container to prevent CLS */}
+    <div className="relative h-[220px] sm:h-[280px] md:h-[380px] lg:h-[420px] rounded-xl overflow-hidden bg-gray-800">
+      <Image
+        src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+        alt={article.title}
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 680px"
+        className="object-cover"
+        priority
+        fetchPriority="high"
+        loading="eager"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+      
+      {/* Category badge */}
+      {article.categories?.nodes?.[0] && (
+        <span className="absolute top-4 left-4 bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded">
+          {article.categories.nodes[0].name}
+        </span>
+      )}
       
       {/* Content overlay */}
       <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
-        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white group-hover:text-yellow-400 transition-colors leading-tight mb-2">
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white group-hover:text-yellow-400 transition-colors leading-tight mb-2 line-clamp-2">
           {article.title}
         </h2>
         <div className="flex items-center gap-3 text-sm text-gray-300">
@@ -83,10 +81,10 @@ const FeaturedArticle = ({ article }: { article: Article }) => (
   </Link>
 );
 
-// Secondary article cards (below featured) - No animation for faster paint
+// Secondary article cards (below featured) - Fixed height to prevent CLS
 const SecondaryArticle = ({ article }: { article: Article; index: number }) => (
-  <Link href={`/${article.slug}`} className="group block">
-    <div className="relative aspect-[16/9] rounded-lg overflow-hidden mb-3 bg-gray-800">
+  <Link href={`/${article.slug}`} className="group block h-[180px] md:h-[200px]">
+    <div className="relative h-[120px] md:h-[130px] rounded-lg overflow-hidden mb-2 bg-gray-800">
       <Image
         src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
         alt={article.title}
@@ -110,19 +108,20 @@ const SecondaryArticle = ({ article }: { article: Article; index: number }) => (
   </Link>
 );
 
-// Compact card for mobile
+// Compact card for mobile - Fixed height to prevent CLS
 const CompactArticle = ({ article }: { article: Article }) => (
   <Link 
     href={`/${article.slug}`}
-    className="flex gap-3 p-2 rounded-lg bg-gray-800/30 hover:bg-gray-800/50 transition-colors"
+    className="flex gap-3 p-2 rounded-lg bg-gray-800/30 hover:bg-gray-800/50 transition-colors h-[88px]"
   >
-    <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
+    <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-700">
       <Image
         src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
         alt={article.title}
         fill
         sizes="80px"
         className="object-cover"
+        loading="lazy"
       />
     </div>
     <div className="flex-1 min-w-0 py-1">
@@ -150,50 +149,67 @@ const LatestArticles = () => {
     }
   }, [data]);
 
-  // Fixed dimensions skeleton to prevent CLS
+  // Fixed dimensions skeleton matching exact final layout to prevent CLS
   if (loading) {
     return (
-      <section className="py-10 md:py-16 bg-gray-900" style={{ minHeight: '600px' }}>
+      <section className="py-10 md:py-16 bg-gray-900">
         <div className="container mx-auto px-3 md:px-4">
-          <div className="h-8 w-48 bg-gray-800 rounded mb-6" />
-          {/* Mobile skeleton - fixed height */}
-          <div className="md:hidden" style={{ minHeight: '500px' }}>
-            <div className="aspect-[16/9] bg-gray-800 rounded-xl mb-4" />
-            {Array.from({ length: 4 }).map((_, idx) => (
-              <div key={idx} className="flex gap-3 p-2 bg-gray-800/30 rounded-lg mb-2" style={{ height: '88px' }}>
-                <div className="w-20 h-20 bg-gray-700 rounded-lg flex-shrink-0" />
-                <div className="flex-1 space-y-2 py-1">
-                  <div className="h-4 bg-gray-700 rounded w-3/4" />
-                  <div className="h-3 bg-gray-700 rounded w-1/2" />
-                </div>
-              </div>
-            ))}
+          {/* Header skeleton - exact height */}
+          <div className="flex items-center mb-6 md:mb-8 h-8 md:h-10">
+            <div className="h-6 md:h-8 w-40 md:w-48 bg-gray-800 rounded" />
+            <div className="flex-grow h-0.5 md:h-1 bg-gray-800 rounded-full ml-3 md:ml-4" />
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-800 rounded-full ml-3 md:ml-4" />
           </div>
-          {/* Desktop skeleton - fixed height */}
-          <div className="hidden md:flex gap-8" style={{ minHeight: '500px' }}>
-            <div className="flex-1">
-              <div className="aspect-[16/10] bg-gray-800 rounded-xl mb-6" />
+          
+          {/* Mobile skeleton - exact heights */}
+          <div className="md:hidden">
+            {/* Featured - exact height */}
+            <div className="h-[220px] sm:h-[280px] bg-gray-800 rounded-xl mb-4" />
+            {/* Compact cards - exact heights */}
+            <div className="space-y-2">
+              {Array.from({ length: 5 }).map((_, idx) => (
+                <div key={idx} className="flex gap-3 p-2 bg-gray-800/30 rounded-lg h-[88px]">
+                  <div className="w-20 h-20 bg-gray-700 rounded-lg flex-shrink-0" />
+                  <div className="flex-1 space-y-2 py-1">
+                    <div className="h-4 bg-gray-700 rounded w-3/4" />
+                    <div className="h-4 bg-gray-700 rounded w-full" />
+                    <div className="h-3 bg-gray-700 rounded w-1/3" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Desktop skeleton - exact heights */}
+          <div className="hidden md:flex gap-8">
+            <div className="flex-1 min-w-0">
+              {/* Featured - exact height */}
+              <div className="h-[380px] lg:h-[420px] bg-gray-800 rounded-xl mb-6" />
+              {/* Secondary grid - exact heights */}
               <div className="grid grid-cols-3 gap-4">
                 {Array.from({ length: 3 }).map((_, idx) => (
-                  <div key={idx}>
-                    <div className="aspect-[16/9] bg-gray-800 rounded-lg mb-3" />
+                  <div key={idx} className="h-[200px]">
+                    <div className="h-[130px] bg-gray-800 rounded-lg mb-2" />
                     <div className="h-4 bg-gray-800 rounded w-3/4 mb-2" />
-                    <div className="h-4 bg-gray-800 rounded w-1/2" />
+                    <div className="h-4 bg-gray-800 rounded w-full" />
                   </div>
                 ))}
               </div>
             </div>
-            <div className="w-96 space-y-3">
-              <div className="h-6 bg-gray-800 rounded w-24 mb-4" />
-              {Array.from({ length: 8 }).map((_, idx) => (
-                <div key={idx} className="flex gap-3 py-3 border-b border-gray-800" style={{ height: '60px' }}>
-                  <div className="w-16 h-4 bg-gray-800 rounded" />
-                  <div className="flex-1">
-                    <div className="h-4 bg-gray-800 rounded mb-2" />
-                    <div className="h-3 bg-gray-800 rounded w-1/3" />
+            {/* Sidebar skeleton */}
+            <div className="w-80 lg:w-96 flex-shrink-0">
+              <div className="h-6 bg-gray-800 rounded w-20 mb-4" />
+              <div className="space-y-0">
+                {Array.from({ length: 10 }).map((_, idx) => (
+                  <div key={idx} className="flex gap-3 py-3 border-b border-gray-800/50">
+                    <div className="w-14 h-4 bg-gray-800 rounded flex-shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 bg-gray-800 rounded" />
+                      <div className="h-3 bg-gray-800 rounded w-1/3" />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>

@@ -71,11 +71,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
         {/* Preconnects for third-parties to reduce connection latency */}
-        <link rel="preconnect" href="https://www.googletagmanager.com" />
-        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+        <link rel="preconnect" href="https://backend.finalboss.io" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.googleapis.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://backend.finalboss.io" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
         <link rel="preconnect" href="https://i.ytimg.com" />
         <link rel="alternate" type="application/rss+xml" title="FinalBoss.io Articles" href={`${baseUrl}/feeds/articles`} />
