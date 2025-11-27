@@ -36,24 +36,21 @@ interface Article {
   };
 }
 
-// Featured article card (smaller than before)
+// Featured article card (smaller than before) - Optimized for LCP
 const FeaturedArticle = ({ article }: { article: Article }) => (
   <Link href={`/${article.slug}`} className="group block">
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
-      className="relative"
-    >
-      {/* Image - Reduced height */}
-      <div className="relative aspect-[16/9] md:aspect-[16/10] rounded-xl overflow-hidden">
+    <div className="relative">
+      {/* Image - Fixed aspect ratio to prevent CLS */}
+      <div className="relative aspect-[16/9] md:aspect-[16/10] rounded-xl overflow-hidden bg-gray-800">
         <Image
           src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
           alt={article.title}
           fill
-          sizes="(max-width: 768px) 100vw, 55vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 680px"
+          className="object-cover"
           priority
+          fetchPriority="high"
+          loading="eager"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         
@@ -82,40 +79,35 @@ const FeaturedArticle = ({ article }: { article: Article }) => (
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   </Link>
 );
 
-// Secondary article cards (below featured)
-const SecondaryArticle = ({ article, index }: { article: Article; index: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3, delay: 0.2 + index * 0.1 }}
-  >
-    <Link href={`/${article.slug}`} className="group block">
-      <div className="relative aspect-[16/9] rounded-lg overflow-hidden mb-3">
-        <Image
-          src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
-          alt={article.title}
-          fill
-          sizes="(max-width: 768px) 50vw, 18vw"
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        
-        {/* Category badge */}
-        {article.categories?.nodes?.[0] && (
-          <span className="absolute top-2 left-2 bg-yellow-400 text-black text-[10px] font-bold px-2 py-0.5 rounded">
-            {article.categories.nodes[0].name}
-          </span>
-        )}
-      </div>
-      <h3 className="text-sm md:text-base font-semibold text-white group-hover:text-yellow-400 transition-colors line-clamp-2 leading-snug">
-        {article.title}
-      </h3>
-    </Link>
-  </motion.div>
+// Secondary article cards (below featured) - No animation for faster paint
+const SecondaryArticle = ({ article }: { article: Article; index: number }) => (
+  <Link href={`/${article.slug}`} className="group block">
+    <div className="relative aspect-[16/9] rounded-lg overflow-hidden mb-3 bg-gray-800">
+      <Image
+        src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+        alt={article.title}
+        fill
+        sizes="(max-width: 768px) 50vw, 220px"
+        className="object-cover group-hover:scale-105 transition-transform duration-300"
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      
+      {/* Category badge */}
+      {article.categories?.nodes?.[0] && (
+        <span className="absolute top-2 left-2 bg-yellow-400 text-black text-[10px] font-bold px-2 py-0.5 rounded">
+          {article.categories.nodes[0].name}
+        </span>
+      )}
+    </div>
+    <h3 className="text-sm md:text-base font-semibold text-white group-hover:text-yellow-400 transition-colors line-clamp-2 leading-snug">
+      {article.title}
+    </h3>
+  </Link>
 );
 
 // Compact card for mobile
@@ -158,19 +150,33 @@ const LatestArticles = () => {
     }
   }, [data]);
 
+  // Fixed dimensions skeleton to prevent CLS
   if (loading) {
     return (
-      <section className="py-10 md:py-16 bg-gray-900">
+      <section className="py-10 md:py-16 bg-gray-900" style={{ minHeight: '600px' }}>
         <div className="container mx-auto px-3 md:px-4">
-          <div className="h-8 w-48 bg-gray-800 animate-pulse mb-6" />
-          {/* Desktop skeleton */}
-          <div className="hidden md:flex gap-8">
+          <div className="h-8 w-48 bg-gray-800 rounded mb-6" />
+          {/* Mobile skeleton - fixed height */}
+          <div className="md:hidden" style={{ minHeight: '500px' }}>
+            <div className="aspect-[16/9] bg-gray-800 rounded-xl mb-4" />
+            {Array.from({ length: 4 }).map((_, idx) => (
+              <div key={idx} className="flex gap-3 p-2 bg-gray-800/30 rounded-lg mb-2" style={{ height: '88px' }}>
+                <div className="w-20 h-20 bg-gray-700 rounded-lg flex-shrink-0" />
+                <div className="flex-1 space-y-2 py-1">
+                  <div className="h-4 bg-gray-700 rounded w-3/4" />
+                  <div className="h-3 bg-gray-700 rounded w-1/2" />
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Desktop skeleton - fixed height */}
+          <div className="hidden md:flex gap-8" style={{ minHeight: '500px' }}>
             <div className="flex-1">
-              <div className="aspect-[16/10] bg-gray-800 rounded-xl animate-pulse mb-6" />
+              <div className="aspect-[16/10] bg-gray-800 rounded-xl mb-6" />
               <div className="grid grid-cols-3 gap-4">
                 {Array.from({ length: 3 }).map((_, idx) => (
                   <div key={idx}>
-                    <div className="aspect-[16/9] bg-gray-800 rounded-lg animate-pulse mb-3" />
+                    <div className="aspect-[16/9] bg-gray-800 rounded-lg mb-3" />
                     <div className="h-4 bg-gray-800 rounded w-3/4 mb-2" />
                     <div className="h-4 bg-gray-800 rounded w-1/2" />
                   </div>
@@ -179,8 +185,8 @@ const LatestArticles = () => {
             </div>
             <div className="w-96 space-y-3">
               <div className="h-6 bg-gray-800 rounded w-24 mb-4" />
-              {Array.from({ length: 10 }).map((_, idx) => (
-                <div key={idx} className="flex gap-3 py-3 border-b border-gray-800">
+              {Array.from({ length: 8 }).map((_, idx) => (
+                <div key={idx} className="flex gap-3 py-3 border-b border-gray-800" style={{ height: '60px' }}>
                   <div className="w-16 h-4 bg-gray-800 rounded" />
                   <div className="flex-1">
                     <div className="h-4 bg-gray-800 rounded mb-2" />
@@ -189,19 +195,6 @@ const LatestArticles = () => {
                 </div>
               ))}
             </div>
-          </div>
-          {/* Mobile skeleton */}
-          <div className="md:hidden space-y-2">
-            <div className="aspect-[16/10] bg-gray-800 rounded-xl animate-pulse" />
-            {Array.from({ length: 4 }).map((_, idx) => (
-              <div key={idx} className="flex gap-3 p-2 bg-gray-800/30 rounded-lg animate-pulse">
-                <div className="w-20 h-20 bg-gray-700 rounded-lg flex-shrink-0" />
-                <div className="flex-1 space-y-2 py-1">
-                  <div className="h-4 bg-gray-700 rounded w-3/4" />
-                  <div className="h-3 bg-gray-700 rounded w-1/2" />
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>

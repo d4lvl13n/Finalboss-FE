@@ -20,7 +20,7 @@ module.exports = {
       },
       fontFamily: {
         body: ['var(--font-body)', 'Inter', 'system-ui', 'sans-serif'],
-        heading: ['var(--font-heading)', 'Orbitron', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-heading)', 'Space Grotesk', 'system-ui', 'sans-serif'],
       },
     },
   },

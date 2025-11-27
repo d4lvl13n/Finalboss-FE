@@ -202,14 +202,21 @@ const GuidesSection = () => {
     }
   };
 
+  // Fixed height skeleton to prevent CLS
   if (loading) {
     return (
-      <section className="py-10 md:py-16 bg-gray-900 overflow-hidden">
+      <section className="py-10 md:py-16 bg-gray-900 overflow-hidden" style={{ minHeight: '550px' }}>
         <div className="container mx-auto px-4">
-          <div className="h-10 w-48 bg-gray-800 animate-pulse mb-8 rounded-lg" />
-          <div className="flex gap-6 overflow-hidden">
+          <div className="flex items-center justify-between mb-8 md:mb-12">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gray-800 rounded-xl" />
+              <div className="h-10 w-48 bg-gray-800 rounded-lg" />
+            </div>
+            <div className="h-10 w-28 bg-gray-800 rounded-full" />
+          </div>
+          <div className="flex gap-6 overflow-hidden" style={{ minHeight: '420px' }}>
             {Array.from({ length: 4 }).map((_, idx) => (
-              <div key={idx} className="flex-shrink-0 w-[280px] md:w-[320px] h-[380px] md:h-[420px] bg-gray-800 rounded-2xl animate-pulse" />
+              <div key={idx} className="flex-shrink-0 w-[280px] md:w-[320px] h-[380px] md:h-[420px] bg-gray-800 rounded-2xl" />
             ))}
           </div>
         </div>

@@ -6,15 +6,15 @@ import Footer from './components/Footer';
 import GameDatabaseSection from './components/GameDatabaseSection';
 import { buildPageMetadata } from './lib/seo';
 
-// Import critical components with loading priority
+// Import critical components with loading priority - SSR for LCP
 const LatestArticles = dynamic(() => import('./components/LatestArticles'), {
-  loading: () => <div className="h-[400px] bg-gray-800 animate-pulse" />,
+  loading: () => <div className="py-10 md:py-16 bg-gray-900" style={{ minHeight: '600px' }} />,
   ssr: true
 });
 
-// Optimize non-critical components loading
+// Optimize non-critical components loading - No SSR for faster initial paint
 const ReviewsSlider = dynamic(() => import('./components/ReviewsSlider'), {
-  loading: () => <div className="h-[300px] bg-gray-800 animate-pulse" />,
+  loading: () => <div className="py-10 md:py-16 bg-gray-900" style={{ minHeight: '700px' }} />,
   ssr: false
 });
 
@@ -22,14 +22,14 @@ const ReviewsSlider = dynamic(() => import('./components/ReviewsSlider'), {
 const ContentSections = dynamic(
   () => import('./components/ContentSections').then(mod => mod.default),
   {
-    loading: () => <div className="h-[400px] bg-gray-800 animate-pulse" />,
+    loading: () => <div className="bg-gray-900" style={{ minHeight: '1200px' }} />,
     ssr: false
   }
 );
 
 // Newsletter form with reduced priority
 const NewsletterForm = dynamic(() => import('./components/NewsletterForm'), {
-  loading: () => <div className="h-[200px] bg-gray-800 animate-pulse" />,
+  loading: () => <div className="h-14 bg-gray-800/50 rounded-full max-w-xl mx-auto" />,
   ssr: false
 });
 
@@ -56,7 +56,7 @@ export default async function HomePage() {
 
           <Suspense
             fallback={
-              <div className="h-[400px] bg-gray-800 animate-pulse" />
+              <div className="py-10 md:py-16 bg-gray-900" style={{ minHeight: '600px' }} />
             }
           >
             <LatestArticles />
@@ -65,7 +65,7 @@ export default async function HomePage() {
           {/* Non-critical content with deferred loading */}
           <Suspense
             fallback={
-              <div className="h-[300px] bg-gray-800 animate-pulse" />
+              <div className="py-10 md:py-16 bg-gray-900" style={{ minHeight: '700px' }} />
             }
           >
             <ReviewsSlider />
@@ -77,7 +77,7 @@ export default async function HomePage() {
           {/* Game Database Section */}
           <Suspense
             fallback={
-              <div className="h-[400px] bg-gray-800 animate-pulse" />
+              <div className="py-10 md:py-16 bg-gray-900" style={{ minHeight: '300px' }} />
             }
           >
             <GameDatabaseSection />

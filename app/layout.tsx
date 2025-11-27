@@ -1,5 +1,5 @@
 import './globals.css';
-import { Inter, Orbitron } from 'next/font/google';
+import { Inter, Space_Grotesk } from 'next/font/google';
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import Script from 'next/script';
@@ -21,10 +21,11 @@ const inter = Inter({
   variable: '--font-body'
 });
 
-const orbitron = Orbitron({
+const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   display: 'swap',
   preload: true,
+  weight: ['400', '500', '600', '700'],
   variable: '--font-heading'
 });
 
@@ -67,7 +68,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${orbitron.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
         {/* Preconnects for third-parties to reduce connection latency */}
         <link rel="preconnect" href="https://www.googletagmanager.com" />

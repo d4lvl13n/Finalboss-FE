@@ -257,18 +257,58 @@ const ReviewsSlider = () => {
     }
   };
 
+  // Fixed height skeleton to prevent CLS - matches exact final layout dimensions
   if (loading) {
     return (
-      <section className="py-10 md:py-16 bg-gray-900">
+      <section className="py-10 md:py-16 bg-gray-900" style={{ minHeight: '700px' }}>
         <div className="container mx-auto px-4">
-          <div className="h-8 w-32 bg-gray-800 animate-pulse mb-8 rounded" />
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-            <div className="lg:col-span-3 h-[400px] md:h-[500px] bg-gray-800 rounded-2xl animate-pulse" />
-            <div className="lg:col-span-2 space-y-4">
-              <div className="h-6 w-32 bg-gray-800 animate-pulse rounded" />
-              <div className="flex gap-4 overflow-hidden">
-                {Array.from({ length: 2 }).map((_, idx) => (
-                  <div key={idx} className="flex-shrink-0 w-[280px] h-[200px] bg-gray-800 rounded-xl animate-pulse" />
+          {/* Header skeleton */}
+          <div className="flex items-center justify-between mb-8 md:mb-10">
+            <div className="flex items-center flex-1">
+              <div className="h-10 w-48 bg-gray-800 rounded" />
+              <div className="flex-grow h-1 bg-gray-800 rounded-full ml-4" />
+            </div>
+            <div className="h-10 w-28 bg-gray-800 rounded-full" />
+          </div>
+          
+          {/* Mobile skeleton */}
+          <div className="lg:hidden" style={{ minHeight: '500px' }}>
+            <div className="h-[300px] bg-gray-800 rounded-2xl mb-4" />
+            <div className="space-y-3">
+              {Array.from({ length: 4 }).map((_, idx) => (
+                <div key={idx} className="flex gap-3 p-2" style={{ height: '88px' }}>
+                  <div className="w-20 h-20 bg-gray-700 rounded-lg flex-shrink-0" />
+                  <div className="flex-1 py-1 space-y-2">
+                    <div className="h-3 w-16 bg-gray-700 rounded" />
+                    <div className="h-4 bg-gray-700 rounded w-full" />
+                    <div className="h-4 bg-gray-700 rounded w-3/4" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Desktop skeleton */}
+          <div className="hidden lg:grid lg:grid-cols-5 gap-8" style={{ minHeight: '500px' }}>
+            <div className="lg:col-span-3 h-[500px] bg-gray-800 rounded-2xl" />
+            <div className="lg:col-span-2 flex flex-col">
+              <div className="flex items-center justify-between mb-4">
+                <div className="h-6 w-32 bg-gray-800 rounded" />
+                <div className="flex gap-2">
+                  <div className="w-8 h-8 bg-gray-800 rounded-full" />
+                  <div className="w-8 h-8 bg-gray-800 rounded-full" />
+                </div>
+              </div>
+              <div className="flex-1 space-y-4" style={{ maxHeight: '440px' }}>
+                {Array.from({ length: 4 }).map((_, idx) => (
+                  <div key={idx} className="flex gap-4 p-3" style={{ height: '100px' }}>
+                    <div className="w-32 h-24 bg-gray-700 rounded-lg flex-shrink-0" />
+                    <div className="flex-1 py-1 space-y-2">
+                      <div className="h-3 w-16 bg-gray-700 rounded" />
+                      <div className="h-4 bg-gray-700 rounded w-full" />
+                      <div className="h-3 bg-gray-700 rounded w-1/3" />
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>

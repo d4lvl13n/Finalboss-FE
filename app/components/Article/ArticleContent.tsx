@@ -275,10 +275,10 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
       {/* Article Content */}
       <div className="relative z-10 px-4 -mt-8">
-        <div className="flex justify-center max-w-7xl mx-auto">
+        <div className="flex justify-center max-w-[1600px] mx-auto">
           {/* Left Sidebar - Desktop Only */}
           {isDesktop && SHOW_MANUAL_ADS && (
-            <div className="hidden xl:block w-48 flex-shrink-0 mr-6">
+            <div className="hidden xl:block w-40 flex-shrink-0 mr-4">
               <div className="sticky top-32">
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
@@ -293,8 +293,8 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             </div>
           )}
 
-          {/* Main Content */}
-          <div className="flex-1 max-w-4xl bg-gray-900 rounded-lg shadow-2xl overflow-hidden">
+          {/* Main Content - Centered with wider sidebar */}
+          <div className="flex-1 max-w-3xl xl:max-w-[780px] bg-gray-900 rounded-lg shadow-2xl overflow-hidden">
           <div className="p-4 sm:p-6 md:p-8">
             <motion.h1
               className="text-4xl sm:text-5xl font-bold mb-4 text-yellow-400"
@@ -451,25 +451,25 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             </div>
           </div>
 
-          {/* Right Sidebar - Desktop Only */}
+          {/* Right Sidebar - Desktop Only - Extra Wide */}
           {isDesktop && (
-            <div className="hidden xl:block w-72 flex-shrink-0 ml-6">
+            <div className="hidden xl:block w-[420px] flex-shrink-0 ml-6">
               <div className="sticky top-24 space-y-6">
                 {/* Latest Articles Sidebar */}
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.8 }}
-                  className="bg-gray-800/30 rounded-xl p-4 border border-gray-700/30"
+                  className="bg-gray-800/30 rounded-xl p-5 border border-gray-700/30"
                 >
                   <LatestSidebar 
                     articles={latestData?.posts?.nodes || []}
                     title="Latest"
                     showAllLink="/gaming"
                     showAllText="View All"
-                    maxItems={8}
+                    maxItems={12}
                     accentColor="yellow"
-                    maxHeight="650px"
+                    maxHeight="750px"
                   />
                 </motion.div>
                 
