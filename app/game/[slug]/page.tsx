@@ -1,9 +1,12 @@
 import { IGDBClient } from '@/app/lib/igdb-client';
 import { GameDetails } from '@/app/components/GameDetails';
+import Header from '@/app/components/Header';
+import Footer from '@/app/components/Footer';
+import ResponsiveArticleGrid from '@/app/components/ResponsiveArticleGrid';
 import { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import client from '@/app/lib/apolloClient';
-import { CREATE_GAME, GET_GAME, GET_GAME_BY_IGDB_ID } from '@/app/lib/queries/gameQueries';
+import { CREATE_GAME_TAG, GET_GAME_TAG_BY_SLUG, GET_GAME_TAG_WITH_POSTS } from '@/app/lib/queries/gameQueries';
 import { absoluteUrl, buildPageMetadata } from '@/app/lib/seo';
 import { IGDBGame } from '@/app/types/igdb';
 
@@ -16,6 +19,7 @@ interface Props {
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
 
 export const revalidate = 3600;
+const POSTS_PAGE_SIZE = 12;
 
 function slugifyGameTitle(title: string): string {
   return title
@@ -28,11 +32,6 @@ function slugifyGameTitle(title: string): string {
 function stripHtml(value: string | undefined): string {
   if (!value) return '';
   return value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-}
-
-function stripGameMetaBlock(content: string | undefined): string {
-  if (!content) return '';
-  return content.replace(/<div class="game-meta"[^>]*>[\s\S]*?<\/div>/, '');
 }
 
 function buildDescription(value: string | undefined): string {
@@ -58,73 +57,94 @@ function buildVideoGameJsonLd(game: IGDBGame, canonicalUrl: string) {
   };
 }
 
-function buildGameMetaFromIgdb(game: IGDBGame) {
-  return {
-    igdb_id: game.id,
-    rating: game.rating,
-    release_date: game.release_date,
-    platforms: game.platforms,
-    screenshots: game.screenshots,
-    videos: game.videos,
-    websites: game.websites,
-  };
-}
+function parseIgdbData(raw: unknown): IGDBGame | null {
+  if (!raw || typeof raw !== 'string') {
+    return null;
+  }
 
-function buildGameContent(content: string, meta: Record<string, unknown>) {
-  return `<!-- wp:group -->
-<div class="game-details">
-  ${content}
-  <!-- Game Meta Data -->
-  <div class="game-meta" style="display:none">
-    ${JSON.stringify(meta)}
-  </div>
-</div>
-<!-- /wp:group -->`;
-}
-
-async function findGameSlugByIgdbId(igdbId: number): Promise<string | null> {
   try {
-    const { data } = await client.query({
-      query: GET_GAME_BY_IGDB_ID,
-      variables: { igdbId: String(igdbId) },
-      fetchPolicy: 'no-cache',
-    });
-
-    const node = data?.games?.nodes?.[0];
-    return node?.slug || null;
-  } catch (error) {
-    console.error('Error resolving game by IGDB id:', error);
+    return JSON.parse(raw) as IGDBGame;
+  } catch {
     return null;
   }
 }
 
-async function createGameFromIgdb(game: IGDBGame): Promise<string | null> {
-  try {
-    const meta = buildGameMetaFromIgdb(game);
-    const slug = slugifyGameTitle(game.name);
-    const content = buildGameContent(game.description || '', meta);
-
-    const input: Record<string, unknown> = {
-      title: game.name,
-      status: 'PUBLISH',
-      slug,
-      content,
+function buildGameFromTag(tag: {
+  name: string;
+  description?: string | null;
+  igdbData?: string | null;
+}): IGDBGame {
+  const parsed = parseIgdbData(tag.igdbData);
+  if (parsed && parsed.name) {
+    return {
+      ...parsed,
+      name: parsed.name || tag.name,
+      description: parsed.description || tag.description || parsed.name,
     };
+  }
+
+  return {
+    name: tag.name,
+    description: tag.description || tag.name,
+  };
+}
+
+async function getGameTagBySlug(slug: string) {
+  try {
+    const { data } = await client.query({
+      query: GET_GAME_TAG_BY_SLUG,
+      variables: { slug },
+      fetchPolicy: 'no-cache',
+    });
+    return data?.gameTag || null;
+  } catch (error) {
+    console.error('Error fetching game tag:', error);
+    return null;
+  }
+}
+
+async function getGameTagWithPosts(slug: string) {
+  try {
+    const { data } = await client.query({
+      query: GET_GAME_TAG_WITH_POSTS,
+      variables: { slug, first: POSTS_PAGE_SIZE, after: null },
+      fetchPolicy: 'no-cache',
+    });
+    return data?.gameTag || null;
+  } catch (error) {
+    console.error('Error fetching game tag posts:', error);
+    return null;
+  }
+}
+
+async function createGameTagFromIgdb(game: IGDBGame): Promise<string | null> {
+  try {
+    const slug = slugifyGameTitle(game.name);
+    const description = buildDescription(game.description) || game.name;
+    const metaData: { key: string; value: string }[] = [];
 
     if (game.id != null) {
-      input.metaData = [{ key: 'igdb_id', value: String(game.id) }];
+      metaData.push({ key: 'igdb_id', value: String(game.id) });
     }
+    metaData.push({ key: 'igdb_data', value: JSON.stringify({ ...game, igdb_id: game.id }) });
+
+    const input: Record<string, unknown> = {
+      name: game.name,
+      slug,
+      description,
+      metaData,
+    };
 
     const { data } = await client.mutate({
-      mutation: CREATE_GAME,
+      mutation: CREATE_GAME_TAG,
       variables: {
         input,
       },
     });
 
-    return data?.createGame?.game?.slug || null;
+    return data?.createGameTag?.gameTag?.slug || null;
   } catch (error) {
-    console.error('Error creating game from IGDB:', error);
+    console.error('Error creating game tag from IGDB:', error);
     return null;
   }
 }
@@ -132,20 +152,16 @@ async function createGameFromIgdb(game: IGDBGame): Promise<string | null> {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const canonicalPath = `/game/${params.slug}`;
-    // First try WordPress
-    const { data } = await client.query({
-      query: GET_GAME,
-      variables: { slug: params.slug }
-    });
+    const gameTag = await getGameTagBySlug(params.slug);
 
-    if (data?.game) {
-      const contentSansMeta = stripGameMetaBlock(data.game.content);
-      const description = buildDescription(data.game.excerpt || contentSansMeta || data.game.title);
+    if (gameTag) {
+      const gameData = buildGameFromTag(gameTag);
+      const description = buildDescription(gameTag.description || gameData.description || gameData.name);
       return buildPageMetadata({
-        title: `${data.game.title} - Game Details | FinalBoss.io`,
-        description: description || data.game.title,
+        title: `${gameData.name} - Game Details | FinalBoss.io`,
+        description: description || gameData.name,
         path: canonicalPath,
-        image: data.game.featuredImage?.node?.sourceUrl || undefined,
+        image: gameData.cover_url || undefined,
         type: 'article',
         robots: {
           index: true,
@@ -157,10 +173,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // Fallback to IGDB if it's an ID
     const igdbId = parseInt(params.slug);
     if (!isNaN(igdbId)) {
-      const resolvedSlug = await findGameSlugByIgdbId(igdbId);
-      const resolvedPath = resolvedSlug ? `/game/${resolvedSlug}` : canonicalPath;
       const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
       const game = await igdbClient.getGameDetails(igdbId);
+      const resolvedSlug = slugifyGameTitle(game.data.name);
+      const resolvedPath = `/game/${resolvedSlug}`;
       
       const description = buildDescription(game.data.description) || game.data.name;
       return buildPageMetadata({
@@ -190,59 +206,69 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function GamePage({ params }: Props) {
   try {
     const canonicalUrl = `${baseUrl}/game/${params.slug}`;
-    // First try WordPress
-    const { data } = await client.query({
-      query: GET_GAME,
-      variables: { slug: params.slug }
-    });
+    const gameTag = await getGameTagWithPosts(params.slug);
 
-    if (data?.game) {
-      // Extract game meta data from content
-      const metaMatch = data.game.content.match(/<div class="game-meta"[^>]*>(.*?)<\/div>/);
-      const gameMeta = metaMatch ? JSON.parse(metaMatch[1]) : null;
-      const contentSansMeta = stripGameMetaBlock(data.game.content);
-      const gameData: IGDBGame = {
-        ...(gameMeta || {}),
-        name: data.game.title,
-        description: gameMeta?.description || stripHtml(contentSansMeta),
-        cover_url: gameMeta?.cover_url || data.game.featuredImage?.node?.sourceUrl,
-      };
+    if (gameTag) {
+      const gameData = buildGameFromTag(gameTag);
+      const relatedArticles = gameTag.posts?.nodes || [];
 
       return (
-        <div className="min-h-screen bg-gray-900">
+        <>
+          <Header />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(buildVideoGameJsonLd(gameData, canonicalUrl)) }}
           />
           <GameDetails game={gameData} />
-        </div>
+          {relatedArticles.length > 0 && (
+            <section className="bg-gray-900 text-white py-12">
+              <div className="container mx-auto px-4">
+                <div className="flex items-center mb-6">
+                  <h2 className="text-2xl md:text-3xl font-bold text-yellow-400 mr-4">
+                    More {gameData.name} Coverage
+                  </h2>
+                  <div className="flex-grow h-0.5 md:h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full" />
+                </div>
+                <ResponsiveArticleGrid
+                  articles={relatedArticles}
+                  showFeatured={false}
+                  featuredCount={0}
+                />
+              </div>
+            </section>
+          )}
+          <Footer />
+        </>
       );
     }
 
     // Fallback to IGDB if it's an ID
     const igdbId = parseInt(params.slug);
     if (!isNaN(igdbId)) {
-      const resolvedSlug = await findGameSlugByIgdbId(igdbId);
-      if (resolvedSlug) {
-        redirect(`/game/${resolvedSlug}`);
-      }
-
       const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
       const game = await igdbClient.getGameDetails(igdbId);
 
-      const createdSlug = await createGameFromIgdb(game.data);
+      const resolvedSlug = slugifyGameTitle(game.data.name);
+      const existingTag = await getGameTagBySlug(resolvedSlug);
+      if (existingTag?.slug) {
+        redirect(`/game/${resolvedSlug}`);
+      }
+
+      const createdSlug = await createGameTagFromIgdb(game.data);
       if (createdSlug) {
         redirect(`/game/${createdSlug}`);
       }
 
       return (
-        <div className="min-h-screen bg-gray-900">
+        <>
+          <Header />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(buildVideoGameJsonLd(game.data, canonicalUrl)) }}
           />
           <GameDetails game={game.data} />
-        </div>
+          <Footer />
+        </>
       );
     }
 

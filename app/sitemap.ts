@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { youtubeService } from './lib/youtube/service'
 import { fetchAllPosts, WordPressPost } from './lib/fetchAllPosts'
+import { fetchAllGameTags } from './lib/fetchAllGameTags'
 import client from './lib/apolloClient'
 import { GET_ALL_AUTHORS } from './lib/queries/getAuthor'
 import { GET_GUIDE_CATEGORIES_AND_POSTS } from './lib/queries/getGuideCategories'
@@ -19,13 +20,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const ARTICLE_PAGE_SIZE = 24
 
   // Fetch dynamic content
-  const [videos, { posts: allPosts, total: totalPosts }, authorsData, guidesData] = await Promise.all([
+  const [videos, { posts: allPosts, total: totalPosts }, authorsData, guidesData, gameTags] = await Promise.all([
     youtubeService.getChannelUploads(50),
     fetchAllPosts(),
     client.query({ query: GET_ALL_AUTHORS }).catch(() => ({ data: { users: { nodes: [] } } })),
     client
       .query({ query: GET_GUIDE_CATEGORIES_AND_POSTS, variables: { first: 1 }, fetchPolicy: 'no-cache' })
       .catch(() => ({ data: { categories: { nodes: [] } } })),
+    fetchAllGameTags(),
   ])
   
   const authors: AuthorNode[] = authorsData?.data?.users?.nodes || []
@@ -148,6 +150,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...authors.map((author: AuthorNode) => ({
       url: `${baseUrl}/author/${author.slug}`,
       changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
+    // Game hub pages
+    ...gameTags.map((tag) => ({
+      url: `${baseUrl}/game/${tag.slug}`,
+      changeFrequency: 'weekly' as const,
       priority: 0.6,
     })),
     // Guide category pages

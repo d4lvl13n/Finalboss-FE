@@ -3,15 +3,11 @@
 import React from 'react';
 import Image from 'next/image';
 import { IGDBGame } from '../types/igdb';
-import Header from './Header';
-import Footer from './Footer';
 import { format } from 'date-fns';
 import { GameSearch } from './GameSearch';
 
 export function GameDetails({ game }: { game: IGDBGame }) {
   return (
-    <>
-      <Header />
       <main className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
         {/* Hero Section */}
         <div className="relative h-[70vh] w-full">
@@ -130,7 +126,5 @@ export function GameDetails({ game }: { game: IGDBGame }) {
           </div>
         </div>
       </main>
-      <Footer />
-    </>
   );
 }

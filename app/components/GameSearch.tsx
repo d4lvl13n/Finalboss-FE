@@ -161,15 +161,10 @@ export function GameSearch() {
         body: JSON.stringify({
           game: {
             title: game.name,
-            content: game.description || '',
-            meta: {
-              igdb_id: game.id,
-              rating: game.rating,
-              release_date: game.release_date,
-              platforms: game.platforms,
-              screenshots: game.screenshots,
-              videos: game.videos,
-              websites: game.websites
+            description: game.description || '',
+            igdbData: {
+              ...game,
+              igdb_id: game.id
             }
           }
         })
