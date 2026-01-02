@@ -8,18 +8,19 @@ interface Article {
 }
 
 export default function TechnologyStructuredData({ articles }: { articles: Article[] }) {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Gaming Technology Articles",
     "description": "Explore the latest in gaming technology, hardware reviews, and tech trends in the gaming industry.",
-    "url": "https://finalboss.io/technology",
+    "url": `${baseUrl}/technology`,
     "mainEntity": {
       "@type": "ItemList",
       "itemListElement": articles.map((article, index) => ({
         "@type": "ListItem",
         "position": index + 1,
-        "url": `https://finalboss.io/${article.slug}`,
+        "url": `${baseUrl}/${article.slug}`,
         "name": article.title
       }))
     }
@@ -33,13 +34,13 @@ export default function TechnologyStructuredData({ articles }: { articles: Artic
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://finalboss.io/"
+        "item": `${baseUrl}/`
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Technology",
-        "item": "https://finalboss.io/technology"
+        "item": `${baseUrl}/technology`
       }
     ]
   };

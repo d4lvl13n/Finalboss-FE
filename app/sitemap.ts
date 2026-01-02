@@ -3,6 +3,7 @@ import { youtubeService } from './lib/youtube/service'
 import { fetchAllPosts, WordPressPost } from './lib/fetchAllPosts'
 import client from './lib/apolloClient'
 import { GET_ALL_AUTHORS } from './lib/queries/getAuthor'
+import { GET_GUIDE_CATEGORIES_AND_POSTS } from './lib/queries/getGuideCategories'
 
 interface YouTubeVideo {
   id: string
@@ -18,13 +19,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const ARTICLE_PAGE_SIZE = 24
 
   // Fetch dynamic content
-  const [videos, { posts: allPosts, total: totalPosts }, authorsData] = await Promise.all([
+  const [videos, { posts: allPosts, total: totalPosts }, authorsData, guidesData] = await Promise.all([
     youtubeService.getChannelUploads(50),
     fetchAllPosts(),
     client.query({ query: GET_ALL_AUTHORS }).catch(() => ({ data: { users: { nodes: [] } } })),
+    client
+      .query({ query: GET_GUIDE_CATEGORIES_AND_POSTS, variables: { first: 1 }, fetchPolicy: 'no-cache' })
+      .catch(() => ({ data: { categories: { nodes: [] } } })),
   ])
   
   const authors: AuthorNode[] = authorsData?.data?.users?.nodes || []
+  const guideCategories =
+    guidesData?.data?.categories?.nodes?.[0]?.children?.nodes?.filter(
+      (category: { slug?: string }) => category?.slug
+    ) || []
 
   // Deduplicate posts by slug
   const uniquePostsBySlug = new Map<string, WordPressPost>()
@@ -73,6 +81,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${baseUrl}/guides`,
       changeFrequency: 'daily' as const,
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/games`,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/authors`,
@@ -135,6 +148,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...authors.map((author: AuthorNode) => ({
       url: `${baseUrl}/author/${author.slug}`,
       changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
+    // Guide category pages
+    ...guideCategories.map((category: { slug: string }) => ({
+      url: `${baseUrl}/guides/${category.slug}`,
+      changeFrequency: 'weekly' as const,
       priority: 0.6,
     })),
   ]

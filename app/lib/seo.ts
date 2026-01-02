@@ -33,6 +33,7 @@ export function buildPageMetadata({
   robots,
 }: PageMetadataOptions): Metadata {
   const url = absoluteUrl(path);
+  const imageUrl = absoluteUrl(image);
   return {
     title,
     description,
@@ -47,7 +48,7 @@ export function buildPageMetadata({
       url,
       siteName: 'FinalBoss.io',
       type,
-      images: [{ url: image }],
+      images: [{ url: imageUrl }],
       ...(publishedTime && { publishedTime }),
       ...(modifiedTime && { modifiedTime }),
     },
@@ -55,8 +56,7 @@ export function buildPageMetadata({
       card: 'summary_large_image',
       title,
       description,
-      images: [image],
+      images: [imageUrl],
     },
   };
 }
-

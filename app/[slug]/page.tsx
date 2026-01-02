@@ -4,6 +4,7 @@ import ArticleContent from '../components/Article/ArticleContent';
 import { Metadata } from 'next';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { absoluteUrl } from '../lib/seo';
 
 interface PageProps {
   params: { slug: string };
@@ -25,33 +26,43 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const stripHtml = (value: string | undefined) =>
+    value ? value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() : '';
+  const description = stripHtml(seo?.metaDesc || article.excerpt || article.title);
+  const openGraphDescription = stripHtml(seo?.opengraphDescription || description);
+  const twitterDescription = stripHtml(seo?.twitterDescription || description);
+  const rawImage =
+    seo?.opengraphImage?.sourceUrl ||
+    article.featuredImage?.node?.sourceUrl ||
+    '/images/finalboss-og-image.jpg';
+  const imageUrl = absoluteUrl(rawImage);
+  const authorName = article.author?.node?.name;
+
   return {
     title: seo?.title || `${article.title} | FinalBoss.io`,
-    description: seo?.metaDesc || article.excerpt || article.title,
+    description: description || article.title,
     keywords: article.categories?.nodes?.map((c: { name: string }) => c.name),
-    authors: article.author?.node?.name ? [{ name: article.author.node.name }] : undefined,
+    authors: authorName ? [{ name: authorName }] : undefined,
     robots: {
       index: !seo?.metaRobotsNoindex,
       follow: !seo?.metaRobotsNofollow,
     },
     openGraph: {
       title: seo?.opengraphTitle || article.title,
-      description: seo?.opengraphDescription || article.excerpt,
-      images: [{ 
-        url: seo?.opengraphImage?.sourceUrl || article.featuredImage?.node?.sourceUrl 
-      }],
+      description: openGraphDescription || description,
+      images: [{ url: imageUrl }],
       url: `${baseUrl}/${article.slug}`,
       type: 'article',
       publishedTime: article.date,
       modifiedTime: article.modified,
-      authors: [article.author?.node?.name],
+      ...(authorName ? { authors: [authorName] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
       site: '@finalbossio',
       title: seo?.twitterTitle || article.title,
-      description: seo?.twitterDescription || article.excerpt,
-      images: [seo?.twitterImage?.sourceUrl || article.featuredImage?.node?.sourceUrl],
+      description: twitterDescription || description,
+      images: [absoluteUrl(seo?.twitterImage?.sourceUrl || imageUrl)],
     },
     alternates: {
       canonical: `${baseUrl}/${article.slug}`,

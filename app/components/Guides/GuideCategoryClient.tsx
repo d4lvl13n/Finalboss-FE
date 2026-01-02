@@ -30,15 +30,33 @@ interface SubcategoryQueryData {
   };
 }
 
-export default function GuideCategoryClient({ slug }: { slug: string }) {
-  const [afterCursor, setAfterCursor] = useState<string | null>(null);
-  const [articles, setArticles] = useState<GuideArticle[]>([]);
+interface GuideCategoryClientProps {
+  slug: string;
+  initialArticles: GuideArticle[];
+  initialHasNextPage: boolean;
+  initialEndCursor?: string | null;
+}
 
-  const { data, loading, error, fetchMore } = useQuery<SubcategoryQueryData>(GET_SUBCATEGORY_ARTICLES, {
-    variables: { categorySlug: slug, first: 24, after: afterCursor },
+export default function GuideCategoryClient({
+  slug,
+  initialArticles,
+  initialHasNextPage,
+  initialEndCursor = null,
+}: GuideCategoryClientProps) {
+  const [articles, setArticles] = useState<GuideArticle[]>(initialArticles);
+  const [hasNextPage, setHasNextPage] = useState(initialHasNextPage);
+  const [endCursor, setEndCursor] = useState<string | null>(initialEndCursor);
+
+  const shouldSkipInitialFetch = initialArticles.length > 0;
+
+  const { loading, error, fetchMore } = useQuery<SubcategoryQueryData>(GET_SUBCATEGORY_ARTICLES, {
+    variables: { categorySlug: slug, first: 24, after: null },
     client,
+    skip: shouldSkipInitialFetch,
     onCompleted: (result) => {
-      setArticles((prevArticles) => [...prevArticles, ...result.posts.nodes]);
+      setArticles(result.posts.nodes);
+      setHasNextPage(result.posts.pageInfo.hasNextPage);
+      setEndCursor(result.posts.pageInfo.endCursor);
     },
   });
 
@@ -59,15 +77,19 @@ export default function GuideCategoryClient({ slug }: { slug: string }) {
   }
 
   const handleLoadMore = () => {
-    if (data?.posts.pageInfo.hasNextPage) {
-      fetchMore({
-        variables: {
-          after: data.posts.pageInfo.endCursor,
-        },
-      }).then((fetchMoreResult) => {
-        setAfterCursor(fetchMoreResult.data.posts.pageInfo.endCursor);
-      });
+    if (!hasNextPage || !endCursor) {
+      return;
     }
+
+    fetchMore({
+      variables: {
+        after: endCursor,
+      },
+    }).then((fetchMoreResult) => {
+      setArticles((prevArticles) => [...prevArticles, ...fetchMoreResult.data.posts.nodes]);
+      setHasNextPage(fetchMoreResult.data.posts.pageInfo.hasNextPage);
+      setEndCursor(fetchMoreResult.data.posts.pageInfo.endCursor);
+    });
   };
 
   return (
@@ -108,7 +130,7 @@ export default function GuideCategoryClient({ slug }: { slug: string }) {
             </motion.div>
           ))}
         </div>
-        {data?.posts.pageInfo.hasNextPage && (
+        {hasNextPage && (
           <div className="text-center mt-12">
             <button
               onClick={handleLoadMore}
@@ -122,4 +144,3 @@ export default function GuideCategoryClient({ slug }: { slug: string }) {
     </section>
   );
 }
-

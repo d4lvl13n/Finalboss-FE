@@ -8,18 +8,19 @@ interface Article {
 }
 
 export default function GamingStructuredData({ articles }: { articles: Article[] }) {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Gaming News and Articles",
     "description": "Stay updated with the latest gaming news, reviews, and in-depth articles about your favorite games.",
-    "url": "https://finalboss.io/gaming",
+    "url": `${baseUrl}/gaming`,
     "mainEntity": {
       "@type": "ItemList",
       "itemListElement": articles.map((article, index) => ({
         "@type": "ListItem",
         "position": index + 1,
-        "url": `https://finalboss.io/${article.slug}`,
+        "url": `${baseUrl}/${article.slug}`,
         "name": article.title
       }))
     }
@@ -33,13 +34,13 @@ export default function GamingStructuredData({ articles }: { articles: Article[]
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://finalboss.io/"
+        "item": `${baseUrl}/`
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Gaming",
-        "item": "https://finalboss.io/gaming"
+        "item": `${baseUrl}/gaming`
       }
     ]
   };

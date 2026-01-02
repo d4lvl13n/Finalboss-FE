@@ -2,10 +2,8 @@ import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { GET_ALL_POSTS } from '../lib/queries/getAllPosts';
 import client from '../lib/apolloClient';
-import dynamic from 'next/dynamic';
 import { buildPageMetadata } from '../lib/seo';
-
-const AllArticlesPageContent = dynamic(() => import('../components/AllArticles/AllArticlesPageContent'), { ssr: false });
+import AllArticlesPageContent from '../components/AllArticles/AllArticlesPageContent';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
 const PAGE_SIZE = 24;
 

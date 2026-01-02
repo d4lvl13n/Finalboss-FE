@@ -1,11 +1,9 @@
 import React, { Suspense } from 'react';
 import { GET_TECH_ARTICLES } from '../lib/queries/getTechArticles';
 import client from '../lib/apolloClient';
-import dynamic from 'next/dynamic';
 import { buildPageMetadata } from '../lib/seo';
-
-const TechnologyPageContent = dynamic(() => import('../components/TechnologyPageContent'), { ssr: false });
-const TechnologyStructuredData = dynamic(() => import('../components/TechnologyStructuredData'), { ssr: false });
+import TechnologyPageContent from '../components/TechnologyPageContent';
+import TechnologyStructuredData from '../components/TechnologyStructuredData';
 
 export async function generateMetadata() {
   return buildPageMetadata({

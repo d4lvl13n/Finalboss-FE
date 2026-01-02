@@ -1,11 +1,9 @@
 import React, { Suspense } from 'react';
 import { GET_GUIDE_CATEGORIES_AND_POSTS } from '../lib/queries/getGuideCategories';
 import client from '../lib/apolloClient';
-import dynamic from 'next/dynamic';
 import { buildPageMetadata } from '../lib/seo';
-
-const GuidesPageContent = dynamic(() => import('../components/Guides/GuidesPageContent'), { ssr: false });
-const GuidesStructuredData = dynamic(() => import('../components/Guides/GuidesStructuredData'), { ssr: false });
+import GuidesPageContent from '../components/Guides/GuidesPageContent';
+import GuidesStructuredData from '../components/Guides/GuidesStructuredData';
 
 export async function generateMetadata() {
   return buildPageMetadata({

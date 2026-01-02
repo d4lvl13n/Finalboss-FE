@@ -18,6 +18,7 @@ interface GuidesStructuredDataProps {
 }
 
 export default function GuidesStructuredData({ categories, guides }: GuidesStructuredDataProps) {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -28,7 +29,7 @@ export default function GuidesStructuredData({ categories, guides }: GuidesStruc
         "item": {
           "@type": "Article",
           "name": category.name,
-          "url": `https://finalboss.io/guides/${category.slug}`
+          "url": `${baseUrl}/guides/${category.slug}`
         }
       })),
       ...guides.map((guide, index) => ({
@@ -37,7 +38,7 @@ export default function GuidesStructuredData({ categories, guides }: GuidesStruc
         "item": {
           "@type": "Article",
           "name": guide.title,
-          "url": `https://finalboss.io/${guide.slug}`
+          "url": `${baseUrl}/${guide.slug}`
         }
       }))
     ]
@@ -51,13 +52,13 @@ export default function GuidesStructuredData({ categories, guides }: GuidesStruc
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://finalboss.io/"
+        "item": `${baseUrl}/`
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Guides",
-        "item": "https://finalboss.io/guides"
+        "item": `${baseUrl}/guides`
       }
     ]
   };
