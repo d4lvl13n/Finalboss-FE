@@ -140,7 +140,7 @@ async function createGameTagFromIgdb(game: IGDBGame): Promise<string | null> {
       },
     });
 
-    return data?.createGameTagWithMeta?.gameTag?.slug || null;
+    return data?.createGameTagWithMeta?.slug || null;
   } catch (error) {
     console.error('Error creating game tag from IGDB:', error);
     return null;

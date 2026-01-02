@@ -56,7 +56,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ 
       success: true, 
-      slug: createResult.data.createGameTagWithMeta.gameTag.slug 
+      slug: createResult.data.createGameTagWithMeta.slug 
     });
   } catch (error: unknown) {
     console.error('Error creating game:', error);
