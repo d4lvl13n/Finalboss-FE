@@ -57,16 +57,170 @@ function buildVideoGameJsonLd(game: IGDBGame, canonicalUrl: string) {
   };
 }
 
-function parseIgdbData(raw: unknown): IGDBGame | null {
+function parseIgdbData(raw: unknown): unknown | null {
   if (!raw || typeof raw !== 'string') {
     return null;
   }
 
   try {
-    return JSON.parse(raw) as IGDBGame;
+    return JSON.parse(raw);
   } catch {
     return null;
   }
+}
+
+function buildIgdbImageUrl(imageId: string, size: 'cover_big' | 'screenshot_big') {
+  return `https://images.igdb.com/igdb/image/upload/t_${size}/${imageId}.jpg`;
+}
+
+function normalizeIgdbData(
+  raw: unknown,
+  fallbackName: string,
+  fallbackDescription?: string | null,
+  fallbackIgdbId?: string | null
+): IGDBGame | null {
+  if (!raw || typeof raw !== 'object') {
+    return null;
+  }
+
+  const data = raw as Record<string, unknown>;
+  const name = typeof data.name === 'string' ? data.name : fallbackName;
+  if (!name) {
+    return null;
+  }
+
+  const coverImageId = (data as { cover?: { image_id?: string } }).cover?.image_id;
+  const coverUrl = typeof data.cover_url === 'string'
+    ? data.cover_url
+    : typeof coverImageId === 'string'
+      ? buildIgdbImageUrl(coverImageId, 'cover_big')
+      : undefined;
+
+  const screenshotsRaw = (data as { screenshots?: unknown }).screenshots;
+  const screenshots = Array.isArray(screenshotsRaw)
+    ? screenshotsRaw
+        .map((screenshot) => {
+          if (typeof screenshot === 'string') {
+            return screenshot;
+          }
+          if (screenshot && typeof screenshot === 'object') {
+            const imageId = (screenshot as { image_id?: string }).image_id;
+            if (typeof imageId === 'string') {
+              return buildIgdbImageUrl(imageId, 'screenshot_big');
+            }
+          }
+          return null;
+        })
+        .filter((screenshot): screenshot is string => Boolean(screenshot))
+    : undefined;
+
+  const videosRaw = (data as { videos?: unknown }).videos;
+  const videos = Array.isArray(videosRaw)
+    ? videosRaw
+        .map((video) => {
+          if (!video || typeof video !== 'object') {
+            return null;
+          }
+          const videoId = (video as { video_id?: string }).video_id;
+          if (typeof videoId !== 'string') {
+            return null;
+          }
+          const id = (video as { id?: number }).id ?? 0;
+          const videoName = (video as { name?: string }).name ?? 'Trailer';
+          return {
+            id: typeof id === 'number' ? id : 0,
+            name: typeof videoName === 'string' ? videoName : 'Trailer',
+            video_id: videoId,
+          };
+        })
+        .filter((video): video is { id: number; name: string; video_id: string } => Boolean(video))
+    : undefined;
+
+  const platformsRaw = (data as { platforms?: unknown }).platforms;
+  const platforms = Array.isArray(platformsRaw)
+    ? platformsRaw
+        .map((platform) => {
+          if (!platform || typeof platform !== 'object') {
+            return null;
+          }
+          const id = (platform as { id?: number }).id;
+          const platformName = (platform as { name?: string }).name;
+          if (typeof id !== 'number' || typeof platformName !== 'string') {
+            return null;
+          }
+          return { id, name: platformName };
+        })
+        .filter((platform): platform is { id: number; name: string } => Boolean(platform))
+    : undefined;
+
+  const genresRaw = (data as { genres?: unknown }).genres;
+  const genres = Array.isArray(genresRaw)
+    ? genresRaw
+        .map((genre) => {
+          if (typeof genre === 'string') {
+            return genre;
+          }
+          if (genre && typeof genre === 'object') {
+            const genreName = (genre as { name?: string }).name;
+            if (typeof genreName === 'string') {
+              return genreName;
+            }
+          }
+          return null;
+        })
+        .filter((genre): genre is string => Boolean(genre))
+    : undefined;
+
+  const description = typeof data.description === 'string'
+    ? data.description
+    : typeof (data as { summary?: string }).summary === 'string'
+      ? (data as { summary?: string }).summary
+      : fallbackDescription || fallbackName;
+
+  const release_date = typeof data.release_date === 'string'
+    ? data.release_date
+    : typeof (data as { first_release_date?: number }).first_release_date === 'number'
+      ? new Date((data as { first_release_date: number }).first_release_date * 1000).toISOString()
+      : undefined;
+
+  const rating = typeof data.rating === 'number' ? data.rating : undefined;
+
+  const websitesRaw = (data as { websites?: unknown }).websites;
+  const websites = Array.isArray(websitesRaw)
+    ? websitesRaw
+        .map((website) => {
+          if (!website || typeof website !== 'object') {
+            return null;
+          }
+          const url = (website as { url?: string }).url;
+          const category = (website as { category?: string }).category ?? '';
+          if (typeof url !== 'string') {
+            return null;
+          }
+          return {
+            url,
+            category: typeof category === 'string' ? category : '',
+          };
+        })
+        .filter((website): website is { url: string; category: string } => Boolean(website))
+    : undefined;
+
+  const idFromData = typeof data.id === 'number' ? data.id : undefined;
+  const idFromTag = fallbackIgdbId ? Number(fallbackIgdbId) : undefined;
+
+  return {
+    id: idFromData ?? idFromTag,
+    name,
+    cover_url: coverUrl,
+    description,
+    release_date,
+    rating,
+    platforms: platforms?.length ? platforms : undefined,
+    genres: genres?.length ? genres : undefined,
+    screenshots: screenshots?.length ? screenshots : undefined,
+    videos: videos?.length ? videos : undefined,
+    websites: websites?.length ? websites : undefined,
+  };
 }
 
 function buildGameFromTag(tag: {
@@ -76,11 +230,12 @@ function buildGameFromTag(tag: {
   igdbId?: string | null;
 }): IGDBGame {
   const parsed = parseIgdbData(tag.igdbData);
-  if (parsed && parsed.name) {
+  const normalized = normalizeIgdbData(parsed, tag.name, tag.description, tag.igdbId);
+  if (normalized) {
     return {
-      ...parsed,
-      name: parsed.name || tag.name,
-      description: parsed.description || tag.description || parsed.name,
+      ...normalized,
+      name: normalized.name || tag.name,
+      description: normalized.description || tag.description || normalized.name,
     };
   }
 
@@ -216,10 +371,12 @@ export default async function GamePage({ params }: Props) {
         (!gameData.screenshots || gameData.screenshots.length === 0) ||
         (!gameData.videos || gameData.videos.length === 0);
 
-      if (needsIgdbRefresh && gameTag.igdbId) {
+      const igdbId = gameTag.igdbId ?? (gameData.id ? String(gameData.id) : null);
+
+      if (needsIgdbRefresh && igdbId) {
         try {
           const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
-          const game = await igdbClient.getGameDetails(Number(gameTag.igdbId));
+          const game = await igdbClient.getGameDetails(Number(igdbId));
           if (game?.data) {
             gameData = game.data;
           }
