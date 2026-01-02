@@ -25,6 +25,7 @@ import Breadcrumbs from '../Breadcrumbs';
 import TableOfContents from './TableOfContents';
 import ReadingProgressBar from '../ReadingProgressBar';
 import LatestSidebar from '../LatestSidebar';
+import GameMetaCard from '../GameMetaCard';
 
 const sourceSans = Source_Sans_3({
   subsets: ['latin'],
@@ -57,6 +58,14 @@ interface ArticleData {
       name: string;
     }[];
   };
+  gameTags?: {
+    nodes?: {
+      name: string;
+      slug: string;
+      igdbId?: string | null;
+      igdbData?: string | null;
+    }[];
+  };
 }
 
 interface ArticleContentProps {
@@ -79,6 +88,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
   // Get the primary category for related posts
   const primaryCategory = article.categories?.nodes?.[0];
+  const primaryGameTag = article.gameTags?.nodes?.[0];
 
   // Fetch related articles by category with error handling
   const { data: relatedData, loading: relatedLoading, error: relatedError } = useQuery(GET_RELATED_POSTS, {
@@ -307,6 +317,56 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
             
 
+            {primaryGameTag && <GameMetaCard gameTag={primaryGameTag} />}
+
+            {/* Table of Contents for long articles */}
+            <TableOfContents content={contentCleaned} minHeadings={4} />
+
+              {/* 🎯 AD PLACEMENT 1: High-performing above-the-fold ad */}
+              {SHOW_MANUAL_ADS && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="article-ad-top"
+              >
+                <div className="ad-label">Advertisement</div>
+                <ResponsiveAd adSlot="5844341661" />
+              </motion.div>
+              )}
+
+            <motion.div
+              className={`${sourceSans.className} prose prose-lg prose-invert mx-auto max-w-3xl text-[18px] md:text-[19px] leading-8 tracking-[0.0025em]`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <ProcessedContent content={contentCleaned} />
+            </motion.div>
+
+            {articlesToShow.length > 0 && (
+              <InlineRelatedLinks articles={articlesToShow.slice(0, 3)} />
+            )}
+
+            {/* Conditional Review summary block at end of content */}
+            {isReview && reviewConfig && (
+              <>
+                <ReviewSummary
+                  articleTitle={article.title}
+                  fallbackImage={article.featuredImage?.node?.sourceUrl}
+                  config={reviewConfig}
+                />
+                <ReviewJsonLd
+                  articleUrl={`${process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'}/${(article as unknown as { slug?: string }).slug || ''}`}
+                  articleTitle={article.title}
+                  authorName={article.author?.node?.name}
+                  rating={typeof reviewConfig.score === 'number' ? reviewConfig.score : undefined}
+                  reviewBody={reviewConfig.conclusion}
+                  imageUrl={reviewConfig.backgroundImage || article.featuredImage?.node?.sourceUrl}
+                />
+              </>
+            )}
+
             {/* Author and Date Section */}
             <motion.div
               className="inline-block rounded-xl bg-gray-800/50 border border-gray-700/50 backdrop-blur-sm shadow-xl p-4 mb-6 sm:mb-8"
@@ -314,7 +374,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-                <div className="flex items-center gap-6">
+              <div className="flex items-center gap-6">
                 {/* Author Info */}
                 <div className="flex items-center gap-3">
                   <Link 
@@ -373,54 +433,6 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 )}
               </div>
             </motion.div>
-
-            {articlesToShow.length > 0 && (
-              <InlineRelatedLinks articles={articlesToShow.slice(0, 3)} />
-            )}
-
-            {/* Table of Contents for long articles */}
-            <TableOfContents content={contentCleaned} minHeadings={4} />
-
-              {/* 🎯 AD PLACEMENT 1: High-performing above-the-fold ad */}
-              {SHOW_MANUAL_ADS && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="article-ad-top"
-              >
-                <div className="ad-label">Advertisement</div>
-                <ResponsiveAd adSlot="5844341661" />
-              </motion.div>
-              )}
-
-            <motion.div
-              className={`${sourceSans.className} prose prose-lg prose-invert mx-auto max-w-3xl text-[18px] md:text-[19px] leading-8 tracking-[0.0025em]`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <ProcessedContent content={contentCleaned} />
-            </motion.div>
-
-            {/* Conditional Review summary block at end of content */}
-            {isReview && reviewConfig && (
-              <>
-                <ReviewSummary
-                  articleTitle={article.title}
-                  fallbackImage={article.featuredImage?.node?.sourceUrl}
-                  config={reviewConfig}
-                />
-                <ReviewJsonLd
-                  articleUrl={`${process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'}/${(article as unknown as { slug?: string }).slug || ''}`}
-                  articleTitle={article.title}
-                  authorName={article.author?.node?.name}
-                  rating={typeof reviewConfig.score === 'number' ? reviewConfig.score : undefined}
-                  reviewBody={reviewConfig.conclusion}
-                  imageUrl={reviewConfig.backgroundImage || article.featuredImage?.node?.sourceUrl}
-                />
-              </>
-            )}
 
             {/* Inline Content Upgrade - Strategic Placement */}
             <motion.div
@@ -524,4 +536,3 @@ export default function ArticleContent({ article }: ArticleContentProps) {
     </div>
   );
 }
-

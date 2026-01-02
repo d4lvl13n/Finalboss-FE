@@ -196,4 +196,3 @@ export default function ArticleCard({ article, index = 0, variant = 'default', b
 
 // Export individual variants for direct use
 export { CompactCard, FeaturedCard, DefaultCard };
-
