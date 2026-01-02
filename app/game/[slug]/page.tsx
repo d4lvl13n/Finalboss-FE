@@ -6,7 +6,7 @@ import ResponsiveArticleGrid from '@/app/components/ResponsiveArticleGrid';
 import { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import client from '@/app/lib/apolloClient';
-import { CREATE_GAME_TAG, GET_GAME_TAG_BY_SLUG, GET_GAME_TAG_WITH_POSTS } from '@/app/lib/queries/gameQueries';
+import { CREATE_GAME_TAG_WITH_META, GET_GAME_TAG_BY_SLUG, GET_GAME_TAG_WITH_POSTS } from '@/app/lib/queries/gameQueries';
 import { absoluteUrl, buildPageMetadata } from '@/app/lib/seo';
 import { IGDBGame } from '@/app/types/igdb';
 
@@ -121,28 +121,26 @@ async function createGameTagFromIgdb(game: IGDBGame): Promise<string | null> {
   try {
     const slug = slugifyGameTitle(game.name);
     const description = buildDescription(game.description) || game.name;
-    const metaData: { key: string; value: string }[] = [];
-
-    if (game.id != null) {
-      metaData.push({ key: 'igdb_id', value: String(game.id) });
-    }
-    metaData.push({ key: 'igdb_data', value: JSON.stringify({ ...game, igdb_id: game.id }) });
 
     const input: Record<string, unknown> = {
       name: game.name,
       slug,
       description,
-      metaData,
     };
 
+    if (game.id != null) {
+      input.igdbId = String(game.id);
+    }
+    input.igdbData = JSON.stringify({ ...game, igdb_id: game.id });
+
     const { data } = await client.mutate({
-      mutation: CREATE_GAME_TAG,
+      mutation: CREATE_GAME_TAG_WITH_META,
       variables: {
         input,
       },
     });
 
-    return data?.createGameTag?.gameTag?.slug || null;
+    return data?.createGameTagWithMeta?.gameTag?.slug || null;
   } catch (error) {
     console.error('Error creating game tag from IGDB:', error);
     return null;

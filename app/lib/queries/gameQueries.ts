@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-export const CREATE_GAME_TAG = gql`
-  mutation CreateGameTag($input: CreateGameTagInput!) {
-    createGameTag(input: $input) {
+export const CREATE_GAME_TAG_WITH_META = gql`
+  mutation CreateGameTagWithMeta($input: CreateGameTagWithMetaInput!) {
+    createGameTagWithMeta(input: $input) {
       gameTag {
         databaseId
         slug

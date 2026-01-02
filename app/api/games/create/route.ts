@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import client from '@/app/lib/apolloClient';
-import { CREATE_GAME_TAG, GET_GAME_TAG_BY_SLUG } from '@/app/lib/queries/gameQueries';
+import { CREATE_GAME_TAG_WITH_META, GET_GAME_TAG_BY_SLUG } from '@/app/lib/queries/gameQueries';
 
 export async function POST(request: Request) {
   try {
@@ -40,19 +40,15 @@ export async function POST(request: Request) {
       description: trimmedDescription,
     };
 
-    const metaData: { key: string; value: string }[] = [];
     if (igdbId != null) {
-      metaData.push({ key: "igdb_id", value: String(igdbId) });
+      input.igdbId = String(igdbId);
     }
     if (Object.keys(igdbData || {}).length > 0) {
-      metaData.push({ key: "igdb_data", value: JSON.stringify(igdbData) });
-    }
-    if (metaData.length > 0) {
-      input.metaData = metaData;
+      input.igdbData = JSON.stringify(igdbData);
     }
 
     const createResult = await client.mutate({
-      mutation: CREATE_GAME_TAG,
+      mutation: CREATE_GAME_TAG_WITH_META,
       variables: {
         input
       }
@@ -60,7 +56,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ 
       success: true, 
-      slug: createResult.data.createGameTag.gameTag.slug 
+      slug: createResult.data.createGameTagWithMeta.gameTag.slug 
     });
   } catch (error: unknown) {
     console.error('Error creating game:', error);
