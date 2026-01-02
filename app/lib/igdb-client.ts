@@ -16,6 +16,18 @@ interface IGDBRawWebsite {
   category: string;
 }
 
+interface IGDBRawNamedEntry {
+  name: string;
+}
+
+interface IGDBRawCompanyEntry {
+  company?: {
+    name?: string;
+  };
+  developer?: boolean;
+  publisher?: boolean;
+}
+
 interface IGDBRawGame {
   id: number;
   name: string;
@@ -28,6 +40,12 @@ interface IGDBRawGame {
   screenshots?: IGDBRawImage[];
   videos?: IGDBRawVideo[];
   websites?: IGDBRawWebsite[];
+  themes?: IGDBRawNamedEntry[];
+  game_modes?: IGDBRawNamedEntry[];
+  player_perspectives?: IGDBRawNamedEntry[];
+  franchises?: IGDBRawNamedEntry[];
+  collections?: IGDBRawNamedEntry[];
+  involved_companies?: IGDBRawCompanyEntry[];
 }
 
 export class IGDBClient {
@@ -92,6 +110,14 @@ export class IGDBClient {
         name: p.name
       })),
       genres: game.genres?.map((g) => g.name),
+      themes: game.themes?.map((t) => t.name),
+      game_modes: game.game_modes?.map((mode) => mode.name),
+      player_perspectives: game.player_perspectives?.map((perspective) => perspective.name),
+      franchises: game.franchises?.map((franchise) => franchise.name),
+      collections: game.collections?.map((collection) => collection.name),
+      companies: game.involved_companies
+        ?.map((entry) => entry.company?.name)
+        .filter((name): name is string => Boolean(name)),
       screenshots: game.screenshots?.map((s) => 
         this.getImageUrl(s.image_id, 'screenshot_big')
       ),

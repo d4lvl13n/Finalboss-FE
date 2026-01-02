@@ -17,6 +17,12 @@ export interface IGDBGame {
   rating?: number;
   platforms?: Array<{ id: number; name: string }>;
   genres?: string[];
+  themes?: string[];
+  game_modes?: string[];
+  player_perspectives?: string[];
+  franchises?: string[];
+  collections?: string[];
+  companies?: string[];
   screenshots?: string[];
   videos?: Array<{ id: number; name: string; video_id: string }>;
   websites?: Array<{ url: string; category: string }>;

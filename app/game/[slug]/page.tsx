@@ -82,6 +82,48 @@ function buildIgdbImageUrl(imageId: string, size: 'cover_big' | 'screenshot_big'
   return `https://images.igdb.com/igdb/image/upload/t_${size}/${imageId}.jpg`;
 }
 
+function extractNamedList(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((entry) => {
+      if (typeof entry === 'string') {
+        return entry;
+      }
+      if (entry && typeof entry === 'object') {
+        const name = (entry as { name?: string }).name;
+        return typeof name === 'string' ? name : null;
+      }
+      return null;
+    })
+    .filter((entry): entry is string => Boolean(entry));
+}
+
+function extractCompanyNames(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((entry) => {
+      if (typeof entry === 'string') {
+        return entry;
+      }
+      if (entry && typeof entry === 'object') {
+        const companyName = (entry as { company?: { name?: string } }).company?.name;
+        if (typeof companyName === 'string') {
+          return companyName;
+        }
+        const name = (entry as { name?: string }).name;
+        return typeof name === 'string' ? name : null;
+      }
+      return null;
+    })
+    .filter((entry): entry is string => Boolean(entry));
+}
+
 function normalizeIgdbData(
   raw: unknown,
   fallbackName: string,
@@ -162,23 +204,16 @@ function normalizeIgdbData(
         .filter((platform): platform is { id: number; name: string } => Boolean(platform))
     : undefined;
 
-  const genresRaw = (data as { genres?: unknown }).genres;
-  const genres = Array.isArray(genresRaw)
-    ? genresRaw
-        .map((genre) => {
-          if (typeof genre === 'string') {
-            return genre;
-          }
-          if (genre && typeof genre === 'object') {
-            const genreName = (genre as { name?: string }).name;
-            if (typeof genreName === 'string') {
-              return genreName;
-            }
-          }
-          return null;
-        })
-        .filter((genre): genre is string => Boolean(genre))
-    : undefined;
+  const genres = extractNamedList((data as { genres?: unknown }).genres);
+  const themes = extractNamedList((data as { themes?: unknown }).themes);
+  const gameModes = extractNamedList((data as { game_modes?: unknown }).game_modes);
+  const playerPerspectives = extractNamedList((data as { player_perspectives?: unknown }).player_perspectives);
+  const franchises = extractNamedList((data as { franchises?: unknown }).franchises);
+  const collections = extractNamedList((data as { collections?: unknown }).collections);
+  const companies = extractCompanyNames(
+    (data as { involved_companies?: unknown }).involved_companies ??
+      (data as { companies?: unknown }).companies
+  );
 
   const description = typeof data.description === 'string'
     ? data.description
@@ -266,7 +301,13 @@ function normalizeIgdbData(
     release_date,
     rating,
     platforms: platforms?.length ? platforms : undefined,
-    genres: genres?.length ? genres : undefined,
+    genres: genres.length ? genres : undefined,
+    themes: themes.length ? themes : undefined,
+    game_modes: gameModes.length ? gameModes : undefined,
+    player_perspectives: playerPerspectives.length ? playerPerspectives : undefined,
+    franchises: franchises.length ? franchises : undefined,
+    collections: collections.length ? collections : undefined,
+    companies: companies.length ? companies : undefined,
     screenshots: screenshots?.length ? screenshots : undefined,
     videos: videos?.length ? videos : undefined,
     websites: websites?.length ? websites : undefined,

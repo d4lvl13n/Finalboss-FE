@@ -122,12 +122,75 @@ export function GameDetails({
             ))}
           </div>
 
-          {/* Description */}
-          {game.description && (
-            <div className="bg-gray-800 rounded-lg p-6 mb-8 shadow-xl">
-              <p className="text-gray-300 leading-relaxed">{game.description}</p>
+        {/* Description */}
+        {game.description && (
+          <div className="bg-gray-800 rounded-lg p-6 mb-8 shadow-xl">
+            <p className="text-gray-300 leading-relaxed">{game.description}</p>
+          </div>
+        )}
+
+        {(game.genres?.length ||
+          game.themes?.length ||
+          game.game_modes?.length ||
+          game.player_perspectives?.length ||
+          game.franchises?.length ||
+          game.collections?.length ||
+          game.companies?.length ||
+          game.websites?.length) && (
+          <div className="bg-gray-800 rounded-lg p-6 mb-8 shadow-xl">
+            <h2 className="text-2xl font-bold text-white mb-6">Game Facts</h2>
+            <div className="grid gap-6 md:grid-cols-2">
+              {[
+                { label: 'Genres', items: game.genres },
+                { label: 'Themes', items: game.themes },
+                { label: 'Modes', items: game.game_modes },
+                { label: 'Perspectives', items: game.player_perspectives },
+                { label: 'Franchises', items: game.franchises },
+                { label: 'Collections', items: game.collections },
+                { label: 'Companies', items: game.companies },
+              ]
+                .filter((block) => block.items && block.items.length > 0)
+                .map((block) => (
+                  <div key={block.label}>
+                    <p className="text-xs uppercase tracking-widest text-yellow-400 mb-2">
+                      {block.label}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {block.items?.map((item) => (
+                        <span
+                          key={`${block.label}-${item}`}
+                          className="text-sm bg-gray-700 text-gray-200 px-3 py-1 rounded-full"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+
+              {game.websites && game.websites.length > 0 && (
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-yellow-400 mb-2">
+                    Official Links
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    {game.websites.map((website, index) => (
+                      <a
+                        key={`${website.url}-${index}`}
+                        href={website.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-sm text-yellow-300 hover:text-yellow-200 underline underline-offset-4"
+                      >
+                        {website.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </div>
+        )}
 
           {/* Screenshots */}
           {game.screenshots && game.screenshots.length > 0 && (
