@@ -1,9 +1,9 @@
 import { IGDBClient } from '@/app/lib/igdb-client';
 import { GameDetails } from '@/app/components/GameDetails';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import client from '@/app/lib/apolloClient';
-import { GET_GAME } from '@/app/lib/queries/gameQueries';
+import { CREATE_GAME, GET_GAME, GET_GAME_BY_IGDB_ID } from '@/app/lib/queries/gameQueries';
 import { absoluteUrl, buildPageMetadata } from '@/app/lib/seo';
 import { IGDBGame } from '@/app/types/igdb';
 
@@ -17,9 +17,22 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
 
 export const revalidate = 3600;
 
+function slugifyGameTitle(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .substring(0, 200);
+}
+
 function stripHtml(value: string | undefined): string {
   if (!value) return '';
   return value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function stripGameMetaBlock(content: string | undefined): string {
+  if (!content) return '';
+  return content.replace(/<div class="game-meta"[^>]*>[\s\S]*?<\/div>/, '');
 }
 
 function buildDescription(value: string | undefined): string {
@@ -45,6 +58,77 @@ function buildVideoGameJsonLd(game: IGDBGame, canonicalUrl: string) {
   };
 }
 
+function buildGameMetaFromIgdb(game: IGDBGame) {
+  return {
+    igdb_id: game.id,
+    rating: game.rating,
+    release_date: game.release_date,
+    platforms: game.platforms,
+    screenshots: game.screenshots,
+    videos: game.videos,
+    websites: game.websites,
+  };
+}
+
+function buildGameContent(content: string, meta: Record<string, unknown>) {
+  return `<!-- wp:group -->
+<div class="game-details">
+  ${content}
+  <!-- Game Meta Data -->
+  <div class="game-meta" style="display:none">
+    ${JSON.stringify(meta)}
+  </div>
+</div>
+<!-- /wp:group -->`;
+}
+
+async function findGameSlugByIgdbId(igdbId: number): Promise<string | null> {
+  try {
+    const { data } = await client.query({
+      query: GET_GAME_BY_IGDB_ID,
+      variables: { igdbId: String(igdbId) },
+      fetchPolicy: 'no-cache',
+    });
+
+    const node = data?.games?.nodes?.[0];
+    return node?.slug || null;
+  } catch (error) {
+    console.error('Error resolving game by IGDB id:', error);
+    return null;
+  }
+}
+
+async function createGameFromIgdb(game: IGDBGame): Promise<string | null> {
+  try {
+    const meta = buildGameMetaFromIgdb(game);
+    const slug = slugifyGameTitle(game.name);
+    const content = buildGameContent(game.description || '', meta);
+
+    const input: Record<string, unknown> = {
+      title: game.name,
+      status: 'PUBLISH',
+      slug,
+      content,
+    };
+
+    if (game.id != null) {
+      input.metaData = [{ key: 'igdb_id', value: String(game.id) }];
+    }
+
+    const { data } = await client.mutate({
+      mutation: CREATE_GAME,
+      variables: {
+        input,
+      },
+    });
+
+    return data?.createGame?.game?.slug || null;
+  } catch (error) {
+    console.error('Error creating game from IGDB:', error);
+    return null;
+  }
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const canonicalPath = `/game/${params.slug}`;
@@ -54,13 +138,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       variables: { slug: params.slug }
     });
 
-    if (data?.post) {
-      const description = buildDescription(data.post.excerpt || data.post.content || data.post.title);
+    if (data?.game) {
+      const contentSansMeta = stripGameMetaBlock(data.game.content);
+      const description = buildDescription(data.game.excerpt || contentSansMeta || data.game.title);
       return buildPageMetadata({
-        title: `${data.post.title} - Game Details | FinalBoss.io`,
-        description: description || data.post.title,
+        title: `${data.game.title} - Game Details | FinalBoss.io`,
+        description: description || data.game.title,
         path: canonicalPath,
-        image: data.post.featuredImage?.node?.sourceUrl || undefined,
+        image: data.game.featuredImage?.node?.sourceUrl || undefined,
         type: 'article',
         robots: {
           index: true,
@@ -72,6 +157,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // Fallback to IGDB if it's an ID
     const igdbId = parseInt(params.slug);
     if (!isNaN(igdbId)) {
+      const resolvedSlug = await findGameSlugByIgdbId(igdbId);
+      const resolvedPath = resolvedSlug ? `/game/${resolvedSlug}` : canonicalPath;
       const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
       const game = await igdbClient.getGameDetails(igdbId);
       
@@ -79,7 +166,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       return buildPageMetadata({
         title: `${game.data.name} - Game Details | FinalBoss.io`,
         description,
-        path: canonicalPath,
+        path: resolvedPath,
         image: game.data.cover_url || undefined,
         type: 'article',
         robots: {
@@ -109,15 +196,16 @@ export default async function GamePage({ params }: Props) {
       variables: { slug: params.slug }
     });
 
-    if (data?.post) {
+    if (data?.game) {
       // Extract game meta data from content
-      const metaMatch = data.post.content.match(/<div class="game-meta"[^>]*>(.*?)<\/div>/);
+      const metaMatch = data.game.content.match(/<div class="game-meta"[^>]*>(.*?)<\/div>/);
       const gameMeta = metaMatch ? JSON.parse(metaMatch[1]) : null;
+      const contentSansMeta = stripGameMetaBlock(data.game.content);
       const gameData: IGDBGame = {
         ...(gameMeta || {}),
-        name: data.post.title,
-        description: gameMeta?.description || stripHtml(data.post.content),
-        cover_url: gameMeta?.cover_url || data.post.featuredImage?.node?.sourceUrl,
+        name: data.game.title,
+        description: gameMeta?.description || stripHtml(contentSansMeta),
+        cover_url: gameMeta?.cover_url || data.game.featuredImage?.node?.sourceUrl,
       };
 
       return (
@@ -134,9 +222,19 @@ export default async function GamePage({ params }: Props) {
     // Fallback to IGDB if it's an ID
     const igdbId = parseInt(params.slug);
     if (!isNaN(igdbId)) {
+      const resolvedSlug = await findGameSlugByIgdbId(igdbId);
+      if (resolvedSlug) {
+        redirect(`/game/${resolvedSlug}`);
+      }
+
       const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
       const game = await igdbClient.getGameDetails(igdbId);
-      
+
+      const createdSlug = await createGameFromIgdb(game.data);
+      if (createdSlug) {
+        redirect(`/game/${createdSlug}`);
+      }
+
       return (
         <div className="min-h-screen bg-gray-900">
           <script

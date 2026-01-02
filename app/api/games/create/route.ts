@@ -12,34 +12,38 @@ export async function POST(request: Request) {
       .replace(/[^a-z0-9]+/g, '-')  // Replace non-alphanumeric chars with dash
       .replace(/^-+|-+$/g, '')      // Remove leading/trailing dashes
       .substring(0, 200);           // Limit length
+    const meta = game?.meta ?? {};
     
-    // Create the game post in WordPress
-    const createResult = await client.mutate({
-      mutation: CREATE_GAME,
-      variables: {
-        input: {
-          title: game.title,
-          status: "PUBLISH",
-          slug: slug,
-          categories: {
-            nodes: [{ name: "Games" }]
-          },
-          content: `<!-- wp:group -->
+    // Create the game entry in WordPress (custom post type)
+    const input: Record<string, unknown> = {
+      title: game.title,
+      status: "PUBLISH",
+      slug: slug,
+      content: `<!-- wp:group -->
 <div class="game-details">
   ${game.content}
   <!-- Game Meta Data -->
   <div class="game-meta" style="display:none">
-    ${JSON.stringify(game.meta)}
+    ${JSON.stringify(meta)}
   </div>
 </div>
 <!-- /wp:group -->`
-        }
+    };
+
+    if (meta?.igdb_id != null) {
+      input.metaData = [{ key: "igdb_id", value: String(meta.igdb_id) }];
+    }
+
+    const createResult = await client.mutate({
+      mutation: CREATE_GAME,
+      variables: {
+        input
       }
     });
 
     return NextResponse.json({ 
       success: true, 
-      slug: createResult.data.createPost.post.slug 
+      slug: createResult.data.createGame.game.slug 
     });
   } catch (error: unknown) {
     console.error('Error creating game:', error);
