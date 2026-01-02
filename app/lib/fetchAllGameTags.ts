@@ -1,3 +1,4 @@
+import { ApolloQueryResult } from '@apollo/client';
 import client from './apolloClient';
 import { GET_ALL_GAME_TAGS } from './queries/gameQueries';
 
@@ -30,7 +31,7 @@ export async function fetchAllGameTags(
     let data: GameTagsQueryResult | null = null;
 
     try {
-      const response = await client.query<GameTagsQueryResult>({
+      const response: ApolloQueryResult<GameTagsQueryResult> = await client.query({
         query: GET_ALL_GAME_TAGS,
         variables: { first: batchSize, after },
         fetchPolicy: 'no-cache',
