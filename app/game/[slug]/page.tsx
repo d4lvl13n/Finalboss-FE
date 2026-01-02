@@ -66,9 +66,6 @@ function parseIgdbData(raw: unknown): IGDBGame | null {
     return JSON.parse(raw) as IGDBGame;
   } catch {
     return null;
-  }
-}
-
 function buildGameFromTag(tag: {
   name: string;
   description?: string | null;
