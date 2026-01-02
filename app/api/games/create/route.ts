@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import client from '@/app/lib/apolloClient';
+import { IGDBClient } from '@/app/lib/igdb-client';
 import { CREATE_GAME_TAG_WITH_META, GET_GAME_TAG_BY_SLUG } from '@/app/lib/queries/gameQueries';
 
 export async function POST(request: Request) {
@@ -7,9 +8,24 @@ export async function POST(request: Request) {
     const { game } = await request.json();
     
     // Create slug from game title (ES2015 compatible)
-    const rawTitle = game?.title || game?.name || '';
+    let rawTitle = game?.title || game?.name || '';
     if (!rawTitle) {
       return NextResponse.json({ success: false, error: 'Missing game title' }, { status: 400 });
+    }
+    let igdbData = game?.igdbData || game?.meta || {};
+    const igdbId = igdbData?.igdb_id ?? igdbData?.id ?? game?.igdb_id;
+
+    if (igdbId != null) {
+      try {
+        const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL || '');
+        const fullGame = await igdbClient.getGameDetails(Number(igdbId));
+        if (fullGame?.data) {
+          igdbData = { ...fullGame.data, igdb_id: igdbId };
+          rawTitle = fullGame.data.name || rawTitle;
+        }
+      } catch (error) {
+        console.error('Error fetching full IGDB data:', error);
+      }
     }
 
     const slug = rawTitle
@@ -17,8 +33,6 @@ export async function POST(request: Request) {
       .replace(/[^a-z0-9]+/g, '-')  // Replace non-alphanumeric chars with dash
       .replace(/^-+|-+$/g, '')      // Remove leading/trailing dashes
       .substring(0, 200);           // Limit length
-    const igdbData = game?.igdbData || game?.meta || {};
-    const igdbId = igdbData?.igdb_id ?? igdbData?.id ?? game?.igdb_id;
 
     const existing = await client.query({
       query: GET_GAME_TAG_BY_SLUG,
