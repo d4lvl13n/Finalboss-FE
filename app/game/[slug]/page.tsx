@@ -73,6 +73,7 @@ function buildGameFromTag(tag: {
   name: string;
   description?: string | null;
   igdbData?: string | null;
+  igdbId?: string | null;
 }): IGDBGame {
   const parsed = parseIgdbData(tag.igdbData);
   if (parsed && parsed.name) {
@@ -84,6 +85,7 @@ function buildGameFromTag(tag: {
   }
 
   return {
+    id: tag.igdbId ? Number(tag.igdbId) : undefined,
     name: tag.name,
     description: tag.description || tag.name,
   };
@@ -207,8 +209,24 @@ export default async function GamePage({ params }: Props) {
     const gameTag = await getGameTagWithPosts(params.slug);
 
     if (gameTag) {
-      const gameData = buildGameFromTag(gameTag);
+      let gameData = buildGameFromTag(gameTag);
       const relatedArticles = gameTag.posts?.nodes || [];
+
+      const needsIgdbRefresh =
+        (!gameData.screenshots || gameData.screenshots.length === 0) ||
+        (!gameData.videos || gameData.videos.length === 0);
+
+      if (needsIgdbRefresh && gameTag.igdbId) {
+        try {
+          const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
+          const game = await igdbClient.getGameDetails(Number(gameTag.igdbId));
+          if (game?.data) {
+            gameData = game.data;
+          }
+        } catch (error) {
+          console.error('Error refreshing IGDB data:', error);
+        }
+      }
 
       return (
         <>
