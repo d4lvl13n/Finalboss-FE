@@ -33,6 +33,7 @@ const navItems = [
   { name: 'Guides', href: '/guides' },
   { name: 'Technology', href: '/technology' },
   { name: 'Videos', href: '/videos' },
+  { name: 'Games', href: '/games' },
   { name: 'Team', href: '/authors' },
 ];
 
@@ -225,6 +226,9 @@ const Header: React.FC = () => {
               <nav className="flex-grow">
                 <MenuItem href="/gaming">
                   News
+                </MenuItem>
+                <MenuItem href="/games">
+                  Games
                 </MenuItem>
                 {['Reviews', 'Guides', 'Videos', 'Technology'].map((item) => (
                   <MenuItem key={item} href={`/${item.toLowerCase()}`}>

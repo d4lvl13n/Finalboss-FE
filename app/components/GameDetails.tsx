@@ -5,8 +5,42 @@ import Image from 'next/image';
 import { IGDBGame } from '../types/igdb';
 import { format } from 'date-fns';
 import { GameSearch } from './GameSearch';
+import ResponsiveArticleGrid from './ResponsiveArticleGrid';
 
-export function GameDetails({ game }: { game: IGDBGame }) {
+interface RelatedArticle {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  date?: string;
+  featuredImage?: {
+    node: {
+      sourceUrl: string;
+    };
+  };
+  categories?: {
+    nodes?: {
+      name: string;
+      slug?: string;
+    }[];
+  };
+  author?: {
+    node?: {
+      name?: string;
+      avatar?: {
+        url?: string;
+      };
+    };
+  };
+}
+
+export function GameDetails({
+  game,
+  relatedArticles = [],
+}: {
+  game: IGDBGame;
+  relatedArticles?: RelatedArticle[];
+}) {
   return (
       <main className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
         {/* Hero Section */}
@@ -40,6 +74,24 @@ export function GameDetails({ game }: { game: IGDBGame }) {
             </>
           )}
         </div>
+
+        {relatedArticles.length > 0 && (
+          <section className="bg-gray-900/80 text-white py-10">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center mb-6">
+                <h2 className="text-2xl md:text-3xl font-bold text-yellow-400 mr-4">
+                  More {game.name} Coverage
+                </h2>
+                <div className="flex-grow h-0.5 md:h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full" />
+              </div>
+              <ResponsiveArticleGrid
+                articles={relatedArticles}
+                showFeatured={false}
+                featuredCount={0}
+              />
+            </div>
+          </section>
+        )}
 
         {/* Game Info */}
         <div className="container mx-auto px-4 py-8">

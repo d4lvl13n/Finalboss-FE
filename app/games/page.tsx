@@ -2,7 +2,12 @@ import { Suspense } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { GameSearch } from '../components/GameSearch';
+import GamesIndexClient from '../components/GamesIndexClient';
 import { buildPageMetadata } from '../lib/seo';
+import client from '../lib/apolloClient';
+import { GET_GAME_TAGS_FOR_INDEX } from '../lib/queries/gameQueries';
+
+const GAME_INDEX_LIMIT = 60;
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
 
@@ -14,7 +19,30 @@ export async function generateMetadata() {
   });
 }
 
-export default function GamesPage() {
+export const revalidate = 3600;
+
+async function fetchGameTagsForIndex() {
+  try {
+    const { data } = await client.query({
+      query: GET_GAME_TAGS_FOR_INDEX,
+      variables: { first: GAME_INDEX_LIMIT, after: null },
+      fetchPolicy: 'no-cache',
+    });
+    return {
+      nodes: data?.gameTags?.nodes ?? [],
+      pageInfo: data?.gameTags?.pageInfo ?? { hasNextPage: false, endCursor: null },
+    };
+  } catch (error) {
+    console.error('Failed to fetch game tags for index:', error);
+    return {
+      nodes: [],
+      pageInfo: { hasNextPage: false, endCursor: null },
+    };
+  }
+}
+
+export default async function GamesPage() {
+  const { nodes: gameTags, pageInfo } = await fetchGameTagsForIndex();
   return (
     <>
       <Header />
@@ -31,6 +59,12 @@ export default function GamesPage() {
           >
             <GameSearch />
           </Suspense>
+
+          <GamesIndexClient
+            initialTags={gameTags}
+            initialPageInfo={pageInfo}
+            pageSize={GAME_INDEX_LIMIT}
+          />
         </div>
       </main>
       <script

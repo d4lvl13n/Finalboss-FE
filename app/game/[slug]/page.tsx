@@ -2,7 +2,6 @@ import { IGDBClient } from '@/app/lib/igdb-client';
 import { GameDetails } from '@/app/components/GameDetails';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
-import ResponsiveArticleGrid from '@/app/components/ResponsiveArticleGrid';
 import { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import client from '@/app/lib/apolloClient';
@@ -54,6 +53,16 @@ function buildVideoGameJsonLd(game: IGDBGame, canonicalUrl: string) {
     url: canonicalUrl,
     ...(game.release_date ? { datePublished: game.release_date } : {}),
     ...(platforms?.length ? { gamePlatform: platforms } : {}),
+    ...(game.genres?.length ? { genre: game.genres } : {}),
+    ...(typeof game.rating === 'number'
+      ? {
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: Math.round(game.rating * 10) / 10,
+            bestRating: 100,
+          },
+        }
+      : {}),
   };
 }
 
@@ -177,13 +186,54 @@ function normalizeIgdbData(
       ? (data as { summary?: string }).summary
       : fallbackDescription || fallbackName;
 
-  const release_date = typeof data.release_date === 'string'
-    ? data.release_date
-    : typeof (data as { first_release_date?: number }).first_release_date === 'number'
-      ? new Date((data as { first_release_date: number }).first_release_date * 1000).toISOString()
-      : undefined;
+  const release_date =
+    typeof data.release_date === 'string'
+      ? data.release_date
+      : (() => {
+          const releaseDates = (data as { release_dates?: unknown }).release_dates;
+          if (Array.isArray(releaseDates)) {
+            let earliestTimestamp: number | null = null;
+            let earliestYear: number | null = null;
 
-  const rating = typeof data.rating === 'number' ? data.rating : undefined;
+            releaseDates.forEach((releaseDate) => {
+              if (!releaseDate || typeof releaseDate !== 'object') {
+                return;
+              }
+              const timestamp = (releaseDate as { date?: number }).date;
+              if (typeof timestamp === 'number') {
+                if (earliestTimestamp === null || timestamp < earliestTimestamp) {
+                  earliestTimestamp = timestamp;
+                }
+                return;
+              }
+              const year = (releaseDate as { y?: number }).y;
+              if (typeof year === 'number') {
+                if (earliestYear === null || year < earliestYear) {
+                  earliestYear = year;
+                }
+              }
+            });
+
+            if (earliestTimestamp !== null) {
+              return new Date(earliestTimestamp * 1000).toISOString();
+            }
+            if (earliestYear !== null) {
+              return new Date(Date.UTC(earliestYear, 0, 1)).toISOString();
+            }
+          }
+
+          const fallbackTimestamp = (data as { first_release_date?: number }).first_release_date;
+          if (typeof fallbackTimestamp === 'number') {
+            return new Date(fallbackTimestamp * 1000).toISOString();
+          }
+
+          return undefined;
+        })();
+
+  const aggregatedRating = typeof data.aggregated_rating === 'number'
+    ? data.aggregated_rating
+    : undefined;
+  const rating = typeof data.rating === 'number' ? data.rating : aggregatedRating;
 
   const websitesRaw = (data as { websites?: unknown }).websites;
   const websites = Array.isArray(websitesRaw)
@@ -392,24 +442,7 @@ export default async function GamePage({ params }: Props) {
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(buildVideoGameJsonLd(gameData, canonicalUrl)) }}
           />
-          <GameDetails game={gameData} />
-          {relatedArticles.length > 0 && (
-            <section className="bg-gray-900 text-white py-12">
-              <div className="container mx-auto px-4">
-                <div className="flex items-center mb-6">
-                  <h2 className="text-2xl md:text-3xl font-bold text-yellow-400 mr-4">
-                    More {gameData.name} Coverage
-                  </h2>
-                  <div className="flex-grow h-0.5 md:h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full" />
-                </div>
-                <ResponsiveArticleGrid
-                  articles={relatedArticles}
-                  showFeatured={false}
-                  featuredCount={0}
-                />
-              </div>
-            </section>
-          )}
+          <GameDetails game={gameData} relatedArticles={relatedArticles} />
           <Footer />
         </>
       );

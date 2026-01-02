@@ -106,6 +106,7 @@ const Footer = () => {
                     { href: '/articles', label: 'News', icon: FaNewspaper },
                     { href: '/reviews', label: 'Reviews', icon: FaStar },
                     { href: '/guides', label: 'Guides', icon: FaBookOpen },
+                    { href: '/games', label: 'Games', icon: FaGamepad },
                     { href: '/videos', label: 'Videos', icon: FaVideo },
                     { href: '/technology', label: 'Technology', icon: FaCog }
                   ].map((item) => (

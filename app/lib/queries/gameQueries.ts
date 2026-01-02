@@ -77,3 +77,20 @@ export const GET_ALL_GAME_TAGS = gql`
     }
   }
 `;
+
+export const GET_GAME_TAGS_FOR_INDEX = gql`
+  query GetGameTagsForIndex($first: Int!, $after: String) {
+    gameTags(first: $first, after: $after) {
+      nodes {
+        name
+        slug
+        igdbId
+        igdbData
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+`;
