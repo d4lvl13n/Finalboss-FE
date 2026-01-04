@@ -57,9 +57,6 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
-  alternates: {
-    canonical: '/',
-  },
   robots: {
     index: true,
     follow: true,
@@ -85,13 +82,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }}
         />
-        {/* Verification */}
-        <div
-          dangerouslySetInnerHTML={{
-            __html: '<!-- e2c216ee3e6ae9705e843d5a227568c93d21a3ac -->',
-          }}
-          style={{ display: 'none' }}   // keep it invisible
-        />
+        <meta name="google-site-verification" content="e2c216ee3e6ae9705e843d5a227568c93d21a3ac" />
         
         {/* Google Analytics */}
         <Script

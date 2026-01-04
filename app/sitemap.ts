@@ -21,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Fetch dynamic content
   const [videos, { posts: allPosts, total: totalPosts }, authorsData, guidesData, gameTags] = await Promise.all([
-    youtubeService.getChannelUploads(50),
+    youtubeService.getChannelUploads(50).catch(() => ({ items: [] })),
     fetchAllPosts(),
     client.query({ query: GET_ALL_AUTHORS }).catch(() => ({ data: { users: { nodes: [] } } })),
     client

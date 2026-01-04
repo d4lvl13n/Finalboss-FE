@@ -3,7 +3,7 @@ import { GameDetails } from '@/app/components/GameDetails';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
 import { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect, redirect } from 'next/navigation';
 import client from '@/app/lib/apolloClient';
 import { CREATE_GAME_TAG_WITH_META, GET_GAME_TAG_BY_SLUG, GET_GAME_TAG_WITH_POSTS } from '@/app/lib/queries/gameQueries';
 import { absoluteUrl, buildPageMetadata } from '@/app/lib/seo';
@@ -498,12 +498,12 @@ export default async function GamePage({ params }: Props) {
       const resolvedSlug = slugifyGameTitle(game.data.name);
       const existingTag = await getGameTagBySlug(resolvedSlug);
       if (existingTag?.slug) {
-        redirect(`/game/${resolvedSlug}`);
+        permanentRedirect(`/game/${resolvedSlug}`);
       }
 
       const createdSlug = await createGameTagFromIgdb(game.data);
       if (createdSlug) {
-        redirect(`/game/${createdSlug}`);
+        permanentRedirect(`/game/${createdSlug}`);
       }
 
       return (
