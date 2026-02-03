@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Boss Game Lookup</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#8B5CF6"/>
+          <path d="M2 17L12 22L22 17" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 12L12 17L22 12" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>FinalBoss.io</span>
+      </div>
+    </header>
+
+    <!-- Search Box -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search for a game..." autocomplete="off">
+      <button id="searchBtn" class="search-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Content Area -->
+    <main class="content">
+      <!-- Initial State -->
+      <div id="initialState" class="state initial-state">
+        <p>Select any game name on a webpage and right-click to search</p>
+        <span class="shortcut">or press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd></span>
+      </div>
+
+      <!-- Loading State -->
+      <div id="loadingState" class="state loading-state hidden">
+        <div class="spinner"></div>
+        <p>Searching...</p>
+      </div>
+
+      <!-- Error State -->
+      <div id="errorState" class="state error-state hidden">
+        <p id="errorMessage">Something went wrong</p>
+        <button id="retryBtn" class="btn btn-secondary">Try Again</button>
+      </div>
+
+      <!-- Search Results -->
+      <div id="resultsState" class="state results-state hidden">
+        <div id="resultsList" class="results-list"></div>
+      </div>
+
+      <!-- Game Details -->
+      <div id="detailsState" class="state details-state hidden">
+        <button id="backBtn" class="back-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          Back to results
+        </button>
+        <div id="gameDetails" class="game-details"></div>
+      </div>
+
+      <!-- No Results -->
+      <div id="noResultsState" class="state no-results-state hidden">
+        <p>No games found for "<span id="noResultsQuery"></span>"</p>
+        <a href="https://finalboss.io/games" target="_blank" class="btn btn-primary">Browse All Games</a>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <a href="https://finalboss.io" target="_blank">Powered by FinalBoss.io</a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
