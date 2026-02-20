@@ -3,6 +3,8 @@
 // State
 let currentResults = [];
 let currentQuery = '';
+let currentGame = null;
+const MAX_HISTORY = 5;
 
 // DOM Elements
 const searchInput = document.getElementById('searchInput');
@@ -25,6 +27,13 @@ const noResultsQuery = document.getElementById('noResultsQuery');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', async () => {
+  // Display version
+  const manifest = chrome.runtime.getManifest();
+  document.getElementById('version').textContent = `v${manifest.version}`;
+
+  // Load and display search history
+  loadSearchHistory();
+
   // Check for pending search from context menu
   chrome.runtime.sendMessage({ type: 'GET_PENDING_SEARCH' }, (response) => {
     if (response && response.query) {
@@ -56,6 +65,46 @@ document.addEventListener('DOMContentLoaded', async () => {
   searchInput.focus();
 });
 
+// Search History
+async function loadSearchHistory() {
+  const { searchHistory = [] } = await chrome.storage.local.get('searchHistory');
+  const historyContainer = document.getElementById('searchHistory');
+
+  if (searchHistory.length === 0) {
+    historyContainer.classList.add('hidden');
+    return;
+  }
+
+  historyContainer.classList.remove('hidden');
+  const historyList = document.getElementById('historyList');
+  historyList.innerHTML = searchHistory.map(item => `
+    <button class="history-item" data-query="${escapeHtml(item)}">
+      ${escapeHtml(item)}
+    </button>
+  `).join('');
+
+  historyList.querySelectorAll('.history-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const query = btn.dataset.query;
+      searchInput.value = query;
+      performSearch(query);
+    });
+  });
+}
+
+async function saveToHistory(query) {
+  const { searchHistory = [] } = await chrome.storage.local.get('searchHistory');
+
+  // Remove if already exists, add to front
+  const filtered = searchHistory.filter(q => q.toLowerCase() !== query.toLowerCase());
+  filtered.unshift(query);
+
+  // Keep only last MAX_HISTORY items
+  const updated = filtered.slice(0, MAX_HISTORY);
+
+  await chrome.storage.local.set({ searchHistory: updated });
+}
+
 // State Management
 function showState(stateElement) {
   [initialState, loadingState, errorState, resultsState, detailsState, noResultsState]
@@ -67,6 +116,9 @@ function showState(stateElement) {
 async function performSearch(query) {
   currentQuery = query;
   showState(loadingState);
+
+  // Save to history
+  saveToHistory(query);
 
   try {
     const response = await chrome.runtime.sendMessage({
@@ -162,6 +214,7 @@ async function showGameDetails(id) {
       throw new Error(response.error || 'Failed to load game details');
     }
 
+    currentGame = response.data;
     renderGameDetails(response.data);
     showState(detailsState);
 
@@ -177,6 +230,7 @@ function renderGameDetails(game) {
   const platforms = game.platforms || [];
   const genres = game.genres || [];
   const companies = game.companies || [];
+  const screenshots = game.screenshots || [];
 
   gameDetails.innerHTML = `
     <div class="game-header">
@@ -213,6 +267,14 @@ function renderGameDetails(game) {
       <p class="game-description">${escapeHtml(game.description)}</p>
     ` : ''}
 
+    ${screenshots.length > 0 ? `
+      <div class="screenshots">
+        ${screenshots.slice(0, 3).map(url => `
+          <img class="screenshot" src="${url}" alt="Screenshot" loading="lazy" data-url="${url}">
+        `).join('')}
+      </div>
+    ` : ''}
+
     ${companies.length > 0 ? `
       <p class="game-companies">By ${companies.slice(0, 2).map(c => escapeHtml(c)).join(', ')}</p>
     ` : ''}
@@ -221,8 +283,85 @@ function renderGameDetails(game) {
       <a href="${game.finalboss_url}" target="_blank" class="btn btn-primary">
         View on FinalBoss.io
       </a>
+      <button class="btn btn-secondary share-btn" title="Share">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="share-menu hidden" id="shareMenu">
+      <button class="share-option" data-platform="twitter">
+        <span>𝕏 Twitter</span>
+      </button>
+      <button class="share-option" data-platform="reddit">
+        <span>Reddit</span>
+      </button>
+      <button class="share-option" data-platform="copy">
+        <span>Copy Link</span>
+      </button>
     </div>
   `;
+
+  // Add screenshot click listeners (open in new tab)
+  gameDetails.querySelectorAll('.screenshot').forEach(img => {
+    img.addEventListener('click', () => {
+      window.open(img.dataset.url, '_blank');
+    });
+  });
+
+  // Add share button listeners
+  const shareBtn = gameDetails.querySelector('.share-btn');
+  const shareMenu = gameDetails.querySelector('#shareMenu');
+
+  if (shareBtn && shareMenu) {
+    shareBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      shareMenu.classList.toggle('hidden');
+    });
+
+    // Close menu when clicking outside
+    gameDetails.addEventListener('click', (e) => {
+      if (!e.target.closest('.share-btn') && !e.target.closest('.share-menu')) {
+        shareMenu.classList.add('hidden');
+      }
+    });
+
+    gameDetails.querySelectorAll('.share-option').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleShare(btn.dataset.platform, game);
+      });
+    });
+  }
+}
+
+// Share functionality
+function handleShare(platform, game) {
+  const text = `Check out ${game.name} on FinalBoss.io`;
+  const url = game.finalboss_url;
+
+  switch (platform) {
+    case 'twitter':
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+      break;
+    case 'reddit':
+      window.open(`https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}`, '_blank');
+      break;
+    case 'copy':
+      navigator.clipboard.writeText(url).then(() => {
+        const shareMenu = document.getElementById('shareMenu');
+        const copyBtn = shareMenu.querySelector('[data-platform="copy"]');
+        copyBtn.innerHTML = '<span>Copied!</span>';
+        setTimeout(() => {
+          copyBtn.innerHTML = '<span>Copy Link</span>';
+        }, 2000);
+      });
+      break;
+  }
 }
 
 // Helpers
