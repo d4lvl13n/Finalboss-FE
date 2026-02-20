@@ -67,11 +67,11 @@ export default function PageHeader({ title, description, accentColor = 'yellow',
       />
       
       <div className="relative container mx-auto px-4 text-center">
-        {/* Animated Title - Smaller on mobile */}
-        <motion.h1 
+        {/* Title - visible immediately for SSR/SEO, animates position only */}
+        <motion.h1
           className={`font-bold ${compact ? 'text-2xl md:text-4xl mb-2' : 'text-2xl md:text-4xl lg:text-5xl mb-2 md:mb-4'}`}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ y: 10 }}
+          animate={{ y: 0 }}
           transition={{ duration: 0.4 }}
         >
           <span className={`bg-gradient-to-r ${colors.gradient} bg-clip-text text-transparent`}>

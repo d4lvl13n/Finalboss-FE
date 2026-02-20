@@ -8,6 +8,7 @@ import client from '@/app/lib/apolloClient';
 import { CREATE_GAME_TAG_WITH_META, GET_GAME_TAG_BY_SLUG, GET_GAME_TAG_WITH_POSTS } from '@/app/lib/queries/gameQueries';
 import { absoluteUrl, buildPageMetadata } from '@/app/lib/seo';
 import { IGDBGame } from '@/app/types/igdb';
+import { fetchAllGameTags } from '@/app/lib/fetchAllGameTags';
 
 interface Props {
   params: {
@@ -19,6 +20,11 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
 
 export const revalidate = 3600;
 const POSTS_PAGE_SIZE = 12;
+
+export async function generateStaticParams() {
+  const gameTags = await fetchAllGameTags();
+  return gameTags.map((tag) => ({ slug: tag.slug }));
+}
 
 function slugifyGameTitle(title: string): string {
   return title
