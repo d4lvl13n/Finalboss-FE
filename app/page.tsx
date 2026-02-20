@@ -107,10 +107,10 @@ const LatestArticles = dynamic(() => import('./components/LatestArticles'), {
   ssr: true
 });
 
-// Optimize non-critical components loading - No SSR for faster initial paint
+// SSR enabled so review links appear in initial HTML for crawlers
 const ReviewsSlider = dynamic(() => import('./components/ReviewsSlider'), {
   loading: () => <ReviewsSliderSkeleton />,
-  ssr: false
+  ssr: true
 });
 
 // Group similar sections for better code splitting
@@ -197,13 +197,19 @@ const NewsletterForm = dynamic(() => import('./components/NewsletterForm'), {
 export const revalidate = 3600;
 
 export async function generateMetadata() {
-  return buildPageMetadata({
+  const meta = buildPageMetadata({
     title: 'FinalBoss.io - Your Ultimate Gaming Destination',
     description:
       'Discover the latest gaming news, reviews, guides, and cutting-edge technology at FinalBoss.io. Stay ahead in the gaming world.',
     path: '/',
     image: '/images/finalboss-og-image.jpg',
   });
+  return {
+    ...meta,
+    title: {
+      absolute: 'FinalBoss.io - Your Ultimate Gaming Destination',
+    },
+  };
 }
 
 export default async function HomePage() {

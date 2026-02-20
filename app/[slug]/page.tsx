@@ -2,6 +2,7 @@ import { GET_POST_BY_SLUG } from '../lib/queries/getPostBySlug';
 import client from '../lib/apolloClient';
 import ArticleContent from '../components/Article/ArticleContent';
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { absoluteUrl } from '../lib/seo';
@@ -79,7 +80,7 @@ export default async function ArticlePage({ params }: PageProps) {
   const article = data?.post;
 
   if (!article) {
-    return <div>Article not found</div>;
+    notFound();
   }
 
   return (
@@ -107,7 +108,7 @@ export default async function ArticlePage({ params }: PageProps) {
             },
             datePublished: article.date,
             dateModified: article.modified,
-            description: article.excerpt || article.title,
+            description: (article.excerpt || article.title || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim(),
             mainEntityOfPage: {
               '@type': 'WebPage',
               '@id': `${process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'}/${article.slug}`,

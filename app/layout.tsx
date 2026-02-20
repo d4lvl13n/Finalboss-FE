@@ -42,6 +42,17 @@ const websiteStructuredData = {
   },
 };
 
+const organizationStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'FinalBoss.io',
+  url: baseUrl,
+  logo: `${baseUrl}/images/finalboss-og-image.jpg`,
+  sameAs: [
+    'https://x.com/finalbossio',
+  ],
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
@@ -81,6 +92,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData) }}
         />
         <meta name="google-site-verification" content="e2c216ee3e6ae9705e843d5a227568c93d21a3ac" />
         

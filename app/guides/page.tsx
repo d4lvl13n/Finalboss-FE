@@ -4,6 +4,8 @@ import client from '../lib/apolloClient';
 import { buildPageMetadata } from '../lib/seo';
 import GuidesPageContent from '../components/Guides/GuidesPageContent';
 import GuidesStructuredData from '../components/Guides/GuidesStructuredData';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export async function generateMetadata() {
   return buildPageMetadata({
@@ -24,22 +26,26 @@ export default async function GuidesPage() {
   const hasNextPage = data.posts.pageInfo.hasNextPage;
 
   return (
-    <Suspense
-      fallback={
-        <section className="py-24 bg-gray-900">
-          <div className="container mx-auto px-4">
-            <div className="h-12 w-64 bg-gray-800 animate-pulse mb-8" />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, idx) => (
-                <div key={idx} className="h-64 bg-gray-800 animate-pulse rounded-xl" />
-              ))}
+    <>
+      <Header />
+      <Suspense
+        fallback={
+          <section className="py-24 bg-gray-900">
+            <div className="container mx-auto px-4">
+              <div className="h-12 w-64 bg-gray-800 animate-pulse mb-8" />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Array.from({ length: 6 }).map((_, idx) => (
+                  <div key={idx} className="h-64 bg-gray-800 animate-pulse rounded-xl" />
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      }
-    >
-      <GuidesStructuredData categories={subcategories} guides={guides} />
-      <GuidesPageContent initialSubcategories={subcategories} initialGuides={guides} initialHasNextPage={hasNextPage} />
-    </Suspense>
+          </section>
+        }
+      >
+        <GuidesStructuredData categories={subcategories} guides={guides} />
+        <GuidesPageContent initialSubcategories={subcategories} initialGuides={guides} initialHasNextPage={hasNextPage} />
+      </Suspense>
+      <Footer />
+    </>
   );
 }

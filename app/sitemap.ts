@@ -114,6 +114,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'yearly' as const,
       priority: 0.2,
     },
+    {
+      url: `${baseUrl}/about`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/features`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    },
     // Note: RSS feeds (/feeds/articles, /feeds/reviews) are intentionally excluded
     // from the sitemap as they are data feeds, not HTML pages for indexing.
     // They are linked in <head> via alternate links for feed discovery.

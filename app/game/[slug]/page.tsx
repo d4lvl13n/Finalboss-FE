@@ -54,12 +54,13 @@ function buildVideoGameJsonLd(game: IGDBGame, canonicalUrl: string) {
     ...(game.release_date ? { datePublished: game.release_date } : {}),
     ...(platforms?.length ? { gamePlatform: platforms } : {}),
     ...(game.genres?.length ? { genre: game.genres } : {}),
-    ...(typeof game.rating === 'number'
+    ...(typeof game.rating === 'number' && typeof game.rating_count === 'number' && game.rating_count > 0
       ? {
           aggregateRating: {
             '@type': 'AggregateRating',
             ratingValue: Math.round(game.rating * 10) / 10,
             bestRating: 100,
+            ratingCount: game.rating_count,
           },
         }
       : {}),
@@ -269,6 +270,11 @@ function normalizeIgdbData(
     ? data.aggregated_rating
     : undefined;
   const rating = typeof data.rating === 'number' ? data.rating : aggregatedRating;
+  const ratingCount = typeof data.rating_count === 'number'
+    ? data.rating_count
+    : typeof data.aggregated_rating_count === 'number'
+      ? data.aggregated_rating_count
+      : undefined;
 
   const websitesRaw = (data as { websites?: unknown }).websites;
   const websites = Array.isArray(websitesRaw)
@@ -300,6 +306,7 @@ function normalizeIgdbData(
     description,
     release_date,
     rating,
+    rating_count: ratingCount,
     platforms: platforms?.length ? platforms : undefined,
     genres: genres.length ? genres : undefined,
     themes: themes.length ? themes : undefined,

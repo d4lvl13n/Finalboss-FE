@@ -15,6 +15,7 @@ export interface IGDBGame {
   description?: string;
   release_date?: string;
   rating?: number;
+  rating_count?: number;
   platforms?: Array<{ id: number; name: string }>;
   genres?: string[];
   themes?: string[];

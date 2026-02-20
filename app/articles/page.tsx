@@ -4,6 +4,8 @@ import { GET_ALL_POSTS } from '../lib/queries/getAllPosts';
 import client from '../lib/apolloClient';
 import { buildPageMetadata } from '../lib/seo';
 import AllArticlesPageContent from '../components/AllArticles/AllArticlesPageContent';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
 const PAGE_SIZE = 24;
 
@@ -42,8 +44,6 @@ export default async function AllArticlesPage() {
       variables: { first: 24 },
       fetchPolicy: 'no-cache',
     });
-
-    console.log('Articles page data:', JSON.stringify(data, null, 2));
 
     if (data?.posts?.nodes) {
       articles = data.posts.nodes;
@@ -98,6 +98,7 @@ export default async function AllArticlesPage() {
 
   return (
     <>
+      <Header />
       <Suspense
         fallback={
           <section className="py-24 bg-gray-900">
@@ -121,8 +122,8 @@ export default async function AllArticlesPage() {
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
           />
-          <AllArticlesPageContent 
-            initialArticles={articles} 
+          <AllArticlesPageContent
+            initialArticles={articles}
             initialHasNextPage={hasNextPage}
             initialEndCursor={endCursor}
           />
@@ -138,6 +139,7 @@ export default async function AllArticlesPage() {
           </Link>
         </div>
       )}
+      <Footer />
     </>
   );
 }
