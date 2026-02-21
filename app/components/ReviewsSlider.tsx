@@ -8,6 +8,7 @@ import { GET_REVIEWS } from '../lib/queries/getReviews';
 import client from '../lib/apolloClient';
 import { motion } from 'framer-motion';
 import { FaArrowRight, FaStar, FaChevronLeft, FaChevronRight, FaUser, FaCalendar } from 'react-icons/fa';
+import { formatDateLong, formatDate } from '../utils/formatDate';
 
 interface ReviewNode {
   id: string;
@@ -96,11 +97,7 @@ const FeaturedReviewCard = ({ review }: { review: ReviewNode }) => {
                 <div className="flex items-center gap-2 text-gray-300">
                   <FaCalendar className="w-3 h-3 text-yellow-400" />
                   <span className="text-sm">
-                    {new Date(review.date).toLocaleDateString('en-US', { 
-                      month: 'long', 
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}
+                    {formatDateLong(review.date)}
                   </span>
                 </div>
               </div>
@@ -507,7 +504,7 @@ const ReviewsSlider = () => {
                     {featuredReview.author?.node?.name && (
                       <span>by {featuredReview.author.node.name}</span>
                     )}
-                    <span>{new Date(featuredReview.date).toLocaleDateString()}</span>
+                    <span>{formatDate(featuredReview.date)}</span>
                   </div>
                 </div>
               </div>

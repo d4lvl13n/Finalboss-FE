@@ -11,6 +11,7 @@ import { FaArrowRight } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import LatestSidebar, { formatTimeAgo } from './LatestSidebar';
 import { t } from '../lib/i18n';
+import { formatDateShort } from '../utils/formatDate';
 
 // Define the Article interface
 interface Article {
@@ -68,7 +69,7 @@ const FeaturedArticle = ({ article }: { article: Article }) => (
         </h2>
         <div className="flex items-center gap-3 text-sm text-gray-300">
           {article.date && (
-            <span>{new Date(article.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+            <span>{formatDateShort(article.date)}</span>
           )}
           {article.author?.node?.name && (
             <>

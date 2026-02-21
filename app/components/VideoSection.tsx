@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { useYouTubeVideos } from '../hooks/useYouTubeVideos';
 import { YouTubeService } from '../lib/youtube/service';
 import { FaArrowRight, FaPlay, FaClock, FaEye, FaChevronLeft, FaChevronRight, FaYoutube } from 'react-icons/fa';
+import { formatDateCompact, formatNumber } from '../utils/formatDate';
 
 const VideoSection = () => {
   const { videos, loading, error } = useYouTubeVideos(6);
@@ -208,10 +209,10 @@ const VideoSection = () => {
                       {video.title}
                     </h3>
                     <div className="flex justify-between items-center text-gray-400 text-xs mt-2">
-                      <span>{new Date(video.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                      <span>{formatDateCompact(video.publishedAt)}</span>
                       <span className="flex items-center gap-1">
                         <FaEye className="w-3 h-3" />
-                        {parseInt(video.viewCount).toLocaleString()}
+                        {formatNumber(parseInt(video.viewCount))}
                       </span>
                     </div>
                   </div>

@@ -3,10 +3,10 @@
 import React from 'react';
 import Image from 'next/image';
 import { IGDBGame } from '../types/igdb';
-import { format } from 'date-fns';
 import { GameSearch } from './GameSearch';
 import ResponsiveArticleGrid from './ResponsiveArticleGrid';
 import { t } from '../lib/i18n';
+import { formatDateLong } from '../utils/formatDate';
 
 interface RelatedArticle {
   id: string;
@@ -102,7 +102,7 @@ export function GameDetails({
           
           {game.release_date && (
             <p className="text-yellow-400 text-center mb-8">
-              {t('game.released', { date: format(new Date(game.release_date), 'MMMM d, yyyy') })}
+              {t('game.released', { date: formatDateLong(game.release_date) })}
             </p>
           )}
 

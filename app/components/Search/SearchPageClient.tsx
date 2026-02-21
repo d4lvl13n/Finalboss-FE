@@ -11,6 +11,7 @@ import { PLACEHOLDER_BASE64 } from '@/app/utils/placeholder';
 import { FaSearch } from 'react-icons/fa';
 import { SearchResult } from '@/app/types/search';
 import { t } from '@/app/lib/i18n';
+import { formatDateShort } from '@/app/utils/formatDate';
 
 export default function SearchPageClient() {
   const searchParams = useSearchParams();
@@ -144,11 +145,7 @@ export default function SearchPageClient() {
                           dangerouslySetInnerHTML={{ __html: result.excerpt }}
                         />
                         <div className="mt-4 text-sm text-gray-400">
-                          {new Date(result.date).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric',
-                          })}
+                          {formatDateShort(result.date)}
                         </div>
                       </div>
                     </Link>

@@ -7,6 +7,7 @@ import { useYouTubeVideos } from '../../hooks/useYouTubeVideos';
 import { YouTubeService } from '../../lib/youtube/service';
 import PageHeader from '../PageHeader';
 import { t } from '../../lib/i18n';
+import { formatDate, formatNumber } from '../../utils/formatDate';
 
 export default function VideosPageClient() {
   const { videos, loading, error } = useYouTubeVideos(12);
@@ -82,8 +83,8 @@ export default function VideosPageClient() {
               <div className="p-6">
                 <h2 className="text-xl font-semibold text-white mb-2">{video.title}</h2>
                 <div className="flex justify-between items-center text-gray-400 text-sm">
-                  <span>{new Date(video.publishedAt).toLocaleDateString()}</span>
-                  <span>{t('video.views', { count: parseInt(video.viewCount).toLocaleString() })}</span>
+                  <span>{formatDate(video.publishedAt)}</span>
+                  <span>{t('video.views', { count: formatNumber(parseInt(video.viewCount)) })}</span>
                 </div>
               </div>
             </Link>

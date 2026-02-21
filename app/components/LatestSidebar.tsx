@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
 import { t } from '../lib/i18n';
+import { formatTime, formatDateCompact } from '../utils/formatDate';
 
 interface Article {
   id: string;
@@ -47,7 +48,7 @@ const formatTimeAgo = (dateString: string) => {
     if (diffMins < 60) {
       return t('common.minsAgo', { mins: diffMins });
     }
-    return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    return formatTime(date);
   }
   
   // If yesterday
@@ -58,7 +59,7 @@ const formatTimeAgo = (dateString: string) => {
   }
   
   // Otherwise show date
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return formatDateCompact(date);
 };
 
 const accentColors = {

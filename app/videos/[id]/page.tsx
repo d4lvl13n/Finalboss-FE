@@ -5,6 +5,7 @@ import { Metadata } from 'next';
 import { buildPageMetadata } from '../../lib/seo';
 import VideoStructuredData from '../../components/VideoStructuredData';
 import siteConfig from '../../lib/siteConfig';
+import { formatDate, formatNumber } from '../../utils/formatDate';
 
 interface VideoPageProps {
   params: { id: string };
@@ -70,10 +71,10 @@ export default async function VideoPage({ params }: VideoPageProps) {
         <VideoContent
           title={video.title}
           author={video.channelTitle}
-          date={new Date(video.publishedAt).toLocaleDateString()}
+          date={formatDate(video.publishedAt)}
           videoId={video.id}
           description={video.description}
-          viewCount={parseInt(video.viewCount).toLocaleString()}
+          viewCount={formatNumber(parseInt(video.viewCount))}
           thumbnail={video.thumbnail}
         />
       </>

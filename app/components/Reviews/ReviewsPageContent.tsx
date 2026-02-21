@@ -15,6 +15,7 @@ import { motion } from 'framer-motion';
 import { FaStar, FaArrowRight, FaUser, FaCalendar } from 'react-icons/fa';
 import siteConfig from '../../lib/siteConfig';
 import { t } from '../../lib/i18n';
+import { formatDateLong, formatDate } from '../../utils/formatDate';
 
 interface Review {
   id: string;
@@ -112,11 +113,7 @@ const FeaturedReviewCard = ({ review }: { review: Review }) => {
                 <div className="flex items-center gap-2 text-gray-300">
                   <FaCalendar className="w-3 h-3 text-yellow-400" />
                   <span className="text-xs md:text-sm">
-                    {new Date(review.date).toLocaleDateString('en-US', { 
-                      month: 'long', 
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}
+                    {formatDateLong(review.date)}
                   </span>
                 </div>
               </div>
@@ -193,7 +190,7 @@ const ReviewCard = ({ review, index }: { review: Review; index: number }) => {
                 {review.date && (
                   <>
                     <span>•</span>
-                    <span>{new Date(review.date).toLocaleDateString()}</span>
+                    <span>{formatDate(review.date)}</span>
                   </>
                 )}
               </div>

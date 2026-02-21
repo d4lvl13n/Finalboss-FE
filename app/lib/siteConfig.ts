@@ -52,9 +52,30 @@ export const siteConfig = {
     process.env.NEXT_PUBLIC_OG_IMAGE_PATH || '/images/finalboss-og-image.jpg',
 } as const;
 
+// Runtime validation — warn on missing critical vars (non-throwing for graceful degradation)
+function validateConfig() {
+  const critical = [
+    ['NEXT_PUBLIC_BASE_URL', siteConfig.url, 'https://finalboss.io'],
+    ['NEXT_PUBLIC_WORDPRESS_URL', siteConfig.wordpressUrl, 'https://backend.finalboss.io'],
+  ] as const;
+
+  for (const [envVar, value, fallback] of critical) {
+    if (!process.env[envVar]) {
+      console.warn(
+        `[siteConfig] Missing env var ${envVar} — falling back to "${fallback}". Set it in .env.local for production.`
+      );
+    }
+  }
+}
+validateConfig();
+
 // Derived helpers
 export const formspreeUrl = `https://formspree.io/f/${siteConfig.formspreeId}`;
 export const adsenseSrc = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adsensePublisherId}`;
+
+// Intl locale mapping
+const intlLocaleMap: Record<string, string> = { en: 'en-US', fr: 'fr-FR' };
+export const intlLocale = intlLocaleMap[siteConfig.locale] || 'en-US';
 
 export type SiteConfig = typeof siteConfig;
 export default siteConfig;

@@ -8,6 +8,7 @@ import { IGDBGame } from '../types/igdb';
 import debounce from 'lodash/debounce';
 import { useRouter } from 'next/navigation';
 import { t } from '../lib/i18n';
+import { formatDate } from '../utils/formatDate';
 
 const client = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
 
@@ -75,7 +76,7 @@ const GameCard = ({ game }: { game: IGDBGame }) => {
           </h3>
           {game.release_date && (
             <p className="text-gray-400 text-sm mb-2">
-              {t('game.released', { date: new Date(game.release_date).toLocaleDateString() })}
+              {t('game.released', { date: formatDate(game.release_date) })}
             </p>
           )}
           {game.rating && (

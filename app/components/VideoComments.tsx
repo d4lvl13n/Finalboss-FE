@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { formatDate } from '../utils/formatDate';
 
 interface Comment {
   id: string;
@@ -65,7 +66,7 @@ export default function VideoComments({ videoId }: VideoCommentsProps) {
               <div>
                 <h4 className="font-semibold">{comment.author}</h4>
                 <p className="text-sm text-gray-400">
-                  {new Date(comment.date).toLocaleDateString()}
+                  {formatDate(comment.date)}
                 </p>
               </div>
               <button className="text-gray-400 hover:text-yellow-400">

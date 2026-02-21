@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { FaArrowLeft, FaArrowRight, FaUser, FaTags } from 'react-icons/fa';
 import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
 import { t } from '../../lib/i18n';
+import { formatDate } from '../../utils/formatDate';
 
 interface RelatedArticle {
   id: string;
@@ -116,7 +117,7 @@ export default function RelatedArticles({
           )}
           
           <div className="flex items-center justify-between text-xs text-gray-400">
-            <span>{new Date(article.date).toLocaleDateString()}</span>
+            <span>{formatDate(article.date)}</span>
             {article.categories?.nodes?.[0] && (
               <span className="bg-yellow-400/20 text-yellow-400 px-2 py-1 rounded">
                 {article.categories.nodes[0].name}
