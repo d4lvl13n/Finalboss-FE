@@ -1,6 +1,7 @@
 import { fetchPaginatedArticles, ARTICLE_PAGE_SIZE } from '../../../lib/pagination';
+import siteConfig from '../../../lib/siteConfig';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+const baseUrl = siteConfig.url;
 
 function parsePage(param: string): number | null {
   const page = Number(param);

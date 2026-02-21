@@ -6,13 +6,13 @@
 
 ---
 
-## Sprint 1: Core SiteConfig + Env Vars
+## Sprint 1: Core SiteConfig + Env Vars ✅ COMPLETED
 
 Create the config layer and replace all hardcoded brand/domain references.
 
 ### 1.1 Create siteConfig.ts
 
-- [ ] Create `app/lib/siteConfig.ts` with all site-level constants:
+- [x] Create `app/lib/siteConfig.ts` with all site-level constants:
   - `name` (e.g. "FinalBoss.io")
   - `url` (from `NEXT_PUBLIC_BASE_URL`)
   - `wordpressUrl` (from `NEXT_PUBLIC_WORDPRESS_URL`)
@@ -36,175 +36,172 @@ All values should read from `process.env.NEXT_PUBLIC_*` with finalboss.io defaul
 
 ### 1.2 Replace hardcoded brand strings in metadata (56 files, ~65 occurrences)
 
-- [ ] `app/layout.tsx` — site name, title template, description, structured data, RSS titles
-- [ ] `app/page.tsx` — homepage title, description
-- [ ] `app/lib/seo.ts` — `siteName`, default OG image, BASE_URL
-- [ ] `app/reviews/page.tsx` — title, description
-- [ ] `app/gaming/page.tsx` — title, description
-- [ ] `app/guides/page.tsx` — title, description
-- [ ] `app/technology/page.tsx` — title, description
-- [ ] `app/videos/page.tsx` — title, description
-- [ ] `app/games/page.tsx` — title, description
-- [ ] `app/articles/page.tsx` — title, description
-- [ ] `app/authors/page.tsx` — title, description, Organization schema, story content
-- [ ] `app/author/[slug]/page.tsx` — title template, schema
-- [ ] `app/contact/page.tsx` — title, description
-- [ ] `app/write-for-us/page.tsx` — title, description, body text
-- [ ] `app/about/page.tsx` — title, description, body text
-- [ ] `app/privacy-policy/page.tsx` — title, description, body text, extension section
-- [ ] `app/terms-of-service/page.tsx` — title, description
-- [ ] `app/features/page.tsx` — title
-- [ ] `app/[slug]/page.tsx` — title fallback, twitter handle, structured data
-- [ ] `app/game/[slug]/page.tsx` — title templates
-- [ ] `app/videos/[id]/page.tsx` — title, twitter handle
-- [ ] `app/guides/[slug]/page.tsx` — baseUrl fallback
-- [ ] `app/articles/page/[page]/page.tsx` — baseUrl fallback
-- [ ] `app/articles/page/[page]/head.tsx` — baseUrl fallback
-- [ ] `app/search/page.tsx` — title template
+- [x] `app/layout.tsx` — site name, title template, description, structured data, RSS titles
+- [x] `app/page.tsx` — homepage title, description
+- [x] `app/lib/seo.ts` — `siteName`, default OG image, BASE_URL
+- [x] `app/reviews/page.tsx` — title, description
+- [x] `app/gaming/page.tsx` — title, description
+- [x] `app/guides/page.tsx` — title, description
+- [x] `app/technology/page.tsx` — title, description
+- [x] `app/videos/page.tsx` — title, description
+- [x] `app/games/page.tsx` — title, description
+- [x] `app/articles/page.tsx` — title, description
+- [x] `app/authors/page.tsx` — title, description, Organization schema, story content
+- [x] `app/author/[slug]/page.tsx` — title template, schema
+- [x] `app/contact/page.tsx` — title, description
+- [x] `app/write-for-us/page.tsx` — title, description, body text
+- [x] `app/about/page.tsx` — title, description, body text
+- [x] `app/privacy-policy/page.tsx` — title, description, body text, extension section
+- [x] `app/terms-of-service/page.tsx` — title, description
+- [x] `app/features/page.tsx` — title
+- [x] `app/[slug]/page.tsx` — title fallback, twitter handle, structured data
+- [x] `app/game/[slug]/page.tsx` — title templates
+- [x] `app/videos/[id]/page.tsx` — title, twitter handle
+- [x] `app/guides/[slug]/page.tsx` — baseUrl fallback
+- [x] `app/articles/page/[page]/page.tsx` — baseUrl fallback
+- [x] `app/articles/page/[page]/head.tsx` — baseUrl fallback
+- [x] `app/search/page.tsx` — title template
 
 ### 1.3 Replace hardcoded URLs (50+ occurrences)
 
-- [ ] Replace all `process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'` with `siteConfig.url`
-- [ ] Replace all `process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://backend.finalboss.io'` with `siteConfig.wordpressUrl`
-- [ ] `app/lib/apolloClient.ts` — GraphQL endpoint fallback
-- [ ] `app/lib/igdb-client.ts` — IGDB proxy base URL fallback
-- [ ] `app/components/ProcessedContent.tsx` — link rewriting for `backend.finalboss.io`
-- [ ] `app/api/wordpress-proxy/route.ts` — backend URL
-- [ ] `app/api/extension/search/route.ts` — backend URL
-- [ ] `app/api/extension/game/[id]/route.ts` — backend URL + hardcoded `finalboss.io` link
-- [ ] `app/feeds/articles/route.ts` — baseUrl fallback
-- [ ] `app/feeds/reviews/route.ts` — baseUrl fallback
-- [ ] `codegen.ts` — GraphQL endpoint
+- [x] Replace all `process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'` with `siteConfig.url`
+- [x] Replace all `process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://backend.finalboss.io'` with `siteConfig.wordpressUrl`
+- [x] `app/lib/apolloClient.ts` — GraphQL endpoint fallback
+- [x] `app/lib/igdb-client.ts` — IGDB proxy base URL fallback
+- [x] `app/components/ProcessedContent.tsx` — link rewriting for `backend.finalboss.io`
+- [x] `app/api/wordpress-proxy/route.ts` — backend URL
+- [x] `app/api/extension/search/route.ts` — backend URL
+- [x] `app/api/extension/game/[id]/route.ts` — backend URL + hardcoded `finalboss.io` link
+- [x] `app/feeds/articles/route.ts` — baseUrl fallback
+- [x] `app/feeds/reviews/route.ts` — baseUrl fallback
+- [x] `codegen.ts` — GraphQL endpoint
 
 ### 1.4 Replace third-party IDs
 
-- [ ] `app/layout.tsx` — Google Analytics ID (`G-HV2MVVJDN4`), site verification tag
-- [ ] `app/components/AdSense/AdBanner.tsx` — AdSense publisher ID (`ca-pub-7494322760704385`)
-- [ ] `app/components/AdSense/AdScriptLoader.tsx` — AdSense publisher ID + script URL
-- [ ] `app/components/Footer.tsx` — Formspree ID (`xjkronpd`)
-- [ ] `app/components/LeadCapture/InlineContentUpgrade.tsx` — Formspree ID
-- [ ] `app/components/LeadCapture/StickyNotificationBar.tsx` — Formspree ID
-- [ ] `app/components/LeadCapture/ExitIntentModal.tsx` — Formspree ID
-- [ ] `app/components/SEOMetadata.tsx` — Twitter handle
+- [x] `app/layout.tsx` — Google Analytics ID (`G-HV2MVVJDN4`), site verification tag
+- [x] `app/components/AdSense/AdBanner.tsx` — AdSense publisher ID (`ca-pub-7494322760704385`)
+- [x] `app/components/AdSense/AdScriptLoader.tsx` — AdSense publisher ID + script URL
+- [x] `app/components/Footer.tsx` — Formspree ID (`xjkronpd`)
+- [x] `app/components/LeadCapture/InlineContentUpgrade.tsx` — Formspree ID
+- [x] `app/components/LeadCapture/StickyNotificationBar.tsx` — Formspree ID
+- [x] `app/components/LeadCapture/ExitIntentModal.tsx` — Formspree ID
+- [x] `app/components/SEOMetadata.tsx` — Twitter handle
 
 ### 1.5 Replace social links and contact info
 
-- [ ] `app/components/Footer.tsx` — social URLs (Twitter, Facebook, Instagram, YouTube), email
-- [ ] `app/authors/page.tsx` — Twitter, YouTube URLs in Organization schema
-- [ ] `app/layout.tsx` — Organization schema `sameAs`
+- [x] `app/components/Footer.tsx` — social URLs (Twitter, Facebook, Instagram, YouTube), email
+- [x] `app/authors/page.tsx` — Twitter, YouTube URLs in Organization schema
+- [x] `app/layout.tsx` — Organization schema `sameAs`
 
 ### 1.6 Update next.config.js
 
-- [ ] Make `images.remotePatterns` dynamic based on env vars (add new WordPress domain)
-- [ ] Update CSP headers to reference env-based domains
-- [ ] Update rewrite rule for `/wp-content/uploads/` to use env var
+- [x] Make `images.remotePatterns` dynamic based on env vars (add new WordPress domain)
+- [x] Update CSP headers to reference env-based domains
+- [x] Update rewrite rule for `/wp-content/uploads/` to use env var
 
 ### 1.7 Update image/logo references
 
-- [ ] `app/components/Header.tsx` — logo `src` and `alt` (3 locations)
-- [ ] `app/components/Footer.tsx` — logo `src`
-- [ ] `app/lib/seo.ts` — default OG image path
-- [ ] Add per-site logo and OG image to `/public` (or make path configurable)
+- [x] `app/components/Header.tsx` — logo `src` and `alt` (3 locations)
+- [x] `app/components/Footer.tsx` — logo `src`
+- [x] `app/lib/seo.ts` — default OG image path
+- [x] Add per-site logo and OG image to `/public` (or make path configurable)
 
 ### 1.8 Update `<html lang="en">` to use siteConfig
 
-- [ ] `app/layout.tsx` — change `lang="en"` to `lang={siteConfig.lang}`
+- [x] `app/layout.tsx` — change `lang="en"` to `lang={siteConfig.lang}`
 
 ---
 
-## Sprint 2: i18n — UI String Translation
+## Sprint 2: i18n — UI String Translation ✅ COMPLETED
 
 Extract all hardcoded English UI strings into a translation system.
 
 ### 2.1 Create translation infrastructure
 
-- [ ] Create `app/lib/i18n/translations/en.ts` with all English strings
-- [ ] Create `app/lib/i18n/translations/fr.ts` with French translations
-- [ ] Create `app/lib/i18n/index.ts` — `t()` function that reads locale from siteConfig
-- [ ] Organize strings by namespace: `nav`, `footer`, `search`, `newsletter`, `errors`, `game`, `article`, `review`, `common`
+- [x] Create `app/lib/i18n/translations/en.ts` with all English strings (274 keys)
+- [x] Create `app/lib/i18n/translations/fr.ts` with French translations (274 keys)
+- [x] Create `app/lib/i18n/index.ts` — `t()` function that reads locale from siteConfig
+- [x] Organize strings by namespace: `nav`, `footer`, `search`, `newsletter`, `leadCapture`, `article`, `review`, `game`, `guide`, `video`, `tech`, `common`, `contact`, `breadcrumb`, `a11y`, `notFound`, `pages`
 
 ### 2.2 Header & Navigation (14 strings)
 
-- [ ] `app/components/Header.tsx` — nav items: "News", "Reviews", "Guides", "Technology", "Videos", "Games", "Team", "All Articles", "Write For Us", "About Us", "Contact", "Login", "Search...", aria labels
+- [x] `app/components/Header.tsx` — nav items, aria labels, search placeholder, login
 
 ### 2.3 Footer (24 strings)
 
-- [ ] `app/components/Footer.tsx` — section headers: "Stay Updated", "Quick Links", "Categories", "Connect", "Follow Us", "Contact"
-- [ ] Link labels: "Our Team", "Write For Us", "About Us", "Contact", "Privacy Policy", "Terms of Service"
-- [ ] Category links: "News", "Reviews", "Guides", "Games", "Videos", "Technology"
-- [ ] Form: placeholder, button, tagline, copyright text
+- [x] `app/components/Footer.tsx` — section headers, links, form, tagline, copyright
 
 ### 2.4 Search (10 strings)
 
-- [ ] `app/components/Search/SearchOverlay.tsx` — placeholder, loading, error, result count, empty state
-- [ ] `app/components/Search/SearchPageClient.tsx` — if applicable
+- [x] `app/components/Search/SearchOverlay.tsx` — placeholder, loading, error, result count, empty state, aria labels
+- [x] `app/components/Search/SearchPageClient.tsx` — placeholder, states, load more
 
 ### 2.5 Newsletter & Lead Capture (30+ strings)
 
-- [ ] `app/components/NewsletterForm.tsx` — placeholder, button, benefits, privacy notice
-- [ ] `app/components/LeadCapture/ExitIntentModal.tsx` — heading, benefits, CTA, success message
-- [ ] `app/components/LeadCapture/InlineContentUpgrade.tsx` — heading, CTA, success
-- [ ] `app/components/LeadCapture/StickyNotificationBar.tsx` — badge, message, CTA, success
-- [ ] `app/page.tsx` — newsletter section heading, description, badge text
+- [x] `app/components/NewsletterForm.tsx` — placeholder, button, benefits, privacy notice
+- [x] `app/components/LeadCapture/ExitIntentModal.tsx` — heading, benefits, CTA, success message
+- [x] `app/components/LeadCapture/InlineContentUpgrade.tsx` — heading, CTA, success
+- [x] `app/components/LeadCapture/StickyNotificationBar.tsx` — badge, message, CTA, success, aria labels
+- [x] `app/page.tsx` — newsletter section heading, description, badge text
 
 ### 2.6 Article Components (20+ strings)
 
-- [ ] `app/components/Article/RelatedArticles.tsx` — "Continue Reading", "Previous/Next Article", "Related Articles", empty state
-- [ ] `app/components/Article/TableOfContents.tsx` — "Table of Contents"
-- [ ] `app/components/Article/ArticleContent.tsx` — any static text
-- [ ] `app/components/Breadcrumbs.tsx` — "Home", aria labels
-- [ ] `app/components/SocialShare.tsx` — "Share:"
+- [x] `app/components/Article/RelatedArticles.tsx` — "Continue Reading", "Previous/Next Article", "Related Articles", empty state
+- [x] `app/components/Article/TableOfContents.tsx` — "Table of Contents"
+- [x] `app/components/Article/ArticleContent.tsx` — upgrade CTA, date labels, ad labels
+- [x] `app/components/Breadcrumbs.tsx` — "Home", aria labels
+- [x] `app/components/SocialShare.tsx` — "Share:"
 
 ### 2.7 Reviews (5 strings)
 
-- [ ] `app/components/Review/ReviewSummary.tsx` — "Verdict", "The Good", "The Bad", "/10"
-- [ ] `app/components/Reviews/ReviewsPageContent.tsx` — "Read Full Review", "Load More Reviews", description
+- [x] `app/components/Review/ReviewSummary.tsx` — "Verdict", "The Good", "The Bad", "/10"
+- [x] `app/components/Reviews/ReviewsPageContent.tsx` — "Read Full Review", "Load More Reviews", description
 
 ### 2.8 Game Components (25+ strings)
 
-- [ ] `app/components/GameDetails.tsx` — "More Coverage", "Search More Games"
-- [ ] `app/components/GameSearch.tsx` — placeholder, error messages, labels
-- [ ] `app/components/GameMetaCard.tsx` — "Game intel", "View hub", labels (Platform, Genre, Release, etc.)
-- [ ] `app/components/GamesIndexClient.tsx` — "Browse Game Hubs", filters, status text, empty state, load more
+- [x] `app/components/GameDetails.tsx` — "More Coverage", "Search More Games"
+- [x] `app/components/GameSearch.tsx` — placeholder, error messages, labels
+- [x] `app/components/GameMetaCard.tsx` — "Game intel", "View hub", labels (Platform, Genre, Release, etc.)
+- [x] `app/components/GamesIndexClient.tsx` — "Browse Game Hubs", filters, status text, empty state, load more
 
 ### 2.9 Guide Components
 
-- [ ] `app/components/Guides/GuidesPageContent.tsx` — any static text
-- [ ] `app/components/GuidesSection.tsx` — "Read Guide"
+- [x] `app/components/Guides/GuidesPageContent.tsx` — title, description, categories, CTAs
+- [x] `app/components/GuidesSection.tsx` — heading, subtitle, "Read Guide", "View All"
 
 ### 2.10 Video Components
 
-- [ ] `app/components/Videos/VideosPageClient.tsx` — any static text
-- [ ] `app/components/VideoContent.tsx` — any static text
+- [x] `app/components/Videos/VideosPageClient.tsx` — title, description, states, views
+- [x] `app/components/VideoContent.tsx` — views count
 
 ### 2.11 Technology Components
 
-- [ ] `app/components/TechnologyPageContent.tsx` — "Load More", section text
+- [x] `app/components/TechnologyPageContent.tsx` — title, description, categories, CTAs, load more
 
 ### 2.12 Common/Shared (15+ strings)
 
-- [ ] `app/components/FeaturedSlider.tsx` — "Read More", navigation aria labels, error/empty states
-- [ ] `app/components/LatestArticles.tsx` — "Latest Articles", "Browse all articles", error text
-- [ ] `app/components/LatestSidebar.tsx` — "Latest", time format strings ("m ago", "Yesterday")
-- [ ] `app/components/BackToTop.tsx` — "Back to top" aria label
-- [ ] `app/components/YouTubeErrorBoundary.tsx` — error message
-- [ ] `app/components/Contact/ContactFormClient.tsx` — form labels, button, success message
+- [x] `app/components/FeaturedSlider.tsx` — "Read More", "Prev"/"Next", navigation aria labels, error/empty states
+- [x] `app/components/LatestArticles.tsx` — "Latest Articles", "Browse all articles", error text
+- [x] `app/components/LatestSidebar.tsx` — "Latest", time format strings ("m ago", "Yesterday")
+- [x] `app/components/BackToTop.tsx` — "Back to top" aria label
+- [x] `app/components/YouTubeErrorBoundary.tsx` — error message
+- [x] `app/components/Contact/ContactFormClient.tsx` — form labels, button, success message
 
 ### 2.13 Page-level static content
 
-- [ ] `app/contact/page.tsx` — page body content
-- [ ] `app/write-for-us/page.tsx` — full page body (guidelines, instructions)
-- [ ] `app/about/page.tsx` — full page body (team story)
-- [ ] `app/privacy-policy/page.tsx` — full legal text
-- [ ] `app/terms-of-service/page.tsx` — full legal text
-- [ ] `app/authors/page.tsx` — "The FinalBoss Story" section, values section, CTA section
-- [ ] `app/not-found.tsx` — 404 page text
+- [x] `app/contact/page.tsx` — heading
+- [x] `app/write-for-us/page.tsx` — full page body (guidelines, instructions)
+- [x] `app/about/page.tsx` — heading, intro, team heading
+- [x] `app/privacy-policy/page.tsx` — full legal text
+- [x] `app/terms-of-service/page.tsx` — full legal text
+- [x] `app/authors/page.tsx` — hero story, values section, CTA section
+- [x] `app/not-found.tsx` — 404 game text
 
 ### 2.14 Date & number formatting
 
-- [ ] `app/components/LatestSidebar.tsx` — relative time ("m ago", "Yesterday")
-- [ ] Any date displays — use `Intl.DateTimeFormat` with siteConfig.locale
-- [ ] Review scores — decimal separator (. vs ,)
+- [x] `app/components/LatestSidebar.tsx` — relative time ("m ago", "Yesterday")
+- [ ] Any date displays — use `Intl.DateTimeFormat` with siteConfig.locale (deferred to Sprint 3)
+- [ ] Review scores — decimal separator (. vs ,) (deferred to Sprint 3)
 
 ---
 

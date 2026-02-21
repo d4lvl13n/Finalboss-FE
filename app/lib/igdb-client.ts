@@ -1,5 +1,6 @@
 // lib/igdb-client.ts
 import { IGDBGame, IGDBResponse } from '../types/igdb';
+import siteConfig from './siteConfig';
 
 interface IGDBRawImage {
   image_id: string;
@@ -53,7 +54,7 @@ export class IGDBClient {
 
   constructor(baseUrl: string) {
     if (!baseUrl) {
-      this.baseUrl = 'https://backend.finalboss.io';
+      this.baseUrl = siteConfig.wordpressUrl;
     } else {
       this.baseUrl = baseUrl;
     }

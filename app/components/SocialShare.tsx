@@ -11,6 +11,7 @@ import {
   WhatsappIcon,
   RedditIcon
 } from 'react-share';
+import { t } from '../lib/i18n';
 
 interface SocialShareProps {
   url: string;
@@ -20,7 +21,7 @@ interface SocialShareProps {
 export default function SocialShare({ url, title }: SocialShareProps) {
   return (
     <div className="flex space-x-4 items-center">
-      <span className="text-gray-400">Share:</span>
+      <span className="text-gray-400">{t('article.share')}</span>
       <FacebookShareButton url={url} title={title}>
         <FacebookIcon size={32} round />
       </FacebookShareButton>

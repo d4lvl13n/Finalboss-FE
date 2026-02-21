@@ -6,13 +6,14 @@ import ReviewsStructuredData from '../components/Reviews/ReviewsStructuredData';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { buildPageMetadata } from '../lib/seo';
+import siteConfig from '../lib/siteConfig';
 
 export const revalidate = 3600; // Revalidate every hour (optional)
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: 'Game Reviews | FinalBoss.io',
-    description: 'Read in-depth game reviews, verdicts, and ratings from the FinalBoss.io editorial team.',
+    title: `Game Reviews | ${siteConfig.name}`,
+    description: `Read in-depth game reviews, verdicts, and ratings from the ${siteConfig.name} editorial team.`,
     path: '/reviews',
   });
 }

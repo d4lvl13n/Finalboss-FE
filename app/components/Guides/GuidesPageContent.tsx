@@ -12,6 +12,7 @@ import Footer from '../Footer';
 import PageHeader from '../PageHeader';
 import { FaArrowRight, FaBookOpen, FaGamepad } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
+import { t } from '../../lib/i18n';
 
 interface Category {
   id: string;
@@ -67,7 +68,7 @@ const borderGradients = [
 // Modern Guide Card with glassmorphism - same design as GuidesSection
 const GuideCard = ({ guide, index }: { guide: Guide; index: number }) => {
   const imageUrl = guide.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
-  const category = guide.categories?.nodes?.[0]?.name || 'Guide';
+  const category = guide.categories?.nodes?.[0]?.name || t('guide.categoryDefault');
   const gradient = gradients[index % gradients.length];
   const borderGradient = borderGradients[index % borderGradients.length];
 
@@ -136,7 +137,7 @@ const GuideCard = ({ guide, index }: { guide: Guide; index: number }) => {
                 
                 {/* Read guide button */}
                 <div className="flex items-center gap-2 text-white/80 group-hover:text-white transition-colors">
-                  <span className="text-xs font-semibold uppercase tracking-wider">Read Guide</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider">{t('guide.readGuide')}</span>
                   <motion.div
                     animate={{ x: [0, 4, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -193,7 +194,7 @@ const CompactGuideCard = ({ guide, index }: { guide: Guide; index: number }) => 
         <div className="flex-1 min-w-0 flex flex-col justify-center py-0.5">
           <div className="flex items-center gap-1.5 mb-1">
             <FaBookOpen className="w-2.5 h-2.5 text-purple-400" />
-            <span className="text-[10px] font-semibold text-purple-400 uppercase">Guide</span>
+            <span className="text-[10px] font-semibold text-purple-400 uppercase">{t('guide.categoryDefault')}</span>
           </div>
           <h3 className="text-sm font-semibold text-white line-clamp-2 leading-tight group-hover:text-purple-400 transition-colors">
             {guide.title}
@@ -207,7 +208,7 @@ const CompactGuideCard = ({ guide, index }: { guide: Guide; index: number }) => 
 // Featured Guide Card - Larger for first article
 const FeaturedGuideCard = ({ guide }: { guide: Guide }) => {
   const imageUrl = guide.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
-  const category = guide.categories?.nodes?.[0]?.name || 'Guide';
+  const category = guide.categories?.nodes?.[0]?.name || t('guide.categoryDefault');
 
   return (
     <motion.div
@@ -255,7 +256,7 @@ const FeaturedGuideCard = ({ guide }: { guide: Guide }) => {
                   transition={{ duration: 2, repeat: Infinity }}
                 >
                   <HiSparkles className="w-3 h-3 text-yellow-300" />
-                  <span className="text-xs font-semibold text-white uppercase">Featured</span>
+                  <span className="text-xs font-semibold text-white uppercase">{t('guide.featured')}</span>
                 </motion.div>
               </div>
               
@@ -266,7 +267,7 @@ const FeaturedGuideCard = ({ guide }: { guide: Guide }) => {
                 </h2>
                 
                 <div className="flex items-center gap-3 text-white/80 group-hover:text-white transition-colors">
-                  <span className="text-sm font-semibold uppercase tracking-wider">Read Full Guide</span>
+                  <span className="text-sm font-semibold uppercase tracking-wider">{t('guide.readFull')}</span>
                   <motion.div
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -322,13 +323,13 @@ const SubcategoryCard = ({ category, index }: { category: Category; index: numbe
             <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-5">
               <div className="flex items-center gap-2 mb-2">
                 <FaGamepad className="w-4 h-4 text-white/80" />
-                <span className="text-xs text-white/60 uppercase tracking-wider">Game Guide</span>
+                <span className="text-xs text-white/60 uppercase tracking-wider">{t('guide.gameGuide')}</span>
               </div>
               <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-yellow-300 transition-colors">
                 {category.name}
               </h3>
               <div className="flex items-center gap-2 mt-2 text-white/70 group-hover:text-white transition-colors">
-                <span className="text-sm">Explore Guides</span>
+                <span className="text-sm">{t('guide.explore')}</span>
                 <FaArrowRight className="w-3 h-3" />
               </div>
             </div>
@@ -375,8 +376,8 @@ export default function GuidesPageContent({ initialSubcategories, initialGuides,
     <>
       <Header />
       <PageHeader 
-        title="Game Guides" 
-        description="Expert walkthroughs, tips, and strategies to help you conquer any game"
+        title={t('guide.title')}
+        description={t('guide.description')}
         accentColor="purple"
       />
       
@@ -396,7 +397,7 @@ export default function GuidesPageContent({ initialSubcategories, initialGuides,
                 <div className="hidden md:flex w-10 h-10 items-center justify-center bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg">
                   <FaGamepad className="w-5 h-5 text-white" />
                 </div>
-                <h2 className="text-lg md:text-xl font-bold text-white">Browse by Game</h2>
+                <h2 className="text-lg md:text-xl font-bold text-white">{t('guide.byGame')}</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {initialSubcategories.map((category, index) => (
@@ -412,7 +413,7 @@ export default function GuidesPageContent({ initialSubcategories, initialGuides,
               <div className="hidden md:flex w-10 h-10 items-center justify-center bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg">
                 <FaBookOpen className="w-5 h-5 text-white" />
               </div>
-              <h2 className="text-lg md:text-xl font-bold text-white">All Guides</h2>
+              <h2 className="text-lg md:text-xl font-bold text-white">{t('guide.allGuides')}</h2>
             </div>
             
             {/* Featured Guide */}
@@ -444,7 +445,7 @@ export default function GuidesPageContent({ initialSubcategories, initialGuides,
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
               >
-                  <span>Load More Guides</span>
+                  <span>{t('guide.loadMore')}</span>
                   <FaArrowRight className="w-3 h-3" />
                 </motion.button>
             </div>

@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { GET_GUIDE_CATEGORIES_AND_POSTS } from '../lib/queries/getGuideCategories';
 import client from '../lib/apolloClient';
 import { buildPageMetadata } from '../lib/seo';
+import siteConfig from '../lib/siteConfig';
 import GuidesPageContent from '../components/Guides/GuidesPageContent';
 import GuidesStructuredData from '../components/Guides/GuidesStructuredData';
 import Header from '../components/Header';
@@ -9,8 +10,8 @@ import Footer from '../components/Footer';
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: 'Game Guides & Walkthroughs | FinalBoss.io',
-    description: 'Master every quest with FinalBoss.io guides, walkthroughs, and strategy breakdowns.',
+    title: `Game Guides & Walkthroughs | ${siteConfig.name}`,
+    description: `Master every quest with ${siteConfig.name} guides, walkthroughs, and strategy breakdowns.`,
     path: '/guides',
   });
 }

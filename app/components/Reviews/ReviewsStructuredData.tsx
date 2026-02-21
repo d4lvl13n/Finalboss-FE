@@ -1,4 +1,5 @@
 import React from 'react';
+import siteConfig from '../../lib/siteConfig';
 
 interface Review {
   id: string;
@@ -23,15 +24,15 @@ interface Review {
 }
 
 export default function ReviewsStructuredData({ reviews }: { reviews: Review[] }) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+  const baseUrl = siteConfig.url;
   
   // Use CollectionPage schema for the reviews listing page
   // Individual review pages should have the Review schema with ratings
   const collectionPageData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": "Game Reviews | FinalBoss.io",
-    "description": "Read in-depth game reviews, verdicts, and ratings from the FinalBoss.io editorial team.",
+    "name": `Game Reviews | ${siteConfig.name}`,
+    "description": `Read in-depth game reviews, verdicts, and ratings from the ${siteConfig.name} editorial team.`,
     "url": `${baseUrl}/reviews`,
     "mainEntity": {
       "@type": "ItemList",
@@ -53,13 +54,13 @@ export default function ReviewsStructuredData({ reviews }: { reviews: Review[] }
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://finalboss.io/"
+        "item": `${baseUrl}/`
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Reviews",
-        "item": "https://finalboss.io/reviews"
+        "item": `${baseUrl}/reviews`
       }
     ]
   };

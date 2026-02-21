@@ -9,6 +9,7 @@ import client from '../lib/apolloClient';
 import { motion } from 'framer-motion';
 import { FaArrowRight, FaChevronLeft, FaChevronRight, FaBookOpen, FaGamepad } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
+import { t } from '../lib/i18n';
 
 interface GuideArticle {
   id: string;
@@ -31,7 +32,7 @@ interface GuideArticle {
 // Modern Guide Card with glassmorphism and hover effects
 const GuideCard = ({ guide, index }: { guide: GuideArticle; index: number }) => {
   const imageUrl = guide.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
-  const category = guide.categories?.nodes?.[0]?.name || 'Guide';
+  const category = guide.categories?.nodes?.[0]?.name || t('guide.categoryDefault');
   
   // Gradient colors based on index for variety
   const gradients = [
@@ -127,7 +128,7 @@ const GuideCard = ({ guide, index }: { guide: GuideArticle; index: number }) => 
                   initial={{ x: 0 }}
                   whileHover={{ x: 5 }}
                 >
-                  <span className="text-sm font-semibold uppercase tracking-wider">Read Guide</span>
+                  <span className="text-sm font-semibold uppercase tracking-wider">{t('guide.readGuide')}</span>
                   <motion.div
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -250,11 +251,11 @@ const GuidesSection = () => {
             <div>
               <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold">
                 <span className="bg-gradient-to-r from-violet-400 via-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
-                  Game Guides
+                  {t('guide.title')}
                 </span>
               </h2>
               <p className="text-gray-400 text-sm md:text-base mt-1 hidden md:block">
-                Master every game with our expert walkthroughs
+                {t('guide.subtitle')}
               </p>
             </div>
           </div>
@@ -295,7 +296,7 @@ const GuidesSection = () => {
               href="/guides" 
               className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-full font-semibold text-sm hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105"
             >
-              <span className="hidden sm:inline">View All</span>
+              <span className="hidden sm:inline">{t('common.viewAll')}</span>
               <FaArrowRight className="w-3 h-3" />
             </Link>
           </div>

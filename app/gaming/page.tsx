@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { GET_GAMING_POSTS } from '../lib/queries/getGamingPosts';
 import client from '../lib/apolloClient';
 import { buildPageMetadata } from '../lib/seo';
+import siteConfig from '../lib/siteConfig';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import GamingPageContent from '../components/Gaming/GamingPageContent';
@@ -9,7 +10,7 @@ import GamingStructuredData from '../components/Gaming/GamingStructuredData';
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: 'Gaming News and Articles | FinalBoss.io',
+    title: `Gaming News and Articles | ${siteConfig.name}`,
     description: 'Stay updated with the latest gaming news, releases, esports, and community stories.',
     path: '/gaming',
   });

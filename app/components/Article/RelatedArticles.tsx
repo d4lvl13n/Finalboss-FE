@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FaArrowLeft, FaArrowRight, FaUser, FaTags } from 'react-icons/fa';
 import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
+import { t } from '../../lib/i18n';
 
 interface RelatedArticle {
   id: string;
@@ -47,7 +48,7 @@ export default function RelatedArticles({
   isLoading = false,
   sequentialPosts,
   authorPosts,
-  sectionTitle = "Related Articles"
+  sectionTitle = t('article.relatedTitle')
 }: RelatedArticlesProps) {
   if (isLoading) {
     return (
@@ -138,7 +139,7 @@ export default function RelatedArticles({
       <div className="mb-12">
         <h3 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
           <FaArrowLeft className="text-lg" />
-          Continue Reading
+          {t('article.continueReading')}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {prevPost && (
@@ -146,7 +147,7 @@ export default function RelatedArticles({
               <div className="flex items-center gap-4 p-4 bg-gray-800 rounded-lg hover:bg-gray-750 transition-colors">
                 <FaArrowLeft className="text-yellow-400 group-hover:transform group-hover:-translate-x-1 transition-transform" />
                 <div className="flex-1">
-                  <p className="text-sm text-gray-400 mb-1">Previous Article</p>
+                  <p className="text-sm text-gray-400 mb-1">{t('article.previousArticle')}</p>
                   <h4 className="font-semibold text-white group-hover:text-yellow-400 transition-colors line-clamp-2">
                     {prevPost.title}
                   </h4>
@@ -159,7 +160,7 @@ export default function RelatedArticles({
             <Link href={`/${nextPost.slug}`} className="group">
               <div className="flex items-center gap-4 p-4 bg-gray-800 rounded-lg hover:bg-gray-750 transition-colors">
                 <div className="flex-1 text-right">
-                  <p className="text-sm text-gray-400 mb-1">Next Article</p>
+                  <p className="text-sm text-gray-400 mb-1">{t('article.nextArticle')}</p>
                   <h4 className="font-semibold text-white group-hover:text-yellow-400 transition-colors line-clamp-2">
                     {nextPost.title}
                   </h4>
@@ -200,7 +201,7 @@ export default function RelatedArticles({
           <div>
             <h3 className="text-2xl font-bold text-yellow-400 mb-6 flex items-center gap-2">
               <FaUser className="text-lg" />
-              More from this Author
+              {t('article.moreFromAuthor')}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {authorPosts.slice(0, 3).map((article, index) => 
@@ -216,10 +217,10 @@ export default function RelatedArticles({
          (!authorPosts || authorPosts.length === 0) && (
           <div className="text-center py-12">
             <FaTags className="text-yellow-400 text-4xl mx-auto mb-4" />
-            <h3 className="text-xl text-white mb-2">No Related Articles Found</h3>
-            <p className="text-gray-400 mb-6">Check out our latest articles instead</p>
+            <h3 className="text-xl text-white mb-2">{t('article.noRelated')}</h3>
+            <p className="text-gray-400 mb-6">{t('article.noRelatedTip')}</p>
             <Link href="/articles" className="inline-block bg-yellow-400 text-black font-bold py-3 px-6 rounded-full hover:bg-yellow-300 transition-colors">
-              Browse All Articles
+              {t('article.browseAll')}
             </Link>
           </div>
         )}

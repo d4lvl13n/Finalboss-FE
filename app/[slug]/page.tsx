@@ -6,13 +6,14 @@ import { notFound } from 'next/navigation';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { absoluteUrl } from '../lib/seo';
+import siteConfig from '../lib/siteConfig';
 
 interface PageProps {
   params: { slug: string };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+  const baseUrl = siteConfig.url;
   const { data } = await client.query({
     query: GET_POST_BY_SLUG,
     variables: { id: params.slug },
@@ -35,12 +36,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const rawImage =
     seo?.opengraphImage?.sourceUrl ||
     article.featuredImage?.node?.sourceUrl ||
-    '/images/finalboss-og-image.jpg';
+    siteConfig.ogImagePath;
   const imageUrl = absoluteUrl(rawImage);
   const authorName = article.author?.node?.name;
 
   return {
-    title: seo?.title || `${article.title} | FinalBoss.io`,
+    title: seo?.title || `${article.title} | ${siteConfig.name}`,
     description: description || article.title,
     keywords: article.categories?.nodes?.map((c: { name: string }) => c.name),
     authors: authorName ? [{ name: authorName }] : undefined,
@@ -60,7 +61,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     twitter: {
       card: 'summary_large_image',
-      site: '@finalbossio',
+      site: siteConfig.twitterHandle,
       title: seo?.twitterTitle || article.title,
       description: twitterDescription || description,
       images: [absoluteUrl(seo?.twitterImage?.sourceUrl || imageUrl)],
@@ -111,7 +112,7 @@ export default async function ArticlePage({ params }: PageProps) {
             description: (article.excerpt || article.title || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim(),
             mainEntityOfPage: {
               '@type': 'WebPage',
-              '@id': `${process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'}/${article.slug}`,
+              '@id': `${siteConfig.url}/${article.slug}`,
             },
           }),
         }}
@@ -124,7 +125,7 @@ export default async function ArticlePage({ params }: PageProps) {
             '@context': 'https://schema.org',
             '@type': 'BreadcrumbList',
             itemListElement: (function () {
-              const base = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+              const base = siteConfig.url;
               const category = article.categories?.nodes?.[0];
               const items = [
                 { '@type': 'ListItem', position: 1, name: 'Home', item: `${base}/` },

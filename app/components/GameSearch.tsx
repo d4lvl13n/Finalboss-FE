@@ -7,6 +7,7 @@ import { IGDBClient } from '../lib/igdb-client';
 import { IGDBGame } from '../types/igdb';
 import debounce from 'lodash/debounce';
 import { useRouter } from 'next/navigation';
+import { t } from '../lib/i18n';
 
 const client = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
 
@@ -29,7 +30,7 @@ class ErrorBoundary extends React.Component<
     if (this.state.hasError) {
       return (
         <div className="text-center p-4">
-          <p className="text-red-500">Something went wrong. Please try again later.</p>
+          <p className="text-red-500">{t('common.error.generic')}</p>
         </div>
       );
     }
@@ -42,9 +43,9 @@ class ErrorBoundary extends React.Component<
 const getPlatformName = (platform?: { name?: string } | string): string => {
   if (typeof platform === 'string') return platform;
   if (platform && typeof platform === 'object' && 'name' in platform) {
-    return platform.name ?? 'Unknown Platform';
+    return platform.name ?? t('game.unknownPlatform');
   }
-  return 'Unknown Platform';
+  return t('game.unknownPlatform');
 };
 
 // Game card component to isolate potential rendering issues
@@ -70,11 +71,11 @@ const GameCard = ({ game }: { game: IGDBGame }) => {
         )}
         <div className="p-4">
           <h3 className="text-xl font-bold text-white mb-2">
-            {game.name || 'Untitled Game'}
+            {game.name || t('game.untitled')}
           </h3>
           {game.release_date && (
             <p className="text-gray-400 text-sm mb-2">
-              Released: {new Date(game.release_date).toLocaleDateString()}
+              {t('game.released', { date: new Date(game.release_date).toLocaleDateString() })}
             </p>
           )}
           {game.rating && (
@@ -102,7 +103,7 @@ const GameCard = ({ game }: { game: IGDBGame }) => {
     console.error('Error rendering game card:', error, game);
     return (
       <div className="bg-gray-800 rounded-lg p-4">
-        <p className="text-red-500">Error displaying this game</p>
+        <p className="text-red-500">{t('game.displayError')}</p>
       </div>
     );
   }
@@ -197,7 +198,7 @@ export function GameSearch() {
             type="text"
             value={query}
             onChange={handleInputChange}
-            placeholder="Search for games..."
+            placeholder={t('game.searchPlaceholder')}
             className="w-full p-4 rounded-lg bg-gray-800 text-white border border-gray-700 focus:border-yellow-400 focus:outline-none"
           />
         </div>
@@ -226,7 +227,7 @@ export function GameSearch() {
           ) : (
             query.trim() && !loading && (
               <div className="col-span-full text-center text-gray-400">
-                No games found
+                {t('game.noGamesFound')}
               </div>
             )
           )}

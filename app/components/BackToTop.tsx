@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowUp } from 'react-icons/fa';
+import { t } from '../lib/i18n';
 
 export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -34,7 +35,7 @@ export default function BackToTop() {
           transition={{ duration: 0.2 }}
           onClick={scrollToTop}
           className="fixed bottom-6 right-6 z-50 p-3 bg-yellow-400 text-gray-900 rounded-full shadow-lg hover:bg-yellow-300 hover:shadow-xl transition-all duration-300 group"
-          aria-label="Back to top"
+          aria-label={t('a11y.backToTop')}
         >
           <motion.div
             animate={{ y: [0, -3, 0] }}

@@ -3,6 +3,7 @@ import Footer from '../components/Footer';
 import { Suspense } from 'react';
 import SearchPageClient from '../components/Search/SearchPageClient';
 import { buildPageMetadata } from '../lib/seo';
+import siteConfig from '../lib/siteConfig';
 
 type SearchPageProps = {
   searchParams: {
@@ -12,10 +13,10 @@ type SearchPageProps = {
 
 export async function generateMetadata({ searchParams }: SearchPageProps) {
   const query = searchParams.q?.trim();
-  const title = query ? `Search results for "${query}" | FinalBoss.io` : 'Search | FinalBoss.io';
+  const title = query ? `Search results for "${query}" | ${siteConfig.name}` : `Search | ${siteConfig.name}`;
   const description = query
-    ? `Discover articles, guides, and reviews related to "${query}" on FinalBoss.io.`
-    : 'Search FinalBoss.io for gaming news, guides, reviews, and technology insights.';
+    ? `Discover articles, guides, and reviews related to "${query}" on ${siteConfig.name}.`
+    : `Search ${siteConfig.name} for gaming news, guides, reviews, and technology insights.`;
 
   return buildPageMetadata({
     title,

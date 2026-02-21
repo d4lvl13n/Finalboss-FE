@@ -9,6 +9,7 @@ import { CREATE_GAME_TAG_WITH_META, GET_GAME_TAG_BY_SLUG, GET_GAME_TAG_WITH_POST
 import { absoluteUrl, buildPageMetadata } from '@/app/lib/seo';
 import { IGDBGame } from '@/app/types/igdb';
 import { fetchAllGameTags } from '@/app/lib/fetchAllGameTags';
+import siteConfig from '@/app/lib/siteConfig';
 
 interface Props {
   params: {
@@ -16,7 +17,7 @@ interface Props {
   };
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+const baseUrl = siteConfig.url;
 
 export const revalidate = 3600;
 const POSTS_PAGE_SIZE = 12;
@@ -417,7 +418,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       const gameData = buildGameFromTag(gameTag);
       const description = buildDescription(gameTag.description || gameData.description || gameData.name);
       return buildPageMetadata({
-        title: `${gameData.name} - Game Details | FinalBoss.io`,
+        title: `${gameData.name} - Game Details | ${siteConfig.name}`,
         description: description || gameData.name,
         path: canonicalPath,
         image: gameData.cover_url || undefined,
@@ -439,7 +440,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       
       const description = buildDescription(game.data.description) || game.data.name;
       return buildPageMetadata({
-        title: `${game.data.name} - Game Details | FinalBoss.io`,
+        title: `${game.data.name} - Game Details | ${siteConfig.name}`,
         description,
         path: resolvedPath,
         image: game.data.cover_url || undefined,
@@ -452,12 +453,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     return {
-      title: 'Game Not Found | FinalBoss.io'
+      title: `Game Not Found | ${siteConfig.name}`
     };
   } catch (error) {
     console.error('Error generating metadata:', error);
     return {
-      title: 'Error | FinalBoss.io'
+      title: `Error | ${siteConfig.name}`
     };
   }
 }

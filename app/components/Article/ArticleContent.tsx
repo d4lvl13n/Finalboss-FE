@@ -19,6 +19,7 @@ import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../..
 import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
 import client from '../../lib/apolloClient';
 import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
+import siteConfig from '../../lib/siteConfig';
 import ReviewSummary, { ReviewConfig } from '../Review/ReviewSummary';
 import ReviewJsonLd from '../Seo/ReviewJsonLd';
 import Breadcrumbs from '../Breadcrumbs';
@@ -26,6 +27,7 @@ import TableOfContents from './TableOfContents';
 import ReadingProgressBar from '../ReadingProgressBar';
 import LatestSidebar from '../LatestSidebar';
 import GameMetaCard from '../GameMetaCard';
+import { t } from '../../lib/i18n';
 
 const sourceSans = Source_Sans_3({
   subsets: ['latin'],
@@ -296,7 +298,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                   transition={{ duration: 0.5, delay: 1.2 }}
                   className="sidebar-ad-sticky bg-gray-800/20 rounded-lg p-3 border border-gray-700/20"
                 >
-                  <div className="ad-label text-xs mb-3">Advertisement</div>
+                  <div className="ad-label text-xs mb-3">{t('article.adLabel')}</div>
                   <VerticalAd adSlot="1258229391" />
                 </motion.div>
               </div>
@@ -330,7 +332,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="article-ad-top"
               >
-                <div className="ad-label">Advertisement</div>
+                <div className="ad-label">{t('article.adLabel')}</div>
                 <ResponsiveAd adSlot="5844341661" />
               </motion.div>
               )}
@@ -357,7 +359,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                   config={reviewConfig}
                 />
                 <ReviewJsonLd
-                  articleUrl={`${process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'}/${(article as unknown as { slug?: string }).slug || ''}`}
+                  articleUrl={`${siteConfig.url}/${(article as unknown as { slug?: string }).slug || ''}`}
                   articleTitle={article.title}
                   authorName={article.author?.node?.name}
                   rating={typeof reviewConfig.score === 'number' ? reviewConfig.score : undefined}
@@ -391,9 +393,9 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                       {article.author?.node?.name}
                     </Link>
                     <div className="text-sm text-gray-400 flex flex-col">
-                      <span>Published {publishedDate}</span>
+                      <span>{t('article.publishedOn', { date: publishedDate })}</span>
                       {showUpdatedTimestamp && updatedDate && (
-                        <span className="text-xs text-gray-500">Updated {updatedDate}</span>
+                        <span className="text-xs text-gray-500">{t('article.updatedOn', { date: updatedDate })}</span>
                       )}
                     </div>
                   </div>
@@ -415,7 +417,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                       clipRule="evenodd" 
                     />
                   </svg>
-                  <span>{Math.ceil(article.content.split(' ').length / 200)} min read</span>
+                  <span>{Math.ceil(article.content.split(' ').length / 200)} {t('article.minRead')}</span>
                 </div>
 
                 {/* Category Tags */}
@@ -441,9 +443,9 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               transition={{ duration: 0.5, delay: 0.5 }}
             >
               <InlineContentUpgrade
-                title="Want to Level Up Your Gaming?"
-                description="Get access to exclusive strategies, hidden tips, and pro-level insights that we don't share publicly."
-                bonusContent={`Ultimate ${primaryCategory?.name || 'Gaming'} Strategy Guide + Weekly Pro Tips`}
+                title={t('article.contentUpgrade.title')}
+                description={t('article.contentUpgrade.description')}
+                bonusContent={t('article.contentUpgrade.bonus', { category: primaryCategory?.name || 'Gaming' })}
                 articleTopic={article.title}
               />
             </motion.div>
@@ -456,7 +458,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 transition={{ duration: 0.5, delay: 0.6 }}
                 className="article-ad-content"
               >
-                <div className="ad-label">Advertisement</div>
+                <div className="ad-label">{t('article.adLabel')}</div>
                 <ResponsiveAd adSlot="6510556072" />
               </motion.div>
               )}
@@ -474,11 +476,11 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                   transition={{ duration: 0.5, delay: 0.8 }}
                   className="bg-gray-800/30 rounded-xl p-5 border border-gray-700/30"
                 >
-                  <LatestSidebar 
+                  <LatestSidebar
                     articles={latestData?.posts?.nodes || []}
-                    title="Latest"
+                    title={t('common.latest')}
                     showAllLink="/gaming"
-                    showAllText="View All"
+                    showAllText={t('article.viewAll')}
                     maxItems={12}
                     accentColor="yellow"
                     maxHeight="750px"
@@ -493,7 +495,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                     transition={{ duration: 0.5, delay: 1.0 }}
                     className="bg-gray-800/20 rounded-lg p-3 border border-gray-700/20"
                   >
-                    <div className="ad-label text-xs mb-3">Advertisement</div>
+                    <div className="ad-label text-xs mb-3">{t('article.adLabel')}</div>
                     <VerticalAd adSlot="1258229391" />
                   </motion.div>
                 )}
@@ -511,7 +513,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         transition={{ duration: 0.5, delay: 0.8 }}
         className="article-ad-bottom max-w-4xl mx-auto px-4"
       >
-        <div className="ad-label">Advertisement</div>
+        <div className="ad-label">{t('article.adLabel')}</div>
         <ResponsiveAd adSlot="9184820874" />
       </motion.div>
       )}
@@ -526,11 +528,11 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         } : undefined}
         authorPosts={authorData?.posts?.nodes || []}
         sectionTitle={
-          relatedData?.posts?.nodes?.length > 0 && primaryCategory 
-            ? `Related to ${primaryCategory.name}` 
-            : articlesToShow?.length > 0 
-              ? 'You Might Also Like' 
-              : 'Related Articles'
+          relatedData?.posts?.nodes?.length > 0 && primaryCategory
+            ? t('article.relatedCategoryTitle', { category: primaryCategory.name })
+            : articlesToShow?.length > 0
+              ? t('article.youMightLike')
+              : t('article.relatedTitle')
         }
       />
     </div>

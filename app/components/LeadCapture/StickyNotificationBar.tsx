@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaBell, FaFire, FaGamepad } from 'react-icons/fa';
+import { formspreeUrl } from '../../lib/siteConfig';
+import { t } from '../../lib/i18n';
 
 const DISMISS_DURATION_DAYS = 7;
 
@@ -45,7 +47,7 @@ const StickyNotificationBar: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://formspree.io/f/xjkronpd', {
+      const response = await fetch(formspreeUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +88,7 @@ const StickyNotificationBar: React.FC = () => {
               <div className="flex items-center justify-center text-center">
                 <FaBell className="text-green-400 mr-2" />
                 <span className="text-white font-semibold">
-                  🎉 You&apos;re all set! Gaming deals coming your way!
+                  {t('leadCapture.sticky.successMessage')}
                 </span>
               </div>
             ) : (
@@ -94,15 +96,15 @@ const StickyNotificationBar: React.FC = () => {
                 <div className="flex items-center space-x-2 sm:space-x-4 flex-1 min-w-0">
                   <div className="flex items-center text-yellow-400 flex-shrink-0">
                     <FaFire className="animate-pulse mr-1 sm:mr-2" />
-                    <span className="font-bold text-xs sm:text-sm">HOT DEALS</span>
+                    <span className="font-bold text-xs sm:text-sm">{t('leadCapture.sticky.hotDeals')}</span>
                   </div>
                   
                   <div className="hidden sm:block text-white text-sm">
-                    Get instant alerts for gaming deals up to 90% off + free game keys every month!
+                    {t('leadCapture.sticky.desktopMessage')}
                   </div>
-                  
+
                   <div className="sm:hidden text-white text-xs truncate">
-                    Gaming deals up to 90% off + free keys!
+                    {t('leadCapture.sticky.mobileMessage')}
                   </div>
                 </div>
 
@@ -111,7 +113,7 @@ const StickyNotificationBar: React.FC = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
+                    placeholder={t('leadCapture.sticky.emailPlaceholder')}
                     required
                     className="px-3 py-1.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-300 text-sm focus:outline-none focus:border-yellow-400/50 focus:bg-white/15 transition-all w-40 sm:w-48"
                   />
@@ -123,13 +125,13 @@ const StickyNotificationBar: React.FC = () => {
                     {isSubmitting ? (
                       <div className="flex items-center">
                         <div className="w-3 h-3 border border-black/20 border-t-black rounded-full animate-spin mr-1"></div>
-                        <span className="hidden sm:inline">Joining...</span>
+                        <span className="hidden sm:inline">{t('leadCapture.sticky.submitting')}</span>
                       </div>
                     ) : (
                       <>
                         <FaGamepad className="inline mr-1" />
-                        <span className="hidden sm:inline">Get Alerts</span>
-                        <span className="sm:hidden">Join</span>
+                        <span className="hidden sm:inline">{t('leadCapture.sticky.submit')}</span>
+                        <span className="sm:hidden">{t('leadCapture.sticky.submitMobile')}</span>
                       </>
                     )}
                   </button>
@@ -138,7 +140,7 @@ const StickyNotificationBar: React.FC = () => {
                 <button
                   onClick={handleDismiss}
                   className="text-gray-400 hover:text-white transition-colors p-3 sm:p-1 -m-2 sm:m-0 flex-shrink-0"
-                  aria-label="Close notification"
+                  aria-label={t('a11y.closeNotification')}
                 >
                   <FaTimes className="w-5 h-5 sm:w-4 sm:h-4" />
                 </button>

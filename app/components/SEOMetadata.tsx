@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import siteConfig from '../lib/siteConfig';
 
 interface SEOMetadataProps {
   title: string;
@@ -23,8 +24,7 @@ export function generateSEOMetadata({
   section,
   tags,
 }: SEOMetadataProps): Metadata {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-  const defaultImage = `${baseUrl}/images/default-og.jpg`;
+  const defaultImage = `${siteConfig.url}${siteConfig.ogImagePath}`;
 
   return {
     title,
@@ -34,7 +34,7 @@ export function generateSEOMetadata({
       description,
       type,
       images: [{ url: image || defaultImage }],
-      siteName: 'FinalBoss.io',
+      siteName: siteConfig.siteName,
       ...(publishedTime && { publishedTime }),
       ...(modifiedTime && { modifiedTime }),
       ...(authors?.length && { authors }),
@@ -43,7 +43,7 @@ export function generateSEOMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      site: '@finalbossio',
+      site: siteConfig.twitterHandle,
       title,
       description,
       images: [image || defaultImage],

@@ -4,10 +4,12 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Image from 'next/image';
 import { buildPageMetadata } from '../lib/seo';
+import siteConfig from '../lib/siteConfig';
+import { t } from '../lib/i18n';
 
 export const metadata = buildPageMetadata({
-  title: 'About FinalBoss.io',
-  description: 'Learn about the FinalBoss.io team delivering gaming news, reviews, and guides.',
+  title: `About ${siteConfig.name}`,
+  description: `Learn about the ${siteConfig.name} team delivering gaming news, reviews, and guides.`,
   path: '/about',
 });
 
@@ -16,7 +18,7 @@ const teamMembers = [
     name: 'John Doe',
     role: 'Founder & CEO',
     image: '/images/john.jpg',
-    bio: 'John is the visionary behind FinalBoss.io...'
+    bio: `John is the visionary behind ${siteConfig.name}...`
   },
   {
     name: 'Jane Smith',
@@ -33,14 +35,14 @@ export default function AboutPage() {
       <Header />
       <div className="min-h-screen bg-gray-900 text-white px-4 py-24">
         <div className="container mx-auto">
-          <h1 className="text-5xl font-bold mb-12 text-center">About Us</h1>
+          <h1 className="text-5xl font-bold mb-12 text-center">{t('pages.about.heading')}</h1>
           
           <div className="text-lg leading-relaxed mb-16">
-            <p className="mb-4">FinalBoss.io is your go-to source for gaming news, reviews, and guides. Founded in 2024, we are passionate about providing the most accurate and engaging content for the gaming community.</p>
-            <p>Our mission is to empower gamers with the knowledge they need to make informed decisions, whether it&apos;s about the latest game releases, tech advancements, or industry trends.</p>
+            <p className="mb-4">{siteConfig.name}{t('pages.about.intro1')}</p>
+            <p>{t('pages.about.intro2')}</p>
           </div>
           
-          <h2 className="text-4xl font-bold mb-8 text-center">Our Team</h2>
+          <h2 className="text-4xl font-bold mb-8 text-center">{t('pages.about.teamHeading')}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {teamMembers.map((member, index) => (
               <div key={index} className="bg-gray-800 p-8 rounded-lg text-center shadow-lg">

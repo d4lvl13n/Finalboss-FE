@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { formatDate } from '../utils/formatDate';
+import { t } from '../lib/i18n';
 
 interface GameTag {
   name: string;
@@ -183,14 +184,14 @@ export default function GameMetaCard({ gameTag }: GameMetaCardProps) {
     <div className="mt-4 rounded-2xl border border-yellow-400/20 bg-gradient-to-br from-gray-900/95 via-gray-900/80 to-gray-800/80 px-4 py-4 text-sm text-gray-200 shadow-[0_18px_40px_-28px_rgba(250,204,21,0.7)] backdrop-blur">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">Game intel</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-yellow-400/80">{t('game.metaCard.title')}</p>
           <p className="text-lg font-semibold text-white">{gameTag.name}</p>
         </div>
         <Link
           href={`/game/${gameTag.slug}`}
           className="inline-flex items-center gap-2 rounded-full bg-yellow-400 px-4 py-2 text-xs font-semibold text-gray-900 shadow-lg shadow-yellow-400/30 transition-colors hover:bg-yellow-300"
         >
-          View hub
+          {t('game.metaCard.viewHub')}
           <span aria-hidden="true">→</span>
         </Link>
       </div>
@@ -200,22 +201,22 @@ export default function GameMetaCard({ gameTag }: GameMetaCardProps) {
       <div className="mt-4 flex flex-wrap gap-2">
         {platforms.length > 0 && (
           <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-200">
-            Platform: {platforms.join(', ')}
+            {t('game.metaCard.platform')}: {platforms.join(', ')}
           </span>
         )}
         {genres.length > 0 && (
           <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-200">
-            Genre: {genres.join(', ')}
+            {t('game.metaCard.genre')}: {genres.join(', ')}
           </span>
         )}
         {releaseDate && (
           <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-200">
-            Release: {formatDate(releaseDate)}
+            {t('game.metaCard.release')}: {formatDate(releaseDate)}
           </span>
         )}
         {publisher && (
           <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-200">
-            Publisher: {publisher}
+            {t('game.metaCard.publisher')}: {publisher}
           </span>
         )}
       </div>

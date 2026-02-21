@@ -1,4 +1,5 @@
 import React from 'react';
+import siteConfig from '../../lib/siteConfig';
 
 interface Category {
   id: string;
@@ -18,7 +19,7 @@ interface GuidesStructuredDataProps {
 }
 
 export default function GuidesStructuredData({ categories, guides }: GuidesStructuredDataProps) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+  const baseUrl = siteConfig.url;
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "ItemList",

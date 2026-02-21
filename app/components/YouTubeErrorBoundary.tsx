@@ -1,6 +1,7 @@
 'use client';
 
 import { Component, ReactNode } from 'react';
+import { t } from '../lib/i18n';
 
 interface Props {
   children: ReactNode;
@@ -25,7 +26,7 @@ export class YouTubeErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className="p-4 text-red-500">
-          <h2>Something went wrong with the YouTube integration.</h2>
+          <h2>{t('common.error.youtubeIntegration')}</h2>
           <p>{this.state.error?.message}</p>
         </div>
       );

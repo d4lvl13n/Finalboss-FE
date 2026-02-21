@@ -10,6 +10,7 @@ import client from '../lib/apolloClient';
 import { FaArrowRight } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import LatestSidebar, { formatTimeAgo } from './LatestSidebar';
+import { t } from '../lib/i18n';
 
 // Define the Article interface
 interface Article {
@@ -217,7 +218,7 @@ const LatestArticles = () => {
     );
   }
   
-  if (error) return <p className="text-center py-8 text-red-400">Error loading latest articles...</p>;
+  if (error) return <p className="text-center py-8 text-red-400">{t('common.error.loadLatest')}</p>;
 
   const featuredArticle = articles[0];
   const secondaryArticles = articles.slice(1, 4); // 3 secondary articles below featured
@@ -228,13 +229,13 @@ const LatestArticles = () => {
       <div className="container mx-auto px-3 md:px-4">
         {/* Section Header */}
         <div className="flex items-center mb-6 md:mb-8">
-          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-yellow-400 mr-3 md:mr-4">Latest Articles</h2>
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-yellow-400 mr-3 md:mr-4">{t('common.latestArticles')}</h2>
           <div className="flex-grow h-0.5 md:h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full"></div>
           <Link
             href="/gaming"
             className="ml-3 md:ml-4 bg-yellow-400 text-black p-1.5 md:p-2 rounded-full hover:bg-yellow-300 transition-colors"
-            aria-label="Browse all articles"
-            title="Browse all articles"
+            aria-label={t('a11y.browseAll')}
+            title={t('a11y.browseAll')}
           >
             <FaArrowRight className="w-3 h-3 md:w-4 md:h-4" aria-hidden="true" />
           </Link>
@@ -269,9 +270,9 @@ const LatestArticles = () => {
           <div className="w-80 lg:w-96 flex-shrink-0">
             <LatestSidebar 
               articles={sidebarArticles}
-              title="Latest"
+              title={t('common.latest')}
               showAllLink="/gaming"
-              showAllText="Show All"
+              showAllText={t('common.showAll')}
               maxItems={20}
               accentColor="yellow"
               maxHeight="800px"

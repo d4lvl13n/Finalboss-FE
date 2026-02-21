@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { t } from '../../lib/i18n';
 
 export default function ContactFormClient() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -18,7 +19,7 @@ export default function ContactFormClient() {
   if (submitted) {
     return (
       <div className="text-center text-lg text-green-400">
-        Thank you for your message! We&apos;ll get back to you soon.
+        {t('contact.success')}
       </div>
     );
   }
@@ -27,7 +28,7 @@ export default function ContactFormClient() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
         <label className="block text-sm font-bold mb-2" htmlFor="name">
-          Name
+          {t('contact.nameLabel')}
         </label>
         <input
           className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -41,7 +42,7 @@ export default function ContactFormClient() {
       </div>
       <div>
         <label className="block text-sm font-bold mb-2" htmlFor="email">
-          Email
+          {t('contact.emailLabel')}
         </label>
         <input
           className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -55,7 +56,7 @@ export default function ContactFormClient() {
       </div>
       <div>
         <label className="block text-sm font-bold mb-2" htmlFor="message">
-          Message
+          {t('contact.messageLabel')}
         </label>
         <textarea
           className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
@@ -71,7 +72,7 @@ export default function ContactFormClient() {
         type="submit"
         className="w-full bg-yellow-400 text-black font-bold py-3 rounded-lg hover:bg-yellow-300 transition-colors"
       >
-        Send Message
+        {t('contact.sendMessage')}
       </button>
     </form>
   );

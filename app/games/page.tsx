@@ -4,16 +4,17 @@ import Footer from '../components/Footer';
 import { GameSearch } from '../components/GameSearch';
 import GamesIndexClient from '../components/GamesIndexClient';
 import { buildPageMetadata } from '../lib/seo';
+import siteConfig from '../lib/siteConfig';
 import client from '../lib/apolloClient';
 import { GET_GAME_TAGS_FOR_INDEX } from '../lib/queries/gameQueries';
 
 const GAME_INDEX_LIMIT = 60;
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+const baseUrl = siteConfig.url;
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: 'Game Database | FinalBoss.io',
+    title: `Game Database | ${siteConfig.name}`,
     description: 'Search and explore our comprehensive game database with ratings, release dates, and platform information.',
     path: '/games',
   });

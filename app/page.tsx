@@ -5,6 +5,8 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import GameDatabaseSection from './components/GameDatabaseSection';
 import { buildPageMetadata } from './lib/seo';
+import siteConfig from './lib/siteConfig';
+import { t } from './lib/i18n';
 
 // Skeleton components with exact dimensions to prevent CLS
 const LatestArticlesSkeleton = () => (
@@ -198,16 +200,15 @@ export const revalidate = 3600;
 
 export async function generateMetadata() {
   const meta = buildPageMetadata({
-    title: 'FinalBoss.io - Your Ultimate Gaming Destination',
-    description:
-      'Discover the latest gaming news, reviews, guides, and cutting-edge technology at FinalBoss.io. Stay ahead in the gaming world.',
+    title: `${siteConfig.name} - ${siteConfig.tagline}`,
+    description: siteConfig.description,
     path: '/',
-    image: '/images/finalboss-og-image.jpg',
+    image: siteConfig.ogImagePath,
   });
   return {
     ...meta,
     title: {
-      absolute: 'FinalBoss.io - Your Ultimate Gaming Destination',
+      absolute: `${siteConfig.name} - ${siteConfig.tagline}`,
     },
   };
 }
@@ -254,15 +255,15 @@ export default async function HomePage() {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/20 rounded-full px-4 py-1.5 mb-6">
                 <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
-                <span className="text-yellow-400 text-sm font-medium">Join 10,000+ Gamers</span>
+                <span className="text-yellow-400 text-sm font-medium">{t('pages.home.newsletterBadge')}</span>
               </div>
               
               <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
-                <span className="text-white">Level Up Your </span>
-                <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">Gaming Knowledge</span>
+                <span className="text-white">{t('pages.home.newsletterHeading')}</span>
+                <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">{t('pages.home.newsletterHighlight')}</span>
               </h2>
               <p className="text-sm md:text-lg text-gray-400 mb-8 md:mb-10 max-w-2xl mx-auto">
-                Get the latest gaming news, exclusive reviews, pro tips, and insider content delivered straight to your inbox every week.
+                {t('pages.home.newsletterDescription')}
               </p>
               <Suspense
                 fallback={
@@ -281,7 +282,7 @@ export default async function HomePage() {
     console.error('Error in HomePage:', error);
     return (
       <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-        <h1 className="text-3xl font-bold">Something went wrong. Please try again later.</h1>
+        <h1 className="text-3xl font-bold">{t('pages.home.error')}</h1>
       </div>
     );
   }

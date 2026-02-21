@@ -5,6 +5,7 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
+import { t } from '../lib/i18n';
 
 interface Article {
   id: string;
@@ -44,7 +45,7 @@ const formatTimeAgo = (dateString: string) => {
   // If today, show time
   if (date.toDateString() === now.toDateString()) {
     if (diffMins < 60) {
-      return `${diffMins}m ago`;
+      return t('common.minsAgo', { mins: diffMins });
     }
     return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
   }
@@ -53,7 +54,7 @@ const formatTimeAgo = (dateString: string) => {
   const yesterday = new Date(now);
   yesterday.setDate(yesterday.getDate() - 1);
   if (date.toDateString() === yesterday.toDateString()) {
-    return 'Yesterday';
+    return t('common.yesterday');
   }
   
   // Otherwise show date
@@ -139,9 +140,9 @@ const SidebarArticle = ({
 
 export default function LatestSidebar({
   articles,
-  title = 'Latest',
+  title = t('common.latest'),
   showAllLink = '/gaming',
-  showAllText = 'Show All',
+  showAllText = t('common.showAll'),
   maxItems = 15,
   accentColor = 'yellow',
   maxHeight = '600px',

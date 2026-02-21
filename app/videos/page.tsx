@@ -3,13 +3,14 @@ import Footer from '../components/Footer';
 import { YouTubeErrorBoundary } from '../components/YouTubeErrorBoundary';
 import VideosPageClient from '../components/Videos/VideosPageClient';
 import { buildPageMetadata } from '../lib/seo';
+import siteConfig from '../lib/siteConfig';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+const baseUrl = siteConfig.url;
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: 'Gaming Videos | FinalBoss.io',
-    description: 'Watch the latest trailers, gameplay clips, and video coverage from FinalBoss.io.',
+    title: `Gaming Videos | ${siteConfig.name}`,
+    description: `Watch the latest trailers, gameplay clips, and video coverage from ${siteConfig.name}.`,
     path: '/videos',
   });
 }

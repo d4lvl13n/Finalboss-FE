@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { ChevronRight, Home } from 'lucide-react';
+import siteConfig from '../lib/siteConfig';
+import { t } from '../lib/i18n';
 
 interface BreadcrumbItem {
   label: string;
@@ -14,7 +16,7 @@ interface BreadcrumbsProps {
 }
 
 export default function Breadcrumbs({ items, className = '' }: BreadcrumbsProps) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+  const baseUrl = siteConfig.url;
   
   // Generate BreadcrumbList schema
   const breadcrumbSchema = {
@@ -24,7 +26,7 @@ export default function Breadcrumbs({ items, className = '' }: BreadcrumbsProps)
       {
         '@type': 'ListItem',
         position: 1,
-        name: 'Home',
+        name: t('breadcrumb.home'),
         item: baseUrl,
       },
       ...items.map((item, index) => ({
@@ -44,13 +46,13 @@ export default function Breadcrumbs({ items, className = '' }: BreadcrumbsProps)
       />
       
       <nav 
-        aria-label="Breadcrumb" 
+        aria-label={t('a11y.breadcrumb')} 
         className={`flex items-center gap-1 text-sm text-gray-400 ${className}`}
       >
         <Link 
           href="/" 
           className="flex items-center gap-1 hover:text-yellow-400 transition-colors"
-          aria-label="Home"
+          aria-label={t('a11y.home')}
         >
           <Home className="w-4 h-4" />
         </Link>

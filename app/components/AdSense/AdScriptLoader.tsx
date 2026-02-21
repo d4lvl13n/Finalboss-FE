@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react'
 import { SHOW_MANUAL_ADS } from '../../lib/adsConfig'
+import siteConfig, { adsenseSrc } from '../../lib/siteConfig'
 
 interface AdScriptLoaderProps {
   enableAutoAds: boolean
@@ -13,8 +14,7 @@ declare global {
   }
 }
 
-const ADSENSE_SRC =
-  'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7494322760704385'
+const ADSENSE_SRC = adsenseSrc
 
 export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
   const shouldLoad = SHOW_MANUAL_ADS || enableAutoAds
@@ -27,7 +27,7 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
       try {
         const adsQueue = window.adsbygoogle || []
         adsQueue.push({
-          google_ad_client: 'ca-pub-7494322760704385',
+          google_ad_client: siteConfig.adsensePublisherId,
           enable_page_level_ads: true,
         })
         window.adsbygoogle = adsQueue

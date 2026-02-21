@@ -6,6 +6,7 @@ import { GET_AUTHOR_BY_SLUG, GET_ALL_AUTHORS, Author } from '../../lib/queries/g
 import AuthorArticlesGrid from '../../components/Author/AuthorArticlesGrid';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import siteConfig from '../../lib/siteConfig';
 
 interface AuthorPageProps {
   params: Promise<{ slug: string }>;
@@ -40,21 +41,21 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
     
     if (!author) {
       return {
-        title: 'Author Not Found | FinalBoss.io',
+        title: `Author Not Found | ${siteConfig.name}`,
       };
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
-    const description = author.description || `Read articles by ${author.name} on FinalBoss.io - Gaming news, reviews, guides and more.`;
+    const baseUrl = siteConfig.url;
+    const description = author.description || `Read articles by ${author.name} on ${siteConfig.name} - Gaming news, reviews, guides and more.`;
 
     return {
-      title: `${author.name} - Author | FinalBoss.io`,
+      title: `${author.name} - Author | ${siteConfig.name}`,
       description,
       alternates: {
         canonical: `${baseUrl}/author/${author.slug}`,
       },
       openGraph: {
-        title: `${author.name} - Author | FinalBoss.io`,
+        title: `${author.name} - Author | ${siteConfig.name}`,
         description,
         url: `${baseUrl}/author/${author.slug}`,
         type: 'profile',
@@ -62,13 +63,13 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
       },
       twitter: {
         card: 'summary',
-        title: `${author.name} - Author | FinalBoss.io`,
+        title: `${author.name} - Author | ${siteConfig.name}`,
         description,
       },
     };
   } catch {
     return {
-      title: 'Author | FinalBoss.io',
+      title: `Author | ${siteConfig.name}`,
     };
   }
 }
@@ -93,7 +94,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     notFound();
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+  const baseUrl = siteConfig.url;
 
   // Person Schema (JSON-LD)
   const personSchema = {
@@ -101,13 +102,13 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     '@type': 'Person',
     name: author.name,
     url: `${baseUrl}/author/${author.slug}`,
-    description: author.description || `Gaming writer at FinalBoss.io`,
+    description: author.description || `Gaming writer at ${siteConfig.name}`,
     image: author.avatar?.url,
     sameAs: [],
     jobTitle: 'Gaming Writer',
     worksFor: {
       '@type': 'Organization',
-      name: 'FinalBoss.io',
+      name: siteConfig.name,
       url: baseUrl,
     },
   };
@@ -118,7 +119,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     '@type': 'ProfilePage',
     mainEntity: personSchema,
     name: `${author.name} - Author Profile`,
-    description: author.description || `Read articles by ${author.name} on FinalBoss.io`,
+    description: author.description || `Read articles by ${author.name} on ${siteConfig.name}`,
     url: `${baseUrl}/author/${author.slug}`,
   };
 

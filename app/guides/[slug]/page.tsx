@@ -4,6 +4,7 @@ import Footer from '../../components/Footer';
 import client from '../../lib/apolloClient';
 import { GET_SUBCATEGORY_ARTICLES } from '../../lib/queries/getSubcategoryArticles';
 import { buildPageMetadata } from '../../lib/seo';
+import siteConfig from '../../lib/siteConfig';
 
 interface GuideCategoryProps {
   params: { slug: string };
@@ -31,7 +32,7 @@ function formatSlug(slug: string) {
 export async function generateMetadata({ params }: GuideCategoryProps) {
   const titleFragment = formatSlug(params.slug);
   return buildPageMetadata({
-    title: `${titleFragment} Guides | FinalBoss.io`,
+    title: `${titleFragment} Guides | ${siteConfig.name}`,
     description: `Explore walkthroughs, tips, and strategies for ${titleFragment}.`,
     path: `/guides/${params.slug}`,
     robots: {
@@ -44,7 +45,7 @@ export async function generateMetadata({ params }: GuideCategoryProps) {
 export const revalidate = 3600;
 
 export default async function GuideCategoryPage({ params }: GuideCategoryProps) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+  const baseUrl = siteConfig.url;
   const titleFragment = formatSlug(params.slug);
 
   let initialArticles: GuideArticle[] = [];

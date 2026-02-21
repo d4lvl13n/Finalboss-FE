@@ -10,6 +10,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Link from 'next/link';
 import { useMediaQuery } from 'react-responsive';
 import { useSwipeable } from 'react-swipeable';
+import { t } from '../lib/i18n';
 
 // Define interfaces for our data structure
 interface FeaturedImage {
@@ -145,12 +146,12 @@ export default function FeaturedSlider() {
   if (error) return (
     <div className="relative w-full h-[60vh] bg-gray-900 flex items-center justify-center">
       <div className="text-center">
-        <p className="text-white mb-4">Failed to load featured articles</p>
+        <p className="text-white mb-4">{t('common.error.loadFeatured')}</p>
         <button
           onClick={() => refetch()}
           className="bg-yellow-400 text-black font-bold py-2 px-6 rounded-full hover:bg-yellow-300 transition-colors"
         >
-          Try Again
+          {t('common.tryAgain')}
         </button>
       </div>
     </div>
@@ -164,7 +165,7 @@ export default function FeaturedSlider() {
     return (
       <div className="relative w-full h-[60vh] bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-white mb-4">No featured articles available</p>
+          <p className="text-white mb-4">{t('common.error.noFeatured')}</p>
         </div>
       </div>
     );
@@ -173,7 +174,7 @@ export default function FeaturedSlider() {
   return (
     <div 
       role="region"
-      aria-label="Featured articles slider"
+      aria-label={t('a11y.featuredSlider')}
       className="relative w-full bg-gray-900"
     >
       {/* Dynamic height based on device */}
@@ -233,7 +234,7 @@ export default function FeaturedSlider() {
                   {/* CTA Button */}
                   <Link href={`/${featuredArticles[currentIndex]?.slug}`}>
                     <button className="bg-yellow-400 text-black font-bold py-2 px-6 md:py-3 md:px-8 rounded-full hover:bg-yellow-300 transition-colors">
-                      Read More
+                      {t('common.readMore')}
                     </button>
                   </Link>
                 </motion.div>
@@ -255,14 +256,14 @@ export default function FeaturedSlider() {
         {/* Navigation buttons - Hidden on mobile */}
         <div className="hidden md:block">
           <button
-            aria-label="Previous slide"
+            aria-label={t('a11y.previousSlide')}
             onClick={handlePrev}
             className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/75 transition-all"
           >
             <FaChevronLeft size={24} />
           </button>
           <button
-            aria-label="Next slide"
+            aria-label={t('a11y.nextSlide')}
             onClick={handleNext}
             className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-3 rounded-full hover:bg-black/75 transition-all"
           >
@@ -271,7 +272,7 @@ export default function FeaturedSlider() {
         </div>
 
         {/* Slide indicators */}
-        <div role="tablist" aria-label="Slide indicators">
+        <div role="tablist" aria-label={t('a11y.slideIndicators')}>
           {featuredArticles.map((_, index: number) => (
             <button
               role="tab"
@@ -345,7 +346,7 @@ export default function FeaturedSlider() {
             <button
               onClick={handlePrev}
               className="group flex items-center gap-2 hover:text-yellow-400 transition-colors"
-              aria-label="Previous slide"
+              aria-label={t('a11y.previousSlide')}
             >
               <motion.div
                 animate={{ x: [-5, 0, -5] }}
@@ -357,14 +358,14 @@ export default function FeaturedSlider() {
               >
                 <FaChevronLeft size={20} />
               </motion.div>
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity">Prev</span>
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity">{t('common.prev')}</span>
             </button>
             <button
               onClick={handleNext}
               className="group flex items-center gap-2 hover:text-yellow-400 transition-colors"
-              aria-label="Next slide"
+              aria-label={t('a11y.nextSlide')}
             >
-              <span className="opacity-0 group-hover:opacity-100 transition-opacity">Next</span>
+              <span className="opacity-0 group-hover:opacity-100 transition-opacity">{t('common.next')}</span>
               <motion.div
                 animate={{ x: [0, 5, 0] }}
                 transition={{ 

@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
+import siteConfig from './siteConfig';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
-const DEFAULT_OG_IMAGE = `${BASE_URL}/images/finalboss-og-image.jpg`;
+const DEFAULT_OG_IMAGE = `${siteConfig.url}${siteConfig.ogImagePath}`;
 
 export function absoluteUrl(path: string | undefined): string {
-  if (!path) return BASE_URL;
+  if (!path) return siteConfig.url;
   if (path.startsWith('http')) return path;
-  return `${BASE_URL}${path.startsWith('/') ? path : `/${path}`}`;
+  return `${siteConfig.url}${path.startsWith('/') ? path : `/${path}`}`;
 }
 
 type PageMetadataOptions = {
@@ -46,7 +46,7 @@ export function buildPageMetadata({
       title,
       description,
       url,
-      siteName: 'FinalBoss.io',
+      siteName: siteConfig.siteName,
       type,
       images: [{ url: imageUrl }],
       ...(publishedTime && { publishedTime }),

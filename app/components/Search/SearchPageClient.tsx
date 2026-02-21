@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { PLACEHOLDER_BASE64 } from '@/app/utils/placeholder';
 import { FaSearch } from 'react-icons/fa';
 import { SearchResult } from '@/app/types/search';
+import { t } from '@/app/lib/i18n';
 
 export default function SearchPageClient() {
   const searchParams = useSearchParams();
@@ -72,7 +73,7 @@ export default function SearchPageClient() {
       <div className="container mx-auto px-4">
         <div className="mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            {query ? `Search results for "${query}"` : 'Search'}
+            {query ? t('search.pageTitle', { query }) : t('search.title')}
           </h1>
 
           <form className="max-w-2xl mb-8" onSubmit={handleSearch}>
@@ -82,7 +83,7 @@ export default function SearchPageClient() {
                 type="text"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                placeholder="Search articles, guides, reviews..."
+                placeholder={t('search.placeholder')}
                 className="w-full py-3 pl-12 pr-4 bg-gray-800 text-white rounded-lg border-2 border-gray-700 focus:border-yellow-400 focus:outline-none"
               />
             </div>
@@ -90,25 +91,25 @@ export default function SearchPageClient() {
 
           {!query ? (
             <div className="text-center text-gray-400 mt-12">
-              <p>Enter a search term above to find articles.</p>
+              <p>{t('search.emptyState')}</p>
             </div>
           ) : loading || isLoading ? (
             <div className="text-center text-gray-400 mt-12">
-              <p>Searching...</p>
+              <p>{t('search.searching')}</p>
             </div>
           ) : error ? (
             <div className="text-center text-red-400 mt-12">
-              <p>Error searching. Please try again.</p>
+              <p>{t('search.error')}</p>
             </div>
           ) : results.length === 0 ? (
             <div className="text-center text-gray-400 mt-12">
-              <p>No results found for “{query}”</p>
-              <p className="mt-2 text-sm">Try different keywords or check your spelling</p>
+              <p>{t('search.noResults', { query })}</p>
+              <p className="mt-2 text-sm">{t('search.noResultsTip')}</p>
             </div>
           ) : (
             <>
               <p className="text-gray-400 mb-8">
-                Found {results.length} result{results.length !== 1 ? 's' : ''}
+                {t('search.found', { count: results.length, resultWord: results.length !== 1 ? t('search.results') : t('search.result'), query })}
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -161,7 +162,7 @@ export default function SearchPageClient() {
                     onClick={handleLoadMore}
                     className="inline-block bg-yellow-400 text-black px-6 py-2 rounded-full hover:bg-yellow-300 transition-colors"
                   >
-                    Load more results
+                    {t('search.loadMore')}
                   </button>
                 </div>
               )}

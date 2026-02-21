@@ -1,6 +1,7 @@
 "use client";
 import Image from 'next/image';
 import React from 'react';
+import { t } from '../../lib/i18n';
 
 export type ReviewRating = {
   label: string;
@@ -32,7 +33,7 @@ export default function ReviewSummary({ articleTitle, fallbackImage, config }: P
   const pros = Array.isArray(config.pros) ? config.pros : [];
   const cons = Array.isArray(config.cons) ? config.cons : [];
   const conclusion = config.conclusion || '';
-  const verdictTitle = config.verdictTitle || (score != null ? `Verdict — ${score}/10` : 'Verdict');
+  const verdictTitle = config.verdictTitle || (score != null ? t('review.verdictWithScore', { score }) : t('review.verdict'));
 
   return (
     <section className="not-prose my-12">
@@ -98,7 +99,7 @@ export default function ReviewSummary({ articleTitle, fallbackImage, config }: P
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
             {pros.length > 0 && (
               <div>
-                <div className="font-bold mb-3 text-gray-100 text-lg">The Good</div>
+                <div className="font-bold mb-3 text-gray-100 text-lg">{t('review.theGood')}</div>
                 <ul className="list-none m-0 p-0 space-y-2">
                   {pros.map((p, i) => (
                     <li key={`pro-${i}`} className="relative pl-6 leading-6 text-gray-200">
@@ -111,7 +112,7 @@ export default function ReviewSummary({ articleTitle, fallbackImage, config }: P
             )}
             {cons.length > 0 && (
               <div>
-                <div className="font-bold mb-3 text-gray-100 text-lg">The Bad</div>
+                <div className="font-bold mb-3 text-gray-100 text-lg">{t('review.theBad')}</div>
                 <ul className="list-none m-0 p-0 space-y-2">
                   {cons.map((c, i) => (
                     <li key={`con-${i}`} className="relative pl-6 leading-6 text-gray-200">

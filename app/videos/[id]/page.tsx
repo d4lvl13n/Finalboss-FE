@@ -4,6 +4,7 @@ import VideoContent from '../../components/VideoContent';
 import { Metadata } from 'next';
 import { buildPageMetadata } from '../../lib/seo';
 import VideoStructuredData from '../../components/VideoStructuredData';
+import siteConfig from '../../lib/siteConfig';
 
 interface VideoPageProps {
   params: { id: string };
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: VideoPageProps): Promise<Meta
     const video = await youtubeService.getVideoById(params.id);
     const description = video.description.substring(0, 160);
     const baseMetadata = buildPageMetadata({
-      title: `${video.title} - FinalBoss.io`,
+      title: `${video.title} - ${siteConfig.name}`,
       description,
       path: `/videos/${video.id}`,
       image: video.thumbnail.url,
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: VideoPageProps): Promise<Meta
       twitter: {
         ...baseMetadata.twitter,
         card: 'player',
-        site: '@finalbossio',
+        site: siteConfig.twitterHandle,
       },
       openGraph: {
         ...baseMetadata.openGraph,
@@ -53,7 +54,7 @@ export async function generateMetadata({ params }: VideoPageProps): Promise<Meta
   } catch (error) {
     console.error('Unable to build video metadata:', error);
     return {
-      title: 'Video Not Found - FinalBoss.io',
+      title: `Video Not Found - ${siteConfig.name}`,
     };
   }
 }
@@ -61,7 +62,7 @@ export async function generateMetadata({ params }: VideoPageProps): Promise<Meta
 export default async function VideoPage({ params }: VideoPageProps) {
   try {
     const video = await youtubeService.getVideoById(params.id);
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+    const baseUrl = siteConfig.url;
     
     return (
       <>

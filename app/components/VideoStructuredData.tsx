@@ -1,4 +1,5 @@
 import { YouTubeVideo } from '../lib/youtube/config';
+import siteConfig from '../lib/siteConfig';
 
 interface VideoStructuredDataProps {
   video: YouTubeVideo;
@@ -23,7 +24,7 @@ export default function VideoStructuredData({ video, baseUrl }: VideoStructuredD
     "contentUrl": `https://www.youtube.com/watch?v=${video.id}`,
     "publisher": {
       "@type": "Organization",
-      "name": "FinalBoss.io",
+      "name": siteConfig.name,
       "logo": {
         "@type": "ImageObject",
         "url": `${baseUrl}/images/logo.png`

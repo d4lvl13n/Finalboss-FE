@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { GET_TECH_ARTICLES } from '../lib/queries/getTechArticles';
 import client from '../lib/apolloClient';
 import { buildPageMetadata } from '../lib/seo';
+import siteConfig from '../lib/siteConfig';
 import TechnologyPageContent from '../components/TechnologyPageContent';
 import TechnologyStructuredData from '../components/TechnologyStructuredData';
 import Header from '../components/Header';
@@ -9,7 +10,7 @@ import Footer from '../components/Footer';
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: 'Gaming & Tech Articles | FinalBoss.io',
+    title: `Gaming & Tech Articles | ${siteConfig.name}`,
     description: 'Explore the latest in gaming technology, hardware reviews, and industry innovation.',
     path: '/technology',
   });

@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { PLACEHOLDER_BASE64 } from '@/app/utils/placeholder';
 import { useRouter } from 'next/navigation';
 import { SearchResult } from '@/app/types/search';
+import { t } from '@/app/lib/i18n';
 
 export default function SearchOverlay() {
   const { isSearchOpen, closeSearch, searchQuery, setSearchQuery } = useSearch();
@@ -84,7 +85,7 @@ export default function SearchOverlay() {
                       type="text"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Search articles, guides, reviews..."
+                      placeholder={t('search.placeholder')}
                       className="w-full py-3 pl-12 pr-4 bg-gray-800 text-white rounded-lg border-2 border-gray-700 focus:border-yellow-400 focus:outline-none"
                     />
                   </div>
@@ -92,7 +93,7 @@ export default function SearchOverlay() {
                 <button
                   onClick={closeSearch}
                   className="p-2 text-white hover:text-yellow-400 transition-colors"
-                  aria-label="Close search"
+                  aria-label={t('a11y.closeSearch')}
                 >
                   <FaTimes size={24} />
                 </button>
@@ -104,20 +105,20 @@ export default function SearchOverlay() {
           <div className="flex-1 container mx-auto px-4 py-6">
             {debouncedQuery.length < 3 ? (
               <div className="text-center text-gray-400 mt-12">
-                <p>Enter at least 3 characters to search</p>
+                <p>{t('search.minChars')}</p>
               </div>
             ) : loading ? (
               <div className="text-center text-gray-400 mt-12">
-                <p>Searching...</p>
+                <p>{t('search.searching')}</p>
               </div>
             ) : error ? (
               <div className="text-center text-red-400 mt-12">
-                <p>Error searching. Please try again.</p>
+                <p>{t('search.error')}</p>
               </div>
             ) : hasResults ? (
               <div className="space-y-6">
                 <h2 className="text-2xl font-bold text-white">
-                  {results.length} result{results.length !== 1 ? 's' : ''} for &quot;{debouncedQuery}&quot;
+                  {t('search.resultsFor', { count: results.length, resultWord: results.length !== 1 ? t('search.results') : t('search.result'), query: debouncedQuery })}
                 </h2>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -165,14 +166,14 @@ export default function SearchOverlay() {
                     onClick={closeSearch}
                     className="inline-block bg-yellow-400 text-black px-6 py-2 rounded-full hover:bg-yellow-300 transition-colors"
                   >
-                    View all results
+                    {t('search.viewAll')}
                   </Link>
                 </div>
               </div>
             ) : (
               <div className="text-center text-gray-400 mt-12">
-                <p>No results found for &quot;{debouncedQuery}&quot;</p>
-                <p className="mt-2 text-sm">Try different keywords or check your spelling</p>
+                <p>{t('search.noResults', { query: debouncedQuery })}</p>
+                <p className="mt-2 text-sm">{t('search.noResultsTip')}</p>
               </div>
             )}
           </div>

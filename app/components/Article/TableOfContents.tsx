@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { List, ChevronDown, ChevronUp } from 'lucide-react';
+import { t } from '../../lib/i18n';
 
 interface TocItem {
   id: string;
@@ -100,7 +101,7 @@ export default function TableOfContents({ content, minHeadings = 3 }: TableOfCon
       >
         <div className="flex items-center gap-2 text-yellow-400 font-semibold">
           <List className="w-5 h-5" />
-          <span>Table of Contents</span>
+          <span>{t('article.tableOfContents')}</span>
           <span className="text-gray-500 font-normal text-sm">({headings.length})</span>
         </div>
         {isOpen ? (

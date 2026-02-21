@@ -6,6 +6,7 @@ import { IGDBGame } from '../types/igdb';
 import { format } from 'date-fns';
 import { GameSearch } from './GameSearch';
 import ResponsiveArticleGrid from './ResponsiveArticleGrid';
+import { t } from '../lib/i18n';
 
 interface RelatedArticle {
   id: string;
@@ -80,7 +81,7 @@ export function GameDetails({
             <div className="container mx-auto px-4">
               <div className="flex items-center mb-6">
                 <h2 className="text-2xl md:text-3xl font-bold text-yellow-400 mr-4">
-                  More {game.name} Coverage
+                  {t('game.coverage', { name: game.name })}
                 </h2>
                 <div className="flex-grow h-0.5 md:h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full" />
               </div>
@@ -101,7 +102,7 @@ export function GameDetails({
           
           {game.release_date && (
             <p className="text-yellow-400 text-center mb-8">
-              Released: {format(new Date(game.release_date), 'MMMM d, yyyy')}
+              {t('game.released', { date: format(new Date(game.release_date), 'MMMM d, yyyy') })}
             </p>
           )}
 
@@ -138,16 +139,16 @@ export function GameDetails({
           game.companies?.length ||
           game.websites?.length) && (
           <div className="bg-gray-800 rounded-lg p-6 mb-8 shadow-xl">
-            <h2 className="text-2xl font-bold text-white mb-6">Game Facts</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{t('game.facts')}</h2>
             <div className="grid gap-6 md:grid-cols-2">
               {[
-                { label: 'Genres', items: game.genres },
-                { label: 'Themes', items: game.themes },
-                { label: 'Modes', items: game.game_modes },
-                { label: 'Perspectives', items: game.player_perspectives },
-                { label: 'Franchises', items: game.franchises },
-                { label: 'Collections', items: game.collections },
-                { label: 'Companies', items: game.companies },
+                { label: t('game.genres'), items: game.genres },
+                { label: t('game.themes'), items: game.themes },
+                { label: t('game.modes'), items: game.game_modes },
+                { label: t('game.perspectives'), items: game.player_perspectives },
+                { label: t('game.franchises'), items: game.franchises },
+                { label: t('game.collections'), items: game.collections },
+                { label: t('game.companies'), items: game.companies },
               ]
                 .filter((block) => block.items && block.items.length > 0)
                 .map((block) => (
@@ -171,7 +172,7 @@ export function GameDetails({
               {game.websites && game.websites.length > 0 && (
                 <div>
                   <p className="text-xs uppercase tracking-widest text-yellow-400 mb-2">
-                    Official Links
+                    {t('game.officialLinks')}
                   </p>
                   <div className="flex flex-wrap gap-3">
                     {game.websites.map((website, index) => (
@@ -195,7 +196,7 @@ export function GameDetails({
           {/* Screenshots */}
           {game.screenshots && game.screenshots.length > 0 && (
             <div className="mb-12">
-              <h2 className="text-2xl font-bold text-white mb-6">Screenshots</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">{t('game.screenshots')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {game.screenshots.map((screenshot, index) => (
                   <div key={index} className="relative h-48 group rounded-lg overflow-hidden">
@@ -215,7 +216,7 @@ export function GameDetails({
           {/* Videos Section */}
           {game.videos && game.videos.length > 0 && (
             <div className="mb-12">
-              <h2 className="text-2xl font-bold text-white mb-6">Videos</h2>
+              <h2 className="text-2xl font-bold text-white mb-6">{t('game.videos')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {game.videos.map((video, index) => (
                   <div key={index} className="aspect-video">
@@ -236,7 +237,7 @@ export function GameDetails({
 
           {/* Game Search Section */}
           <div className="mt-12 bg-gray-800 rounded-lg p-6">
-            <h2 className="text-2xl font-bold text-white mb-6">Search More Games</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{t('game.searchMore')}</h2>
             <GameSearch />
           </div>
         </div>

@@ -5,18 +5,20 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import client from '../lib/apolloClient';
 import { GET_ALL_AUTHORS } from '../lib/queries/getAuthor';
+import siteConfig from '../lib/siteConfig';
+import { t } from '../lib/i18n';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+const baseUrl = siteConfig.url;
 
 export const metadata: Metadata = {
-  title: 'Our Team & Writers | FinalBoss.io',
-  description: 'Meet the passionate gaming journalists and writers behind FinalBoss.io. Our team delivers the latest gaming news, in-depth reviews, and expert guides.',
+  title: `Our Team & Writers | ${siteConfig.name}`,
+  description: `Meet the passionate gaming journalists and writers behind ${siteConfig.name}. Our team delivers the latest gaming news, in-depth reviews, and expert guides.`,
   alternates: {
     canonical: `${baseUrl}/authors`,
   },
   openGraph: {
-    title: 'Our Team & Writers | FinalBoss.io',
-    description: 'Meet the passionate gaming journalists and writers behind FinalBoss.io.',
+    title: `Our Team & Writers | ${siteConfig.name}`,
+    description: `Meet the passionate gaming journalists and writers behind ${siteConfig.name}.`,
     url: `${baseUrl}/authors`,
     type: 'website',
   },
@@ -58,14 +60,14 @@ export default async function AuthorsPage() {
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'FinalBoss.io',
+    name: siteConfig.name,
     url: baseUrl,
-    logo: `${baseUrl}/finalboss.png`,
-    description: 'Your ultimate destination for gaming news, reviews, guides, and more.',
+    logo: `${baseUrl}${siteConfig.logoPath}`,
+    description: siteConfig.description,
     foundingDate: '2020',
     sameAs: [
-      'https://twitter.com/finalbossio',
-      'https://youtube.com/@finalbossio',
+      siteConfig.socialLinks.twitter,
+      siteConfig.socialLinks.youtube,
     ],
     employee: authors.map((author) => ({
       '@type': 'Person',
@@ -108,28 +110,20 @@ export default async function AuthorsPage() {
           
           <div className="relative max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-yellow-200 to-yellow-400 bg-clip-text text-transparent">
-              The FinalBoss Story
+              {t('pages.authors.heroHeading', { name: siteConfig.name })}
             </h1>
             
             <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
               <p>
-                <span className="text-yellow-400 font-semibold">FinalBoss.io</span> was born from a simple belief: 
-                every gamer deserves access to honest, in-depth coverage of the games they love. 
-                What started as a passion project has grown into a thriving community of gaming enthusiasts, 
-                writers, and creators.
+                <span className="text-yellow-400 font-semibold">{siteConfig.name}</span>{t('pages.authors.heroParagraph1')}
               </p>
-              
+
               <p>
-                We&apos;re not just another gaming website. We&apos;re gamers first — spending countless hours 
-                exploring virtual worlds, mastering game mechanics, and discovering hidden secrets. 
-                That firsthand experience shapes everything we write, from our detailed guides to our 
-                no-nonsense reviews.
+                {t('pages.authors.heroParagraph2')}
               </p>
-              
+
               <p>
-                Our mission is simple: <span className="text-white font-medium">help you beat the game</span>. 
-                Whether you&apos;re stuck on a boss, looking for your next adventure, or want to stay 
-                updated on industry news — we&apos;ve got your back.
+                {t('pages.authors.heroParagraph3Part1')}<span className="text-white font-medium">{t('pages.authors.heroParagraph3Part2')}</span>{t('pages.authors.heroParagraph3Part3')}
               </p>
             </div>
           </div>
@@ -138,7 +132,7 @@ export default async function AuthorsPage() {
         {/* Values Section */}
         <section className="py-16 px-4 bg-gray-800/30">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">What We Stand For</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">{t('pages.authors.valuesHeading')}</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="text-center p-6">
@@ -147,9 +141,9 @@ export default async function AuthorsPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-yellow-400">Honest Reviews</h3>
+                <h3 className="text-xl font-semibold mb-2 text-yellow-400">{t('pages.authors.value1Title')}</h3>
                 <p className="text-gray-400">
-                  No paid scores, no bias. We tell it like it is, even when it&apos;s not what publishers want to hear.
+                  {t('pages.authors.value1Description')}
                 </p>
               </div>
               
@@ -159,9 +153,9 @@ export default async function AuthorsPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-yellow-400">Expert Guides</h3>
+                <h3 className="text-xl font-semibold mb-2 text-yellow-400">{t('pages.authors.value2Title')}</h3>
                 <p className="text-gray-400">
-                  Written by players who&apos;ve actually completed the content. No guesswork, just proven strategies.
+                  {t('pages.authors.value2Description')}
                 </p>
               </div>
               
@@ -171,9 +165,9 @@ export default async function AuthorsPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-yellow-400">Community First</h3>
+                <h3 className="text-xl font-semibold mb-2 text-yellow-400">{t('pages.authors.value3Title')}</h3>
                 <p className="text-gray-400">
-                  We listen to our readers. Your feedback shapes our content and helps us serve you better.
+                  {t('pages.authors.value3Description')}
                 </p>
               </div>
             </div>
@@ -184,10 +178,9 @@ export default async function AuthorsPage() {
         <section className="py-20 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-4">Meet Our Writers</h2>
+              <h2 className="text-4xl font-bold mb-4">{t('pages.authors.teamHeading')}</h2>
               <p className="text-gray-400 max-w-2xl mx-auto">
-                The passionate team behind every article, review, and guide. 
-                Click on any writer to see all their contributions.
+                {t('pages.authors.teamDescription')}
               </p>
             </div>
 
@@ -223,7 +216,7 @@ export default async function AuthorsPage() {
 
                     {/* Role */}
                     <p className="text-sm text-yellow-400/80 text-center mb-3">
-                      Gaming Writer
+                      {t('pages.authors.writerRole')}
                     </p>
 
                     {/* Bio */}
@@ -239,14 +232,14 @@ export default async function AuthorsPage() {
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                         </svg>
-                        View Articles →
+                        {t('pages.authors.viewArticles')}
                       </span>
                     </div>
                   </Link>
                 ))}
               </div>
             ) : (
-              <p className="text-center text-gray-500">No authors found.</p>
+              <p className="text-center text-gray-500">{t('pages.authors.noAuthors')}</p>
             )}
           </div>
         </section>
@@ -254,16 +247,15 @@ export default async function AuthorsPage() {
         {/* Join Us CTA */}
         <section className="py-16 px-4 bg-gradient-to-r from-yellow-400/10 via-yellow-400/5 to-yellow-400/10">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Want to Join the Team?</h2>
+            <h2 className="text-3xl font-bold mb-4">{t('pages.authors.ctaHeading')}</h2>
             <p className="text-gray-400 mb-8">
-              We&apos;re always looking for passionate writers who live and breathe gaming. 
-              If you&apos;ve got insights to share and stories to tell, we want to hear from you.
+              {t('pages.authors.ctaDescription')}
             </p>
             <Link
               href="/write-for-us"
               className="inline-flex items-center gap-2 bg-yellow-400 text-gray-900 font-bold px-8 py-4 rounded-full hover:bg-yellow-300 transition-colors"
             >
-              Write for Us
+              {t('pages.authors.ctaButton')}
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>

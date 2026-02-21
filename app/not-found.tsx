@@ -4,7 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { Press_Start_2P } from 'next/font/google'; // Import game-like font from Google Fonts
+import { Press_Start_2P } from 'next/font/google';
+import { t } from './lib/i18n';
 
 const pressStart2P = Press_Start_2P({
   weight: '400',
@@ -71,7 +72,7 @@ const NotFoundPage: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        &quot;Shenmue Flashbacks...&quot;
+        {t('notFound.title')}
       </motion.div>
       <motion.p 
         className="text-2xl mt-4 text-gray-400 font-poppins"
@@ -79,7 +80,7 @@ const NotFoundPage: React.FC = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
       >
-        404 - You seem to be lost in Yokosuka...
+        {t('notFound.subtitle')}
       </motion.p>
 
       {/* Countdown Timer */}
@@ -89,7 +90,7 @@ const NotFoundPage: React.FC = () => {
         animate={{ scale: [1.5, 1.1, 1.5] }}
         transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
       >
-        {countdown > 0 ? `${countdown}` : 'Time&apos;s up!'}
+        {countdown > 0 ? `${countdown}` : t('notFound.timerExpired')}
       </motion.div>
 
       {/* Dart Game */}
@@ -124,7 +125,7 @@ const NotFoundPage: React.FC = () => {
           animate={{ scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }}
           transition={{ duration: 0.5, repeat: Infinity }}
         >
-          Score: {score}
+          {t('notFound.scoreLabel')}{score}
         </motion.p>
       </motion.div>
 
@@ -141,7 +142,7 @@ const NotFoundPage: React.FC = () => {
             whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(59, 130, 246, 0.5)' }}
             whileTap={{ scale: 0.95 }}
           >
-            Return to Dobuita Street
+            {t('notFound.returnButton')}
           </motion.button>
         </Link>
       </motion.div>
@@ -157,15 +158,15 @@ const NotFoundPage: React.FC = () => {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
           >
-            <h2 className={`text-4xl font-bold mb-4 ${pressStart2P.className}`}>Game Over</h2>
-            <p className="text-2xl mb-4">Final Score: {score}</p>
+            <h2 className={`text-4xl font-bold mb-4 ${pressStart2P.className}`}>{t('notFound.gameOverTitle')}</h2>
+            <p className="text-2xl mb-4">{t('notFound.finalScore')}{score}</p>
             <Link href="/">
               <motion.button
                 className="bg-yellow-500 text-gray-900 px-6 py-2 rounded-full font-bold"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Try Again
+                {t('notFound.tryAgain')}
               </motion.button>
             </Link>
           </motion.div>

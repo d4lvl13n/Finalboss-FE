@@ -5,6 +5,7 @@ import { fetchAllGameTags } from './lib/fetchAllGameTags'
 import client from './lib/apolloClient'
 import { GET_ALL_AUTHORS } from './lib/queries/getAuthor'
 import { GET_GUIDE_CATEGORIES_AND_POSTS } from './lib/queries/getGuideCategories'
+import siteConfig from './lib/siteConfig'
 
 interface YouTubeVideo {
   id: string
@@ -16,7 +17,7 @@ interface AuthorNode {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'
+  const baseUrl = siteConfig.url
   const ARTICLE_PAGE_SIZE = 24
 
   // Fetch dynamic content

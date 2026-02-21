@@ -4,18 +4,25 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
+// Derive hostnames from env vars for dynamic domain support
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+const wpUrl = process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://backend.finalboss.io';
+const baseHostname = new URL(baseUrl).hostname;
+const wpHostname = new URL(wpUrl).hostname;
+const imagesHostname = `images.${baseHostname}`;
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.finalboss.io',
+        hostname: imagesHostname,
         pathname: '/wp-content/uploads/**',
       },
       {
         protocol: 'https',
-        hostname: 'backend.finalboss.io',
+        hostname: wpHostname,
         pathname: '/wp-content/uploads/**',
       },
       {
@@ -25,12 +32,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'finalboss.io',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'finalboss.local',
+        hostname: baseHostname,
         pathname: '/**',
       },
       {
@@ -90,8 +92,8 @@ const nextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.google.com https://*.googleapis.com https://*.googlesyndication.com https://*.googleadservices.com https://*.google-analytics.com https://*.doubleclick.net https://*.adtrafficquality.google https://adtrafficquality.google *.cloudflareinsights.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com data:",
-              "img-src 'self' data: blob: https://images.finalboss.io https://backend.finalboss.io https://finalboss.io i.ytimg.com https://images.igdb.com https://*.google.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google *.cloudflareinsights.com",
-              "connect-src 'self' https://www.googletagmanager.com https://*.google.com https://*.googleapis.com https://*.google-analytics.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google https://adtrafficquality.google localhost:3000 backend.finalboss.io https://backend.finalboss.io https://www.googleapis.com *.cloudflareinsights.com",
+              `img-src 'self' data: blob: https://${imagesHostname} https://${wpHostname} https://${baseHostname} i.ytimg.com https://images.igdb.com https://*.google.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google *.cloudflareinsights.com`,
+              `connect-src 'self' https://www.googletagmanager.com https://*.google.com https://*.googleapis.com https://*.google-analytics.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google https://adtrafficquality.google localhost:3000 ${wpHostname} https://${wpHostname} https://www.googleapis.com *.cloudflareinsights.com`,
               "media-src 'self'",
               "frame-src 'self' https://www.youtube.com https://www.googletagmanager.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google",
               "frame-ancestors 'none'",
@@ -142,7 +144,7 @@ const nextConfig = {
     return [
       {
         source: '/wp-content/uploads/:path*',
-        destination: 'https://images.finalboss.io/wp-content/uploads/:path*',
+        destination: `https://${imagesHostname}/wp-content/uploads/:path*`,
       },
     ];
   },

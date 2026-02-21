@@ -1,4 +1,5 @@
 import React from 'react';
+import siteConfig from '../../lib/siteConfig';
 
 interface Article {
   id: string;
@@ -8,7 +9,7 @@ interface Article {
 }
 
 export default function GamingStructuredData({ articles }: { articles: Article[] }) {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+  const baseUrl = siteConfig.url;
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",

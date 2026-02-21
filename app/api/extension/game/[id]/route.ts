@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { IGDBClient } from '@/app/lib/igdb-client';
+import siteConfig from '@/app/lib/siteConfig';
 
-const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://backend.finalboss.io');
+const igdbClient = new IGDBClient(siteConfig.wordpressUrl);
 
 // CORS headers for Chrome extension
 const corsHeaders = {
@@ -63,7 +64,7 @@ export async function GET(
       companies: game.companies,
       screenshots: game.screenshots?.slice(0, 3),
       // Use IGDB ID as fallback - the game page handles both slug and ID
-      finalboss_url: `https://finalboss.io/game/${slug || game.id}`,
+      finalboss_url: `${siteConfig.url}/game/${slug || game.id}`,
     };
 
     return NextResponse.json(

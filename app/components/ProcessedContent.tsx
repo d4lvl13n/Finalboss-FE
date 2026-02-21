@@ -6,12 +6,11 @@
    
    type MiniPost = { slug: string; title?: string; image?: string };
    import { PLACEHOLDER_BASE64 } from '../utils/placeholder';
+   import siteConfig from '../lib/siteConfig';
 
    export default function ProcessedContent({ content }: { content: string }) {
-     const frontendBase = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
-     const wpGraphql = (process.env.NEXT_PUBLIC_WORDPRESS_URL
-       ? `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/graphql`
-       : 'https://backend.finalboss.io/graphql');
+     const frontendBase = siteConfig.url;
+     const wpGraphql = `${siteConfig.wordpressUrl}/graphql`;
 
      const relatedHrefs = useMemo(() => {
        const matches = Array.from(content.matchAll(/<a[^>]*data-gpbot="related-link"[^>]*href="([^"]+)"/g));
@@ -92,8 +91,8 @@
         if (domNode instanceof Element && domNode.name === 'a') {
           const href = domNode.attribs?.href || '';
           // Check if it's a backend link that should point to frontend
-          if (href.includes('backend.finalboss.io') && !href.includes('/wp-admin') && !href.includes('/wp-content/uploads')) {
-            const normalizedHref = href.replace('https://backend.finalboss.io', frontendBase);
+          if (href.includes(new URL(siteConfig.wordpressUrl).hostname) && !href.includes('/wp-admin') && !href.includes('/wp-content/uploads')) {
+            const normalizedHref = href.replace(siteConfig.wordpressUrl, frontendBase);
             return (
               <a 
                 href={normalizedHref}
@@ -169,7 +168,7 @@
                 }
                 if (node instanceof Element && node.name === 'a') {
                   const href = node.attribs?.href || '#';
-                  const normalized = href.replace('https://backend.finalboss.io', frontendBase);
+                  const normalized = href.replace(siteConfig.wordpressUrl, frontendBase);
                   const slug = (() => {
                     try { const u = new URL(href); return u.pathname.replace(/^\//,'').replace(/\/$/,''); } catch { return href.replace(/^https?:\/\/[^/]+\//,'').replace(/\/$/,''); }
                   })();

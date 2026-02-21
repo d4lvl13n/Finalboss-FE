@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GiGamepadCross } from 'react-icons/gi';
 import { FaSearch, FaTimes, FaBars } from 'react-icons/fa';
 import { useSearch } from './Search/SearchContext';
+import siteConfig from '../lib/siteConfig';
+import { t } from '../lib/i18n';
 
 interface MenuItemProps {
   href: string;
@@ -28,13 +30,13 @@ const MenuItem: React.FC<MenuItemProps> = ({ href, children, onClick }) => (
 );
 
 const navItems = [
-  { name: 'News', href: '/gaming' },
-  { name: 'Reviews', href: '/reviews' },
-  { name: 'Guides', href: '/guides' },
-  { name: 'Technology', href: '/technology' },
-  { name: 'Videos', href: '/videos' },
-  { name: 'Games', href: '/games' },
-  { name: 'Team', href: '/authors' },
+  { name: t('nav.news'), href: '/gaming' },
+  { name: t('nav.reviews'), href: '/reviews' },
+  { name: t('nav.guides'), href: '/guides' },
+  { name: t('nav.technology'), href: '/technology' },
+  { name: t('nav.videos'), href: '/videos' },
+  { name: t('nav.games'), href: '/games' },
+  { name: t('nav.team'), href: '/authors' },
 ];
 
 const Header: React.FC = () => {
@@ -91,13 +93,13 @@ const Header: React.FC = () => {
             whileTap={{ scale: 0.9 }}
             onClick={toggleMobileMenu}
             className="md:hidden text-white z-50 mr-4 p-2 -ml-2"
-            aria-label="Toggle menu"
+            aria-label={t('nav.toggleMenu')}
           >
             {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </motion.button>
           
           <Link href="/">
-            <Image src="/finalboss.png" width={120} height={40} alt="FinalBoss.io" />
+            <Image src={siteConfig.logoPath} width={120} height={40} alt={siteConfig.name} />
           </Link>
           
           {/* Desktop Navigation */}
@@ -119,7 +121,7 @@ const Header: React.FC = () => {
               className="text-white hover:text-yellow-400 transition-colors p-2"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              aria-label="Open search"
+              aria-label={t('nav.openSearch')}
             >
               <FaSearch size={20} />
             </motion.button>
@@ -152,7 +154,7 @@ const Header: React.FC = () => {
               <div className="flex flex-col h-full">
                 {/* Mobile Menu Header */}
                 <div className="flex items-center justify-between p-4 border-b border-gray-800">
-                  <Image src="/finalboss.png" width={100} height={33} alt="FinalBoss.io" />
+                  <Image src={siteConfig.logoPath} width={100} height={33} alt={siteConfig.name} />
                   <button 
                     onClick={closeMobileMenu}
                     className="p-2 text-gray-400 hover:text-white transition-colors"
@@ -179,19 +181,19 @@ const Header: React.FC = () => {
                 
                 {/* Mobile Menu Footer */}
                 <div className="p-4 border-t border-gray-800 space-y-3">
-                  <Link 
-                    href="/write-for-us" 
+                  <Link
+                    href="/write-for-us"
                     onClick={closeMobileMenu}
                     className="block text-sm text-gray-400 hover:text-yellow-400 transition-colors py-2"
                   >
-                    Write For Us
+                    {t('nav.writeForUs')}
                   </Link>
-                  <Link 
-                    href="/contact" 
+                  <Link
+                    href="/contact"
                     onClick={closeMobileMenu}
                     className="block text-sm text-gray-400 hover:text-yellow-400 transition-colors py-2"
                   >
-                    Contact
+                    {t('nav.contact')}
                   </Link>
                 </div>
               </div>
@@ -220,26 +222,31 @@ const Header: React.FC = () => {
           >
             <div className="h-full flex flex-col">
               <div className="mb-8">
-                <Image src="/finalboss.png" width={150} height={50} alt="FinalBoss.io" />
+                <Image src={siteConfig.logoPath} width={150} height={50} alt={siteConfig.name} />
               </div>
               
               <nav className="flex-grow">
                 <MenuItem href="/gaming">
-                  News
+                  {t('nav.news')}
                 </MenuItem>
                 <MenuItem href="/games">
-                  Games
+                  {t('nav.games')}
                 </MenuItem>
-                {['Reviews', 'Guides', 'Videos', 'Technology'].map((item) => (
-                  <MenuItem key={item} href={`/${item.toLowerCase()}`}>
-                    {item}
+                {[
+                  { key: 'nav.reviews', href: '/reviews' },
+                  { key: 'nav.guides', href: '/guides' },
+                  { key: 'nav.videos', href: '/videos' },
+                  { key: 'nav.technology', href: '/technology' },
+                ].map((item) => (
+                  <MenuItem key={item.href} href={item.href}>
+                    {t(item.key)}
                   </MenuItem>
                 ))}
                 <MenuItem href="/articles">
-                  All Articles
+                  {t('nav.allArticles')}
                 </MenuItem>
                 <MenuItem href="/authors">
-                  Team
+                  {t('nav.team')}
                 </MenuItem>
               </nav>
               
@@ -248,7 +255,7 @@ const Header: React.FC = () => {
                   <input
                     type="text"
                     className="w-full p-3 pl-10 rounded-full bg-gray-800 text-white border-2 border-futuristic-blue focus:outline-none"
-                    placeholder="Search..."
+                    placeholder={t('nav.searchPlaceholder')}
                   />
                   <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-futuristic-blue" size={18} />
                 </div>
@@ -258,16 +265,16 @@ const Header: React.FC = () => {
                     whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(0, 191, 255, 0.5)' }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Login
+                    {t('nav.login')}
                   </motion.button>
                 </Link>
               </div>
 
               <div className="flex justify-between text-sm">
                 {[
-                  { name: 'Write For Us', href: '/write-for-us' },
-                  { name: 'About Us', href: '/about' },
-                  { name: 'Contact', href: '/contact' }
+                  { name: t('nav.writeForUs'), href: '/write-for-us' },
+                  { name: t('nav.aboutUs'), href: '/about' },
+                  { name: t('nav.contact'), href: '/contact' }
                 ].map((item) => (
                   <Link key={item.name} href={item.href}>
                     <motion.span 

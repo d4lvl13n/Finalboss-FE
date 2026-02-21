@@ -13,6 +13,8 @@ import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
 import PageHeader from '../PageHeader';
 import { motion } from 'framer-motion';
 import { FaStar, FaArrowRight, FaUser, FaCalendar } from 'react-icons/fa';
+import siteConfig from '../../lib/siteConfig';
+import { t } from '../../lib/i18n';
 
 interface Review {
   id: string;
@@ -80,7 +82,7 @@ const FeaturedReviewCard = ({ review }: { review: Review }) => {
                 whileHover={{ scale: 1.05 }}
               >
                 <FaStar className="w-3 h-3 md:w-4 md:h-4" />
-                <span>Featured Review</span>
+                <span>{t('review.featured')}</span>
               </motion.div>
             </div>
             
@@ -125,7 +127,7 @@ const FeaturedReviewCard = ({ review }: { review: Review }) => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <span>Read Full Review</span>
+                <span>{t('review.readFull')}</span>
                 <FaArrowRight className="w-3 h-3 md:w-4 md:h-4" />
               </motion.div>
             </div>
@@ -175,7 +177,7 @@ const ReviewCard = ({ review, index }: { review: Review; index: number }) => {
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1.5 bg-yellow-400 text-black px-2.5 py-1 rounded-full">
                 <FaStar className="w-2.5 h-2.5" />
-                <span className="text-[10px] md:text-xs font-bold uppercase">Review</span>
+                <span className="text-[10px] md:text-xs font-bold uppercase">{t('review.badge')}</span>
               </div>
             </div>
             
@@ -186,7 +188,7 @@ const ReviewCard = ({ review, index }: { review: Review; index: number }) => {
               </h3>
               <div className="flex items-center gap-2 text-xs text-gray-400">
                 {review.author?.node?.name && (
-                  <span className="text-yellow-400/80">by {review.author.node.name}</span>
+                  <span className="text-yellow-400/80">{t('review.byAuthor', { author: review.author.node.name })}</span>
                 )}
                 {review.date && (
                   <>
@@ -235,14 +237,14 @@ const CompactReviewCard = ({ review, index }: { review: Review; index: number })
         <div className="flex-1 min-w-0 flex flex-col justify-center py-0.5">
           <div className="flex items-center gap-1.5 mb-1">
             <FaStar className="w-2.5 h-2.5 text-yellow-400" />
-            <span className="text-[10px] font-semibold text-yellow-400 uppercase">Review</span>
+            <span className="text-[10px] font-semibold text-yellow-400 uppercase">{t('review.badge')}</span>
           </div>
           <h3 className="text-sm font-semibold text-white line-clamp-2 leading-tight group-hover:text-yellow-100 transition-colors">
             {review.title}
           </h3>
           {review.author?.node?.name && (
             <p className="text-[10px] text-gray-500 mt-1">
-              by {review.author.node.name}
+              {t('review.byAuthor', { author: review.author.node.name })}
             </p>
           )}
         </div>
@@ -291,8 +293,8 @@ export default function ReviewsPageContent({
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <PageHeader 
-        title="Game Reviews" 
-        description="In-depth reviews, honest verdicts, and ratings from the FinalBoss editorial team"
+        title={t('review.title')}
+        description={t('review.description', { name: siteConfig.name })}
         accentColor="yellow"
       />
       
@@ -334,7 +336,7 @@ export default function ReviewsPageContent({
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <span>Load More Reviews</span>
+              <span>{t('review.loadMore')}</span>
               <FaArrowRight className="w-3 h-3" />
             </motion.button>
           </div>

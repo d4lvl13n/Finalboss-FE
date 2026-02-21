@@ -11,6 +11,7 @@ import Footer from './Footer';
 import PageHeader from './PageHeader';
 import { motion } from 'framer-motion';
 import { FaArrowRight, FaMicrochip, FaBolt } from 'react-icons/fa';
+import { t } from '../lib/i18n';
 
 interface Article {
   id: string;
@@ -43,7 +44,7 @@ const colorSchemes = [
 // Futuristic Tech Card - same design as TechnologySection
 const TechCard = ({ article, index }: { article: Article; index: number }) => {
   const imageUrl = article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
-  const category = article.categories?.nodes?.[0]?.name || 'Tech';
+  const category = article.categories?.nodes?.[0]?.name || t('tech.categoryDefault');
   const scheme = colorSchemes[index % colorSchemes.length];
 
   return (
@@ -127,7 +128,7 @@ const TechCard = ({ article, index }: { article: Article; index: number }) => {
                 {/* Read more with tech styling */}
                 <div className="flex items-center justify-between">
                   <div className={`flex items-center gap-2 text-${scheme.text} group-hover:text-white transition-colors`}>
-                    <span className="text-[10px] md:text-xs font-mono font-semibold uppercase tracking-widest">Access</span>
+                    <span className="text-[10px] md:text-xs font-mono font-semibold uppercase tracking-widest">{t('tech.access')}</span>
                     <motion.div
                       animate={{ x: [0, 3, 0] }}
                       transition={{ duration: 1, repeat: Infinity }}
@@ -191,7 +192,7 @@ const CompactTechCard = ({ article, index }: { article: Article; index: number }
         <div className="flex-1 min-w-0 flex flex-col justify-center py-0.5">
           <div className="flex items-center gap-1.5 mb-1">
             <FaMicrochip className={`w-2.5 h-2.5 text-${scheme.text}`} />
-            <span className={`text-[10px] font-mono text-${scheme.text} uppercase`}>Tech</span>
+            <span className={`text-[10px] font-mono text-${scheme.text} uppercase`}>{t('tech.categoryDefault')}</span>
           </div>
           <h3 className="text-sm font-semibold text-white line-clamp-2 leading-tight group-hover:text-cyan-400 transition-colors">
             {article.title}
@@ -205,7 +206,7 @@ const CompactTechCard = ({ article, index }: { article: Article; index: number }
 // Featured Tech Card - Larger for first article
 const FeaturedTechCard = ({ article }: { article: Article }) => {
   const imageUrl = article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
-  const category = article.categories?.nodes?.[0]?.name || 'Tech';
+  const category = article.categories?.nodes?.[0]?.name || t('tech.categoryDefault');
 
   return (
     <motion.div
@@ -261,7 +262,7 @@ const FeaturedTechCard = ({ article }: { article: Article }) => {
                     animate={{ opacity: [1, 0.3, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   />
-                  <span className="text-xs font-mono text-cyan-400/70">FEATURED</span>
+                  <span className="text-xs font-mono text-cyan-400/70">{t('tech.featured')}</span>
                 </div>
               </div>
               
@@ -277,7 +278,7 @@ const FeaturedTechCard = ({ article }: { article: Article }) => {
                 </h2>
                 
                 <div className="flex items-center gap-3 text-cyan-400 group-hover:text-white transition-colors">
-                  <span className="text-sm font-mono font-semibold uppercase tracking-widest">Access Full Article</span>
+                  <span className="text-sm font-mono font-semibold uppercase tracking-widest">{t('tech.readFull')}</span>
                   <motion.div
                     animate={{ x: [0, 5, 0] }}
                     transition={{ duration: 1, repeat: Infinity }}
@@ -342,8 +343,8 @@ export default function TechnologyPageContent({ initialArticles, initialHasNextP
     <>
       <Header />
       <PageHeader 
-        title="Tech Hub" 
-        description="Hardware reviews, tech news, and the latest innovations in gaming"
+        title={t('tech.title')}
+        description={t('tech.description')}
         accentColor="cyan"
       />
       
@@ -410,7 +411,7 @@ export default function TechnologyPageContent({ initialArticles, initialHasNextP
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <span>{loading ? 'Loading...' : 'Load More'}</span>
+                <span>{loading ? t('common.loadingMore') : t('common.loadMore')}</span>
                 <FaArrowRight className="w-3 h-3" />
               </motion.button>
             </div>

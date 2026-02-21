@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
+import siteConfig from './lib/siteConfig'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io'
+  const baseUrl = siteConfig.url
 
   return {
     rules: {

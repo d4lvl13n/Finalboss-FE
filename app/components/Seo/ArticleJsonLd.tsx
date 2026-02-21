@@ -1,4 +1,5 @@
 import React from 'react';
+import siteConfig from '../../lib/siteConfig';
 
 type ArticleJsonLdProps = {
   title: string;
@@ -25,7 +26,7 @@ export default function ArticleJsonLd(props: ArticleJsonLdProps) {
     authorName,
     imageUrl,
     url,
-    publisherName = 'FinalBoss.io',
+    publisherName = siteConfig.name,
   } = props;
 
   const description = stripHtml(contentHtml).slice(0, 300);

@@ -1,8 +1,9 @@
 import client from '@/app/lib/apolloClient';
 import { GET_FEED_POSTS } from '@/app/lib/queries/getFeedPosts';
 import { buildRssFeed } from '@/app/lib/feeds';
+import siteConfig from '@/app/lib/siteConfig';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+const baseUrl = siteConfig.url;
 
 export async function GET() {
   const { data } = await client.query({
@@ -27,8 +28,8 @@ export async function GET() {
     })) || [];
 
   const rss = buildRssFeed({
-    title: 'FinalBoss.io | Latest Reviews',
-    description: 'All the newest FinalBoss.io game reviews and verdicts in one feed.',
+    title: `${siteConfig.name} | Latest Reviews`,
+    description: `All the newest ${siteConfig.name} game reviews and verdicts in one feed.`,
     siteUrl: `${baseUrl}/reviews`,
     items,
   });

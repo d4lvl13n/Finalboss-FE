@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { buildPageMetadata } from '../../../lib/seo';
+import siteConfig from '../../../lib/siteConfig';
 import { ARTICLE_PAGE_SIZE, fetchPaginatedArticles } from '../../../lib/pagination';
 
 interface PageProps {
@@ -20,15 +21,15 @@ export async function generateMetadata({ params }: PageProps) {
   const pageNumber = parsePageNumber(params.page);
   if (!pageNumber) {
     return buildPageMetadata({
-      title: 'Articles | FinalBoss.io',
+      title: `Articles | ${siteConfig.name}`,
       description: 'Explore curated gaming news, reviews, and guides.',
       path: '/articles',
     });
   }
 
   return buildPageMetadata({
-    title: `Articles - Page ${pageNumber} | FinalBoss.io`,
-    description: `Browse page ${pageNumber} of FinalBoss.io articles.`,
+    title: `Articles - Page ${pageNumber} | ${siteConfig.name}`,
+    description: `Browse page ${pageNumber} of ${siteConfig.name} articles.`,
     path: `/articles/page/${pageNumber}`,
   });
 }

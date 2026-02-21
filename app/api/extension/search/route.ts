@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { IGDBClient } from '@/app/lib/igdb-client';
+import siteConfig from '@/app/lib/siteConfig';
 
-const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://backend.finalboss.io');
+const igdbClient = new IGDBClient(siteConfig.wordpressUrl);
 
 // CORS headers for Chrome extension
 const corsHeaders = {

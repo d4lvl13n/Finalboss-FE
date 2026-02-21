@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaTimes, FaGamepad, FaClock, FaGift, FaUsers } from 'react-icons/fa';
+import { formspreeUrl } from '../../lib/siteConfig';
+import { t } from '../../lib/i18n';
 
 interface ExitIntentModalProps {
   onClose: () => void;
@@ -18,7 +20,7 @@ const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ onClose }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://formspree.io/f/xjkronpd', {
+      const response = await fetch(formspreeUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,9 +61,9 @@ const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ onClose }) => {
           <div className="w-16 h-16 bg-green-400 rounded-full flex items-center justify-center mx-auto mb-4">
             <FaGamepad className="w-8 h-8 text-green-900" />
           </div>
-          <h3 className="text-2xl font-bold text-white mb-2">Welcome to the Club! 🎮</h3>
+          <h3 className="text-2xl font-bold text-white mb-2">{t('leadCapture.exitIntent.successTitle')}</h3>
           <p className="text-green-200">
-            Check your email for your Gaming Insider Access and exclusive content!
+            {t('leadCapture.exitIntent.successMessage')}
           </p>
         </motion.div>
       </motion.div>
@@ -99,21 +101,21 @@ const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ onClose }) => {
                 <FaGamepad className="w-6 h-6 text-black" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-white">Wait! Don&apos;t Miss Out!</h2>
-                <p className="text-yellow-400 text-sm font-semibold">Gaming Insider Access</p>
+                <h2 className="text-2xl font-bold text-white">{t('leadCapture.exitIntent.heading')}</h2>
+                <p className="text-yellow-400 text-sm font-semibold">{t('leadCapture.exitIntent.subtitle')}</p>
               </div>
             </div>
 
             <p className="text-gray-300 mb-6">
-              Join 10,000+ gamers getting exclusive content you won&apos;t find anywhere else:
+              {t('leadCapture.exitIntent.description')}
             </p>
 
             {/* Benefits */}
             <div className="space-y-3 mb-6">
               {[
-                { icon: FaClock, text: "Early access to reviews (24h before public)", color: "text-blue-400" },
-                { icon: FaGift, text: "Exclusive gaming guides & hidden tips", color: "text-purple-400" },
-                { icon: FaUsers, text: "Beta game access notifications", color: "text-green-400" }
+                { icon: FaClock, text: t('leadCapture.exitIntent.benefit1'), color: "text-blue-400" },
+                { icon: FaGift, text: t('leadCapture.exitIntent.benefit2'), color: "text-purple-400" },
+                { icon: FaUsers, text: t('leadCapture.exitIntent.benefit3'), color: "text-green-400" }
               ].map((benefit, index) => (
                 <div key={index} className="flex items-center">
                   <benefit.icon className={`w-4 h-4 mr-3 ${benefit.color}`} />
@@ -123,14 +125,14 @@ const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ onClose }) => {
             </div>
 
             <p className="text-xs text-gray-400">
-              No spam, unsubscribe anytime. Join the gaming elite! 🎮
+              {t('leadCapture.exitIntent.privacyNote')}
             </p>
           </div>
 
           {/* Right Side - Form */}
           <div className="bg-black/30 rounded-xl p-6 border border-white/10">
             <h3 className="text-xl font-bold text-white mb-4 text-center">
-              Get Instant Access
+              {t('leadCapture.exitIntent.formTitle')}
             </h3>
             
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -139,7 +141,7 @@ const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ onClose }) => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your gaming email..."
+                  placeholder={t('leadCapture.exitIntent.emailPlaceholder')}
                   required
                   className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-yellow-400/50 focus:bg-white/10 transition-all"
                 />
@@ -153,17 +155,17 @@ const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ onClose }) => {
                 {isSubmitting ? (
                   <div className="flex items-center justify-center">
                     <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin mr-2"></div>
-                    Joining...
+                    {t('leadCapture.exitIntent.submitting')}
                   </div>
                 ) : (
-                  'Get My Gaming Access 🚀'
+                  t('leadCapture.exitIntent.submit')
                 )}
               </button>
             </form>
 
             <div className="mt-4 text-center">
               <span className="text-xs text-gray-400">
-                Trusted by 10,000+ gamers worldwide
+                {t('leadCapture.exitIntent.trustBadge')}
               </span>
             </div>
           </div>

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { FaPaperPlane, FaGamepad, FaTrophy, FaBolt } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
+import { t } from '../lib/i18n';
 
 export default function NewsletterForm() {
   return (
@@ -32,7 +33,7 @@ export default function NewsletterForm() {
             </div>
             <input
               type="email"
-              placeholder="Enter your email address"
+              placeholder={t('newsletter.emailPlaceholder')}
               className="flex-grow px-4 py-3 bg-transparent text-white placeholder-gray-500 focus:outline-none text-sm md:text-base"
               required
             />
@@ -42,7 +43,7 @@ export default function NewsletterForm() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <span>Subscribe</span>
+              <span>{t('newsletter.subscribe')}</span>
               <HiSparkles className="w-4 h-4" />
             </motion.button>
           </div>
@@ -52,21 +53,21 @@ export default function NewsletterForm() {
         <div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-6 text-sm text-gray-400">
           <div className="flex items-center gap-2">
             <FaBolt className="w-3 h-3 text-yellow-400" />
-            <span>Weekly updates</span>
+            <span>{t('newsletter.benefit1')}</span>
           </div>
           <div className="flex items-center gap-2">
             <FaTrophy className="w-3 h-3 text-yellow-400" />
-            <span>Exclusive content</span>
+            <span>{t('newsletter.benefit2')}</span>
           </div>
           <div className="flex items-center gap-2">
             <FaGamepad className="w-3 h-3 text-yellow-400" />
-            <span>Pro gaming tips</span>
+            <span>{t('newsletter.benefit3')}</span>
           </div>
         </div>
         
         {/* Privacy note */}
         <p className="text-xs text-gray-600 mt-4">
-          No spam, unsubscribe anytime. We respect your privacy.
+          {t('newsletter.privacy')}
         </p>
       </motion.form>
     </div>

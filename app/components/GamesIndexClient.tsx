@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { t } from '../lib/i18n';
 
 interface GameTag {
   name: string;
@@ -110,8 +111,9 @@ export default function GamesIndexClient({
   const [pageInfo, setPageInfo] = useState<PageInfo>(initialPageInfo);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [platformFilter, setPlatformFilter] = useState('All');
-  const [genreFilter, setGenreFilter] = useState('All');
+  const allLabel = t('game.filterAll');
+  const [platformFilter, setPlatformFilter] = useState(allLabel);
+  const [genreFilter, setGenreFilter] = useState(allLabel);
 
   const decoratedTags = useMemo(
     () =>
@@ -149,9 +151,9 @@ export default function GamesIndexClient({
   const filteredTags = useMemo(() => {
     return decoratedTags.filter((tag) => {
       const matchesPlatform =
-        platformFilter === 'All' || tag.platforms.includes(platformFilter);
+        platformFilter === allLabel || tag.platforms.includes(platformFilter);
       const matchesGenre =
-        genreFilter === 'All' || tag.genres.includes(genreFilter);
+        genreFilter === allLabel || tag.genres.includes(genreFilter);
       return matchesPlatform && matchesGenre;
     });
   }, [decoratedTags, platformFilter, genreFilter]);
@@ -198,7 +200,7 @@ export default function GamesIndexClient({
       setPageInfo(nextPageInfo);
     } catch (err) {
       console.error('Failed to load more games:', err);
-      setError('Unable to load more games right now.');
+      setError(t('common.error.loadMoreGames'));
     } finally {
       setLoading(false);
     }
@@ -207,14 +209,14 @@ export default function GamesIndexClient({
   return (
     <section className="mt-14">
       <div className="flex items-center mb-6">
-        <h2 className="text-3xl font-bold text-white mr-4">Browse Game Hubs</h2>
+        <h2 className="text-3xl font-bold text-white mr-4">{t('game.browseHubs')}</h2>
         <div className="flex-grow h-0.5 bg-gradient-to-r from-yellow-400/80 to-transparent rounded-full" />
       </div>
 
       <div className="flex flex-col lg:flex-row lg:items-end gap-4 mb-6">
         <div className="flex-1">
           <label className="block text-sm text-gray-400 mb-2" htmlFor="platform-filter">
-            Platform
+            {t('game.platformFilter')}
           </label>
           <select
             id="platform-filter"
@@ -222,7 +224,7 @@ export default function GamesIndexClient({
             onChange={(event) => setPlatformFilter(event.target.value)}
             className="w-full rounded-lg bg-gray-800 border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-yellow-400"
           >
-            <option>All</option>
+            <option>{t('game.filterAll')}</option>
             {availablePlatforms.map((platform) => (
               <option key={platform} value={platform}>
                 {platform}
@@ -232,7 +234,7 @@ export default function GamesIndexClient({
         </div>
         <div className="flex-1">
           <label className="block text-sm text-gray-400 mb-2" htmlFor="genre-filter">
-            Genre
+            {t('game.genreFilter')}
           </label>
           <select
             id="genre-filter"
@@ -240,7 +242,7 @@ export default function GamesIndexClient({
             onChange={(event) => setGenreFilter(event.target.value)}
             className="w-full rounded-lg bg-gray-800 border border-gray-700 text-white px-4 py-3 focus:outline-none focus:border-yellow-400"
           >
-            <option>All</option>
+            <option>{t('game.filterAll')}</option>
             {availableGenres.map((genre) => (
               <option key={genre} value={genre}>
                 {genre}
@@ -249,7 +251,7 @@ export default function GamesIndexClient({
           </select>
         </div>
         <div className="text-sm text-gray-400 lg:text-right">
-          Showing {filteredTags.length} of {decoratedTags.length} loaded
+          {t('game.showingCount', { filtered: filteredTags.length, total: decoratedTags.length })}
         </div>
       </div>
 
@@ -271,7 +273,7 @@ export default function GamesIndexClient({
                   />
                 ) : (
                   <div className="h-full w-full flex items-center justify-center text-gray-500 text-sm">
-                    No cover available
+                    {t('game.noCover')}
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-80" />
@@ -280,14 +282,14 @@ export default function GamesIndexClient({
                 <h3 className="text-lg font-semibold text-white group-hover:text-yellow-400 transition-colors">
                   {tag.name}
                 </h3>
-                <p className="text-sm text-gray-400">Explore coverage and media</p>
+                <p className="text-sm text-gray-400">{t('game.exploreCoverage')}</p>
               </div>
             </Link>
           ))}
         </div>
       ) : (
         <div className="rounded-xl border border-white/10 bg-gray-800/70 p-6 text-gray-300">
-          No games match these filters yet.
+          {t('game.noMatchFilters')}
         </div>
       )}
 
@@ -300,11 +302,11 @@ export default function GamesIndexClient({
             disabled={loading}
             className="px-6 py-3 rounded-full bg-yellow-400 text-gray-900 font-semibold hover:bg-yellow-300 transition-colors disabled:opacity-60"
           >
-            {loading ? 'Loading more games...' : 'Load more games'}
+            {loading ? t('common.loadingMore') : t('common.loadMore')}
           </button>
         )}
         {!pageInfo.hasNextPage && (
-          <p className="text-sm text-gray-500">You have reached the end of the list.</p>
+          <p className="text-sm text-gray-500">{t('game.endOfList')}</p>
         )}
       </div>
     </section>

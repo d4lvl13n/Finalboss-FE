@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import siteConfig from '@/app/lib/siteConfig';
 
 // WordPress backend URL
-const WORDPRESS_URL = process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://backend.finalboss.io';
+const WORDPRESS_URL = siteConfig.wordpressUrl;
 
 export async function POST(request: NextRequest) {
   try {

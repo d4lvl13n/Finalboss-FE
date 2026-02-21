@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
+import siteConfig from '../../lib/siteConfig';
 
 interface AdBannerProps {
   adSlot: string;
@@ -39,7 +40,7 @@ export default function AdBanner({
           display: 'block',
           ...style
         }}
-        data-ad-client="ca-pub-7494322760704385"
+        data-ad-client={siteConfig.adsensePublisherId}
         data-ad-slot={adSlot}
         data-ad-format={adFormat}
         data-full-width-responsive="true"

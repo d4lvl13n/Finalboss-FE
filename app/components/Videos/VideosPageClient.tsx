@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { useYouTubeVideos } from '../../hooks/useYouTubeVideos';
 import { YouTubeService } from '../../lib/youtube/service';
 import PageHeader from '../PageHeader';
+import { t } from '../../lib/i18n';
 
 export default function VideosPageClient() {
   const { videos, loading, error } = useYouTubeVideos(12);
@@ -14,12 +15,12 @@ export default function VideosPageClient() {
     return (
       <>
         <PageHeader 
-          title="Videos" 
-          description="Watch gameplay, reviews, and gaming content from FinalBoss"
+          title={t('video.title')}
+          description={t('video.description')}
           accentColor="red"
         />
         <section className="max-w-6xl mx-auto px-4 pb-16 text-center text-gray-400">
-          Loading the latest videos…
+          {t('video.loadingVideos')}
         </section>
       </>
     );
@@ -29,12 +30,12 @@ export default function VideosPageClient() {
     return (
       <>
         <PageHeader 
-          title="Videos" 
-          description="Watch gameplay, reviews, and gaming content from FinalBoss"
+          title={t('video.title')}
+          description={t('video.description')}
           accentColor="red"
         />
         <section className="max-w-6xl mx-auto px-4 pb-16 text-center text-red-400">
-          Unable to load videos right now.
+          {t('video.loadError')}
         </section>
       </>
     );
@@ -43,8 +44,8 @@ export default function VideosPageClient() {
   return (
     <>
       <PageHeader 
-        title="Videos" 
-        description="Watch gameplay, reviews, and gaming content from FinalBoss"
+        title={t('video.title')}
+        description={t('video.description')}
         accentColor="red"
       />
       
@@ -82,7 +83,7 @@ export default function VideosPageClient() {
                 <h2 className="text-xl font-semibold text-white mb-2">{video.title}</h2>
                 <div className="flex justify-between items-center text-gray-400 text-sm">
                   <span>{new Date(video.publishedAt).toLocaleDateString()}</span>
-                  <span>{parseInt(video.viewCount).toLocaleString()} views</span>
+                  <span>{t('video.views', { count: parseInt(video.viewCount).toLocaleString() })}</span>
                 </div>
               </div>
             </Link>

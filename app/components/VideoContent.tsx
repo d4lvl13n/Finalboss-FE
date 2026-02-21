@@ -5,6 +5,8 @@ import SocialShare from './SocialShare';
 import Header from './Header';
 import Footer from './Footer';
 import { processTextWithLinks } from '../utils/linkProcessor';
+import siteConfig from '../lib/siteConfig';
+import { t } from '../lib/i18n';
 
 interface VideoContentProps {
   title: string;
@@ -29,7 +31,7 @@ export default function VideoContent({
   viewCount 
 }: VideoContentProps) {
   const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-  const shareUrl = `https://finalboss.io/videos/${videoId}`; // Update with your domain
+  const shareUrl = `${siteConfig.url}/videos/${videoId}`;
 
   return (
     <>
@@ -43,7 +45,7 @@ export default function VideoContent({
               <p className="text-sm text-gray-400">{date}</p>
             </div>
             <div className="text-gray-400">
-              {viewCount} views
+              {t('video.views', { count: viewCount })}
             </div>
           </div>
 

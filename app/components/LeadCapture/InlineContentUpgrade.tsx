@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaDownload, FaGamepad, FaClock, FaLock } from 'react-icons/fa';
+import { formspreeUrl } from '../../lib/siteConfig';
+import { t } from '../../lib/i18n';
 
 interface InlineContentUpgradeProps {
   title: string;
@@ -26,7 +28,7 @@ const InlineContentUpgrade: React.FC<InlineContentUpgradeProps> = ({
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://formspree.io/f/xjkronpd', {
+      const response = await fetch(formspreeUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,9 +62,9 @@ const InlineContentUpgrade: React.FC<InlineContentUpgradeProps> = ({
           <div className="w-16 h-16 bg-green-400 rounded-full flex items-center justify-center mx-auto mb-4">
             <FaDownload className="w-8 h-8 text-green-900" />
           </div>
-          <h3 className="text-xl font-bold text-white mb-2">Check Your Email! 📧</h3>
+          <h3 className="text-xl font-bold text-white mb-2">{t('leadCapture.inline.successTitle')}</h3>
           <p className="text-green-200">
-            Your exclusive {bonusContent.toLowerCase()} is on its way to your inbox.
+            {t('leadCapture.inline.successMessage', { bonus: bonusContent.toLowerCase() })}
           </p>
         </div>
       </motion.div>
@@ -97,7 +99,7 @@ const InlineContentUpgrade: React.FC<InlineContentUpgradeProps> = ({
         <div className="bg-black/30 rounded-lg p-4 mb-4">
           <div className="flex items-center gap-3 mb-3">
             <FaGamepad className="text-yellow-400" />
-            <span className="text-white font-semibold">Exclusive Bonus Content:</span>
+            <span className="text-white font-semibold">{t('leadCapture.inline.bonusLabel')}</span>
           </div>
           <p className="text-yellow-200 text-sm">{bonusContent}</p>
         </div>
@@ -107,7 +109,7 @@ const InlineContentUpgrade: React.FC<InlineContentUpgradeProps> = ({
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email for instant access..."
+            placeholder={t('leadCapture.inline.emailPlaceholder')}
             required
             className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-yellow-400/50 focus:bg-white/15 transition-all"
           />
@@ -119,12 +121,12 @@ const InlineContentUpgrade: React.FC<InlineContentUpgradeProps> = ({
             {isSubmitting ? (
               <div className="flex items-center">
                 <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin mr-2"></div>
-                Sending...
+                {t('leadCapture.inline.submitting')}
               </div>
             ) : (
               <>
                 <FaDownload className="inline mr-2" />
-                Get Bonus Content
+                {t('leadCapture.inline.submit')}
               </>
             )}
           </button>
@@ -133,9 +135,9 @@ const InlineContentUpgrade: React.FC<InlineContentUpgradeProps> = ({
         <div className="mt-3 flex items-center justify-between text-xs text-gray-400">
           <span className="flex items-center">
             <FaClock className="mr-1" />
-            Instant delivery
+            {t('leadCapture.inline.instantDelivery')}
           </span>
-          <span>No spam, unsubscribe anytime</span>
+          <span>{t('leadCapture.inline.privacyNote')}</span>
         </div>
       </div>
     </motion.div>

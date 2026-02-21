@@ -3,10 +3,11 @@ import Link from 'next/link';
 import { GET_ALL_POSTS } from '../lib/queries/getAllPosts';
 import client from '../lib/apolloClient';
 import { buildPageMetadata } from '../lib/seo';
+import siteConfig from '../lib/siteConfig';
 import AllArticlesPageContent from '../components/AllArticles/AllArticlesPageContent';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://finalboss.io';
+const baseUrl = siteConfig.url;
 const PAGE_SIZE = 24;
 
 interface ArticleListItem {
@@ -26,7 +27,7 @@ export const revalidate = 60;
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: 'All Articles | FinalBoss.io',
+    title: `All Articles | ${siteConfig.name}`,
     description: 'Explore every article across news, reviews, guides, and technology.',
     path: '/articles',
   });
