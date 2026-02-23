@@ -38,7 +38,9 @@ const client = new ApolloClient({
       errorPolicy: 'all',
     },
     query: {
-      fetchPolicy: 'cache-first',
+      // Server-side: always fetch fresh data to avoid stale cache across requests.
+      // Client-side: use cache-first for performance.
+      fetchPolicy: isServer ? 'no-cache' : 'cache-first',
       errorPolicy: 'all',
     },
   },
