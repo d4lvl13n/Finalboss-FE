@@ -17,7 +17,7 @@ const GRAPHQL_ENDPOINT = isLocalDev && !isServer
 
 const httpLink = createHttpLink({
   uri: GRAPHQL_ENDPOINT,
-  credentials: isLocalDev ? 'same-origin' : 'include', // Adjust for proxy usage
+  credentials: 'same-origin',
 });
 
 const authLink = setContext((_, { headers }) => {
