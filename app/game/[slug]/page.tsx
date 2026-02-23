@@ -1,4 +1,4 @@
-import { IGDBClient } from '@/app/lib/igdb-client';
+import { getGameDetails as igdbGetGameDetails } from '@/app/lib/igdb-server';
 import { GameDetails } from '@/app/components/GameDetails';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
@@ -433,17 +433,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // Fallback to IGDB if it's an ID
     const igdbId = parseInt(params.slug);
     if (!isNaN(igdbId)) {
-      const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
-      const game = await igdbClient.getGameDetails(igdbId);
-      const resolvedSlug = slugifyGameTitle(game.data.name);
+      const gameData = await igdbGetGameDetails(igdbId);
+      const resolvedSlug = slugifyGameTitle(gameData.name);
       const resolvedPath = `/game/${resolvedSlug}`;
-      
-      const description = buildDescription(game.data.description) || game.data.name;
+
+      const description = buildDescription(gameData.description) || gameData.name;
       return buildPageMetadata({
-        title: `${game.data.name} - Game Details | ${siteConfig.name}`,
+        title: `${gameData.name} - Game Details | ${siteConfig.name}`,
         description,
         path: resolvedPath,
-        image: game.data.cover_url || undefined,
+        image: gameData.cover_url || undefined,
         type: 'article',
         robots: {
           index: true,
@@ -480,10 +479,9 @@ export default async function GamePage({ params }: Props) {
 
       if (needsIgdbRefresh && igdbId) {
         try {
-          const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
-          const game = await igdbClient.getGameDetails(Number(igdbId));
-          if (game?.data) {
-            gameData = game.data;
+          const freshData = await igdbGetGameDetails(Number(igdbId));
+          if (freshData) {
+            gameData = freshData;
           }
         } catch (error) {
           console.error('Error refreshing IGDB data:', error);
@@ -506,16 +504,15 @@ export default async function GamePage({ params }: Props) {
     // Fallback to IGDB if it's an ID
     const igdbId = parseInt(params.slug);
     if (!isNaN(igdbId)) {
-      const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
-      const game = await igdbClient.getGameDetails(igdbId);
+      const igdbGame = await igdbGetGameDetails(igdbId);
 
-      const resolvedSlug = slugifyGameTitle(game.data.name);
+      const resolvedSlug = slugifyGameTitle(igdbGame.name);
       const existingTag = await getGameTagBySlug(resolvedSlug);
       if (existingTag?.slug) {
         permanentRedirect(`/game/${resolvedSlug}`);
       }
 
-      const createdSlug = await createGameTagFromIgdb(game.data);
+      const createdSlug = await createGameTagFromIgdb(igdbGame);
       if (createdSlug) {
         permanentRedirect(`/game/${createdSlug}`);
       }
@@ -525,9 +522,9 @@ export default async function GamePage({ params }: Props) {
           <Header />
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(buildVideoGameJsonLd(game.data, canonicalUrl)) }}
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(buildVideoGameJsonLd(igdbGame, canonicalUrl)) }}
           />
-          <GameDetails game={game.data} />
+          <GameDetails game={igdbGame} />
           <Footer />
         </>
       );

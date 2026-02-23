@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { t } from '../lib/i18n';
 import { formatDate } from '../utils/formatDate';
 
-const client = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL!);
+const client = new IGDBClient();
 
 // Error boundary component
 class ErrorBoundary extends React.Component<

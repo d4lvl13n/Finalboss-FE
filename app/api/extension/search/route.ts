@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { IGDBClient } from '@/app/lib/igdb-client';
-import siteConfig from '@/app/lib/siteConfig';
-
-const igdbClient = new IGDBClient(siteConfig.wordpressUrl);
+import { searchGames } from '@/app/lib/igdb-server';
 
 // CORS headers for Chrome extension
 const corsHeaders = {
@@ -28,17 +25,10 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await igdbClient.searchGames(query.trim(), limit);
-
-    if (!response.success) {
-      return NextResponse.json(
-        { success: false, error: 'Failed to fetch games from IGDB' },
-        { status: 500, headers: corsHeaders }
-      );
-    }
+    const games = await searchGames(query.trim(), limit);
 
     // Transform data for extension (minimal payload)
-    const games = response.data.map(game => ({
+    const results = games.map(game => ({
       id: game.id,
       name: game.name,
       cover_url: game.cover_url,
@@ -49,7 +39,7 @@ export async function GET(request: NextRequest) {
     }));
 
     return NextResponse.json(
-      { success: true, data: games },
+      { success: true, data: results },
       { headers: corsHeaders }
     );
   } catch (error) {

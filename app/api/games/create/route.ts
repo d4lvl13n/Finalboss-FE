@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import client from '@/app/lib/apolloClient';
-import { IGDBClient } from '@/app/lib/igdb-client';
+import { getGameDetails } from '@/app/lib/igdb-server';
 import { CREATE_GAME_TAG_WITH_META, GET_GAME_TAG_BY_SLUG } from '@/app/lib/queries/gameQueries';
 
 export async function POST(request: Request) {
@@ -17,11 +17,10 @@ export async function POST(request: Request) {
 
     if (igdbId != null) {
       try {
-        const igdbClient = new IGDBClient(process.env.NEXT_PUBLIC_WORDPRESS_URL || '');
-        const fullGame = await igdbClient.getGameDetails(Number(igdbId));
-        if (fullGame?.data) {
-          igdbData = { ...fullGame.data, igdb_id: igdbId };
-          rawTitle = fullGame.data.name || rawTitle;
+        const fullGame = await getGameDetails(Number(igdbId));
+        if (fullGame) {
+          igdbData = { ...fullGame, igdb_id: igdbId };
+          rawTitle = fullGame.name || rawTitle;
         }
       } catch (error) {
         console.error('Error fetching full IGDB data:', error);
