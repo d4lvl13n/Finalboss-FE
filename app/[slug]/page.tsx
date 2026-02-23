@@ -1,4 +1,5 @@
 import { GET_POST_BY_SLUG } from '../lib/queries/getPostBySlug';
+import { gql } from '@apollo/client';
 import client from '../lib/apolloClient';
 import ArticleContent from '../components/Article/ArticleContent';
 import { Metadata } from 'next';
@@ -7,6 +8,22 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { absoluteUrl } from '../lib/seo';
 import siteConfig from '../lib/siteConfig';
+
+// Separate query for gameTags — may not exist on all WordPress backends
+const GET_POST_GAME_TAGS = gql`
+  query GetPostGameTags($id: ID!) {
+    post(id: $id, idType: SLUG) {
+      gameTags {
+        nodes {
+          name
+          slug
+          igdbId
+          igdbData
+        }
+      }
+    }
+  }
+`;
 
 interface PageProps {
   params: { slug: string };
@@ -82,6 +99,19 @@ export default async function ArticlePage({ params }: PageProps) {
 
   if (!article) {
     notFound();
+  }
+
+  // Fetch gameTags separately — the taxonomy may not exist on all backends (e.g. finalboss.fr)
+  try {
+    const { data: gameTagData } = await client.query({
+      query: GET_POST_GAME_TAGS,
+      variables: { id: params.slug },
+    });
+    if (gameTagData?.post?.gameTags) {
+      article.gameTags = gameTagData.post.gameTags;
+    }
+  } catch {
+    // gameTags taxonomy not available on this backend — skip silently
   }
 
   return (

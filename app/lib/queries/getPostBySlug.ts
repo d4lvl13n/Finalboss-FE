@@ -38,14 +38,6 @@ export const GET_POST_BY_SLUG = gql`
           slug
         }
       }
-      gameTags {
-        nodes {
-          name
-          slug
-          igdbId
-          igdbData
-        }
-      }
     }
   }
 `;
