@@ -5,6 +5,7 @@ export const GET_POST_BY_SLUG = gql`
     post(id: $id, idType: SLUG) {
       id
       title
+      excerpt
       content
       date
       modified
