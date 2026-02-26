@@ -8,7 +8,7 @@ import siteConfig from '../lib/siteConfig';
 import { t } from '../lib/i18n';
 
 export const metadata = buildPageMetadata({
-  title: `About ${siteConfig.name}`,
+  title: 'About Us',
   description: `Learn about the ${siteConfig.name} team delivering gaming news, reviews, and guides.`,
   path: '/about',
 });

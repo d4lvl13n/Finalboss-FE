@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { absoluteUrl } from '../lib/seo';
-import siteConfig from '../lib/siteConfig';
+import siteConfig, { intlLocale } from '../lib/siteConfig';
 
 // Separate query for gameTags — may not exist on all WordPress backends
 const GET_POST_GAME_TAGS = gql`
@@ -37,7 +37,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   });
 
   const article = data?.post;
-  const seo = article?.seo;
 
   if (!article) {
     return {
@@ -47,30 +46,33 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const stripHtml = (value: string | undefined) =>
     value ? value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() : '';
-  const description = stripHtml(seo?.metaDesc || article.excerpt || article.title);
-  const openGraphDescription = stripHtml(seo?.opengraphDescription || description);
-  const twitterDescription = stripHtml(seo?.twitterDescription || description);
+  const description = stripHtml(article.excerpt || article.title);
   const rawImage =
-    seo?.opengraphImage?.sourceUrl ||
     article.featuredImage?.node?.sourceUrl ||
     siteConfig.ogImagePath;
   const imageUrl = absoluteUrl(rawImage);
   const authorName = article.author?.node?.name;
 
+  const ogImage: { url: string; secureUrl?: string; width?: number; height?: number } = { url: imageUrl };
+  if (imageUrl.startsWith('https://')) ogImage.secureUrl = imageUrl;
+  const mediaWidth = article.featuredImage?.node?.mediaDetails?.width;
+  const mediaHeight = article.featuredImage?.node?.mediaDetails?.height;
+  if (typeof mediaWidth === 'number' && typeof mediaHeight === 'number') {
+    ogImage.width = mediaWidth;
+    ogImage.height = mediaHeight;
+  }
+
   return {
-    title: seo?.title || `${article.title} | ${siteConfig.name}`,
+    title: article.title,
     description: description || article.title,
     keywords: article.categories?.nodes?.map((c: { name: string }) => c.name),
     authors: authorName ? [{ name: authorName }] : undefined,
-    robots: {
-      index: !seo?.metaRobotsNoindex,
-      follow: !seo?.metaRobotsNofollow,
-    },
     openGraph: {
-      title: seo?.opengraphTitle || article.title,
-      description: openGraphDescription || description,
-      images: [{ url: imageUrl }],
+      title: article.title,
+      description,
+      images: [ogImage],
       url: `${baseUrl}/${article.slug}`,
+      locale: intlLocale,
       type: 'article',
       publishedTime: article.date,
       modifiedTime: article.modified,
@@ -79,12 +81,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       site: siteConfig.twitterHandle,
-      title: seo?.twitterTitle || article.title,
-      description: twitterDescription || description,
-      images: [absoluteUrl(seo?.twitterImage?.sourceUrl || imageUrl)],
+      title: article.title,
+      description,
+      images: [imageUrl],
     },
     alternates: {
       canonical: `${baseUrl}/${article.slug}`,
+    },
+    other: {
+      'article:content_tier': 'free',
     },
   };
 }
@@ -122,7 +127,7 @@ export default async function ArticlePage({ params }: PageProps) {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
-            '@type': 'Article',
+            '@type': 'NewsArticle',
             headline: article.title,
             image: article.featuredImage?.node?.sourceUrl,
             author: {
@@ -131,15 +136,25 @@ export default async function ArticlePage({ params }: PageProps) {
               description: article.author?.node?.description,
               image: article.author?.node?.avatar?.url,
               sameAs: [
-                article.author?.node?.social?.twitter && 
+                article.author?.node?.social?.twitter &&
                   `https://x.com/${article.author.node.social.twitter}`,
                 article.author?.node?.social?.linkedin,
                 article.author?.node?.social?.website,
               ].filter(Boolean),
             },
+            publisher: {
+              '@type': 'Organization',
+              name: siteConfig.name,
+              logo: {
+                '@type': 'ImageObject',
+                url: `${siteConfig.url}${siteConfig.logoPath}`,
+              },
+            },
             datePublished: article.date,
             dateModified: article.modified,
             description: (article.excerpt || article.title || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim(),
+            isAccessibleForFree: true,
+            inLanguage: siteConfig.lang,
             mainEntityOfPage: {
               '@type': 'WebPage',
               '@id': `${siteConfig.url}/${article.slug}`,

@@ -9,7 +9,7 @@ const baseUrl = siteConfig.url;
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: `Gaming Videos | ${siteConfig.name}`,
+    title: 'Gaming Videos',
     description: `Watch the latest trailers, gameplay clips, and video coverage from ${siteConfig.name}.`,
     path: '/videos',
   });

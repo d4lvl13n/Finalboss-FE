@@ -3,7 +3,7 @@ import { GameDetails } from '@/app/components/GameDetails';
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
 import { Metadata } from 'next';
-import { notFound, permanentRedirect, redirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import client from '@/app/lib/apolloClient';
 import { CREATE_GAME_TAG_WITH_META, GET_GAME_TAG_BY_SLUG, GET_GAME_TAG_WITH_POSTS } from '@/app/lib/queries/gameQueries';
 import { absoluteUrl, buildPageMetadata } from '@/app/lib/seo';
@@ -35,6 +35,32 @@ function slugifyGameTitle(title: string): string {
     .substring(0, 200);
 }
 
+/**
+ * Get a large OG image for a game. Prefers first screenshot at 1080p (1920px wide),
+ * falls back to cover_url.
+ */
+function getGameOgImage(data: Record<string, unknown>): string | undefined {
+  // Try first screenshot at 1080p size
+  const screenshotsRaw = (data as { screenshots?: unknown }).screenshots;
+  if (Array.isArray(screenshotsRaw) && screenshotsRaw.length > 0) {
+    const first = screenshotsRaw[0];
+    if (first && typeof first === 'object') {
+      const imageId = (first as { image_id?: string }).image_id;
+      if (typeof imageId === 'string') {
+        return buildIgdbImageUrl(imageId, '1080p');
+      }
+    }
+    // Already a URL string
+    if (typeof first === 'string') return first;
+  }
+  // Fallback to cover
+  const coverImageId = (data as { cover?: { image_id?: string } }).cover?.image_id;
+  if (typeof coverImageId === 'string') {
+    return buildIgdbImageUrl(coverImageId, '1080p');
+  }
+  return typeof data.cover_url === 'string' ? data.cover_url : undefined;
+}
+
 function stripHtml(value: string | undefined): string {
   if (!value) return '';
   return value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -58,6 +84,7 @@ function buildVideoGameJsonLd(game: IGDBGame, canonicalUrl: string) {
     ...(game.description ? { description: buildDescription(game.description) } : {}),
     ...(game.cover_url ? { image: absoluteUrl(game.cover_url) } : {}),
     url: canonicalUrl,
+    inLanguage: siteConfig.lang,
     ...(game.release_date ? { datePublished: game.release_date } : {}),
     ...(platforms?.length ? { gamePlatform: platforms } : {}),
     ...(game.genres?.length ? { genre: game.genres } : {}),
@@ -86,7 +113,7 @@ function parseIgdbData(raw: unknown): unknown | null {
   }
 }
 
-function buildIgdbImageUrl(imageId: string, size: 'cover_big' | 'screenshot_big') {
+function buildIgdbImageUrl(imageId: string, size: 'cover_big' | 'screenshot_big' | '1080p') {
   return `https://images.igdb.com/igdb/image/upload/t_${size}/${imageId}.jpg`;
 }
 
@@ -333,14 +360,16 @@ function buildGameFromTag(tag: {
   description?: string | null;
   igdbData?: string | null;
   igdbId?: string | null;
-}): IGDBGame {
+}): IGDBGame & { og_image_url?: string } {
   const parsed = parseIgdbData(tag.igdbData);
+  const ogImage = parsed && typeof parsed === 'object' ? getGameOgImage(parsed as Record<string, unknown>) : undefined;
   const normalized = normalizeIgdbData(parsed, tag.name, tag.description, tag.igdbId);
   if (normalized) {
     return {
       ...normalized,
       name: normalized.name || tag.name,
       description: normalized.description || tag.description || normalized.name,
+      og_image_url: ogImage,
     };
   }
 
@@ -348,6 +377,7 @@ function buildGameFromTag(tag: {
     id: tag.igdbId ? Number(tag.igdbId) : undefined,
     name: tag.name,
     description: tag.description || tag.name,
+    og_image_url: ogImage,
   };
 }
 
@@ -418,11 +448,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       const gameData = buildGameFromTag(gameTag);
       const description = buildDescription(gameTag.description || gameData.description || gameData.name);
       return buildPageMetadata({
-        title: `${gameData.name} - Game Details | ${siteConfig.name}`,
+        title: `${gameData.name} - Game Details`,
         description: description || gameData.name,
         path: canonicalPath,
-        image: gameData.cover_url || undefined,
-        type: 'article',
+        image: gameData.og_image_url || gameData.cover_url || undefined,
+        type: 'website',
         robots: {
           index: true,
           follow: true,
@@ -439,11 +469,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
       const description = buildDescription(gameData.description) || gameData.name;
       return buildPageMetadata({
-        title: `${gameData.name} - Game Details | ${siteConfig.name}`,
+        title: `${gameData.name} - Game Details`,
         description,
         path: resolvedPath,
-        image: gameData.cover_url || undefined,
-        type: 'article',
+        image: gameData.screenshots?.[0] || gameData.cover_url || undefined,
+        type: 'website',
         robots: {
           index: true,
           follow: true,
@@ -452,12 +482,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     return {
-      title: `Game Not Found | ${siteConfig.name}`
+      title: 'Game Not Found'
     };
   } catch (error) {
     console.error('Error generating metadata:', error);
     return {
-      title: `Error | ${siteConfig.name}`
+      title: 'Error'
     };
   }
 }

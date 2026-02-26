@@ -7,7 +7,7 @@ import siteConfig from '../lib/siteConfig';
 import { t } from '../lib/i18n';
 
 export const metadata = buildPageMetadata({
-  title: `Write for ${siteConfig.name}`,
+  title: 'Write for Us',
   description: `Pitch your gaming or technology guest post to the ${siteConfig.name} editorial team.`,
   path: '/write-for-us',
 });

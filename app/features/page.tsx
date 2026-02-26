@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { buildPageMetadata } from '../lib/seo';
-import siteConfig from '../lib/siteConfig';
 
 interface Article {
   slug: string;
@@ -17,7 +16,7 @@ interface Article {
 
 // Mock article data (replace with real data fetching in a real app)
 export const metadata = buildPageMetadata({
-  title: `Featured Stories | ${siteConfig.name}`,
+  title: 'Featured Stories',
   description: 'Dive into curated long-form features covering gaming culture, tech, and creators.',
   path: '/features',
 });

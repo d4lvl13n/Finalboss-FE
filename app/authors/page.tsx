@@ -11,13 +11,13 @@ import { t } from '../lib/i18n';
 const baseUrl = siteConfig.url;
 
 export const metadata: Metadata = {
-  title: `Our Team & Writers | ${siteConfig.name}`,
+  title: 'Our Team & Writers',
   description: `Meet the passionate gaming journalists and writers behind ${siteConfig.name}. Our team delivers the latest gaming news, in-depth reviews, and expert guides.`,
   alternates: {
     canonical: `${baseUrl}/authors`,
   },
   openGraph: {
-    title: `Our Team & Writers | ${siteConfig.name}`,
+    title: 'Our Team & Writers',
     description: `Meet the passionate gaming journalists and writers behind ${siteConfig.name}.`,
     url: `${baseUrl}/authors`,
     type: 'website',

@@ -21,14 +21,14 @@ export async function generateMetadata({ params }: PageProps) {
   const pageNumber = parsePageNumber(params.page);
   if (!pageNumber) {
     return buildPageMetadata({
-      title: `Articles | ${siteConfig.name}`,
+      title: 'Articles',
       description: 'Explore curated gaming news, reviews, and guides.',
       path: '/articles',
     });
   }
 
   return buildPageMetadata({
-    title: `Articles - Page ${pageNumber} | ${siteConfig.name}`,
+    title: `Articles - Page ${pageNumber}`,
     description: `Browse page ${pageNumber} of ${siteConfig.name} articles.`,
     path: `/articles/page/${pageNumber}`,
   });

@@ -3,7 +3,7 @@ import siteConfig from '../lib/siteConfig';
 import { t } from '../lib/i18n';
 
 export const metadata = buildPageMetadata({
-  title: `Privacy Policy | ${siteConfig.name}`,
+  title: 'Privacy Policy',
   description: `Understand how ${siteConfig.name} collects, uses, and protects your information.`,
   path: '/privacy-policy',
   robots: {

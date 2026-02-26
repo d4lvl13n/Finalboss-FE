@@ -4,7 +4,7 @@ import siteConfig from '../lib/siteConfig';
 import { t } from '../lib/i18n';
 
 export const metadata = buildPageMetadata({
-  title: `Contact ${siteConfig.name}`,
+  title: 'Contact Us',
   description: `Reach the ${siteConfig.name} team for partnerships, press inquiries, or community questions.`,
   path: '/contact',
   robots: {

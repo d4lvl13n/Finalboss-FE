@@ -10,7 +10,7 @@ import Footer from '../components/Footer';
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: `Game Guides & Walkthroughs | ${siteConfig.name}`,
+    title: 'Game Guides & Walkthroughs',
     description: `Master every quest with ${siteConfig.name} guides, walkthroughs, and strategy breakdowns.`,
     path: '/guides',
   });

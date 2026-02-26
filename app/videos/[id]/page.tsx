@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: VideoPageProps): Promise<Meta
     const video = await youtubeService.getVideoById(params.id);
     const description = video.description.substring(0, 160);
     const baseMetadata = buildPageMetadata({
-      title: `${video.title} - ${siteConfig.name}`,
+      title: video.title,
       description,
       path: `/videos/${video.id}`,
       image: video.thumbnail.url,
@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: VideoPageProps): Promise<Meta
   } catch (error) {
     console.error('Unable to build video metadata:', error);
     return {
-      title: `Video Not Found - ${siteConfig.name}`,
+      title: 'Video Not Found',
     };
   }
 }

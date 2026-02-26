@@ -12,7 +12,7 @@ import LeadCaptureManager from './components/LeadCapture/LeadCaptureManager';
 import AdScriptLoader from './components/AdSense/AdScriptLoader';
 import { ENABLE_AUTO_ADS } from './lib/adsConfig';
 import BackToTop from './components/BackToTop';
-import siteConfig from './lib/siteConfig';
+import siteConfig, { intlLocale } from './lib/siteConfig';
 
 // Optimize font loading
 const inter = Inter({
@@ -47,7 +47,7 @@ const organizationStructuredData = {
   '@type': 'Organization',
   name: siteConfig.name,
   url: siteConfig.url,
-  logo: `${siteConfig.url}${siteConfig.ogImagePath}`,
+  logo: `${siteConfig.url}${siteConfig.logoPath}`,
   sameAs: [
     siteConfig.socialLinks.twitter,
   ],
@@ -63,6 +63,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: siteConfig.siteName,
+    locale: intlLocale,
   },
   twitter: {
     card: 'summary_large_image',
@@ -70,6 +71,9 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    'max-image-preview': 'large',
+    'max-snippet': -1,
+    'max-video-preview': -1,
   },
 };
 

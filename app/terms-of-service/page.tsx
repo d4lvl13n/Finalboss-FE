@@ -3,7 +3,7 @@ import siteConfig from '../lib/siteConfig';
 import { t } from '../lib/i18n';
 
 export const metadata = buildPageMetadata({
-  title: `Terms of Service | ${siteConfig.name}`,
+  title: 'Terms of Service',
   description: `Review the terms and conditions for using ${siteConfig.name} content and services.`,
   path: '/terms-of-service',
 });

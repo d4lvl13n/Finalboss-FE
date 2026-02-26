@@ -27,7 +27,7 @@ export default function VideoStructuredData({ video, baseUrl }: VideoStructuredD
       "name": siteConfig.name,
       "logo": {
         "@type": "ImageObject",
-        "url": `${baseUrl}/images/logo.png`
+        "url": `${baseUrl}${siteConfig.logoPath}`
       }
     }
   };

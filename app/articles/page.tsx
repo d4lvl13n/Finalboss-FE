@@ -27,7 +27,7 @@ export const revalidate = 60;
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: `All Articles | ${siteConfig.name}`,
+    title: 'All Articles',
     description: 'Explore every article across news, reviews, guides, and technology.',
     path: '/articles',
   });

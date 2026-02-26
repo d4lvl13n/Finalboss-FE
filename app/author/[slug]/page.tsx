@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
     
     if (!author) {
       return {
-        title: `Author Not Found | ${siteConfig.name}`,
+        title: 'Author Not Found',
       };
     }
 
@@ -49,13 +49,13 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
     const description = author.description || `Read articles by ${author.name} on ${siteConfig.name} - Gaming news, reviews, guides and more.`;
 
     return {
-      title: `${author.name} - Author | ${siteConfig.name}`,
+      title: `${author.name} - Author`,
       description,
       alternates: {
         canonical: `${baseUrl}/author/${author.slug}`,
       },
       openGraph: {
-        title: `${author.name} - Author | ${siteConfig.name}`,
+        title: `${author.name} - Author`,
         description,
         url: `${baseUrl}/author/${author.slug}`,
         type: 'profile',
@@ -63,13 +63,13 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
       },
       twitter: {
         card: 'summary',
-        title: `${author.name} - Author | ${siteConfig.name}`,
+        title: `${author.name} - Author`,
         description,
       },
     };
   } catch {
     return {
-      title: `Author | ${siteConfig.name}`,
+      title: 'Author',
     };
   }
 }

@@ -32,7 +32,7 @@ function formatSlug(slug: string) {
 export async function generateMetadata({ params }: GuideCategoryProps) {
   const titleFragment = formatSlug(params.slug);
   return buildPageMetadata({
-    title: `${titleFragment} Guides | ${siteConfig.name}`,
+    title: `${titleFragment} Guides`,
     description: `Explore walkthroughs, tips, and strategies for ${titleFragment}.`,
     path: `/guides/${params.slug}`,
     robots: {

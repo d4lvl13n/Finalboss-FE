@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import siteConfig from './siteConfig';
+import siteConfig, { intlLocale } from './siteConfig';
 
 const DEFAULT_OG_IMAGE = `${siteConfig.url}${siteConfig.ogImagePath}`;
 
@@ -14,6 +14,8 @@ type PageMetadataOptions = {
   description: string;
   path?: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   type?: 'website' | 'article' | 'video.other';
   publishedTime?: string;
   modifiedTime?: string;
@@ -26,6 +28,8 @@ export function buildPageMetadata({
   description,
   path = '/',
   image = DEFAULT_OG_IMAGE,
+  imageWidth,
+  imageHeight,
   type = 'website',
   publishedTime,
   modifiedTime,
@@ -34,6 +38,10 @@ export function buildPageMetadata({
 }: PageMetadataOptions): Metadata {
   const url = absoluteUrl(path);
   const imageUrl = absoluteUrl(image);
+  const ogImage: { url: string; secureUrl?: string; width?: number; height?: number } = { url: imageUrl };
+  if (imageUrl.startsWith('https://')) ogImage.secureUrl = imageUrl;
+  if (imageWidth) ogImage.width = imageWidth;
+  if (imageHeight) ogImage.height = imageHeight;
   return {
     title,
     description,
@@ -47,8 +55,9 @@ export function buildPageMetadata({
       description,
       url,
       siteName: siteConfig.siteName,
+      locale: intlLocale,
       type,
-      images: [{ url: imageUrl }],
+      images: [ogImage],
       ...(publishedTime && { publishedTime }),
       ...(modifiedTime && { modifiedTime }),
     },

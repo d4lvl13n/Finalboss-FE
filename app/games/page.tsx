@@ -14,7 +14,7 @@ const baseUrl = siteConfig.url;
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: `Game Database | ${siteConfig.name}`,
+    title: 'Game Database',
     description: 'Search and explore our comprehensive game database with ratings, release dates, and platform information.',
     path: '/games',
   });

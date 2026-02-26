@@ -12,7 +12,7 @@ export const revalidate = 3600; // Revalidate every hour (optional)
 
 export async function generateMetadata() {
   return buildPageMetadata({
-    title: `Game Reviews | ${siteConfig.name}`,
+    title: 'Game Reviews',
     description: `Read in-depth game reviews, verdicts, and ratings from the ${siteConfig.name} editorial team.`,
     path: '/reviews',
   });
