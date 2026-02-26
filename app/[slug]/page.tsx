@@ -70,12 +70,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title: article.title,
       description,
+      siteName: siteConfig.siteName,
       images: [ogImage],
       url: `${baseUrl}/${article.slug}`,
       locale: intlLocale,
       type: 'article',
       publishedTime: article.date,
       modifiedTime: article.modified,
+      section: article.categories?.nodes?.[0]?.name,
+      tags: article.categories?.nodes?.map((c: { name: string }) => c.name),
       ...(authorName ? { authors: [authorName] } : {}),
     },
     twitter: {
@@ -87,9 +90,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     alternates: {
       canonical: `${baseUrl}/${article.slug}`,
-    },
-    other: {
-      'article:content_tier': 'free',
     },
   };
 }
@@ -121,6 +121,9 @@ export default async function ArticlePage({ params }: PageProps) {
 
   return (
     <>
+      <head>
+        <meta property="article:content_tier" content="free" />
+      </head>
       <Header />
       <script
         type="application/ld+json"
@@ -159,6 +162,13 @@ export default async function ArticlePage({ params }: PageProps) {
               '@type': 'WebPage',
               '@id': `${siteConfig.url}/${article.slug}`,
             },
+            ...(article.gameTags?.nodes?.length ? {
+              about: article.gameTags.nodes.map((tag: { name: string; slug: string }) => ({
+                '@type': 'VideoGame',
+                name: tag.name,
+                url: `${siteConfig.url}/game/${tag.slug}`,
+              })),
+            } : {}),
           }),
         }}
       />

@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Our Team & Writers',
     description: `Meet the passionate gaming journalists and writers behind ${siteConfig.name}.`,
+    siteName: siteConfig.siteName,
     url: `${baseUrl}/authors`,
     type: 'website',
   },

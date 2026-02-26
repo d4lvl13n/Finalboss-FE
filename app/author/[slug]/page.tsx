@@ -57,6 +57,7 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
       openGraph: {
         title: `${author.name} - Author`,
         description,
+        siteName: siteConfig.siteName,
         url: `${baseUrl}/author/${author.slug}`,
         type: 'profile',
         images: author.avatar?.url ? [{ url: author.avatar.url }] : undefined,
