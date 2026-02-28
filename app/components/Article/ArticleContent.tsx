@@ -75,7 +75,6 @@ interface ArticleContentProps {
 }
 
 export default function ArticleContent({ article }: ArticleContentProps) {
-  console.log('Raw article content:', article.content);
   const [featuredImageError, setFeaturedImageError] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
 

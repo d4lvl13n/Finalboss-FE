@@ -41,8 +41,10 @@ The app expects a headless WordPress at `backend.<domain>` with specific plugins
 | Plugin | Purpose |
 |--------|---------|
 | **WPGraphQL** | Exposes content via GraphQL at `/graphql` |
-| **IGDB Proxy** (custom) | Proxies IGDB API at `/wp-json/igdb/v1/*` (endpoints: `/search`, `/game/{id}`, `/popular`) |
+| **FinalBoss Game Taxonomy** (custom) | Registers the `gameTag` taxonomy with `igdbId`/`igdbData` meta fields + GraphQL support |
 | **Yoast SEO** | SEO metadata (consumed via GraphQL) |
+
+> **Note**: The IGDB API proxy is handled by Next.js directly (see [Section 2.4](#24-igdb-api--no-wordpress-plugin-needed)). No IGDB WordPress plugin is needed.
 
 ### 2.2 Required Content Structure
 
@@ -77,12 +79,42 @@ Once WordPress is set up, verify from your machine:
 curl -s https://backend.finalboss.fr/graphql -H "Content-Type: application/json" \
   -d '{"query":"{ generalSettings { title } }"}' | jq .
 
-# IGDB proxy works
-curl -s https://backend.finalboss.fr/wp-json/igdb/v1/popular | jq .
-
 # Categories exist
 curl -s https://backend.finalboss.fr/graphql -H "Content-Type: application/json" \
   -d '{"query":"{ categories { nodes { name slug } } }"}' | jq .
+
+# gameTag taxonomy is registered
+curl -s https://backend.finalboss.fr/graphql -H "Content-Type: application/json" \
+  -d '{"query":"{ gameTags(first:1) { nodes { name slug igdbId } } }"}' | jq .
+```
+
+### 2.4 IGDB API — No WordPress Plugin Needed
+
+The IGDB integration runs entirely in the Next.js app. It authenticates directly with the IGDB API via Twitch OAuth2 (client credentials flow) and exposes three internal API routes:
+
+| Route | Purpose |
+|-------|---------|
+| `GET /api/igdb/search?s=query&limit=10` | Search games |
+| `GET /api/igdb/game/{id}` | Get game details by IGDB ID |
+| `GET /api/igdb/popular?limit=10` | Get popular games |
+
+**What you need:** Twitch developer credentials (same for all domains).
+
+1. Go to [https://dev.twitch.tv/console/apps](https://dev.twitch.tv/console/apps)
+2. Create an app (or reuse an existing one)
+3. Copy the **Client ID** and generate a **Client Secret**
+4. Add these as env vars in your Vercel project:
+
+```
+TWITCH_CLIENT_ID=your_client_id_here
+TWITCH_CLIENT_SECRET=your_client_secret_here
+```
+
+These are **server-side only** (not prefixed with `NEXT_PUBLIC_`), so they're never exposed to the browser. The same credentials can be shared across all domains.
+
+**Verify after deploy:**
+```bash
+curl -s https://finalboss.fr/api/igdb/search?s=zelda&limit=3 | jq .
 ```
 
 ---
@@ -196,16 +228,14 @@ After setting env vars, go to **Deployments** and click **Redeploy** (or push a 
 | `NEXT_PUBLIC_YOUTUBE_CHANNEL_ID` | `UCxxxxxxxxxx` | Videos page, YouTube feed |
 | `NEXT_PUBLIC_YOUTUBE_API_KEY` | `AIzaSy...` | YouTube Data API calls |
 
-### Server-Side Only
+### Server-Side Only (REQUIRED for IGDB)
 
 | Variable | Example Value | What It Controls |
 |----------|---------------|------------------|
-| `TWITCH_CLIENT_ID` | `ksh9192h...` | IGDB token generation |
-| `TWITCH_CLIENT_SECRET` | `3s8n6du6...` | IGDB token generation |
-| `IGDB_CLIENT_ID` | `ksh9192h...` | IGDB API auth |
-| `IGDB_ACCESS_TOKEN` | `abc123...` | IGDB API auth |
+| `TWITCH_CLIENT_ID` | `ksh9192h...` | IGDB API authentication (Twitch OAuth2) |
+| `TWITCH_CLIENT_SECRET` | `3s8n6du6...` | IGDB API authentication (Twitch OAuth2) |
 
-> **Note**: Twitch/IGDB credentials can be shared across domains since they authenticate against the same IGDB API.
+> **Note**: These credentials authenticate directly with the IGDB API via Twitch OAuth2 client credentials flow. The same credentials can be shared across all domains. Get them at [dev.twitch.tv/console/apps](https://dev.twitch.tv/console/apps). Without these, game search, game detail pages, and popular games will not work.
 
 ---
 
@@ -347,7 +377,8 @@ After deploying, verify everything works:
 
 ### Content & Data
 - [ ] GraphQL queries return content from the correct WordPress backend
-- [ ] Game pages load IGDB data (via WordPress IGDB proxy)
+- [ ] IGDB API works: `https://<domain>/api/igdb/search?s=zelda&limit=3` returns results
+- [ ] Game pages load IGDB data (covers, screenshots, details)
 - [ ] Images load correctly (WordPress media, IGDB covers, YouTube thumbnails)
 - [ ] Internal links point to `finalboss.fr` (not `finalboss.io`)
 

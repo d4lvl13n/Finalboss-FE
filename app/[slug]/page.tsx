@@ -8,6 +8,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { absoluteUrl } from '../lib/seo';
 import siteConfig, { intlLocale } from '../lib/siteConfig';
+import { cache } from 'react';
 
 // Separate query for gameTags — may not exist on all WordPress backends
 const GET_POST_GAME_TAGS = gql`
@@ -25,18 +26,53 @@ const GET_POST_GAME_TAGS = gql`
   }
 `;
 
+// Deduplicate the post query between generateMetadata and the page component
+// React cache() ensures the same slug only fetches once per request lifecycle.
+const getPost = cache(async (slug: string) => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000); // 10s timeout
+  try {
+    const { data } = await client.query({
+      query: GET_POST_BY_SLUG,
+      variables: { id: slug },
+      context: { fetchOptions: { signal: controller.signal } },
+    });
+    return data?.post || null;
+  } catch (err) {
+    // If the request timed out or failed, return null
+    console.error(`[getPost] Failed to fetch post "${slug}":`, err);
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
+});
+
+// Fetch gameTags separately with its own timeout
+const getPostGameTags = cache(async (slug: string) => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000); // 5s timeout
+  try {
+    const { data } = await client.query({
+      query: GET_POST_GAME_TAGS,
+      variables: { id: slug },
+      context: { fetchOptions: { signal: controller.signal } },
+    });
+    return data?.post?.gameTags || null;
+  } catch {
+    // gameTags taxonomy not available or timed out — skip silently
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
+});
+
 interface PageProps {
   params: { slug: string };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const baseUrl = siteConfig.url;
-  const { data } = await client.query({
-    query: GET_POST_BY_SLUG,
-    variables: { id: params.slug },
-  });
-
-  const article = data?.post;
+  const article = await getPost(params.slug);
 
   if (!article) {
     return {
@@ -47,17 +83,21 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const stripHtml = (value: string | undefined) =>
     value ? value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() : '';
   const description = stripHtml(article.excerpt || article.title);
-  const rawImage =
-    article.featuredImage?.node?.sourceUrl ||
-    siteConfig.ogImagePath;
-  const imageUrl = absoluteUrl(rawImage);
   const authorName = article.author?.node?.name;
+
+  // Discover requires og:image ≥1200px wide for hero cards.
+  // Fall back to the default OG image (which we control) when the
+  // featured image is missing or too narrow.
+  const mediaWidth = article.featuredImage?.node?.mediaDetails?.width;
+  const mediaHeight = article.featuredImage?.node?.mediaDetails?.height;
+  const featuredUrl = article.featuredImage?.node?.sourceUrl;
+  const hasLargeEnoughImage = featuredUrl && typeof mediaWidth === 'number' && mediaWidth >= 1200;
+  const rawImage = hasLargeEnoughImage ? featuredUrl : siteConfig.ogImagePath;
+  const imageUrl = absoluteUrl(rawImage);
 
   const ogImage: { url: string; secureUrl?: string; width?: number; height?: number } = { url: imageUrl };
   if (imageUrl.startsWith('https://')) ogImage.secureUrl = imageUrl;
-  const mediaWidth = article.featuredImage?.node?.mediaDetails?.width;
-  const mediaHeight = article.featuredImage?.node?.mediaDetails?.height;
-  if (typeof mediaWidth === 'number' && typeof mediaHeight === 'number') {
+  if (hasLargeEnoughImage && typeof mediaWidth === 'number' && typeof mediaHeight === 'number') {
     ogImage.width = mediaWidth;
     ogImage.height = mediaHeight;
   }
@@ -95,28 +135,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ArticlePage({ params }: PageProps) {
-  const { data } = await client.query({
-    query: GET_POST_BY_SLUG,
-    variables: { id: params.slug },
-  });
-
-  const article = data?.post;
+  // Fetch post (deduplicated with generateMetadata via React cache) and gameTags in parallel
+  const [article, gameTags] = await Promise.all([
+    getPost(params.slug),
+    getPostGameTags(params.slug),
+  ]);
 
   if (!article) {
     notFound();
   }
 
-  // Fetch gameTags separately — the taxonomy may not exist on all backends (e.g. finalboss.fr)
-  try {
-    const { data: gameTagData } = await client.query({
-      query: GET_POST_GAME_TAGS,
-      variables: { id: params.slug },
-    });
-    if (gameTagData?.post?.gameTags) {
-      article.gameTags = gameTagData.post.gameTags;
-    }
-  } catch {
-    // gameTags taxonomy not available on this backend — skip silently
+  if (gameTags) {
+    article.gameTags = gameTags;
   }
 
   return (
@@ -132,7 +162,7 @@ export default async function ArticlePage({ params }: PageProps) {
             '@context': 'https://schema.org',
             '@type': 'NewsArticle',
             headline: article.title,
-            image: article.featuredImage?.node?.sourceUrl,
+            image: [article.featuredImage?.node?.sourceUrl].filter(Boolean),
             author: {
               '@type': 'Person',
               name: article.author?.node?.name,

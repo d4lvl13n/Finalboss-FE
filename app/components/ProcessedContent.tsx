@@ -216,9 +216,15 @@
        },
      };
 
+     // Sanitize malformed HTML tags from WordPress (e.g. "emvisual<")
+     // that would crash html-react-parser with "Invalid tag" errors.
+     const sanitized = content
+       .replace(/<([a-zA-Z]+[^>]*)<(?=[^!])/g, '&lt;$1&lt;')  // fix tags containing stray '<'
+       .replace(/<(?![a-zA-Z/!])/g, '&lt;');  // fix lone '<' not followed by valid tag start
+
      return (
        <div className="prose prose-invert max-w-none">
-         {parse(content, options)}
+         {parse(sanitized, options)}
        </div>
   );
 }
