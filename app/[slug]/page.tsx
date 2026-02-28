@@ -131,6 +131,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     alternates: {
       canonical: `${baseUrl}/${article.slug}`,
     },
+    other: {
+      'article:content_tier': 'free',
+    },
   };
 }
 
@@ -151,9 +154,6 @@ export default async function ArticlePage({ params }: PageProps) {
 
   return (
     <>
-      <head>
-        <meta property="article:content_tier" content="free" />
-      </head>
       <Header />
       <script
         type="application/ld+json"

@@ -223,7 +223,7 @@
        .replace(/<(?![a-zA-Z/!])/g, '&lt;');  // fix lone '<' not followed by valid tag start
 
      return (
-       <div className="prose prose-invert max-w-none">
+       <div className="prose prose-invert max-w-none" suppressHydrationWarning>
          {parse(sanitized, options)}
        </div>
   );
