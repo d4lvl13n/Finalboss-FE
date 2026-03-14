@@ -237,6 +237,105 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       return { config, cleaned };
     }
 
+    // 3) Auto-extract from content patterns: Verdict heading + Score + TL;DR
+    const scoreRegex = /(?:Score|Provisional\s+score)\s*:?\s*(\d+(?:[.,]\d+)?)\s*\/\s*10/i;
+    const scoreMatchGlobal = html.match(scoreRegex);
+
+    // Find h2 heading containing "verdict"
+    const h2Regex = /<h2[^>]*>([\s\S]*?)<\/h2>/gi;
+    let verdictMatch: RegExpExecArray | null = null;
+    let h2Match: RegExpExecArray | null;
+    while ((h2Match = h2Regex.exec(html)) !== null) {
+      const headingText = h2Match[1].replace(/<[^>]*>/g, '').trim();
+      if (/verdict/i.test(headingText)) {
+        verdictMatch = h2Match;
+        break;
+      }
+    }
+
+    if (verdictMatch || scoreMatchGlobal) {
+      let verdictTitle: string | undefined;
+      let conclusion: string | undefined;
+      let score: number | undefined;
+      const pros: string[] = [];
+      const cons: string[] = [];
+      let cleanedHtml = html;
+
+      if (scoreMatchGlobal) {
+        score = parseFloat(scoreMatchGlobal[1].replace(',', '.'));
+      }
+
+      if (verdictMatch) {
+        const verdictIdx = verdictMatch.index;
+
+        // Extract verdict title (strip "Verdict:" prefix and score suffix)
+        const rawHeadingText = verdictMatch[1].replace(/<[^>]*>/g, '').trim();
+        // Fallback: extract score from heading if not found in body (e.g. "Verdict: ... – 8/10")
+        if (score === undefined) {
+          const headingScoreMatch = rawHeadingText.match(/(\d+(?:[.,]\d+)?)\s*\/\s*10/);
+          if (headingScoreMatch) score = parseFloat(headingScoreMatch[1].replace(',', '.'));
+        }
+        let rawTitle = rawHeadingText;
+        rawTitle = rawTitle.replace(/^(?:FinalBoss\s+)?Verdict\s*(?:\([^)]*\))?\s*[:–—-]\s*/i, '').trim();
+        rawTitle = rawTitle.replace(/\s*[-–—]\s*\d+(?:[.,]\d+)?\s*\/\s*10\s*$/, '').trim();
+        if (rawTitle) verdictTitle = rawTitle;
+
+        const afterVerdict = html.slice(verdictIdx + verdictMatch[0].length);
+
+        // Find TL;DR heading
+        const tldrRegex = /<h2[^>]*>[\s\S]*?TL;?\s*DR[\s\S]*?<\/h2>/i;
+        const tldrMatch = afterVerdict.match(tldrRegex);
+
+        // Conclusion = paragraphs between verdict heading and TL;DR (or end)
+        const conclusionHtml = tldrMatch
+          ? afterVerdict.slice(0, afterVerdict.indexOf(tldrMatch[0]))
+          : afterVerdict;
+
+        const paragraphs: string[] = [];
+        const pMatches = Array.from(conclusionHtml.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi));
+        for (const m of pMatches) {
+          const text = m[1].replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+          if (scoreRegex.test(text)) continue; // skip score paragraph
+          if (text) paragraphs.push(text);
+        }
+        conclusion = paragraphs.join('\n\n');
+
+        // Extract pros/cons from TL;DR bullets
+        if (tldrMatch) {
+          const tldrIdx = afterVerdict.indexOf(tldrMatch[0]);
+          const afterTldr = afterVerdict.slice(tldrIdx + tldrMatch[0].length);
+          const ulMatch = afterTldr.match(/<ul[^>]*>([\s\S]*?)<\/ul>/i);
+          if (ulMatch) {
+            const items = Array.from(ulMatch[1].matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi));
+            for (const item of items) {
+              const text = item[1].replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+              if (/^[+✓✔]/.test(text) || /^Pros?\s*:/i.test(text)) {
+                pros.push(text.replace(/^(?:[+✓✔]\s*|Pros?\s*:\s*)/i, ''));
+              } else if (/^[-–—✗✘]/.test(text) || /^Cons?\s*:/i.test(text)) {
+                cons.push(text.replace(/^(?:[-–—✗✘]\s*|Cons?\s*:\s*)/i, ''));
+              }
+            }
+          }
+        }
+
+        // Strip everything from verdict heading onwards
+        cleanedHtml = html.slice(0, verdictIdx);
+      } else {
+        // Only score found, no verdict heading — remove the score paragraph
+        cleanedHtml = html.replace(/<p[^>]*>[\s\S]*?(?:Score|Provisional\s+score)\s*:?\s*\d+(?:[.,]\d+)?\s*\/\s*10[\s\S]*?<\/p>/gi, '');
+      }
+
+      const config: ReviewConfig = {
+        score,
+        verdictTitle,
+        conclusion: conclusion || undefined,
+        ...(pros.length > 0 ? { pros } : {}),
+        ...(cons.length > 0 ? { cons } : {}),
+      };
+
+      return { config, cleaned: cleanedHtml };
+    }
+
     return { cleaned: html };
   }
 

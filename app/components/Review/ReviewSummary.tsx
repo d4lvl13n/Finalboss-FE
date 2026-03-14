@@ -91,7 +91,11 @@ export default function ReviewSummary({ articleTitle, fallbackImage, config }: P
           <div className="mb-4">
             <div className="text-xl font-extrabold text-yellow-300 mb-3">{verdictTitle}</div>
             {conclusion && (
-              <p className="text-gray-300 leading-7">{conclusion}</p>
+              <div className="text-gray-300 leading-7 space-y-3">
+                {conclusion.split('\n\n').map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
+              </div>
             )}
           </div>
         )}
