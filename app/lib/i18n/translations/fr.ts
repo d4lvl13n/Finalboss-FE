@@ -317,15 +317,10 @@ export const fr = {
     about: {
       heading: 'À propos',
       intro1:
-        ' est votre source incontournable pour les actualités gaming, les tests et les guides. Fondé en 2024, nous sommes passionnés par la création du contenu le plus précis et engageant pour la communauté gaming.',
+        ' est votre source incontournable pour les actualités gaming, les tests et les guides. Fondé en 2016, nous sommes passionnés par la création du contenu le plus précis et engageant pour la communauté gaming.',
       intro2:
         'Notre mission est de donner aux gamers les connaissances nécessaires pour prendre des décisions éclairées, que ce soit sur les dernières sorties de jeux, les avancées technologiques ou les tendances de l\'industrie.',
       teamHeading: 'Notre équipe',
-      founderRole: 'Fondateur & PDG',
-      editorRole: 'Rédacteur en chef',
-      founderBio: 'John est le visionnaire derrière ',
-      editorBio:
-        'Jane s\'assure que tout le contenu respecte les plus hauts standards...',
     },
 
     // ─── Page: Write For Us ───

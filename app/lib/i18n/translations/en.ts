@@ -315,15 +315,10 @@ export const en = {
     about: {
       heading: 'About Us',
       intro1:
-        ' is your go-to source for gaming news, reviews, and guides. Founded in 2024, we are passionate about providing the most accurate and engaging content for the gaming community.',
+        ' is your go-to source for gaming news, reviews, and guides. Founded in 2016, we are passionate about providing the most accurate and engaging content for the gaming community.',
       intro2:
         'Our mission is to empower gamers with the knowledge they need to make informed decisions, whether it\'s about the latest game releases, tech advancements, or industry trends.',
       teamHeading: 'Our Team',
-      founderRole: 'Founder & CEO',
-      editorRole: 'Lead Editor',
-      founderBio: 'John is the visionary behind ',
-      editorBio:
-        'Jane ensures that all the content meets the highest standards...',
     },
 
     // ─── Page: Write For Us ───
