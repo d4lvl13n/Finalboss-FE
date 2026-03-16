@@ -82,7 +82,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const stripHtml = (value: string | undefined) =>
     value ? value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() : '';
-  const description = stripHtml(article.excerpt || article.title);
+  const seo = article.seo;
+  const seoTitle = seo?.title || article.title;
+  const description = seo?.metaDesc || stripHtml(article.excerpt || article.title);
   const authorName = article.author?.node?.name;
 
   // Discover requires og:image ≥1200px wide for hero cards.
@@ -103,13 +105,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: article.title,
+    title: seoTitle,
     description: description || article.title,
     keywords: article.categories?.nodes?.map((c: { name: string }) => c.name),
     authors: authorName ? [{ name: authorName }] : undefined,
     openGraph: {
-      title: article.title,
-      description,
+      title: seo?.opengraphTitle || seoTitle,
+      description: seo?.opengraphDescription || description,
       siteName: siteConfig.siteName,
       images: [ogImage],
       url: `${baseUrl}/${article.slug}`,
@@ -124,8 +126,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       site: siteConfig.twitterHandle,
-      title: article.title,
-      description,
+      title: seo?.opengraphTitle || seoTitle,
+      description: seo?.opengraphDescription || description,
       images: [imageUrl],
     },
     alternates: {

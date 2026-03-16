@@ -38,6 +38,12 @@ export const GET_POST_BY_SLUG = gql`
           slug
         }
       }
+      seo {
+        title
+        metaDesc
+        opengraphTitle
+        opengraphDescription
+      }
     }
   }
 `;
