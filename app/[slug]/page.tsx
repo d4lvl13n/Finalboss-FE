@@ -66,6 +66,8 @@ const getPostGameTags = cache(async (slug: string) => {
   }
 });
 
+export const revalidate = 60; // Revalidate article pages every 60 seconds
+
 interface PageProps {
   params: { slug: string };
 }
