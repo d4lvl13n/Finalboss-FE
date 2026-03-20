@@ -1,1 +1,3 @@
-google.com, pub-7494322760704385, DIRECT, f08c47fec0942fa0 
+google.com, pub-7494322760704385, DIRECT, f08c47fec0942fa0
+# Ezoic — uncomment the line below after Ezoic account approval and replace EZOIC_PUB_ID
+# google.com, EZOIC_PUB_ID, RESELLER, f08c47fec0942fa0

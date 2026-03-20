@@ -13,6 +13,8 @@ import { formatDate } from '../../utils/formatDate';
 import ProcessedContent from '../ProcessedContent';
 import RelatedArticles from './RelatedArticles';
 import { ResponsiveAd, VerticalAd } from '../AdSense/AdBanner';
+import { EzoicArticleTop, EzoicArticleContent, EzoicArticleBottom, EzoicSidebar, EzoicPageManager } from '../Ezoic';
+import { ENABLE_EZOIC, EZOIC_SLOTS } from '../../lib/adsConfig';
 import InlineContentUpgrade from '../LeadCapture/InlineContentUpgrade';
 import InlineRelatedLinks from './InlineRelatedLinks';
 import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../../lib/queries/getRelatedPosts';
@@ -402,6 +404,13 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               </div>
             </div>
           )}
+          {isDesktop && ENABLE_EZOIC && (
+            <div className="hidden xl:block w-40 flex-shrink-0 mr-4">
+              <div className="sticky top-32">
+                <EzoicSidebar placeholderId={EZOIC_SLOTS.sidebarLeft} />
+              </div>
+            </div>
+          )}
 
           {/* Main Content - Centered with wider sidebar */}
           <div className="flex-1 max-w-3xl xl:max-w-[780px] bg-gray-900 rounded-lg shadow-2xl overflow-hidden">
@@ -434,6 +443,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 <ResponsiveAd adSlot="5844341661" />
               </motion.div>
               )}
+              {ENABLE_EZOIC && <EzoicArticleTop placeholderId={EZOIC_SLOTS.articleTop} />}
 
             <motion.div
               className={`${sourceSans.className} prose prose-lg prose-invert mx-auto max-w-3xl text-[18px] md:text-[19px] leading-8 tracking-[0.0025em]`}
@@ -560,6 +570,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 <ResponsiveAd adSlot="6510556072" />
               </motion.div>
               )}
+              {ENABLE_EZOIC && <EzoicArticleContent placeholderId={EZOIC_SLOTS.articleContent} />}
             </div>
           </div>
 
@@ -597,6 +608,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                     <VerticalAd adSlot="1258229391" />
                   </motion.div>
                 )}
+                {ENABLE_EZOIC && <EzoicSidebar placeholderId={EZOIC_SLOTS.sidebarRight} />}
               </div>
             </div>
           )}
@@ -615,6 +627,14 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         <ResponsiveAd adSlot="9184820874" />
       </motion.div>
       )}
+      {ENABLE_EZOIC && (
+        <div className="max-w-4xl mx-auto px-4">
+          <EzoicArticleBottom placeholderId={EZOIC_SLOTS.articleBottom} />
+        </div>
+      )}
+
+      {/* Ezoic SPA page manager — handles define/enable/display/refresh lifecycle */}
+      {ENABLE_EZOIC && <EzoicPageManager />}
 
       {/* Enhanced Related Articles Section */}
       <RelatedArticles 

@@ -19,6 +19,15 @@ declare global {
     dataLayer: Array<Record<string, unknown>>;
     adsbygoogle?: Array<Record<string, unknown>>;
     __adScriptLoaded?: boolean;
+    __ezoicScriptLoaded?: boolean;
+    ezstandalone?: {
+      cmd: Array<() => void>;
+      define: (...ids: number[]) => void;
+      enable: () => void;
+      display: () => void;
+      refresh: () => void;
+      enabled?: boolean;
+    };
     requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
   }
 }
