@@ -3,20 +3,6 @@
 import { useEffect } from 'react';
 import { ENABLE_EZOIC } from '../../lib/adsConfig';
 
-declare global {
-  interface Window {
-    ezstandalone?: {
-      cmd: Array<() => void>;
-      define: (...ids: number[]) => void;
-      enable: () => void;
-      display: () => void;
-      refresh: () => void;
-      enabled?: boolean;
-    };
-    __ezoicScriptLoaded?: boolean;
-  }
-}
-
 const EZOIC_SCRIPT_SRC = 'https://the.gatekeeperconsent.com/cmp.min.js';
 const EZOIC_SA_SRC = 'https://ezojs.com/ezoic/sa.min.js';
 
