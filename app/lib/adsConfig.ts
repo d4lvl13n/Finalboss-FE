@@ -5,9 +5,9 @@ export const ENABLE_AUTO_ADS = false;
 // Set ENABLE_EZOIC to true once the Ezoic account is approved and placeholder IDs are configured.
 export const ENABLE_EZOIC = process.env.NEXT_PUBLIC_ENABLE_EZOIC === 'true';
 
-// Placeholder IDs from the Ezoic dashboard.
-// Replace these with actual IDs after creating ad placeholders in https://publisher.ezoic.com
-// Format: each number maps to a div with id="ezoic-pub-ad-placeholder-{id}"
+// Optional explicit placeholder list from the Ezoic dashboard.
+// The app auto-discovers rendered placeholders on each page, but keeping this
+// list in env can still help with debugging or future non-article placements.
 export const EZOIC_PLACEHOLDER_IDS = (
   process.env.NEXT_PUBLIC_EZOIC_PLACEHOLDER_IDS || ''
 )

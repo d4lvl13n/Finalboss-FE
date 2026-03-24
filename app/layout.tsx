@@ -89,7 +89,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
-        {ENABLE_EZOIC && <link rel="preconnect" href="https://ezojs.com" />}
+        {ENABLE_EZOIC && <link rel="preconnect" href="https://www.ezojs.com" crossOrigin="anonymous" />}
+        {ENABLE_EZOIC && <link rel="preconnect" href="https://the.gatekeeperconsent.com" crossOrigin="anonymous" />}
+        {ENABLE_EZOIC && <link rel="preconnect" href="https://g.ezoic.net" crossOrigin="anonymous" />}
         <link rel="preconnect" href="https://www.google-analytics.com" />
         <link rel="preconnect" href="https://i.ytimg.com" />
         <link rel="alternate" type="application/rss+xml" title={`${siteConfig.name} Articles`} href={`${siteConfig.url}/feeds/articles`} />
@@ -130,6 +132,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             `}
           </Script>
         )}
+        <EzoicScriptLoader />
 
       </head>
       <body className="font-body">
@@ -141,7 +144,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <BackToTop />
         </SearchProvider>
         <AdScriptLoader enableAutoAds={ENABLE_AUTO_ADS} />
-        <EzoicScriptLoader />
         <Analytics />
         <SpeedInsights />
       </body>

@@ -24,10 +24,7 @@ export default function EzoicPlaceholder({
 
   return (
     <div className={`ad-container ${className}`} style={style}>
-      <div
-        id={`ezoic-pub-ad-placeholder-${placeholderId}`}
-        style={{ minHeight: '90px' }}
-      />
+      <div id={`ezoic-pub-ad-placeholder-${placeholderId}`} />
     </div>
   );
 }

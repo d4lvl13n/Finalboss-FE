@@ -19,14 +19,12 @@ declare global {
     dataLayer: Array<Record<string, unknown>>;
     adsbygoogle?: Array<Record<string, unknown>>;
     __adScriptLoaded?: boolean;
-    __ezoicScriptLoaded?: boolean;
     ezstandalone?: {
       cmd: Array<() => void>;
-      define: (...ids: number[]) => void;
-      enable: () => void;
-      display: () => void;
-      refresh: () => void;
-      enabled?: boolean;
+      showAds?: (...ids: number[]) => void;
+      destroyPlaceholders?: (...ids: number[]) => void;
+      destroyAll?: () => void;
+      isEzoicUser?: () => boolean;
     };
     requestIdleCallback?: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
   }

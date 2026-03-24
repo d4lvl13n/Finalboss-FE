@@ -1,4 +1,7 @@
-# 🎯 AdSense Implementation Guide for FinalBoss.io
+# Legacy AdSense Implementation Guide for FinalBoss.io
+
+This file documents the older AdSense setup work. The current Ezoic integration
+runbook lives in `EZOIC_IMPLEMENTATION_GUIDE.md`.
 
 ## ✅ What's Been Implemented
 
