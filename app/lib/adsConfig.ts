@@ -1,5 +1,6 @@
-export const SHOW_MANUAL_ADS = false;
-export const ENABLE_AUTO_ADS = false;
+// AdSense: set NEXT_PUBLIC_SHOW_MANUAL_ADS / NEXT_PUBLIC_ENABLE_AUTO_ADS to "true" on the host (e.g. Vercel).
+export const SHOW_MANUAL_ADS = process.env.NEXT_PUBLIC_SHOW_MANUAL_ADS === 'true';
+export const ENABLE_AUTO_ADS = process.env.NEXT_PUBLIC_ENABLE_AUTO_ADS === 'true';
 
 // Ezoic configuration
 // Set ENABLE_EZOIC to true once the Ezoic account is approved and placeholder IDs are configured.
