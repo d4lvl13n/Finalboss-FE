@@ -39,20 +39,50 @@ const navItems = [
   { name: t('nav.team'), href: '/authors' },
 ];
 
+const SCROLL_IDLE_TOP = 24;
+const SCROLL_DIRECTION_EPS = 6;
+
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHeaderHidden, setHeaderHidden] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
   const { openSearch } = useSearch();
   const menuRef = useRef<HTMLDivElement>(null);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 80);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    lastScrollY.current = window.scrollY;
   }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setIsScrolled(y > 80);
+
+      if (isMobileMenuOpen || isMegaMenuOpen) {
+        setHeaderHidden(false);
+        lastScrollY.current = y;
+        return;
+      }
+
+      const prev = lastScrollY.current;
+      const delta = y - prev;
+
+      if (y <= SCROLL_IDLE_TOP) {
+        setHeaderHidden(false);
+      } else if (delta > SCROLL_DIRECTION_EPS) {
+        setHeaderHidden(true);
+      } else if (delta < -SCROLL_DIRECTION_EPS) {
+        setHeaderHidden(false);
+      }
+
+      lastScrollY.current = y;
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [isMobileMenuOpen, isMegaMenuOpen]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -72,9 +102,9 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[transform,background-color,box-shadow,backdrop-filter] duration-300 ease-out ${
         isScrolled ? 'bg-gray-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-      }`}
+      } ${isHeaderHidden ? '-translate-y-full pointer-events-none' : 'translate-y-0 pointer-events-auto'}`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center py-4">
