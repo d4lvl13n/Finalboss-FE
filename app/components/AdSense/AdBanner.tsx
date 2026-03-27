@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { ADSENSE_SCRIPT_LOADED_EVENT, SHOW_MANUAL_ADS } from '../../lib/adsConfig';
 import siteConfig from '../../lib/siteConfig';
 
@@ -19,7 +19,8 @@ export default function AdBanner({
 }: AdBannerProps) {
   const pushed = useRef(false);
 
-  useEffect(() => {
+  // Layout effect so the <ins> is filled before paint; reduces empty responsive units in complex layouts.
+  useLayoutEffect(() => {
     if (!SHOW_MANUAL_ADS) return;
 
     pushed.current = false;

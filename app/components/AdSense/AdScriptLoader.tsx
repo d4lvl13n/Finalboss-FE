@@ -23,8 +23,9 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
     if (!shouldLoad) return
 
     const queueAutoAds = () => {
-      if (!enableAutoAds) return
+      if (!enableAutoAds || window.__pageLevelAdsQueued) return
       try {
+        window.__pageLevelAdsQueued = true
         const adsQueue = window.adsbygoogle || []
         adsQueue.push({
           google_ad_client: siteConfig.adsensePublisherId,
@@ -32,6 +33,7 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
         })
         window.adsbygoogle = adsQueue
       } catch (error) {
+        window.__pageLevelAdsQueued = false
         console.warn('AdSense auto ads failed to initialize', error)
       }
     }
@@ -40,17 +42,28 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
       window.dispatchEvent(new Event(ADSENSE_SCRIPT_LOADED_EVENT))
     }
 
+    /** Page-level auto ads compete with the adsbygoogle queue; run after manual slot pushes have been scheduled. */
+    const scheduleAutoAdsAfterManual = () => {
+      if (!enableAutoAds) return
+      if (SHOW_MANUAL_ADS) {
+        setTimeout(() => queueAutoAds(), 250)
+      } else {
+        queueAutoAds()
+      }
+    }
+
     const loadScript = () => {
       if (window.__adScriptLoaded) {
-        queueAutoAds()
+        // Script already injected (e.g. strict mode / remount); only auto-ads may need a first queue.
+        scheduleAutoAdsAfterManual()
         return
       }
 
       const existing = document.querySelector<HTMLScriptElement>('script[data-adsbygoogle="true"]')
       if (existing) {
         window.__adScriptLoaded = true
-        queueAutoAds()
         notifyManualSlots()
+        scheduleAutoAdsAfterManual()
         return
       }
 
@@ -61,8 +74,8 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
       script.setAttribute('data-adsbygoogle', 'true')
       script.onload = () => {
         window.__adScriptLoaded = true
-        queueAutoAds()
         notifyManualSlots()
+        scheduleAutoAdsAfterManual()
       }
       document.head.appendChild(script)
     }

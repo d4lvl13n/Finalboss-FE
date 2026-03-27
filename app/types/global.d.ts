@@ -20,6 +20,7 @@ declare global {
     adsbygoogle?: Array<Record<string, unknown>>;
     /** Set when the AdSense script has executed (manual + auto init). */
     __adScriptLoaded?: boolean;
+    __pageLevelAdsQueued?: boolean;
     ezstandalone?: {
       cmd: Array<() => void>;
       showAds?: (...ids: number[]) => void;

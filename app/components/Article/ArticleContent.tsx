@@ -408,7 +408,8 @@ export default function ArticleContent({ article }: ArticleContentProps) {
           )}
 
           {/* Main Content - Centered with wider sidebar */}
-          <div className="flex-1 max-w-3xl xl:max-w-[780px] bg-gray-900 rounded-lg shadow-2xl overflow-hidden">
+          {/* overflow-hidden breaks AdSense responsive iframes (empty slots); rounding via inner content is enough */}
+          <div className="flex-1 max-w-3xl xl:max-w-[780px] bg-gray-900 rounded-lg shadow-2xl">
           <div className="p-4 sm:p-6 md:p-8">
             <motion.h1
               className="text-4xl sm:text-5xl font-bold mb-4 text-yellow-400"
