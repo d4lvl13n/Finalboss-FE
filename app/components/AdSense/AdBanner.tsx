@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
-import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
+import { useEffect, useRef } from 'react';
+import { ADSENSE_SCRIPT_LOADED_EVENT, SHOW_MANUAL_ADS } from '../../lib/adsConfig';
 import siteConfig from '../../lib/siteConfig';
 
 interface AdBannerProps {
@@ -17,16 +17,46 @@ export default function AdBanner({
   className = '',
   style = {}
 }: AdBannerProps) {
-  // Always run the hook to satisfy React rules
+  const pushed = useRef(false);
+
   useEffect(() => {
     if (!SHOW_MANUAL_ADS) return;
-    try {
-      window.adsbygoogle = window.adsbygoogle || []
-      window.adsbygoogle.push({})
-    } catch (err) {
-      console.error('AdSense error:', err)
+
+    pushed.current = false;
+    let cancelled = false;
+
+    const pushUnit = () => {
+      if (cancelled || pushed.current) return;
+      pushed.current = true;
+      // Let layouts settle (incl. flex max-width); early push often yields blank responsive units.
+      requestAnimationFrame(() => {
+        if (cancelled) return;
+        requestAnimationFrame(() => {
+          if (cancelled) return;
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (err) {
+            console.error('AdSense error:', err);
+            pushed.current = false;
+          }
+        });
+      });
+    };
+
+    if (window.__adScriptLoaded) {
+      pushUnit();
+      return () => {
+        cancelled = true;
+      };
     }
-  }, []);
+
+    const onScriptReady = () => pushUnit();
+    window.addEventListener(ADSENSE_SCRIPT_LOADED_EVENT, onScriptReady);
+    return () => {
+      cancelled = true;
+      window.removeEventListener(ADSENSE_SCRIPT_LOADED_EVENT, onScriptReady);
+    };
+  }, [adSlot]);
 
   if (!SHOW_MANUAL_ADS) {
     return null;

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { SHOW_MANUAL_ADS } from '../../lib/adsConfig'
+import { ADSENSE_SCRIPT_LOADED_EVENT, SHOW_MANUAL_ADS } from '../../lib/adsConfig'
 import siteConfig, { adsenseSrc } from '../../lib/siteConfig'
 
 interface AdScriptLoaderProps {
@@ -36,6 +36,10 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
       }
     }
 
+    const notifyManualSlots = () => {
+      window.dispatchEvent(new Event(ADSENSE_SCRIPT_LOADED_EVENT))
+    }
+
     const loadScript = () => {
       if (window.__adScriptLoaded) {
         queueAutoAds()
@@ -46,6 +50,7 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
       if (existing) {
         window.__adScriptLoaded = true
         queueAutoAds()
+        notifyManualSlots()
         return
       }
 
@@ -57,11 +62,21 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
       script.onload = () => {
         window.__adScriptLoaded = true
         queueAutoAds()
+        notifyManualSlots()
       }
       document.head.appendChild(script)
     }
 
+    // Manual units need adsbygoogle.js ASAP; requestIdleCallback was delaying fills and left empty slots.
     const scheduleLoad = () => {
+      if (SHOW_MANUAL_ADS) {
+        if (document.readyState === 'complete') {
+          loadScript()
+        } else {
+          window.addEventListener('load', loadScript, { once: true })
+        }
+        return
+      }
       if (typeof window.requestIdleCallback === 'function') {
         window.requestIdleCallback(() => loadScript())
       } else {

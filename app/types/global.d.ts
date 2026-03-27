@@ -18,6 +18,7 @@ declare global {
     ) => void;
     dataLayer: Array<Record<string, unknown>>;
     adsbygoogle?: Array<Record<string, unknown>>;
+    /** Set when the AdSense script has executed (manual + auto init). */
     __adScriptLoaded?: boolean;
     ezstandalone?: {
       cmd: Array<() => void>;

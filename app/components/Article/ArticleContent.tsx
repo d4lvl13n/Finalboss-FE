@@ -392,15 +392,10 @@ export default function ArticleContent({ article }: ArticleContentProps) {
           {isDesktop && SHOW_MANUAL_ADS && (
             <div className="hidden xl:block w-40 flex-shrink-0 mr-4">
               <div className="sticky top-32">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 1.2 }}
-                  className="sidebar-ad-sticky bg-gray-800/20 rounded-lg p-3 border border-gray-700/20"
-                >
+                <div className="sidebar-ad-sticky bg-gray-800/20 rounded-lg p-3 border border-gray-700/20">
                   <div className="ad-label text-xs mb-3">{t('article.adLabel')}</div>
                   <VerticalAd adSlot="1258229391" />
-                </motion.div>
+                </div>
               </div>
             </div>
           )}
@@ -433,15 +428,10 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
               {/* 🎯 AD PLACEMENT 1: High-performing above-the-fold ad */}
               {SHOW_MANUAL_ADS && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="article-ad-top"
-              >
+              <div className="article-ad-top">
                 <div className="ad-label">{t('article.adLabel')}</div>
                 <ResponsiveAd adSlot="5844341661" />
-              </motion.div>
+              </div>
               )}
               {ENABLE_EZOIC && <EzoicArticleTop placeholderId={EZOIC_SLOTS.articleTop} />}
 
@@ -560,15 +550,10 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
               {/* 🎯 AD PLACEMENT 2: End of content, high engagement */}
               {SHOW_MANUAL_ADS && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="article-ad-content"
-              >
+              <div className="article-ad-content">
                 <div className="ad-label">{t('article.adLabel')}</div>
                 <ResponsiveAd adSlot="6510556072" />
-              </motion.div>
+              </div>
               )}
               {ENABLE_EZOIC && <EzoicArticleContent placeholderId={EZOIC_SLOTS.articleContent} />}
             </div>
@@ -598,15 +583,10 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 
                 {/* Ad below sidebar */}
                 {SHOW_MANUAL_ADS && (
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 1.0 }}
-                    className="bg-gray-800/20 rounded-lg p-3 border border-gray-700/20"
-                  >
+                  <div className="bg-gray-800/20 rounded-lg p-3 border border-gray-700/20">
                     <div className="ad-label text-xs mb-3">{t('article.adLabel')}</div>
                     <VerticalAd adSlot="1258229391" />
-                  </motion.div>
+                  </div>
                 )}
                 {ENABLE_EZOIC && <EzoicSidebar placeholderId={EZOIC_SLOTS.sidebarRight} />}
               </div>
@@ -617,15 +597,10 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
       {/* 🎯 AD PLACEMENT 3: Before related articles - premium position */}
       {SHOW_MANUAL_ADS && (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.8 }}
-        className="article-ad-bottom max-w-4xl mx-auto px-4"
-      >
+      <div className="article-ad-bottom max-w-4xl mx-auto px-4">
         <div className="ad-label">{t('article.adLabel')}</div>
         <ResponsiveAd adSlot="9184820874" />
-      </motion.div>
+      </div>
       )}
       {ENABLE_EZOIC && (
         <div className="max-w-4xl mx-auto px-4">

@@ -2,6 +2,9 @@
 export const SHOW_MANUAL_ADS = process.env.NEXT_PUBLIC_SHOW_MANUAL_ADS === 'true';
 export const ENABLE_AUTO_ADS = process.env.NEXT_PUBLIC_ENABLE_AUTO_ADS === 'true';
 
+/** Dispatched on `window` when `adsbygoogle.js` has loaded (see AdScriptLoader). */
+export const ADSENSE_SCRIPT_LOADED_EVENT = 'adsense-script-loaded';
+
 // Ezoic configuration
 // Set ENABLE_EZOIC to true once the Ezoic account is approved and placeholder IDs are configured.
 export const ENABLE_EZOIC = process.env.NEXT_PUBLIC_ENABLE_EZOIC === 'true';
