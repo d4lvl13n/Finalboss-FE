@@ -408,9 +408,11 @@ export default function ArticleContent({ article }: ArticleContentProps) {
           )}
 
           {/* Main Content - Centered with wider sidebar */}
-          {/* overflow-hidden breaks AdSense responsive iframes (empty slots); rounding via inner content is enough */}
-          <div className="flex-1 max-w-3xl xl:max-w-[780px] bg-gray-900 rounded-lg shadow-2xl">
-          <div className="p-4 sm:p-6 md:p-8">
+          {/* min-w-0 is critical: without it, flex items default to min-width:auto which prevents
+              shrinking below content width. Any wide child (Google auto-ad, embed, image) would
+              force the entire column wider than the mobile viewport. */}
+          <div className="flex-1 min-w-0 max-w-3xl xl:max-w-[780px] bg-gray-900 rounded-lg shadow-2xl">
+          <div className="p-4 sm:p-6 md:p-8 overflow-x-hidden">
             <motion.h1
               className="text-4xl sm:text-5xl font-bold mb-4 text-yellow-400"
               initial={{ opacity: 0, y: 20 }}
