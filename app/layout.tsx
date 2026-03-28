@@ -1,7 +1,7 @@
 import './globals.css';
 import { Inter, Space_Grotesk } from 'next/font/google';
 import { ReactNode } from 'react';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import Script from 'next/script';
 import RouteLoader from './components/RouteLoader';
 import { Analytics } from '@vercel/analytics/next';
@@ -52,6 +52,12 @@ const organizationStructuredData = {
   sameAs: [
     siteConfig.socialLinks.twitter,
   ],
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export const metadata: Metadata = {
@@ -135,16 +141,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <EzoicScriptLoader />
 
       </head>
-      <body className="font-body overflow-x-clip w-full">
-        <div id="__content" className="overflow-x-clip w-full">
-          <SearchProvider>
-            <RouteLoader />
-            <LeadCaptureManager />
-            {children}
-            <SearchOverlay />
-            <BackToTop />
-          </SearchProvider>
-        </div>
+      <body className="font-body">
+        <SearchProvider>
+          <RouteLoader />
+          <LeadCaptureManager />
+          {children}
+          <SearchOverlay />
+          <BackToTop />
+        </SearchProvider>
         <AdScriptLoader enableAutoAds={ENABLE_AUTO_ADS} />
         <Analytics />
         <SpeedInsights />

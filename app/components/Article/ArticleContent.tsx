@@ -344,7 +344,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   const { config: reviewConfig, cleaned: contentCleaned } = extractReviewConfig(article.content);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-200 overflow-x-hidden">
+    <div className="min-h-screen bg-gray-900 text-gray-200">
       {/* Reading Progress Bar */}
       <ReadingProgressBar />
 

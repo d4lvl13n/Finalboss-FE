@@ -74,7 +74,7 @@ export default function AdBanner({
         data-ad-client={siteConfig.adsensePublisherId}
         data-ad-slot={adSlot}
         data-ad-format={adFormat}
-        data-full-width-responsive="true"
+        data-full-width-responsive="false"
       />
     </div>
   );

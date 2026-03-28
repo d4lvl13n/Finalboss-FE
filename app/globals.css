@@ -3,26 +3,44 @@
 @tailwind utilities;
 
 /* Custom styles */
-html {
-  overflow-x: clip;
-}
-
-body {
+html, body {
   @apply bg-gray-900 text-white;
-  overflow-x: clip;
-  width: 100%;
-  overscroll-behavior-x: none;
-  -webkit-overflow-scrolling: touch;
+  overflow-x: hidden;
 }
 
-/* Prevent Google Auto Ads from exceeding viewport */
-.google-auto-placed,
+/*
+ * Neutralise Google AdSense "full-width-responsive" behaviour.
+ * Google's ad script injects negative margins + extra width on <ins> and its
+ * inner iframe so the ad breaks out of padded containers to fill 100vw.
+ * Those negative margins shift the surrounding flex/flow layout on mobile,
+ * causing content to be pushed off-screen to the left.
+ */
 ins.adsbygoogle,
-ins.adsbygoogle[data-ad-status],
-ins.adsbygoogle iframe,
-div[id^="google_ads_"],
-div[id^="aswift_"] {
+ins.adsbygoogle[data-ad-status] {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
   max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+ins.adsbygoogle iframe,
+ins.adsbygoogle > div,
+ins.adsbygoogle > ins {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Google auto-placed ad containers */
+.google-auto-placed,
+div[id^="aswift_"],
+div[id^="google_ads_"] {
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  overflow: hidden !important;
   box-sizing: border-box !important;
 }
 
