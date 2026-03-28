@@ -135,14 +135,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <EzoicScriptLoader />
 
       </head>
-      <body className="font-body">
-        <SearchProvider>
-          <RouteLoader />
-          <LeadCaptureManager />
-          {children}
-          <SearchOverlay />
-          <BackToTop />
-        </SearchProvider>
+      <body className="font-body overflow-x-clip w-full">
+        <div id="__content" className="overflow-x-clip w-full">
+          <SearchProvider>
+            <RouteLoader />
+            <LeadCaptureManager />
+            {children}
+            <SearchOverlay />
+            <BackToTop />
+          </SearchProvider>
+        </div>
         <AdScriptLoader enableAutoAds={ENABLE_AUTO_ADS} />
         <Analytics />
         <SpeedInsights />
