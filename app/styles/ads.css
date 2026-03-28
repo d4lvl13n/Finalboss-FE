@@ -10,6 +10,8 @@
   border-radius: 8px;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .ad-container:hover {
@@ -47,6 +49,12 @@
 .homepage-ad-section {
   padding: 2rem 0;
   margin: 3rem 0;
+}
+
+/* Prevent AdSense iframes from exceeding viewport on mobile */
+.ad-container ins.adsbygoogle,
+.ad-container iframe {
+  max-width: 100% !important;
 }
 
 /* Responsive Design */
