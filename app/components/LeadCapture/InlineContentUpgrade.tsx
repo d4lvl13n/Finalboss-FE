@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaDownload, FaGamepad, FaClock, FaLock } from 'react-icons/fa';
-import { formspreeUrl } from '../../lib/siteConfig';
 import { t } from '../../lib/i18n';
 
 interface InlineContentUpgradeProps {
@@ -28,22 +27,17 @@ const InlineContentUpgrade: React.FC<InlineContentUpgradeProps> = ({
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(formspreeUrl, {
+      const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: email,
-          source: `Inline Content Upgrade - ${title}`,
-          article_topic: articleTopic,
-          message: `User requested bonus content: ${bonusContent} for ${articleTopic}`
+          email,
+          source: `Inline Content Upgrade - ${articleTopic}`,
         }),
       });
 
-      if (response.ok) {
-        setIsSuccess(true);
-      }
+      if (!response.ok) throw new Error();
+      setIsSuccess(true);
     } catch (error) {
       console.error('Error submitting form:', error);
     } finally {

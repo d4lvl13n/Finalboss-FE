@@ -1,7 +1,8 @@
 google.com, pub-7494322760704385, DIRECT, f08c47fec0942fa0
-
-# --- Ezoic ---
-# Fill in EZOIC_PUB_ID from the Ezoic dashboard after account approval.
-# The Google reseller line keeps compatibility with the existing AdSense setup.
-# google.com, EZOIC_PUB_ID, RESELLER, f08c47fec0942fa0
-# ezoic.com, EZOIC_PUB_ID, DIRECT, 31bd73c4a4ed1b63
+sonobi.com, 192ecdea01, RESELLER, d1a215d9eb5aee9e
+google.com, pub-6644558441501035, DIRECT, f08c47fec0942fa0
+google.com, pub-1175987143200523, RESELLER, f08c47fec0942fa0
+risecodes.com, 608fee2f84a3a300011acd3f, DIRECT
+ssp.cadent.com, 45, DIRECT, 1e1d41537f7cad7f
+yahoo.com, 100028, DIRECT, e1a5b5b6e3255540
+themediagrid.com, Q19AKF, DIRECT, 9fac4a4a87c2a44f

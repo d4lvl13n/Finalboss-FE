@@ -99,6 +99,13 @@ export const fr = {
       instantDelivery: 'Livraison instantanée',
       privacyNote: 'Pas de spam, désinscription à tout moment',
     },
+    slideIn: {
+      heading: 'Les infos avant tout le monde',
+      subheading: 'Tips hebdo & tests exclusifs',
+      placeholder: 'votre@email.com',
+      cta: 'OK',
+      privacy: 'Pas de spam. Désinscription libre.',
+    },
     sticky: {
       hotDeals: 'BONS PLANS',
       desktopMessage:

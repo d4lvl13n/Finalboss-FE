@@ -1,0 +1,53 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Upload metadata and screenshots to App Store Connect"
+  lane :metadata do
+    api_key = app_store_connect_api_key(
+      key_id: "2LFBN4H9RH",
+      issuer_id: ENV["ASC_ISSUER_ID"],
+      key_filepath: File.expand_path("~/Downloads/AuthKey_2LFBN4H9RH.p8"),
+      in_house: false,
+    )
+
+    deliver(
+      api_key: api_key,
+      skip_binary_upload: true,
+      skip_app_version_update: true,
+      force: true,
+      automatic_release: false,
+      submit_for_review: false,
+      precheck_include_in_app_purchases: false,
+      overwrite_screenshots: true,
+      app_rating_config_path: "./fastlane/rating_config.json",
+      primary_category: "GAMES",
+      secondary_category: "NEWS",
+    )
+  end
+
+  desc "Submit for review"
+  lane :submit do
+    api_key = app_store_connect_api_key(
+      key_id: "2LFBN4H9RH",
+      issuer_id: ENV["ASC_ISSUER_ID"],
+      key_filepath: File.expand_path("~/Downloads/AuthKey_2LFBN4H9RH.p8"),
+      in_house: false,
+    )
+
+    deliver(
+      api_key: api_key,
+      skip_binary_upload: true,
+      skip_screenshots: true,
+      skip_metadata: true,
+      submit_for_review: true,
+      automatic_release: true,
+      force: true,
+      precheck_include_in_app_purchases: false,
+      submission_information: {
+        add_id_info_uses_idfa: false,
+        export_compliance_uses_encryption: false,
+        export_compliance_is_exempt: true,
+      }
+    )
+  end
+end

@@ -10,12 +10,12 @@ import '../../styles/article.css';
 import '../../styles/ads.css';
 import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
 import { formatDate } from '../../utils/formatDate';
-import ProcessedContent from '../ProcessedContent';
+// ProcessedContent now used via ArticleBodyWithAds
 import RelatedArticles from './RelatedArticles';
-import { ResponsiveAd, VerticalAd } from '../AdSense/AdBanner';
-import { EzoicArticleTop, EzoicArticleContent, EzoicArticleBottom, EzoicSidebar, EzoicPageManager } from '../Ezoic';
+import { ResponsiveAd } from '../AdSense/AdBanner';
+import { EzoicArticleTop, EzoicArticleContent, EzoicArticleBottom, EzoicPageManager } from '../Ezoic';
 import { ENABLE_EZOIC, EZOIC_SLOTS } from '../../lib/adsConfig';
-import InlineContentUpgrade from '../LeadCapture/InlineContentUpgrade';
+// InlineContentUpgrade now rendered via ArticleBodyWithAds
 import InlineRelatedLinks from './InlineRelatedLinks';
 import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../../lib/queries/getRelatedPosts';
 import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
@@ -26,6 +26,7 @@ import ReviewSummary, { ReviewConfig } from '../Review/ReviewSummary';
 import ReviewJsonLd from '../Seo/ReviewJsonLd';
 import Breadcrumbs from '../Breadcrumbs';
 import TableOfContents from './TableOfContents';
+import ArticleBodyWithAds from './ArticleBodyWithAds';
 import ReadingProgressBar from '../ReadingProgressBar';
 import LatestSidebar from '../LatestSidebar';
 import GameMetaCard from '../GameMetaCard';
@@ -348,8 +349,8 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       {/* Reading Progress Bar */}
       <ReadingProgressBar />
 
-      {/* Parallax Featured Image */}
-      <div className="relative h-[60vh] overflow-hidden">
+      {/* Hero Image with Title Overlay */}
+      <div className="relative h-[50vh] sm:h-[55vh] md:h-[60vh] overflow-hidden">
         {article.featuredImage && !featuredImageError ? (
           <motion.div className="absolute inset-0" >
             <Image
@@ -361,67 +362,73 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               priority
               placeholder="blur"
               blurDataURL={PLACEHOLDER_BASE64}
-              className=""
               onError={() => setFeaturedImageError(true)}
             />
           </motion.div>
         ) : (
-          <motion.div className="absolute inset-0 bg-gray-800 flex items-center justify-center" >
-            <div className="text-gray-600 text-lg">
-              {article.title}
-            </div>
-          </motion.div>
+          <motion.div className="absolute inset-0 bg-gray-800" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900/90" />
-      </div>
+        {/* Stronger gradient for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-900" />
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent" style={{ top: '40%' }} />
 
-      {/* Breadcrumbs */}
-      <div className="relative z-10 px-4 -mt-16 mb-4 max-w-7xl mx-auto">
-        <Breadcrumbs 
-          items={[
-            ...(primaryCategory ? [{ label: primaryCategory.name, href: `/${primaryCategory.name.toLowerCase()}` }] : []),
-            { label: article.title }
-          ]}
-        />
-      </div>
-
-      {/* Article Content */}
-      <div className="relative z-10 px-4 -mt-8">
-        <div className="flex justify-center max-w-[1600px] mx-auto">
-          {/* Left Sidebar - Desktop Only */}
-          {isDesktop && SHOW_MANUAL_ADS && (
-            <div className="hidden xl:block w-40 flex-shrink-0 mr-4">
-              <div className="sticky top-32">
-                <div className="sidebar-ad-sticky bg-gray-800/20 rounded-lg p-3 border border-gray-700/20">
-                  <div className="ad-label text-xs mb-3">{t('article.adLabel')}</div>
-                  <VerticalAd adSlot="1258229391" />
-                </div>
-              </div>
-            </div>
-          )}
-          {isDesktop && ENABLE_EZOIC && (
-            <div className="hidden xl:block w-40 flex-shrink-0 mr-4">
-              <div className="sticky top-32">
-                <EzoicSidebar placeholderId={EZOIC_SLOTS.sidebarLeft} />
-              </div>
-            </div>
-          )}
-
-          {/* Main Content - Centered with wider sidebar */}
-          {/* overflow-hidden breaks AdSense responsive iframes (empty slots); rounding via inner content is enough */}
-          <div className="flex-1 max-w-3xl xl:max-w-[780px] bg-gray-900 rounded-lg shadow-2xl">
-          <div className="p-4 sm:p-6 md:p-8">
+        {/* Title + meta overlay */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 px-4 pb-6 sm:pb-8">
+          <div className="max-w-4xl mx-auto">
+            <Breadcrumbs
+              items={[
+                ...(primaryCategory ? [{ label: primaryCategory.name, href: `/${primaryCategory.name.toLowerCase()}` }] : []),
+                { label: article.title }
+              ]}
+            />
             <motion.h1
-              className="text-4xl sm:text-5xl font-bold mb-4 text-yellow-400"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mt-3 mb-3 text-white drop-shadow-lg"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
               {article.title}
             </motion.h1>
+            {/* Compact author line */}
+            <div className="flex items-center gap-3 text-sm text-gray-300">
+              {article.author?.node?.name && (
+                <Link
+                  href={`/author/${article.author?.node?.slug || ''}`}
+                  className="text-yellow-400 font-medium hover:text-yellow-300 transition-colors"
+                >
+                  {article.author.node.name}
+                </Link>
+              )}
+              <span className="text-gray-500">·</span>
+              <span>{publishedDate}</span>
+              <span className="text-gray-500">·</span>
+              <span>{Math.ceil(article.content.split(' ').length / 200)} {t('article.minRead')}</span>
+              {article.categories?.nodes && article.categories.nodes.length > 0 && (
+                <>
+                  <span className="text-gray-500 hidden sm:inline">·</span>
+                  <div className="hidden sm:flex gap-2">
+                    {article.categories.nodes.slice(0, 2).map((category) => (
+                      <span key={category.id} className="bg-yellow-400/20 text-yellow-400 text-xs px-2 py-0.5 rounded-full">
+                        {category.name}
+                      </span>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
 
-            
+      {/* Article Content */}
+      <div className="relative z-10 px-4 -mt-2">
+        <div className="flex justify-center max-w-[1600px] mx-auto">
+          {/* Left sidebar removed — in-article ads provide better viewability */}
 
+          {/* Main Content - Centered with wider sidebar */}
+          {/* overflow-hidden breaks AdSense responsive iframes (empty slots); rounding via inner content is enough */}
+          <div className="flex-1 max-w-3xl xl:max-w-[780px] bg-gray-900 rounded-lg shadow-2xl">
+          <div className="p-4 sm:p-6 md:p-8">
             {primaryGameTag && <GameMetaCard gameTag={primaryGameTag} />}
 
             {/* Table of Contents for long articles */}
@@ -436,14 +443,12 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               )}
               {ENABLE_EZOIC && <EzoicArticleTop placeholderId={EZOIC_SLOTS.articleTop} />}
 
-            <motion.div
-              className={`${sourceSans.className} prose prose-lg prose-invert mx-auto max-w-3xl text-[18px] md:text-[19px] leading-8 tracking-[0.0025em]`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              <ProcessedContent content={contentCleaned} />
-            </motion.div>
+            <ArticleBodyWithAds
+              content={contentCleaned}
+              sourceSansClassName={sourceSans.className}
+              articleTitle={article.title}
+              categoryName={primaryCategory?.name || 'Gaming'}
+            />
 
             {articlesToShow.length > 0 && (
               <InlineRelatedLinks articles={articlesToShow.slice(0, 3)} />
@@ -468,103 +473,40 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               </>
             )}
 
-            {/* Author and Date Section */}
-            <motion.div
-              className="inline-block rounded-xl bg-gray-800/50 border border-gray-700/50 backdrop-blur-sm shadow-xl p-4 mb-6 sm:mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <div className="flex items-center gap-6">
-                {/* Author Info */}
-                <div className="flex items-center gap-3">
-                  <Link 
-                    href={`/author/${article.author?.node?.slug || ''}`}
-                    className="w-12 h-12 rounded-full bg-gray-700/70 border-2 border-yellow-400/20 flex items-center justify-center text-yellow-400 text-lg font-semibold shadow-lg hover:border-yellow-400/50 transition-colors"
-                  >
-                    {article.author?.node?.name?.charAt(0)}
-                  </Link>
-                  <div className="flex flex-col">
-                    <Link 
-                      href={`/author/${article.author?.node?.slug || ''}`}
-                      className="text-yellow-400 font-medium tracking-wide hover:text-yellow-300 transition-colors"
-                    >
-                      {article.author?.node?.name}
-                    </Link>
-                    <div className="text-sm text-gray-400 flex flex-col">
-                      <span>{t('article.publishedOn', { date: publishedDate })}</span>
-                      {showUpdatedTimestamp && updatedDate && (
-                        <span className="text-xs text-gray-500">{t('article.updatedOn', { date: updatedDate })}</span>
-                      )}
-                    </div>
-                  </div>
+            {/* Compact author byline at end of article */}
+            <div className="flex items-center gap-3 mt-8 mb-6 pt-6 border-t border-gray-700/50">
+              <Link
+                href={`/author/${article.author?.node?.slug || ''}`}
+                className="w-10 h-10 rounded-full bg-gray-700/70 border-2 border-yellow-400/20 flex items-center justify-center text-yellow-400 font-semibold hover:border-yellow-400/50 transition-colors flex-shrink-0"
+              >
+                {article.author?.node?.name?.charAt(0)}
+              </Link>
+              <div className="text-sm">
+                <Link
+                  href={`/author/${article.author?.node?.slug || ''}`}
+                  className="text-yellow-400 font-medium hover:text-yellow-300 transition-colors"
+                >
+                  {article.author?.node?.name}
+                </Link>
+                <div className="text-gray-500">
+                  {t('article.publishedOn', { date: publishedDate })}
+                  {showUpdatedTimestamp && updatedDate && (
+                    <span> · {t('article.updatedOn', { date: updatedDate })}</span>
+                  )}
                 </div>
-
-                {/* Divider */}
-                <div className="h-8 w-px bg-gray-700/50"></div>
-
-                {/* Reading Time Indicator */}
-                <div className="flex items-center gap-2 text-sm text-gray-400">
-                  <svg 
-                    className="w-5 h-5 text-yellow-400/70" 
-                    fill="currentColor" 
-                    viewBox="0 0 20 20"
-                  >
-                    <path 
-                      fillRule="evenodd" 
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" 
-                      clipRule="evenodd" 
-                    />
-                  </svg>
-                  <span>{Math.ceil(article.content.split(' ').length / 200)} {t('article.minRead')}</span>
-                </div>
-
-                {/* Category Tags */}
-                {article.categories?.nodes && article.categories.nodes.length > 0 && (
-                  <>
-                    <div className="h-8 w-px bg-gray-700/50"></div>
-                    <div className="flex gap-2">
-                      {article.categories.nodes.slice(0, 2).map((category) => (
-                        <span key={category.id} className="bg-yellow-400/20 text-yellow-400 text-xs px-2 py-1 rounded-full">
-                          {category.name}
-                        </span>
-                      ))}
-                    </div>
-                  </>
-                )}
               </div>
-            </motion.div>
+            </div>
 
-            {/* Inline Content Upgrade - Strategic Placement */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            >
-              <InlineContentUpgrade
-                title={t('article.contentUpgrade.title')}
-                description={t('article.contentUpgrade.description')}
-                bonusContent={t('article.contentUpgrade.bonus', { category: primaryCategory?.name || 'Gaming' })}
-                articleTopic={article.title}
-              />
-            </motion.div>
-
-              {/* 🎯 AD PLACEMENT 2: End of content, high engagement */}
-              {SHOW_MANUAL_ADS && (
-              <div className="article-ad-content">
-                <div className="ad-label">{t('article.adLabel')}</div>
-                <ResponsiveAd adSlot="6510556072" />
-              </div>
-              )}
+              {/* End-of-content ad removed — in-article ads + bottom ad provide better coverage */}
               {ENABLE_EZOIC && <EzoicArticleContent placeholderId={EZOIC_SLOTS.articleContent} />}
             </div>
           </div>
 
-          {/* Right Sidebar - Desktop Only - Extra Wide */}
+          {/* Right Sidebar - Desktop Only */}
           {isDesktop && (
             <div className="hidden xl:block w-[420px] flex-shrink-0 ml-6">
-              <div className="sticky top-24 space-y-6">
-                {/* Latest Articles Sidebar */}
+              {/* Latest articles — sticky so readers can always access */}
+              <div className="sticky top-24">
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -576,20 +518,11 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                     title={t('common.latest')}
                     showAllLink="/gaming"
                     showAllText={t('article.viewAll')}
-                    maxItems={12}
+                    maxItems={8}
                     accentColor="yellow"
-                    maxHeight="750px"
+                    maxHeight="500px"
                   />
                 </motion.div>
-                
-                {/* Ad below sidebar */}
-                {SHOW_MANUAL_ADS && (
-                  <div className="bg-gray-800/20 rounded-lg p-3 border border-gray-700/20">
-                    <div className="ad-label text-xs mb-3">{t('article.adLabel')}</div>
-                    <VerticalAd adSlot="1258229391" />
-                  </div>
-                )}
-                {ENABLE_EZOIC && <EzoicSidebar placeholderId={EZOIC_SLOTS.sidebarRight} />}
               </div>
             </div>
           )}
