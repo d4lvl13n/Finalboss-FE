@@ -19,6 +19,8 @@
 # misc
 .DS_Store
 *.pem
+.claude/
+__pycache__/
 
 # debug
 npm-debug.log*
@@ -38,3 +40,20 @@ next-env.d.ts
 # generated SEO artifacts
 seo-results-*.json
 seo-meta-descriptions-report*.json
+seo-meta-descriptions-report*.csv
+
+# generated analysis artifacts
+link-plan.json
+toxic-links-report.json
+wp-linking-config.json
+task_plan.md
+progress.md
+findings.md
+*_urldetails.csv
+issues_overview_report.csv
+internal_all.csv
+validation_invalid_html_elements_in_head.csv
+
+# app-store and mobile build artifacts
+Iossubmission/
+mobile-app/finalboss.aab
