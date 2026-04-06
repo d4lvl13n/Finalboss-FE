@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaTimes, FaGamepad, FaClock, FaGift, FaUsers } from 'react-icons/fa';
-import { formspreeUrl } from '../../lib/siteConfig';
 import { t } from '../../lib/i18n';
 
 interface ExitIntentModalProps {
@@ -20,24 +19,21 @@ const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ onClose }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(formspreeUrl, {
+      const response = await fetch('/api/newsletter/subscribe', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          email: email,
-          source: 'Exit Intent Modal - Gaming Insider Access',
-          message: 'User signed up for Gaming Insider Access via exit intent modal'
+          email,
+          source: 'Exit Intent Modal',
         }),
       });
 
-      if (response.ok) {
-        setIsSuccess(true);
-        setTimeout(() => {
-          onClose();
-        }, 2000);
-      }
+      if (!response.ok) throw new Error();
+
+      setIsSuccess(true);
+      setTimeout(() => {
+        onClose();
+      }, 2000);
     } catch (error) {
       console.error('Error submitting form:', error);
     } finally {

@@ -1,33 +1,29 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ExitIntentModal from './ExitIntentModal';
-import { useExitIntent } from './useExitIntent';
+import SlideInCTA from './SlideInCTA';
+import { useLeadTrigger } from './useLeadTrigger';
 
 const LeadCaptureManager: React.FC = () => {
-  const [showExitModal, setShowExitModal] = useState(false);
-
-  useExitIntent({
-    enabled: true,
-    delay: 500,
-    onExitIntent: () => setShowExitModal(true),
+  const { triggered, dismiss } = useLeadTrigger({
+    minTimeOnPage: 5,
+    scrollThreshold: 0.45,
+    timeThreshold: 25,
   });
 
-  const handleCloseExitModal = () => {
-    setShowExitModal(false);
-  };
+  // exit-intent & scroll → full modal (high-intent moments)
+  // time → less intrusive slide-in
+  const showModal = triggered === 'exit-intent' || triggered === 'scroll';
+  const showSlideIn = triggered === 'time';
 
   return (
-    <>
-      {/* Exit Intent Modal */}
-      <AnimatePresence>
-        {showExitModal && (
-          <ExitIntentModal onClose={handleCloseExitModal} />
-        )}
-      </AnimatePresence>
-    </>
+    <AnimatePresence>
+      {showModal && <ExitIntentModal onClose={dismiss} />}
+      {showSlideIn && <SlideInCTA onClose={dismiss} />}
+    </AnimatePresence>
   );
 };
 
-export default LeadCaptureManager; 
+export default LeadCaptureManager;

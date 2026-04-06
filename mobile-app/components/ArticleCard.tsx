@@ -1,12 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Pressable, useWindowDimensions } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { format } from 'date-fns';
 import { COLORS } from '../constants/config';
 import type { Post } from '../lib/types';
-
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 interface ArticleCardProps {
   article: Post;
@@ -15,6 +13,7 @@ interface ArticleCardProps {
 
 export default function ArticleCard({ article, variant = 'default' }: ArticleCardProps) {
   const router = useRouter();
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
   const imageUrl = article.featuredImage?.node?.sourceUrl;
   const category = article.categories?.nodes?.[0]?.name;
   const dateStr = article.date ? format(new Date(article.date), 'MMM d, yyyy') : '';
@@ -43,7 +42,7 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
 
   if (variant === 'featured') {
     return (
-      <Pressable style={styles.featuredContainer} onPress={handlePress}>
+      <Pressable style={[styles.featuredContainer, { width: SCREEN_WIDTH - 32 }]} onPress={handlePress}>
         {imageUrl && (
           <Image source={{ uri: imageUrl }} style={styles.featuredImage} contentFit="cover" />
         )}
@@ -126,7 +125,6 @@ const styles = StyleSheet.create({
 
   // Featured variant
   featuredContainer: {
-    width: SCREEN_WIDTH - 32,
     height: 220,
     borderRadius: 16,
     overflow: 'hidden',

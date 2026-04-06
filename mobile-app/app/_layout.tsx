@@ -20,7 +20,10 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="article/[slug]" />
           <Stack.Screen name="game/[slug]" />
+          <Stack.Screen name="category/[slug]" />
+          <Stack.Screen name="videos" />
           <Stack.Screen name="search" />
+          <Stack.Screen name="settings" />
         </Stack>
       </SafeAreaProvider>
     </ApolloProvider>

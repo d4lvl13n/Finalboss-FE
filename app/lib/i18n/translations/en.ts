@@ -97,6 +97,13 @@ export const en = {
       instantDelivery: 'Instant delivery',
       privacyNote: 'No spam, unsubscribe anytime',
     },
+    slideIn: {
+      heading: 'Get the inside scoop',
+      subheading: 'Weekly tips & exclusive reviews',
+      placeholder: 'your@email.com',
+      cta: 'Join',
+      privacy: 'No spam. Unsubscribe anytime.',
+    },
     sticky: {
       hotDeals: 'HOT DEALS',
       desktopMessage:

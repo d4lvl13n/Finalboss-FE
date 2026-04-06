@@ -1,0 +1,7 @@
+app_identifier("io.finalboss.app")
+apple_id("hello@codolie.com")
+team_id("58S3VD996X")
+itc_team_id("128553885")
+
+# App Store Connect API Key (bypasses 2FA)
+json_key_file("fastlane/asc_api_key.json")

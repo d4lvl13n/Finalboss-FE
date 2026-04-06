@@ -18,7 +18,7 @@ interface TableOfContentsProps {
 
 export default function TableOfContents({ content, minHeadings = 3 }: TableOfContentsProps) {
   const [headings, setHeadings] = useState<TocItem[]>([]);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [activeId, setActiveId] = useState<string>('');
 
   useEffect(() => {

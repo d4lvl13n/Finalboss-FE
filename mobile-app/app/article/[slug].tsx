@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, Text, StyleSheet, Pressable, Share, useWindowDimensions } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, Pressable, Share, useWindowDimensions, Platform } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { useQuery } from '@apollo/client';
 import { Image } from 'expo-image';
@@ -13,6 +13,23 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ErrorView from '../../components/ErrorView';
 import { COLORS, CONFIG } from '../../constants/config';
 import type { Post } from '../../lib/types';
+
+// iframe/WebView support is native-only (not available on web)
+let customHTMLElementModels: Record<string, unknown> = {};
+let renderers: Record<string, unknown> = {};
+let WebViewComponent: unknown = undefined;
+
+if (Platform.OS !== 'web') {
+  try {
+    const iframePlugin = require('@native-html/iframe-plugin');
+    const webview = require('react-native-webview');
+    customHTMLElementModels = { iframe: iframePlugin.iframeModel };
+    renderers = { iframe: iframePlugin.default };
+    WebViewComponent = webview.default;
+  } catch {
+    // Gracefully degrade if native modules unavailable
+  }
+}
 
 export default function ArticleDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
@@ -124,6 +141,11 @@ export default function ArticleDetailScreen() {
               contentWidth={width - 32}
               source={{ html: article.content }}
               tagsStyles={tagsStyles}
+              ignoredStyles={[]}
+              emSize={16}
+              {...(Object.keys(customHTMLElementModels).length > 0 && { customHTMLElementModels })}
+              {...(Object.keys(renderers).length > 0 && { renderers })}
+              {...(WebViewComponent ? { WebView: WebViewComponent } : {})}
               enableExperimentalMarginCollapsing
               renderersProps={{
                 a: {
@@ -134,6 +156,14 @@ export default function ArticleDetailScreen() {
                 img: {
                   enableExperimentalPercentWidth: true,
                 },
+                ...(WebViewComponent ? {
+                  iframe: {
+                    scalesPageToFit: true,
+                    webViewProps: {
+                      allowsFullscreenVideo: true,
+                    },
+                  },
+                } : {}),
               }}
               defaultTextProps={{ selectable: true }}
             />

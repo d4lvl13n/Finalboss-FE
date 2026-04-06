@@ -1,13 +1,34 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaTwitter, FaFacebookF, FaInstagram, FaYoutube, FaGamepad, FaNewspaper, FaStar, FaBookOpen, FaVideo, FaCog } from 'react-icons/fa';
-import siteConfig, { formspreeUrl } from '../lib/siteConfig';
+import { FaTwitter, FaFacebookF, FaInstagram, FaYoutube, FaGamepad, FaNewspaper, FaStar, FaBookOpen, FaVideo, FaCog, FaCheck } from 'react-icons/fa';
+import siteConfig from '../lib/siteConfig';
 import { t } from '../lib/i18n';
 
 const Footer = () => {
+  const [footerEmail, setFooterEmail] = useState('');
+  const [footerStatus, setFooterStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  const handleFooterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFooterStatus('submitting');
+    try {
+      const res = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: footerEmail, source: 'Footer Newsletter' }),
+      });
+      if (!res.ok) throw new Error();
+      setFooterStatus('success');
+      setFooterEmail('');
+    } catch {
+      setFooterStatus('error');
+      setTimeout(() => setFooterStatus('idle'), 4000);
+    }
+  };
+
   return (
     <footer className="relative bg-gray-900 overflow-hidden">
       {/* Dynamic Background Effects */}
@@ -42,27 +63,40 @@ const Footer = () => {
                 {/* Newsletter Signup */}
                 <div className="space-y-3">
                   <h4 className="text-yellow-400 font-semibold text-sm uppercase tracking-wider">{t('footer.stayUpdated')}</h4>
-                  <form
-                    action={formspreeUrl}
-                    method="POST"
-                    className="flex flex-col sm:flex-row gap-2"
-                  >
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder={t('footer.emailPlaceholder')}
-                      required
-                      className="flex-1 px-4 py-2 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-yellow-400/50 focus:bg-white/10 transition-all"
-                    />
-                    <input type="hidden" name="source" value="Footer Newsletter" />
-                    <input type="hidden" name="message" value="User signed up for newsletter via footer" />
-                    <button
-                      type="submit"
-                      className="px-6 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold rounded-xl hover:from-yellow-300 hover:to-orange-400 transition-all transform hover:scale-105 shadow-lg"
-                    >
-                      {t('footer.join')}
-                    </button>
-                  </form>
+                  {footerStatus === 'success' ? (
+                    <div className="flex items-center gap-2 text-green-400 text-sm">
+                      <FaCheck className="w-4 h-4" />
+                      <span>{t('newsletter.successMessage')}</span>
+                    </div>
+                  ) : footerStatus === 'error' ? (
+                    <div className="text-red-400 text-sm text-center">Failed to subscribe. Please try again.</div>
+                  ) : (
+                    <form onSubmit={handleFooterSubmit} className="flex flex-col sm:flex-row gap-2">
+                      <input
+                        type="email"
+                        name="email"
+                        value={footerEmail}
+                        onChange={(e) => setFooterEmail(e.target.value)}
+                        placeholder={t('footer.emailPlaceholder')}
+                        required
+                        disabled={footerStatus === 'submitting'}
+                        className="flex-1 px-4 py-2 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-yellow-400/50 focus:bg-white/10 transition-all"
+                      />
+                      <button
+                        type="submit"
+                        disabled={footerStatus === 'submitting'}
+                        className="px-6 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold rounded-xl hover:from-yellow-300 hover:to-orange-400 transition-all transform hover:scale-105 shadow-lg disabled:opacity-50"
+                      >
+                        {footerStatus === 'submitting' ? (
+                          <div className="flex items-center">
+                            <div className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                          </div>
+                        ) : (
+                          t('footer.join')
+                        )}
+                      </button>
+                    </form>
+                  )}
                 </div>
               </div>
             </div>

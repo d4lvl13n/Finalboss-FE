@@ -11,6 +11,16 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ErrorView from '../../components/ErrorView';
 import { COLORS, CONFIG } from '../../constants/config';
 import type { GameTag, IGDBGame, Post } from '../../lib/types';
+import {
+  getIgdbCoverUrl,
+  getIgdbScreenshots,
+  getIgdbPlatforms,
+  getIgdbGenres,
+  getIgdbCompanies,
+  getIgdbGameModes,
+  getIgdbReleaseDate,
+  getIgdbDescription,
+} from '../../lib/types';
 
 function parseIgdbData(igdbData?: string): IGDBGame | null {
   if (!igdbData) return null;
@@ -57,8 +67,14 @@ export default function GameDetailScreen() {
   if (loading) return <LoadingSpinner />;
   if (error || !tag) return <ErrorView message="Game not found" onRetry={() => refetch()} />;
 
-  const coverUrl = game?.cover_url;
-  const screenshots = game?.screenshots ?? [];
+  const coverUrl = game ? getIgdbCoverUrl(game) : undefined;
+  const screenshots = game ? getIgdbScreenshots(game) : [];
+  const platforms = game ? getIgdbPlatforms(game) : '';
+  const genres = game ? getIgdbGenres(game) : '';
+  const companies = game ? getIgdbCompanies(game) : '';
+  const gameModes = game ? getIgdbGameModes(game) : '';
+  const releaseDate = game ? getIgdbReleaseDate(game) : undefined;
+  const description = game ? getIgdbDescription(game) : undefined;
 
   return (
     <View style={styles.container}>
@@ -66,8 +82,12 @@ export default function GameDetailScreen() {
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Hero Section */}
         <View style={styles.hero}>
-          {coverUrl && (
+          {coverUrl ? (
             <Image source={{ uri: coverUrl }} style={styles.coverImage} contentFit="cover" />
+          ) : (
+            <View style={[styles.coverImage, styles.coverPlaceholder]}>
+              <Text style={styles.coverPlaceholderText}>{tag.name[0]}</Text>
+            </View>
           )}
           <View style={styles.heroInfo}>
             <Text style={styles.gameName}>{tag.name}</Text>
@@ -78,18 +98,18 @@ export default function GameDetailScreen() {
         <View style={styles.content}>
           {/* Quick Info */}
           <View style={styles.infoCard}>
-            <InfoRow label="Release Date" value={game?.release_date} />
-            <InfoRow label="Platforms" value={game?.platforms?.map((p) => p.name).join(', ')} />
-            <InfoRow label="Genres" value={game?.genres?.join(', ')} />
-            <InfoRow label="Developers" value={game?.companies?.join(', ')} />
-            <InfoRow label="Game Modes" value={game?.game_modes?.join(', ')} />
+            <InfoRow label="Release Date" value={releaseDate} />
+            <InfoRow label="Platforms" value={platforms} />
+            <InfoRow label="Genres" value={genres} />
+            <InfoRow label="Developers" value={companies} />
+            <InfoRow label="Game Modes" value={gameModes} />
           </View>
 
           {/* Description */}
-          {game?.description && (
+          {description && (
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>About</Text>
-              <Text style={styles.description}>{game.description}</Text>
+              <Text style={styles.description}>{description}</Text>
             </View>
           )}
 
@@ -148,6 +168,16 @@ const styles = StyleSheet.create({
     width: 140,
     height: 190,
     borderRadius: 12,
+  },
+  coverPlaceholder: {
+    backgroundColor: COLORS.surfaceLight,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  coverPlaceholderText: {
+    color: COLORS.textMuted,
+    fontSize: 36,
+    fontWeight: '700',
   },
   heroInfo: {
     flex: 1,

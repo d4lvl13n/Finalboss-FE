@@ -9,6 +9,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ErrorView from '../../components/ErrorView';
 import { COLORS } from '../../constants/config';
 import type { GameTag, IGDBGame } from '../../lib/types';
+import { getIgdbCoverUrl, getIgdbPlatforms } from '../../lib/types';
 
 function parseIgdbData(tag: GameTag): IGDBGame | null {
   if (!tag.igdbData) return null;
@@ -22,9 +23,9 @@ function parseIgdbData(tag: GameTag): IGDBGame | null {
 function GameCard({ tag }: { tag: GameTag }) {
   const router = useRouter();
   const game = parseIgdbData(tag);
-  const coverUrl = game?.cover_url;
+  const coverUrl = game ? getIgdbCoverUrl(game) : undefined;
   const rating = game?.rating ? Math.round(game.rating) : null;
-  const platforms = game?.platforms?.map((p) => p.name).join(', ');
+  const platforms = game ? getIgdbPlatforms(game) : '';
 
   return (
     <Pressable style={styles.gameCard} onPress={() => router.push(`/game/${tag.slug}`)}>

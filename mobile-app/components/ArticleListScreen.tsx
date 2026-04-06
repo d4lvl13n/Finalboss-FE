@@ -13,9 +13,10 @@ interface ArticleListScreenProps {
   query: DocumentNode;
   variables?: Record<string, unknown>;
   dataPath?: string; // e.g. 'posts'
+  showBack?: boolean;
 }
 
-export default function ArticleListScreen({ title, query, variables, dataPath = 'posts' }: ArticleListScreenProps) {
+export default function ArticleListScreen({ title, query, variables, dataPath = 'posts', showBack }: ArticleListScreenProps) {
   const { data, loading, error, refetch, fetchMore } = useQuery(query, {
     variables: { first: 24, ...variables },
     notifyOnNetworkStatusChange: true,
@@ -54,7 +55,7 @@ export default function ArticleListScreen({ title, query, variables, dataPath = 
 
   return (
     <View style={styles.container}>
-      <ScreenHeader title={title} />
+      <ScreenHeader title={title} showBack={showBack} />
       <FlatList
         data={posts}
         keyExtractor={(item) => item.id}

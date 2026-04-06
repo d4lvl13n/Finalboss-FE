@@ -47,7 +47,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader title="FinalBoss.io" />
+      <ScreenHeader showLogo />
       <ScrollView
         style={styles.scrollView}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={COLORS.accent} />}
