@@ -283,22 +283,29 @@ export async function getUpcomingGames(limit = 20): Promise<IGDBGame[]> {
   const ninetyDaysFromNow = now + 60 * 60 * 24 * 90;
   const body = `fields ${DETAIL_FIELDS}; where release_dates.date != null & release_dates.date >= ${now} & release_dates.date <= ${ninetyDaysFromNow}; sort release_dates.date asc; limit ${limit};`;
   const raw = await igdbFetch<IGDBRawGame[]>('games', body);
-  return raw.map((game) => {
-    const nextRelease = game.release_dates
-      ?.map((entry) => entry.date)
-      .filter((value): value is number => typeof value === 'number')
-      .filter((value) => value >= now && value <= ninetyDaysFromNow)
-      .sort((left, right) => left - right)[0];
+  return raw
+    .map((game) => {
+      const nextRelease = game.release_dates
+        ?.map((entry) => entry.date)
+        .filter((value): value is number => typeof value === 'number')
+        .filter((value) => value >= now && value <= ninetyDaysFromNow)
+        .sort((left, right) => left - right)[0];
 
-    const transformed = transformGame(game);
+      const transformed = transformGame(game);
 
-    if (!nextRelease) {
-      return transformed;
-    }
+      if (!nextRelease) {
+        return transformed;
+      }
 
-    return {
-      ...transformed,
-      release_date: new Date(nextRelease * 1000).toISOString(),
-    };
-  });
+      return {
+        ...transformed,
+        release_date: new Date(nextRelease * 1000).toISOString(),
+      };
+    })
+    .filter((game) => Boolean(game.release_date))
+    .sort((left, right) => {
+      const leftDate = left.release_date ? Date.parse(left.release_date) : Number.MAX_SAFE_INTEGER;
+      const rightDate = right.release_date ? Date.parse(right.release_date) : Number.MAX_SAFE_INTEGER;
+      return leftDate - rightDate;
+    });
 }

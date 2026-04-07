@@ -2,6 +2,7 @@ import React from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  Pressable,
   RefreshControl,
   ScrollView,
   StyleSheet,
@@ -9,6 +10,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { Image } from 'expo-image';
 import { useQuery } from '@apollo/client';
 import EmptyState from '../../components/EmptyState';
 import ErrorView from '../../components/ErrorView';
@@ -39,6 +41,7 @@ export default function GamesScreen() {
   const tags: GameTag[] = React.useMemo(() => data?.gameTags?.nodes ?? [], [data?.gameTags?.nodes]);
   const hasNextPage = data?.gameTags?.pageInfo?.hasNextPage ?? false;
   const endCursor = data?.gameTags?.pageInfo?.endCursor;
+  const upcomingSections = React.useMemo(() => groupUpcomingGames(upcomingGames), [upcomingGames]);
 
   const loadUpcomingGames = React.useCallback(async () => {
     try {
@@ -197,8 +200,15 @@ export default function GamesScreen() {
             />
           ) : null}
 
-          {upcomingGames.map((game) => (
-            <UpcomingReleaseCard key={String(game.id ?? game.name)} game={game} />
+          {upcomingSections.map((section) => (
+            <View key={section.title} style={styles.monthSection}>
+              <Text style={styles.monthTitle}>{section.title}</Text>
+              <View style={styles.monthList}>
+                {section.games.map((game) => (
+                  <UpcomingReleaseCard key={String(game.id ?? game.name)} game={game} />
+                ))}
+              </View>
+            </View>
           ))}
         </ScrollView>
       )}
@@ -223,28 +233,92 @@ function formatReleaseDate(value?: string) {
   });
 }
 
-function UpcomingReleaseCard({ game }: { game: IGDBGame }) {
+function formatMonthTitle(value?: string) {
+  if (!value) {
+    return 'Coming Up';
+  }
+
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) {
+    return 'Coming Up';
+  }
+
+  return parsed.toLocaleDateString('en-US', {
+    month: 'long',
+    year: 'numeric',
+  });
+}
+
+function formatPlatforms(game: IGDBGame) {
   const platforms =
     game.platforms
       ?.map((platform) => (typeof platform === 'string' ? platform : platform.name || ''))
-      .filter(Boolean)
-      .join(' • ') || '';
+      .filter(Boolean) ?? [];
+
+  if (platforms.length <= 3) {
+    return platforms.join(' • ');
+  }
+
+  return `${platforms.slice(0, 3).join(' • ')} +${platforms.length - 3}`;
+}
+
+function groupUpcomingGames(games: IGDBGame[]) {
+  const sections = new Map<string, IGDBGame[]>();
+
+  for (const game of games) {
+    const key = formatMonthTitle(game.release_date);
+    const bucket = sections.get(key) ?? [];
+    bucket.push(game);
+    sections.set(key, bucket);
+  }
+
+  return Array.from(sections.entries()).map(([title, bucket]) => ({
+    title,
+    games: bucket,
+  }));
+}
+
+function UpcomingReleaseCard({ game }: { game: IGDBGame }) {
+  const coverUrl = game.cover_url;
+  const platforms = formatPlatforms(game);
+  const genreLabel = game.genres?.slice(0, 2).join(' • ');
+  const description = game.description?.replace(/\s+/g, ' ').trim();
 
   return (
-    <View style={styles.releaseCard}>
-      <View style={styles.releaseBadge}>
-        <Text style={styles.releaseBadgeText}>{formatReleaseDate(game.release_date)}</Text>
-      </View>
-      <View style={styles.releaseBody}>
-        <Text style={styles.releaseTitle}>{game.name}</Text>
-        {platforms ? <Text style={styles.releaseMeta}>{platforms}</Text> : null}
-        {game.genres?.length ? (
+    <Pressable style={styles.releaseCard}>
+      {coverUrl ? (
+        <Image source={{ uri: coverUrl }} style={styles.releaseCover} contentFit="cover" />
+      ) : (
+        <View style={[styles.releaseCover, styles.releasePlaceholder]}>
+          <Text style={styles.releasePlaceholderText}>{game.name[0]}</Text>
+        </View>
+      )}
+      <View style={styles.releaseContent}>
+        <View style={styles.releaseHeaderRow}>
+          <View style={styles.releaseBadge}>
+            <Text style={styles.releaseBadgeText}>{formatReleaseDate(game.release_date)}</Text>
+          </View>
+        </View>
+        <Text style={styles.releaseTitle} numberOfLines={2}>
+          {game.name}
+        </Text>
+        {platforms ? (
+          <Text style={styles.releaseMeta} numberOfLines={2}>
+            {platforms}
+          </Text>
+        ) : null}
+        {genreLabel ? (
           <Text style={styles.releaseGenres} numberOfLines={1}>
-            {game.genres.join(' • ')}
+            {genreLabel}
+          </Text>
+        ) : null}
+        {description ? (
+          <Text style={styles.releaseDescription} numberOfLines={2}>
+            {description}
           </Text>
         ) : null}
       </View>
-    </View>
+    </Pressable>
   );
 }
 
@@ -281,7 +355,7 @@ const styles = StyleSheet.create({
   calendarContent: {
     padding: 16,
     paddingBottom: 120,
-    gap: 14,
+    gap: 20,
   },
   calendarIntro: {
     marginBottom: 4,
@@ -295,17 +369,53 @@ const styles = StyleSheet.create({
   calendarLoader: {
     marginTop: 20,
   },
+  monthSection: {
+    gap: 10,
+  },
+  monthTitle: {
+    color: COLORS.text,
+    fontSize: 13,
+    fontWeight: '800',
+    letterSpacing: 0.6,
+    textTransform: 'uppercase',
+  },
+  monthList: {
+    gap: 12,
+  },
   row: {
     justifyContent: 'space-between',
     marginBottom: 14,
   },
   releaseCard: {
+    flexDirection: 'row',
     backgroundColor: COLORS.surface,
     borderRadius: 18,
     borderWidth: 1,
     borderColor: COLORS.border,
-    padding: 16,
-    gap: 10,
+    overflow: 'hidden',
+  },
+  releaseCover: {
+    width: 108,
+    minHeight: 148,
+    backgroundColor: COLORS.surfaceLight,
+  },
+  releasePlaceholder: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  releasePlaceholderText: {
+    color: COLORS.textMuted,
+    fontSize: 34,
+    fontWeight: '800',
+  },
+  releaseContent: {
+    flex: 1,
+    padding: 14,
+    gap: 6,
+  },
+  releaseHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   releaseBadge: {
     alignSelf: 'flex-start',
@@ -324,16 +434,22 @@ const styles = StyleSheet.create({
   },
   releaseTitle: {
     color: COLORS.text,
-    fontSize: 17,
+    fontSize: 18,
     fontWeight: '800',
     lineHeight: 22,
   },
   releaseMeta: {
     color: COLORS.textSecondary,
     fontSize: 13,
-    lineHeight: 18,
+    lineHeight: 19,
   },
   releaseGenres: {
+    color: COLORS.categoryText,
+    fontSize: 12,
+    lineHeight: 18,
+    fontWeight: '700',
+  },
+  releaseDescription: {
     color: COLORS.textMuted,
     fontSize: 12,
     lineHeight: 18,

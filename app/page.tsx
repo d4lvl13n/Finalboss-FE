@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import GameDatabaseSection from './components/GameDatabaseSection';
+import UpcomingGamesCalendar from './components/UpcomingGamesCalendar';
 import { buildPageMetadata } from './lib/seo';
 import siteConfig from './lib/siteConfig';
 import { t } from './lib/i18n';
@@ -241,6 +242,24 @@ export default async function HomePage() {
             }
           >
             <GameDatabaseSection />
+          </Suspense>
+
+          <Suspense
+            fallback={
+              <section className="py-10 md:py-16 bg-gray-900">
+                <div className="container mx-auto px-4">
+                  <div className="h-[420px] rounded-3xl bg-gray-800/60 animate-pulse" />
+                </div>
+              </section>
+            }
+          >
+            <UpcomingGamesCalendar
+              compact
+              limit={6}
+              title="Release Radar"
+              description="The next big launches worth tracking, pulled from IGDB and framed like a proper editorial calendar."
+              href="/games"
+            />
           </Suspense>
 
           {/* Newsletter section with reserved space */}

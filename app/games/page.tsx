@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { GameSearch } from '../components/GameSearch';
 import GamesIndexClient from '../components/GamesIndexClient';
+import UpcomingGamesCalendar from '../components/UpcomingGamesCalendar';
 import { buildPageMetadata } from '../lib/seo';
 import siteConfig from '../lib/siteConfig';
 import client from '../lib/apolloClient';
@@ -59,6 +60,16 @@ export default async function GamesPage() {
             }
           >
             <GameSearch />
+          </Suspense>
+
+          <Suspense
+            fallback={<div className="mt-16 h-[640px] rounded-3xl bg-gray-800/60 animate-pulse" />}
+          >
+            <UpcomingGamesCalendar
+              limit={14}
+              title="Release Calendar"
+              description="An editorial-style release board built from IGDB, ordered by the next upcoming ship date so major launches are easy to scan."
+            />
           </Suspense>
 
           <GamesIndexClient
