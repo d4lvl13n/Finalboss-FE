@@ -1,15 +1,16 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 import { COLORS } from '../../constants/config';
 
 type TabIcon = React.ComponentProps<typeof Ionicons>['name'];
 
 const tabs: { name: string; title: string; icon: TabIcon; iconFocused: TabIcon }[] = [
   { name: 'index', title: 'Home', icon: 'home-outline', iconFocused: 'home' },
-  { name: 'gaming', title: 'Gaming', icon: 'game-controller-outline', iconFocused: 'game-controller' },
-  { name: 'reviews', title: 'Reviews', icon: 'star-outline', iconFocused: 'star' },
-  { name: 'guides', title: 'Guides', icon: 'book-outline', iconFocused: 'book' },
+  { name: 'following', title: 'Following', icon: 'sparkles-outline', iconFocused: 'sparkles' },
+  { name: 'search', title: 'Search', icon: 'search-outline', iconFocused: 'search' },
   { name: 'games', title: 'Games', icon: 'grid-outline', iconFocused: 'grid' },
+  { name: 'library', title: 'Library', icon: 'bookmark-outline', iconFocused: 'bookmark' },
 ];
 
 export default function TabLayout() {
@@ -19,13 +20,21 @@ export default function TabLayout() {
         headerShown: false,
         tabBarActiveTintColor: COLORS.accent,
         tabBarInactiveTintColor: COLORS.textMuted,
+        tabBarBackground: () => (
+          <BlurView
+            tint="dark"
+            intensity={90}
+            style={{ flex: 1, backgroundColor: 'rgba(11, 16, 32, 0.72)' }}
+          />
+        ),
         tabBarStyle: {
-          backgroundColor: COLORS.surface,
-          borderTopColor: COLORS.border,
+          position: 'absolute',
+          backgroundColor: 'transparent',
+          borderTopColor: 'rgba(255,255,255,0.06)',
           borderTopWidth: 0.5,
-          height: 85,
-          paddingBottom: 28,
-          paddingTop: 8,
+          height: 92,
+          paddingBottom: 24,
+          paddingTop: 10,
         },
         tabBarLabelStyle: {
           fontSize: 11,
@@ -45,6 +54,9 @@ export default function TabLayout() {
           }}
         />
       ))}
+      <Tabs.Screen name="gaming" options={{ href: null }} />
+      <Tabs.Screen name="reviews" options={{ href: null }} />
+      <Tabs.Screen name="guides" options={{ href: null }} />
     </Tabs>
   );
 }

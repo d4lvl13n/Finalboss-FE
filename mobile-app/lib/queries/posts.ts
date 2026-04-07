@@ -6,6 +6,7 @@ const POST_FIELDS = `
   slug
   excerpt
   date
+  modified
   featuredImage {
     node {
       sourceUrl
@@ -19,10 +20,20 @@ const POST_FIELDS = `
   }
   author {
     node {
+      id
       name
+      slug
       avatar {
         url
       }
+    }
+  }
+  gameTags {
+    nodes {
+      name
+      slug
+      igdbId
+      igdbData
     }
   }
 `;
@@ -32,6 +43,20 @@ export const GET_LATEST_POSTS = gql`
     posts(first: $first, where: { orderby: { field: DATE, order: DESC } }) {
       nodes {
         ${POST_FIELDS}
+      }
+    }
+  }
+`;
+
+export const GET_HOME_POSTS = gql`
+  query GetHomePosts($first: Int = 60) {
+    posts(first: $first, where: { orderby: { field: DATE, order: DESC } }) {
+      nodes {
+        ${POST_FIELDS}
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
@@ -96,6 +121,14 @@ export const GET_POST_BY_SLUG = gql`
           id
           name
           slug
+        }
+      }
+      gameTags {
+        nodes {
+          name
+          slug
+          igdbId
+          igdbData
         }
       }
     }

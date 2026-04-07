@@ -277,3 +277,28 @@ export async function getPopularGames(limit = 10): Promise<IGDBGame[]> {
   const raw = await igdbFetch<IGDBRawGame[]>('games', body);
   return raw.map(transformGame);
 }
+
+export async function getUpcomingGames(limit = 20): Promise<IGDBGame[]> {
+  const now = Math.floor(Date.now() / 1000);
+  const ninetyDaysFromNow = now + 60 * 60 * 24 * 90;
+  const body = `fields ${DETAIL_FIELDS}; where release_dates.date != null & release_dates.date >= ${now} & release_dates.date <= ${ninetyDaysFromNow}; sort release_dates.date asc; limit ${limit};`;
+  const raw = await igdbFetch<IGDBRawGame[]>('games', body);
+  return raw.map((game) => {
+    const nextRelease = game.release_dates
+      ?.map((entry) => entry.date)
+      .filter((value): value is number => typeof value === 'number')
+      .filter((value) => value >= now && value <= ninetyDaysFromNow)
+      .sort((left, right) => left - right)[0];
+
+    const transformed = transformGame(game);
+
+    if (!nextRelease) {
+      return transformed;
+    }
+
+    return {
+      ...transformed,
+      release_date: new Date(nextRelease * 1000).toISOString(),
+    };
+  });
+}

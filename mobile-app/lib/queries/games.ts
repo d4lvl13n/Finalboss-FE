@@ -8,6 +8,11 @@ export const GET_GAME_TAGS = gql`
         slug
         igdbId
         igdbData
+        posts(first: 1, where: { orderby: { field: DATE, order: DESC } }) {
+          nodes {
+            date
+          }
+        }
       }
       pageInfo {
         hasNextPage

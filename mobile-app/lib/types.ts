@@ -6,6 +6,9 @@ export interface Post {
   date: string;
   modified?: string;
   content?: string;
+  mobileDek?: string;
+  isMobileFeatured?: boolean;
+  sendMobilePush?: boolean;
   featuredImage?: {
     node: {
       sourceUrl: string;
@@ -27,6 +30,14 @@ export interface Post {
       avatar?: { url: string };
     };
   };
+  gameTags?: {
+    nodes: {
+      name: string;
+      slug: string;
+      igdbId?: string;
+      igdbData?: string;
+    }[];
+  };
 }
 
 export interface GameTag {
@@ -40,6 +51,10 @@ export interface GameTag {
     nodes: Post[];
     pageInfo: PageInfo;
   };
+  latestPostDate?: string;
+  coverUrl?: string;
+  rating?: number | null;
+  savedAt?: string;
 }
 
 export interface IGDBGame {

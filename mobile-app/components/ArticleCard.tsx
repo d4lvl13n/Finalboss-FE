@@ -1,9 +1,24 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, useWindowDimensions } from 'react-native';
+import {
+  ActionSheetIOS,
+  Alert,
+  Linking,
+  Platform,
+  Pressable,
+  Share,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
+import type { GestureResponderEvent } from 'react-native';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { format } from 'date-fns';
-import { COLORS } from '../constants/config';
+import { Ionicons } from '@expo/vector-icons';
+import { COLORS, CONFIG } from '../constants/config';
+import { getArticleDek } from '../lib/feed';
+import { useLocalProfile } from '../context/LocalProfileContext';
 import type { Post } from '../lib/types';
 
 interface ArticleCardProps {
@@ -14,18 +29,79 @@ interface ArticleCardProps {
 export default function ArticleCard({ article, variant = 'default' }: ArticleCardProps) {
   const router = useRouter();
   const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const { toggleSaveArticle, isArticleSaved } = useLocalProfile();
   const imageUrl = article.featuredImage?.node?.sourceUrl;
   const category = article.categories?.nodes?.[0]?.name;
   const dateStr = article.date ? format(new Date(article.date), 'MMM d, yyyy') : '';
   const authorName = article.author?.node?.name;
+  const saved = isArticleSaved(article.slug);
+  const articleUrl = `${CONFIG.SITE_URL}/${article.slug}`;
 
   const handlePress = () => {
     router.push(`/article/${article.slug}`);
   };
 
+  const handleShare = async () => {
+    await Share.share({
+      title: article.title,
+      message: `${article.title} - ${articleUrl}`,
+      url: articleUrl,
+    });
+  };
+
+  const handleInlineSave = async (event: GestureResponderEvent) => {
+    event.stopPropagation();
+    await toggleSaveArticle(article);
+  };
+
+  const handleInlineShare = async (event: GestureResponderEvent) => {
+    event.stopPropagation();
+    await handleShare();
+  };
+
+  const openActions = () => {
+    const saveLabel = saved ? 'Remove from Library' : 'Save for Later';
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: [saveLabel, 'Share', 'Open in Browser', 'Cancel'],
+          cancelButtonIndex: 3,
+        },
+        async (selectedIndex) => {
+          if (selectedIndex === 0) await toggleSaveArticle(article);
+          if (selectedIndex === 1) await handleShare();
+          if (selectedIndex === 2) await Linking.openURL(articleUrl);
+        }
+      );
+      return;
+    }
+
+    Alert.alert(article.title, undefined, [
+      {
+        text: saveLabel,
+        onPress: () => {
+          toggleSaveArticle(article);
+        },
+      },
+      {
+        text: 'Share',
+        onPress: () => {
+          handleShare();
+        },
+      },
+      {
+        text: 'Open in Browser',
+        onPress: () => {
+          Linking.openURL(articleUrl);
+        },
+      },
+      { text: 'Cancel', style: 'cancel' },
+    ]);
+  };
+
   if (variant === 'compact') {
     return (
-      <Pressable style={styles.compactContainer} onPress={handlePress}>
+      <Pressable style={styles.compactContainer} onPress={handlePress} onLongPress={openActions}>
         {imageUrl && (
           <Image source={{ uri: imageUrl }} style={styles.compactImage} contentFit="cover" />
         )}
@@ -34,7 +110,21 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
           <Text style={styles.compactTitle} numberOfLines={2}>
             {article.title}
           </Text>
-          <Text style={styles.compactDate}>{dateStr}</Text>
+          <View style={styles.compactFooter}>
+            <Text style={styles.compactDate}>{dateStr}</Text>
+            <View style={styles.inlineActions}>
+              <Pressable onPress={handleInlineSave} style={styles.smallAction}>
+                <Ionicons
+                  name={saved ? 'bookmark' : 'bookmark-outline'}
+                  size={16}
+                  color={saved ? COLORS.accent : COLORS.textMuted}
+                />
+              </Pressable>
+              <Pressable onPress={handleInlineShare} style={styles.smallAction}>
+                <Ionicons name="share-outline" size={16} color={COLORS.textMuted} />
+              </Pressable>
+            </View>
+          </View>
         </View>
       </Pressable>
     );
@@ -42,11 +132,30 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
 
   if (variant === 'featured') {
     return (
-      <Pressable style={[styles.featuredContainer, { width: SCREEN_WIDTH - 32 }]} onPress={handlePress}>
+      <Pressable
+        style={[styles.featuredContainer, { width: SCREEN_WIDTH - 32 }]}
+        onPress={handlePress}
+        onLongPress={openActions}
+      >
         {imageUrl && (
           <Image source={{ uri: imageUrl }} style={styles.featuredImage} contentFit="cover" />
         )}
         <View style={styles.featuredOverlay}>
+          <View style={styles.featuredTopRow}>
+            <View style={styles.featuredTopSpacer} />
+            <View style={styles.featuredActions}>
+              <Pressable onPress={handleInlineSave} style={styles.overlayAction}>
+                <Ionicons
+                  name={saved ? 'bookmark' : 'bookmark-outline'}
+                  size={18}
+                  color={saved ? COLORS.accent : COLORS.text}
+                />
+              </Pressable>
+              <Pressable onPress={handleInlineShare} style={styles.overlayAction}>
+                <Ionicons name="share-outline" size={18} color={COLORS.text} />
+              </Pressable>
+            </View>
+          </View>
           {category && (
             <View style={styles.categoryBadge}>
               <Text style={styles.categoryText}>{category}</Text>
@@ -54,6 +163,9 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
           )}
           <Text style={styles.featuredTitle} numberOfLines={3}>
             {article.title}
+          </Text>
+          <Text style={styles.featuredDek} numberOfLines={2}>
+            {getArticleDek(article)}
           </Text>
           <View style={styles.featuredMeta}>
             {authorName && <Text style={styles.metaText}>{authorName}</Text>}
@@ -67,7 +179,7 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
 
   // Default card
   return (
-    <Pressable style={styles.defaultContainer} onPress={handlePress}>
+    <Pressable style={styles.defaultContainer} onPress={handlePress} onLongPress={openActions}>
       {imageUrl && (
         <Image source={{ uri: imageUrl }} style={styles.defaultImage} contentFit="cover" />
       )}
@@ -80,7 +192,24 @@ export default function ArticleCard({ article, variant = 'default' }: ArticleCar
         <Text style={styles.defaultTitle} numberOfLines={2}>
           {article.title}
         </Text>
-        <Text style={styles.defaultDate}>{dateStr}</Text>
+        <Text style={styles.defaultExcerpt} numberOfLines={2}>
+          {getArticleDek(article)}
+        </Text>
+        <View style={styles.defaultFooter}>
+          <Text style={styles.defaultDate}>{dateStr}</Text>
+          <View style={styles.inlineActions}>
+            <Pressable onPress={handleInlineSave} style={styles.smallAction}>
+              <Ionicons
+                name={saved ? 'bookmark' : 'bookmark-outline'}
+                size={18}
+                color={saved ? COLORS.accent : COLORS.textMuted}
+              />
+            </Pressable>
+            <Pressable onPress={handleInlineShare} style={styles.smallAction}>
+              <Ionicons name="share-outline" size={18} color={COLORS.textMuted} />
+            </Pressable>
+          </View>
+        </View>
       </View>
     </Pressable>
   );
@@ -102,7 +231,7 @@ const styles = StyleSheet.create({
   compactContent: {
     flex: 1,
     padding: 10,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   compactCategory: {
     color: COLORS.accent,
@@ -120,7 +249,12 @@ const styles = StyleSheet.create({
   compactDate: {
     color: COLORS.textMuted,
     fontSize: 11,
-    marginTop: 4,
+  },
+  compactFooter: {
+    marginTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 
   // Featured variant
@@ -136,14 +270,40 @@ const styles = StyleSheet.create({
   featuredOverlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0,0,0,0.45)',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     padding: 16,
+  },
+  featuredTopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  featuredTopSpacer: {
+    flex: 1,
+  },
+  featuredActions: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  overlayAction: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(11,16,32,0.55)',
   },
   featuredTitle: {
     color: COLORS.text,
     fontSize: 20,
     fontWeight: '700',
     lineHeight: 26,
+    marginBottom: 8,
+  },
+  featuredDek: {
+    color: COLORS.textSecondary,
+    fontSize: 13,
+    lineHeight: 18,
     marginBottom: 8,
   },
   featuredMeta: {
@@ -196,8 +356,31 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     marginBottom: 6,
   },
+  defaultExcerpt: {
+    color: COLORS.textSecondary,
+    fontSize: 13,
+    lineHeight: 18,
+    marginBottom: 12,
+  },
+  defaultFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   defaultDate: {
     color: COLORS.textMuted,
     fontSize: 12,
+  },
+  inlineActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  smallAction: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

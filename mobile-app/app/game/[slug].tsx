@@ -1,25 +1,28 @@
 import React from 'react';
-import { View, ScrollView, Text, StyleSheet, Pressable, Linking } from 'react-native';
+import { Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { useQuery } from '@apollo/client';
 import { Image } from 'expo-image';
 import { Ionicons } from '@expo/vector-icons';
-import { GET_GAME_TAG_WITH_POSTS } from '../../lib/queries/games';
 import ArticleCard from '../../components/ArticleCard';
-import ScreenHeader from '../../components/ScreenHeader';
-import LoadingSpinner from '../../components/LoadingSpinner';
 import ErrorView from '../../components/ErrorView';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import ScreenHeader from '../../components/ScreenHeader';
+import SectionHeader from '../../components/SectionHeader';
 import { COLORS, CONFIG } from '../../constants/config';
+import { useLocalProfile } from '../../context/LocalProfileContext';
+import { type GameSnapshot } from '../../lib/localProfile';
+import { GET_GAME_TAG_WITH_POSTS } from '../../lib/queries/games';
 import type { GameTag, IGDBGame, Post } from '../../lib/types';
 import {
-  getIgdbCoverUrl,
-  getIgdbScreenshots,
-  getIgdbPlatforms,
-  getIgdbGenres,
   getIgdbCompanies,
-  getIgdbGameModes,
-  getIgdbReleaseDate,
+  getIgdbCoverUrl,
   getIgdbDescription,
+  getIgdbGameModes,
+  getIgdbGenres,
+  getIgdbPlatforms,
+  getIgdbReleaseDate,
+  getIgdbScreenshots,
 } from '../../lib/types';
 
 function parseIgdbData(igdbData?: string): IGDBGame | null {
@@ -32,7 +35,10 @@ function parseIgdbData(igdbData?: string): IGDBGame | null {
 }
 
 function InfoRow({ label, value }: { label: string; value?: string | null }) {
-  if (!value) return null;
+  if (!value) {
+    return null;
+  }
+
   return (
     <View style={styles.infoRow}>
       <Text style={styles.infoLabel}>{label}</Text>
@@ -41,19 +47,55 @@ function InfoRow({ label, value }: { label: string; value?: string | null }) {
   );
 }
 
-function RatingCircle({ rating }: { rating: number }) {
-  const rounded = Math.round(rating);
-  const color = rounded >= 75 ? '#22C55E' : rounded >= 50 ? COLORS.accent : COLORS.error;
+function ActionButton({
+  icon,
+  label,
+  active = false,
+  onPress,
+}: {
+  icon: React.ComponentProps<typeof Ionicons>['name'];
+  label: string;
+  active?: boolean;
+  onPress: () => unknown | Promise<unknown>;
+}) {
   return (
-    <View style={[styles.ratingCircle, { borderColor: color }]}>
-      <Text style={[styles.ratingNumber, { color }]}>{rounded}</Text>
-      <Text style={styles.ratingLabel}>Rating</Text>
+    <Pressable
+      style={[styles.actionButton, active && styles.actionButtonActive]}
+      onPress={() => {
+        void onPress();
+      }}
+    >
+      <Ionicons
+        name={icon}
+        size={18}
+        color={active ? COLORS.background : COLORS.text}
+      />
+      <Text style={[styles.actionLabel, active && styles.actionLabelActive]}>{label}</Text>
+    </Pressable>
+  );
+}
+
+function RatingPill({ rating }: { rating: number }) {
+  const rounded = Math.round(rating);
+  const color = rounded >= 75 ? COLORS.success : rounded >= 50 ? COLORS.accent : COLORS.error;
+
+  return (
+    <View style={[styles.ratingPill, { borderColor: color }]}>
+      <Text style={[styles.ratingValue, { color }]}>{rounded}</Text>
+      <Text style={styles.ratingLabel}>Meta Pulse</Text>
     </View>
   );
 }
 
 export default function GameDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
+  const {
+    isGameFollowed,
+    isGameSaved,
+    openNewsletterPrompt,
+    toggleFollowGame,
+    toggleSaveGame,
+  } = useLocalProfile();
 
   const { data, loading, error, refetch } = useQuery(GET_GAME_TAG_WITH_POSTS, {
     variables: { slug, first: 10 },
@@ -64,8 +106,13 @@ export default function GameDetailScreen() {
   const game = parseIgdbData(tag?.igdbData);
   const relatedPosts: Post[] = tag?.posts?.nodes ?? [];
 
-  if (loading) return <LoadingSpinner />;
-  if (error || !tag) return <ErrorView message="Game not found" onRetry={() => refetch()} />;
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error || !tag) {
+    return <ErrorView message="Game not found" onRetry={() => refetch()} />;
+  }
 
   const coverUrl = game ? getIgdbCoverUrl(game) : undefined;
   const screenshots = game ? getIgdbScreenshots(game) : [];
@@ -75,12 +122,44 @@ export default function GameDetailScreen() {
   const gameModes = game ? getIgdbGameModes(game) : '';
   const releaseDate = game ? getIgdbReleaseDate(game) : undefined;
   const description = game ? getIgdbDescription(game) : undefined;
+  const gameUrl = `${CONFIG.SITE_URL}/game/${tag.slug}`;
+  const saved = isGameSaved(tag.slug);
+  const followed = isGameFollowed(tag.slug);
+
+  const gameSnapshot: GameSnapshot = {
+    slug: tag.slug,
+    name: tag.name,
+    coverUrl,
+    rating: game?.rating ?? null,
+    savedAt: new Date().toISOString(),
+  };
+
+  const handleShare = async () => {
+    await Share.share({
+      title: tag.name,
+      message: `${tag.name} - ${gameUrl}`,
+      url: gameUrl,
+    });
+  };
 
   return (
     <View style={styles.container}>
-      <ScreenHeader title={tag.name} showBack showSearch={false} />
+      <ScreenHeader
+        title={tag.name}
+        showBack
+        showSearch={false}
+        rightAction={
+          <View style={styles.headerActions}>
+            <Pressable onPress={handleShare} style={styles.iconBtn} hitSlop={8}>
+              <Ionicons name="share-outline" size={20} color={COLORS.text} />
+            </Pressable>
+            <Pressable onPress={() => Linking.openURL(gameUrl)} style={styles.iconBtn} hitSlop={8}>
+              <Ionicons name="open-outline" size={20} color={COLORS.text} />
+            </Pressable>
+          </View>
+        }
+      />
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* Hero Section */}
         <View style={styles.hero}>
           {coverUrl ? (
             <Image source={{ uri: coverUrl }} style={styles.coverImage} contentFit="cover" />
@@ -91,61 +170,99 @@ export default function GameDetailScreen() {
           )}
           <View style={styles.heroInfo}>
             <Text style={styles.gameName}>{tag.name}</Text>
-            {game?.rating && <RatingCircle rating={game.rating} />}
+            {game?.rating ? <RatingPill rating={game.rating} /> : null}
+            <Text style={styles.heroCopy}>
+              Follow this title to turn FinalBoss into a live release radar instead of a static database page.
+            </Text>
           </View>
         </View>
 
         <View style={styles.content}>
-          {/* Quick Info */}
+          <View style={styles.actionRow}>
+            <ActionButton
+              icon={followed ? 'notifications' : 'notifications-outline'}
+              label={followed ? 'Following' : 'Follow'}
+              active={followed}
+              onPress={() => toggleFollowGame(tag.slug)}
+            />
+            <ActionButton
+              icon={saved ? 'bookmark' : 'bookmark-outline'}
+              label={saved ? 'Watchlisted' : 'Watchlist'}
+              active={saved}
+              onPress={() => toggleSaveGame(gameSnapshot)}
+            />
+            <ActionButton icon="share-outline" label="Share" onPress={handleShare} />
+          </View>
+
           <View style={styles.infoCard}>
             <InfoRow label="Release Date" value={releaseDate} />
             <InfoRow label="Platforms" value={platforms} />
             <InfoRow label="Genres" value={genres} />
-            <InfoRow label="Developers" value={companies} />
+            <InfoRow label="Studios" value={companies} />
             <InfoRow label="Game Modes" value={gameModes} />
           </View>
 
-          {/* Description */}
-          {description && (
+          {description ? (
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>About</Text>
+              <SectionHeader title="About" />
               <Text style={styles.description}>{description}</Text>
             </View>
-          )}
+          ) : null}
 
-          {/* Screenshots */}
-          {screenshots.length > 0 && (
+          <View style={styles.alertCard}>
+            <Text style={styles.alertTitle}>Keep this game on your radar</Text>
+            <Text style={styles.alertText}>
+              Follow the title for review drops, late-breaking coverage, and then add the daily digest if you want the whole briefing in one place.
+            </Text>
+            <View style={styles.alertActions}>
+              <Pressable
+                style={styles.primaryCta}
+                onPress={() => {
+                  void toggleFollowGame(tag.slug);
+                }}
+              >
+                <Ionicons name="notifications-outline" size={18} color={COLORS.background} />
+                <Text style={styles.primaryCtaText}>
+                  {followed ? 'Alerts On' : 'Get Alerts'}
+                </Text>
+              </Pressable>
+              <Pressable
+                style={styles.secondaryCta}
+                onPress={() => openNewsletterPrompt('manual')}
+              >
+                <Ionicons name="mail-outline" size={18} color={COLORS.text} />
+                <Text style={styles.secondaryCtaText}>Get The Daily Digest</Text>
+              </Pressable>
+            </View>
+          </View>
+
+          {screenshots.length > 0 ? (
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Screenshots</Text>
+              <SectionHeader title="Screenshots" />
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {screenshots.map((url, i) => (
-                  <Image key={i} source={{ uri: url }} style={styles.screenshot} contentFit="cover" />
+                {screenshots.map((url, index) => (
+                  <Image
+                    key={index}
+                    source={{ uri: url }}
+                    style={styles.screenshot}
+                    contentFit="cover"
+                  />
                 ))}
               </ScrollView>
             </View>
-          )}
+          ) : null}
 
-          {/* Related Articles */}
-          {relatedPosts.length > 0 && (
+          {relatedPosts.length > 0 ? (
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Related Articles</Text>
+              <SectionHeader title="Coverage Around This Game" />
               {relatedPosts.map((post) => (
                 <ArticleCard key={post.id} article={post} variant="compact" />
               ))}
             </View>
-          )}
-
-          {/* View on Website */}
-          <Pressable
-            style={styles.websiteButton}
-            onPress={() => Linking.openURL(`${CONFIG.SITE_URL}/game/${tag.slug}`)}
-          >
-            <Ionicons name="globe-outline" size={18} color={COLORS.background} />
-            <Text style={styles.websiteButtonText}>View on FinalBoss.io</Text>
-          </Pressable>
+          ) : null}
         </View>
 
-        <View style={{ height: 40 }} />
+        <View style={styles.bottomSpacer} />
       </ScrollView>
     </View>
   );
@@ -167,7 +284,7 @@ const styles = StyleSheet.create({
   coverImage: {
     width: 140,
     height: 190,
-    borderRadius: 12,
+    borderRadius: 18,
   },
   coverPlaceholder: {
     backgroundColor: COLORS.surfaceLight,
@@ -182,91 +299,171 @@ const styles = StyleSheet.create({
   heroInfo: {
     flex: 1,
     justifyContent: 'center',
-    gap: 16,
+    gap: 14,
+  },
+  heroCopy: {
+    color: COLORS.textSecondary,
+    fontSize: 14,
+    lineHeight: 21,
   },
   gameName: {
     color: COLORS.text,
-    fontSize: 22,
-    fontWeight: '700',
-    lineHeight: 28,
+    fontSize: 26,
+    fontWeight: '800',
+    lineHeight: 32,
   },
-  ratingCircle: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    borderWidth: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
+  ratingPill: {
+    alignSelf: 'flex-start',
+    borderWidth: 1,
+    borderRadius: 18,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    backgroundColor: COLORS.surface,
   },
-  ratingNumber: {
+  ratingValue: {
     fontSize: 20,
     fontWeight: '800',
   },
   ratingLabel: {
     color: COLORS.textMuted,
-    fontSize: 10,
-    marginTop: -2,
+    fontSize: 11,
+    fontWeight: '700',
+    marginTop: 2,
   },
   content: {
     paddingHorizontal: 16,
+    gap: 20,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    gap: 6,
+  },
+  iconBtn: {
+    width: 36,
+    height: 36,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  actionRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  actionButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    borderRadius: 16,
+    backgroundColor: COLORS.surface,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+  },
+  actionButtonActive: {
+    backgroundColor: COLORS.accent,
+    borderColor: COLORS.accent,
+  },
+  actionLabel: {
+    color: COLORS.text,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  actionLabelActive: {
+    color: COLORS.background,
   },
   infoCard: {
     backgroundColor: COLORS.surface,
-    borderRadius: 14,
+    borderRadius: 18,
     padding: 16,
     gap: 12,
-    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
   infoRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
+    gap: 12,
   },
   infoLabel: {
     color: COLORS.textMuted,
     fontSize: 13,
-    fontWeight: '600',
-    flex: 0.35,
+    fontWeight: '700',
+    flex: 0.34,
   },
   infoValue: {
     color: COLORS.textSecondary,
     fontSize: 13,
-    flex: 0.65,
+    flex: 0.66,
     textAlign: 'right',
   },
   section: {
-    marginBottom: 24,
-  },
-  sectionTitle: {
-    color: COLORS.text,
-    fontSize: 18,
-    fontWeight: '700',
-    marginBottom: 12,
+    gap: 12,
   },
   description: {
     color: COLORS.textSecondary,
     fontSize: 15,
     lineHeight: 24,
   },
-  screenshot: {
-    width: 280,
-    height: 160,
-    borderRadius: 10,
-    marginRight: 10,
+  alertCard: {
+    backgroundColor: COLORS.surface,
+    borderRadius: 20,
+    padding: 18,
+    gap: 12,
+    borderWidth: 1,
+    borderColor: COLORS.border,
   },
-  websiteButton: {
+  alertTitle: {
+    color: COLORS.text,
+    fontSize: 18,
+    fontWeight: '800',
+  },
+  alertText: {
+    color: COLORS.textSecondary,
+    fontSize: 15,
+    lineHeight: 22,
+  },
+  alertActions: {
+    gap: 10,
+  },
+  primaryCta: {
     flexDirection: 'row',
-    backgroundColor: COLORS.accent,
-    borderRadius: 12,
-    paddingVertical: 14,
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
-    marginTop: 8,
+    borderRadius: 16,
+    backgroundColor: COLORS.accent,
+    paddingVertical: 14,
   },
-  websiteButtonText: {
+  primaryCtaText: {
     color: COLORS.background,
     fontSize: 15,
-    fontWeight: '700',
+    fontWeight: '800',
+  },
+  secondaryCta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    borderRadius: 16,
+    backgroundColor: COLORS.surfaceElevated,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    paddingVertical: 14,
+  },
+  secondaryCtaText: {
+    color: COLORS.text,
+    fontSize: 15,
+    fontWeight: '800',
+  },
+  screenshot: {
+    width: 280,
+    height: 160,
+    borderRadius: 14,
+    marginRight: 10,
+  },
+  bottomSpacer: {
+    height: 40,
   },
 });

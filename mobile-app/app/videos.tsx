@@ -1,46 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, FlatList, StyleSheet, Pressable, RefreshControl, Linking } from 'react-native';
-import { Image } from 'expo-image';
-import { Ionicons } from '@expo/vector-icons';
-import { formatDistanceToNow } from 'date-fns';
+import { View, Text, FlatList, StyleSheet, RefreshControl } from 'react-native';
 import ScreenHeader from '../components/ScreenHeader';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorView from '../components/ErrorView';
+import VideoCard from '../components/VideoCard';
 import { COLORS } from '../constants/config';
 import { fetchChannelVideos, type YouTubeVideo } from '../lib/youtube/service';
-
-function formatViewCount(count: string): string {
-  const n = parseInt(count, 10);
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M views`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K views`;
-  return `${n} views`;
-}
-
-function VideoCard({ video }: { video: YouTubeVideo }) {
-  const timeAgo = formatDistanceToNow(new Date(video.publishedAt), { addSuffix: true });
-
-  return (
-    <Pressable
-      style={styles.videoCard}
-      onPress={() => Linking.openURL(`https://www.youtube.com/watch?v=${video.id}`)}
-    >
-      <View style={styles.thumbnailContainer}>
-        <Image source={{ uri: video.thumbnail.url }} style={styles.thumbnail} contentFit="cover" />
-        <View style={styles.durationBadge}>
-          <Text style={styles.durationText}>{video.duration}</Text>
-        </View>
-      </View>
-      <View style={styles.videoInfo}>
-        <Text style={styles.videoTitle} numberOfLines={2}>{video.title}</Text>
-        <View style={styles.videoMeta}>
-          <Text style={styles.metaText}>{formatViewCount(video.viewCount)}</Text>
-          <Text style={styles.metaDot}>·</Text>
-          <Text style={styles.metaText}>{timeAgo}</Text>
-        </View>
-      </View>
-    </Pressable>
-  );
-}
 
 export default function VideosScreen() {
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
@@ -90,7 +55,7 @@ export default function VideosScreen() {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader title="Videos" showBack />
+      <ScreenHeader largeTitle="Videos" showBack showSettings />
       <FlatList
         data={videos}
         keyExtractor={(item) => item.id}
@@ -120,55 +85,11 @@ const styles = StyleSheet.create({
   },
   list: {
     padding: 16,
-  },
-  videoCard: {
-    marginBottom: 20,
-  },
-  thumbnailContainer: {
-    position: 'relative',
-    borderRadius: 12,
-    overflow: 'hidden',
-  },
-  thumbnail: {
-    width: '100%',
-    aspectRatio: 16 / 9,
-  },
-  durationBadge: {
-    position: 'absolute',
-    bottom: 8,
-    right: 8,
-    backgroundColor: 'rgba(0,0,0,0.8)',
-    borderRadius: 4,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-  },
-  durationText: {
-    color: COLORS.text,
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  videoInfo: {
-    paddingTop: 10,
-    paddingHorizontal: 2,
-  },
-  videoTitle: {
-    color: COLORS.text,
-    fontSize: 15,
-    fontWeight: '600',
-    lineHeight: 20,
-    marginBottom: 6,
-  },
-  videoMeta: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    paddingBottom: 120,
   },
   metaText: {
     color: COLORS.textMuted,
     fontSize: 13,
-  },
-  metaDot: {
-    color: COLORS.textMuted,
-    marginHorizontal: 6,
   },
   loadingMore: {
     paddingVertical: 16,

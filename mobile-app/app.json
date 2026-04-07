@@ -18,6 +18,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "io.finalboss.app",
       "buildNumber": "1",
+      "associatedDomains": [
+        "applinks:finalboss.io"
+      ],
       "infoPlist": {
         "NSUserInterfaceStyle": "Dark",
         "ITSAppUsesNonExemptEncryption": false
@@ -47,7 +50,24 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#111827"
       },
-      "package": "io.finalboss.app"
+      "package": "io.finalboss.app",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "finalboss.io",
+              "pathPrefix": "/"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
     },
     "web": {
       "bundler": "metro",

@@ -55,7 +55,12 @@ export default function ArticleListScreen({ title, query, variables, dataPath = 
 
   return (
     <View style={styles.container}>
-      <ScreenHeader title={title} showBack={showBack} />
+      <ScreenHeader
+        title={showBack ? title : undefined}
+        largeTitle={showBack ? undefined : title}
+        showBack={showBack}
+        showSettings={!showBack}
+      />
       <FlatList
         data={posts}
         keyExtractor={(item) => item.id}
@@ -80,6 +85,7 @@ const styles = StyleSheet.create({
   },
   list: {
     padding: 16,
+    paddingBottom: 120,
   },
   cardWrapper: {
     marginBottom: 0,
