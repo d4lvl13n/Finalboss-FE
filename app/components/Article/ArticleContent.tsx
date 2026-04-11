@@ -426,9 +426,11 @@ export default function ArticleContent({ article }: ArticleContentProps) {
           {/* Left sidebar removed — in-article ads provide better viewability */}
 
           {/* Main Content - Centered with wider sidebar */}
-          {/* overflow-hidden breaks AdSense responsive iframes (empty slots); rounding via inner content is enough */}
-          <div className="flex-1 max-w-3xl xl:max-w-[780px] bg-gray-900 rounded-lg shadow-2xl">
-          <div className="p-4 sm:p-6 md:p-8">
+          {/* min-w-0 is critical in flex layouts: wide ad/embed children otherwise force the whole
+              article column wider than the viewport on mobile. Keep clipping on the inner padding
+              wrapper so the column can shrink without breaking responsive ad iframes. */}
+          <div className="flex-1 min-w-0 max-w-3xl xl:max-w-[780px] bg-gray-900 rounded-lg shadow-2xl">
+          <div className="p-4 sm:p-6 md:p-8 overflow-x-hidden">
             {primaryGameTag && <GameMetaCard gameTag={primaryGameTag} />}
 
             {/* Table of Contents for long articles */}
