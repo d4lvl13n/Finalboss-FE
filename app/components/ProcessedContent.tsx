@@ -7,6 +7,7 @@
    type MiniPost = { slug: string; title?: string; image?: string };
    import { PLACEHOLDER_BASE64 } from '../utils/placeholder';
    import siteConfig from '../lib/siteConfig';
+   import PokemonStatsCard from './Pokemon/PokemonStatsCard';
 
    export default function ProcessedContent({ content }: { content: string }) {
      const frontendBase = siteConfig.url;
@@ -140,6 +141,19 @@
            );
          }
 
+          // Render Pokémon stats card for [pokemon:name] shortcodes
+          if (
+            domNode instanceof Element &&
+            domNode.name === 'div' &&
+            domNode.attribs &&
+            (domNode.attribs.class || '').split(' ').includes('fb-pokemon')
+          ) {
+            const pokemonName = domNode.attribs['data-name'];
+            if (pokemonName) {
+              return <PokemonStatsCard name={pokemonName} />;
+            }
+          }
+
           // Style and normalize custom related-links block coming from WP
           if (
             domNode instanceof Element &&
@@ -220,7 +234,12 @@
      // that would crash html-react-parser with "Invalid tag" errors.
      const sanitized = content
        .replace(/<([a-zA-Z]+[^>]*)<(?=[^!])/g, '&lt;$1&lt;')  // fix tags containing stray '<'
-       .replace(/<(?![a-zA-Z/!])/g, '&lt;');  // fix lone '<' not followed by valid tag start
+       .replace(/<(?![a-zA-Z/!])/g, '&lt;')  // fix lone '<' not followed by valid tag start
+       // Convert [pokemon:name] shortcodes to HTML elements for the parser
+       .replace(
+         /\[pokemon:([a-zA-Z0-9-]+)\]/gi,
+         '<div class="fb-pokemon" data-name="$1"></div>'
+       );
 
      return (
        <div className="prose prose-invert max-w-none" suppressHydrationWarning>
