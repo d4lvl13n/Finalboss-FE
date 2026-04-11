@@ -47,6 +47,11 @@ const nextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: '*.gravatar.com',
         pathname: '/**',
       },
@@ -92,7 +97,7 @@ const nextConfig = {
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.google.com https://*.googleapis.com https://*.googlesyndication.com https://*.googleadservices.com https://*.google-analytics.com https://*.doubleclick.net https://*.adtrafficquality.google https://adtrafficquality.google https://the.gatekeeperconsent.com https://*.ezojs.com https://*.ezoic.com https://*.ezoic.net https://*.ezodn.com *.cloudflareinsights.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com data:",
-              `img-src 'self' data: blob: https://${imagesHostname} https://${wpHostname} https://${baseHostname} i.ytimg.com https://images.igdb.com https://*.google.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google https://*.ezoic.com https://*.ezoic.net https://*.ezodn.com *.cloudflareinsights.com`,
+              `img-src 'self' data: blob: https://${imagesHostname} https://${wpHostname} https://${baseHostname} i.ytimg.com https://images.igdb.com https://raw.githubusercontent.com https://*.google.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google https://*.ezoic.com https://*.ezoic.net https://*.ezodn.com *.cloudflareinsights.com`,
               `connect-src 'self' https://www.googletagmanager.com https://*.google.com https://*.googleapis.com https://*.google-analytics.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google https://adtrafficquality.google https://*.ezoic.com https://*.ezoic.net https://*.ezodn.com localhost:3000 ${wpHostname} https://${wpHostname} https://www.googleapis.com *.cloudflareinsights.com`,
               "media-src 'self'",
               "frame-src 'self' https://www.youtube.com https://www.googletagmanager.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google https://*.ezoic.com https://*.ezoic.net https://*.ezodn.com",
