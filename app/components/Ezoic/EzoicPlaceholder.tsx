@@ -61,7 +61,7 @@ export function EzoicSidebar({ placeholderId }: { placeholderId: number }) {
   return (
     <EzoicPlaceholder
       placeholderId={placeholderId}
-      className="sidebar-ad-sticky vertical-ad"
+      className="vertical-ad"
       style={{ width: '180px', minHeight: '400px' }}
     />
   );

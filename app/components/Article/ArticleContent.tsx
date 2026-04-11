@@ -12,8 +12,8 @@ import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
 import { formatDate } from '../../utils/formatDate';
 // ProcessedContent now used via ArticleBodyWithAds
 import RelatedArticles from './RelatedArticles';
-import { ResponsiveAd } from '../AdSense/AdBanner';
-import { EzoicArticleTop, EzoicArticleContent, EzoicArticleBottom, EzoicPageManager } from '../Ezoic';
+import { ResponsiveAd, VerticalAd } from '../AdSense/AdBanner';
+import { EzoicArticleTop, EzoicArticleContent, EzoicArticleBottom, EzoicSidebar, EzoicPageManager } from '../Ezoic';
 import { ENABLE_EZOIC, EZOIC_SLOTS } from '../../lib/adsConfig';
 // InlineContentUpgrade now rendered via ArticleBodyWithAds
 import InlineRelatedLinks from './InlineRelatedLinks';
@@ -507,8 +507,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
           {/* Right Sidebar - Desktop Only */}
           {isDesktop && (
             <div className="hidden xl:block w-[420px] flex-shrink-0 ml-6">
-              {/* Latest articles — sticky so readers can always access */}
-              <div className="sticky top-24">
+              <div className="sticky top-24 space-y-6">
                 <motion.div
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -520,11 +519,39 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                     title={t('common.latest')}
                     showAllLink="/gaming"
                     showAllText={t('article.viewAll')}
-                    maxItems={8}
+                    maxItems={10}
                     accentColor="yellow"
-                    maxHeight="500px"
+                    maxHeight="420px"
                   />
                 </motion.div>
+
+                {SHOW_MANUAL_ADS && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.9 }}
+                    className="bg-gray-800/20 rounded-xl p-4 border border-gray-700/20"
+                  >
+                    <div className="ad-label text-xs mb-3">{t('article.adLabel')}</div>
+                    <div className="flex justify-center">
+                      <VerticalAd adSlot="1258229391" />
+                    </div>
+                  </motion.div>
+                )}
+
+                {ENABLE_EZOIC && (
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 1.0 }}
+                    className="bg-gray-800/20 rounded-xl p-4 border border-gray-700/20"
+                  >
+                    <div className="ad-label text-xs mb-3">{t('article.adLabel')}</div>
+                    <div className="flex justify-center">
+                      <EzoicSidebar placeholderId={EZOIC_SLOTS.sidebarRight} />
+                    </div>
+                  </motion.div>
+                )}
               </div>
             </div>
           )}
