@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import type { IGDBGame } from '../types/igdb';
 
 interface UpcomingGamesCalendarClientProps {
@@ -91,14 +92,57 @@ function getGenres(games: IGDBGame[]) {
 }
 
 function CalendarCard({ game, compact = false }: { game: IGDBGame; compact?: boolean }) {
+  const router = useRouter();
+  const [opening, setOpening] = useState(false);
   const platforms = formatPlatforms(game);
   const genres = game.genres?.slice(0, compact ? 1 : 2).join(' • ');
-  const href = `/game/${game.id}`;
   const description = game.description?.replace(/\s+/g, ' ').trim();
 
+  const handleClick = async () => {
+    if (opening) {
+      return;
+    }
+
+    try {
+      setOpening(true);
+      const response = await fetch('/api/games/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          game: {
+            title: game.name,
+            description: game.description || '',
+            igdbData: {
+              ...game,
+              igdb_id: game.id,
+            },
+          },
+        }),
+      });
+
+      const payload = (await response.json()) as { success?: boolean; slug?: string };
+
+      if (payload.success && payload.slug) {
+        router.push(`/game/${payload.slug}`);
+        return;
+      }
+
+      throw new Error('Failed to resolve game slug');
+    } catch (error) {
+      console.error('Error resolving calendar game page:', error);
+      if (game.id != null) {
+        router.push(`/game/${game.id}`);
+      }
+    } finally {
+      setOpening(false);
+    }
+  };
+
   return (
-    <Link
-      href={href}
+    <button
+      type="button"
+      onClick={() => void handleClick()}
+      disabled={opening}
       className={`group overflow-hidden rounded-2xl border border-white/10 bg-gray-800/80 transition-all duration-300 hover:border-yellow-400/40 hover:bg-gray-800 ${compact ? '' : 'md:grid md:grid-cols-[132px,1fr]'}`}
     >
       <div className={`relative bg-gray-900 ${compact ? 'aspect-[16/9]' : 'h-full min-h-[188px]'}`}>
@@ -135,9 +179,12 @@ function CalendarCard({ game, compact = false }: { game: IGDBGame; compact?: boo
           {!compact && description ? (
             <p className="line-clamp-2 text-sm leading-6 text-gray-400">{description}</p>
           ) : null}
+          {opening ? (
+            <p className="text-xs font-semibold text-yellow-300/80">Opening game…</p>
+          ) : null}
         </div>
       </div>
-    </Link>
+    </button>
   );
 }
 
