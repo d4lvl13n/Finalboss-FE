@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import { Element, htmlToDOM, type DOMNode } from 'html-react-parser';
+import { render } from 'dom-serializer';
 import ProcessedContent from '../ProcessedContent';
 import { ResponsiveAd } from '../AdSense/AdBanner';
 import { SHOW_MANUAL_ADS, ENABLE_EZOIC } from '../../lib/adsConfig';
@@ -18,9 +20,11 @@ interface ArticleBodyWithAdsProps {
 const AD_EVERY_N_SECTIONS = 3;
 
 /**
- * Splits article HTML at `<h2` boundaries, renders each chunk via
- * ProcessedContent, and injects ad slots + a mid-article email CTA
- * between sections.
+ * Splits article HTML at top-level `<h2>` boundaries, renders each chunk via
+ * ProcessedContent, and injects ad slots + a mid-article email CTA between sections.
+ *
+ * This must be DOM-aware. String-splitting on `<h2>` tears apart custom wrappers
+ * authored in WordPress whenever they contain nested headings.
  */
 export default function ArticleBodyWithAds({
   content,
@@ -28,8 +32,7 @@ export default function ArticleBodyWithAds({
   articleTitle,
   categoryName,
 }: ArticleBodyWithAdsProps) {
-  // Split content at each <h2 (keeping the h2 with the following section)
-  const sections = splitAtH2(content);
+  const sections = splitAtTopLevelH2(content);
   const totalSections = sections.length;
   // Place email CTA roughly in the middle
   const ctaIndex = Math.max(1, Math.floor(totalSections / 2));
@@ -72,13 +75,47 @@ export default function ArticleBodyWithAds({
 }
 
 /**
- * Splits HTML string at `<h2` boundaries.
- * First section is everything before the first H2.
- * Returns at least 1 section (the whole content if no H2s).
+ * Splits only on top-level H2 nodes. Any wrapper element is kept intact even if
+ * it contains nested headings.
  */
-function splitAtH2(html: string): string[] {
-  // Split at positions right before <h2 (case-insensitive)
-  const parts = html.split(/(?=<h2[\s>])/i);
-  // Filter out empty strings
-  return parts.filter((p) => p.trim().length > 0);
+function splitAtTopLevelH2(html: string): string[] {
+  const nodes = htmlToDOM(sanitizeContentForSectioning(html));
+
+  if (nodes.length === 0) {
+    return [];
+  }
+
+  const sections: DOMNode[][] = [];
+  let currentSection: DOMNode[] = [];
+
+  for (const node of nodes) {
+    if (isTopLevelH2(node) && currentSection.length > 0) {
+      sections.push(currentSection);
+      currentSection = [];
+    }
+
+    currentSection.push(node);
+  }
+
+  if (currentSection.length > 0) {
+    sections.push(currentSection);
+  }
+
+  return sections
+    .map((section) => render(section).trim())
+    .filter((section) => section.length > 0);
+}
+
+function isTopLevelH2(node: DOMNode): boolean {
+  return node instanceof Element && node.name === 'h2';
+}
+
+function sanitizeContentForSectioning(content: string): string {
+  return content
+    .replace(/<([a-zA-Z]+[^>]*)<(?=[^!])/g, '&lt;$1&lt;')
+    .replace(/<(?![a-zA-Z/!])/g, '&lt;')
+    .replace(
+      /\[pokemon:([a-zA-Z0-9-]+)\]/gi,
+      '<div class="fb-pokemon" data-name="$1"></div>'
+    );
 }
