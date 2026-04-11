@@ -10,6 +10,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ScreenHeader from '../../components/ScreenHeader';
 import SectionHeader from '../../components/SectionHeader';
 import { COLORS, CONFIG } from '../../constants/config';
+import { useChromeScroll } from '../../context/ChromeContext';
 import { useLocalProfile } from '../../context/LocalProfileContext';
 import { type GameSnapshot } from '../../lib/localProfile';
 import { GET_GAME_TAG_WITH_POSTS } from '../../lib/queries/games';
@@ -89,6 +90,7 @@ function RatingPill({ rating }: { rating: number }) {
 
 export default function GameDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
+  const onChromeScroll = useChromeScroll();
   const {
     isGameFollowed,
     isGameSaved,
@@ -159,7 +161,27 @@ export default function GameDetailScreen() {
           </View>
         }
       />
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        onScroll={onChromeScroll}
+        scrollEventThrottle={16}
+      >
+        {screenshots.length > 0 ? (
+          <View style={styles.topGallery}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              {screenshots.map((url, index) => (
+                <Image
+                  key={index}
+                  source={{ uri: url }}
+                  style={styles.topScreenshot}
+                  contentFit="cover"
+                />
+              ))}
+            </ScrollView>
+          </View>
+        ) : null}
+
         <View style={styles.hero}>
           {coverUrl ? (
             <Image source={{ uri: coverUrl }} style={styles.coverImage} contentFit="cover" />
@@ -236,22 +258,6 @@ export default function GameDetailScreen() {
             </View>
           </View>
 
-          {screenshots.length > 0 ? (
-            <View style={styles.section}>
-              <SectionHeader title="Screenshots" />
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {screenshots.map((url, index) => (
-                  <Image
-                    key={index}
-                    source={{ uri: url }}
-                    style={styles.screenshot}
-                    contentFit="cover"
-                  />
-                ))}
-              </ScrollView>
-            </View>
-          ) : null}
-
           {relatedPosts.length > 0 ? (
             <View style={styles.section}>
               <SectionHeader title="Coverage Around This Game" />
@@ -275,6 +281,16 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+  },
+  topGallery: {
+    paddingTop: 14,
+    paddingLeft: 16,
+  },
+  topScreenshot: {
+    width: 308,
+    height: 176,
+    borderRadius: 18,
+    marginRight: 12,
   },
   hero: {
     flexDirection: 'row',
@@ -456,12 +472,6 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     fontSize: 15,
     fontWeight: '800',
-  },
-  screenshot: {
-    width: 280,
-    height: 160,
-    borderRadius: 14,
-    marginRight: 10,
   },
   bottomSpacer: {
     height: 40,

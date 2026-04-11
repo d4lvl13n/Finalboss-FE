@@ -24,6 +24,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import ScreenHeader from '../../components/ScreenHeader';
 import SectionHeader from '../../components/SectionHeader';
 import { COLORS, CONFIG } from '../../constants/config';
+import { useChromeScroll } from '../../context/ChromeContext';
 import { useLocalProfile } from '../../context/LocalProfileContext';
 import {
   getArticleDek,
@@ -145,6 +146,7 @@ function FollowChip({
 export default function ArticleDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const { width } = useWindowDimensions();
+  const onChromeScroll = useChromeScroll();
   const {
     profile,
     beginArticleSession,
@@ -308,6 +310,7 @@ export default function ArticleDetailScreen() {
     : false;
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    onChromeScroll(event);
     const {
       contentOffset,
       contentSize,
@@ -405,7 +408,7 @@ export default function ArticleDetailScreen() {
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         onScroll={handleScroll}
-        scrollEventThrottle={120}
+        scrollEventThrottle={16}
       >
         {imageUrl ? (
           <Image source={{ uri: imageUrl }} style={styles.heroImage} contentFit="cover" />

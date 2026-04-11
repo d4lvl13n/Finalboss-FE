@@ -8,6 +8,7 @@ import GameCard from '../../components/GameCard';
 import ProgressBar from '../../components/ProgressBar';
 import ScreenHeader from '../../components/ScreenHeader';
 import SectionHeader from '../../components/SectionHeader';
+import { useChromeScroll } from '../../context/ChromeContext';
 import { useLocalProfile } from '../../context/LocalProfileContext';
 import { COLORS } from '../../constants/config';
 import type { Post } from '../../lib/types';
@@ -71,6 +72,7 @@ export default function LibraryScreen() {
     savedGames,
     openNewsletterPrompt,
   } = useLocalProfile();
+  const onChromeScroll = useChromeScroll();
 
   const isEmpty =
     continueReading.length === 0 && savedArticles.length === 0 && savedGames.length === 0;
@@ -78,7 +80,11 @@ export default function LibraryScreen() {
   return (
     <View style={styles.container}>
       <ScreenHeader title="Library" showSearch={false} showSettings />
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        onScroll={onChromeScroll}
+        scrollEventThrottle={16}
+      >
         {isEmpty ? (
           <EmptyState
             icon="bookmark-outline"

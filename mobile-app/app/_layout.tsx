@@ -7,6 +7,7 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import client from '../lib/apolloClient';
 import { COLORS } from '../constants/config';
+import { ChromeProvider } from '../context/ChromeContext';
 import { LocalProfileProvider } from '../context/LocalProfileContext';
 
 let NotificationsModule: typeof import('expo-notifications') | null = null;
@@ -80,26 +81,28 @@ export default function RootLayout() {
   return (
     <ApolloProvider client={client}>
       <SafeAreaProvider>
-        <LocalProfileProvider>
-          <StatusBar style="light" />
-          <NotificationBindings />
-          <Stack
-            screenOptions={{
-              headerShown: false,
-              contentStyle: { backgroundColor: COLORS.background },
-              animation: 'slide_from_right',
-            }}
-          >
-            <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="article/[slug]" />
-            <Stack.Screen name="game/[slug]" />
-            <Stack.Screen name="category/[slug]" />
-            <Stack.Screen name="videos" />
-            <Stack.Screen name="videos/[id]" />
-            <Stack.Screen name="search" />
-            <Stack.Screen name="settings" />
-          </Stack>
-        </LocalProfileProvider>
+        <ChromeProvider>
+          <LocalProfileProvider>
+            <StatusBar style="light" />
+            <NotificationBindings />
+            <Stack
+              screenOptions={{
+                headerShown: false,
+                contentStyle: { backgroundColor: COLORS.background },
+                animation: 'slide_from_right',
+              }}
+            >
+              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="article/[slug]" />
+              <Stack.Screen name="game/[slug]" />
+              <Stack.Screen name="category/[slug]" />
+              <Stack.Screen name="videos" />
+              <Stack.Screen name="videos/[id]" />
+              <Stack.Screen name="search" />
+              <Stack.Screen name="settings" />
+            </Stack>
+          </LocalProfileProvider>
+        </ChromeProvider>
       </SafeAreaProvider>
     </ApolloProvider>
   );

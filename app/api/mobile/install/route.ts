@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { maskInstallId } from '@/app/lib/mobileBackend';
+import { upsertMobileInstall } from '@/app/lib/notifications';
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,6 +20,16 @@ export async function POST(request: NextRequest) {
       platform: body.platform,
       appVersion: body.appVersion,
       locale: body.locale,
+      selectedPlatforms: body.selectedPlatforms,
+      selectedGenres: body.selectedGenres,
+      selectedContentTypes: body.selectedContentTypes,
+    });
+
+    await upsertMobileInstall({
+      installId,
+      platform: typeof body.platform === 'string' ? body.platform : undefined,
+      appVersion: typeof body.appVersion === 'string' ? body.appVersion : undefined,
+      locale: typeof body.locale === 'string' ? body.locale : undefined,
       selectedPlatforms: body.selectedPlatforms,
       selectedGenres: body.selectedGenres,
       selectedContentTypes: body.selectedContentTypes,

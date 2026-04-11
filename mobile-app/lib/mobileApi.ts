@@ -14,6 +14,12 @@ interface IgdbListResponse {
   data: IGDBGame[];
 }
 
+interface CreateGameResponse {
+  success: boolean;
+  slug?: string;
+  error?: string;
+}
+
 const MOBILE_API_BASE = CONFIG.MOBILE_API_URL;
 
 async function postJson<T>(path: string, body: unknown): Promise<T> {
@@ -171,6 +177,35 @@ export async function fetchUpcomingGames(limit = 20) {
 
   const payload = (await response.json()) as IgdbListResponse;
   return payload.data ?? [];
+}
+
+export async function resolveGameSlug(game: IGDBGame) {
+  const response = await fetch(`${CONFIG.SITE_URL}/api/games/create`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      game: {
+        name: game.name,
+        description: game.description,
+        igdb_id: game.id,
+        igdbData: game,
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to resolve game slug');
+  }
+
+  const payload = (await response.json()) as CreateGameResponse;
+
+  if (!payload.success || !payload.slug) {
+    throw new Error(payload.error || 'Failed to resolve game slug');
+  }
+
+  return payload.slug;
 }
 
 export function getInterestLabels(profile: LocalProfile) {

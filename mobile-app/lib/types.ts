@@ -151,7 +151,17 @@ export function getIgdbGameModes(game: IGDBGame): string {
 
 // Get release date string
 export function getIgdbReleaseDate(game: IGDBGame): string | undefined {
-  if (game.release_date) return game.release_date;
+  if (game.release_date) {
+    const parsed = new Date(game.release_date);
+    if (!Number.isNaN(parsed.getTime())) {
+      return parsed.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    }
+    return game.release_date;
+  }
   if (game.first_release_date) {
     return new Date(game.first_release_date * 1000).toLocaleDateString('en-US', {
       year: 'numeric', month: 'long', day: 'numeric',

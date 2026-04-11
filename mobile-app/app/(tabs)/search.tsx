@@ -13,8 +13,9 @@ import EmptyState from '../../components/EmptyState';
 import GameCard from '../../components/GameCard';
 import ScreenHeader from '../../components/ScreenHeader';
 import SectionHeader from '../../components/SectionHeader';
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useApolloClient, useQuery } from '@apollo/client';
 import { COLORS } from '../../constants/config';
+import { useChromeScroll } from '../../context/ChromeContext';
 import { useLocalProfile } from '../../context/LocalProfileContext';
 import { filterGameTagsByQuery } from '../../lib/gameCatalog';
 import { fetchCombinedSearch } from '../../lib/mobileApi';
@@ -28,11 +29,10 @@ export default function SearchScreen() {
   const [articles, setArticles] = React.useState<Post[]>([]);
   const [games, setGames] = React.useState<GameTag[]>([]);
   const [loading, setLoading] = React.useState(false);
+  const onChromeScroll = useChromeScroll();
   const lastLoggedSearchRef = React.useRef('');
   const latestRequestRef = React.useRef(0);
-  const [searchArticles] = useLazyQuery(SEARCH_POSTS, {
-    fetchPolicy: 'no-cache',
-  });
+  const apolloClient = useApolloClient();
   const { data: gameCatalogData } = useQuery(GET_GAME_TAGS, {
     variables: { first: 250 },
   });
@@ -57,8 +57,10 @@ export default function SearchScreen() {
       try {
         setLoading(true);
         const [articleResult, gameResult] = await Promise.all([
-          searchArticles({
+          apolloClient.query({
+            query: SEARCH_POSTS,
             variables: { searchTerm: trimmed, first: 20 },
+            fetchPolicy: 'no-cache',
           }),
           fetchCombinedSearch(trimmed).catch(() => ({ articles: [], games: [] })),
         ]);
@@ -92,7 +94,7 @@ export default function SearchScreen() {
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [addRecentSearch, catalogGames, query, searchArticles]);
+  }, [addRecentSearch, apolloClient, catalogGames, query]);
 
   const hasQuery = query.trim().length >= 2;
   const hasResults = articles.length > 0 || games.length > 0;
@@ -121,7 +123,11 @@ export default function SearchScreen() {
         </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView
+        contentContainerStyle={styles.content}
+        onScroll={onChromeScroll}
+        scrollEventThrottle={16}
+      >
         {!hasQuery ? (
           <>
             {profile.recentSearches.length > 0 ? (

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { maskInstallId } from '@/app/lib/mobileBackend';
+import { registerExpoPushToken, upsertMobileInstall } from '@/app/lib/notifications';
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,6 +20,12 @@ export async function POST(request: NextRequest) {
       installId: maskInstallId(installId),
       tokenSuffix: token.slice(-10),
     });
+
+    await upsertMobileInstall({
+      installId,
+      platform: 'ios',
+    });
+    await registerExpoPushToken({ installId, token });
 
     return NextResponse.json({
       success: true,

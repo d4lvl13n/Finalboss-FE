@@ -5,9 +5,11 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorView from '../components/ErrorView';
 import VideoCard from '../components/VideoCard';
 import { COLORS } from '../constants/config';
+import { useChromeScroll } from '../context/ChromeContext';
 import { fetchChannelVideos, type YouTubeVideo } from '../lib/youtube/service';
 
 export default function VideosScreen() {
+  const onChromeScroll = useChromeScroll();
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,6 +63,8 @@ export default function VideosScreen() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <VideoCard video={item} />}
         contentContainerStyle={styles.list}
+        onScroll={onChromeScroll}
+        scrollEventThrottle={16}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={() => loadVideos(true)} tintColor={COLORS.accent} />
         }

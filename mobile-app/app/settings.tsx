@@ -5,6 +5,7 @@ import Constants from 'expo-constants';
 import ScreenHeader from '../components/ScreenHeader';
 import SelectionChip from '../components/SelectionChip';
 import { COLORS, CONFIG } from '../constants/config';
+import { useChromeScroll } from '../context/ChromeContext';
 import { useLocalProfile } from '../context/LocalProfileContext';
 import type { TextScale } from '../lib/localProfile';
 
@@ -76,6 +77,7 @@ function Row({
 }
 
 export default function SettingsScreen() {
+  const onChromeScroll = useChromeScroll();
   const {
     beginOnboarding,
     clearCache,
@@ -99,7 +101,12 @@ export default function SettingsScreen() {
   return (
     <View style={styles.container}>
       <ScreenHeader title="Settings" showBack showSearch={false} />
-      <ScrollView style={styles.scroll} contentContainerStyle={styles.content}>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.content}
+        onScroll={onChromeScroll}
+        scrollEventThrottle={16}
+      >
         <Section title="Preferences">
           <Row
             icon="notifications-outline"

@@ -7,6 +7,7 @@ import ErrorView from '../../components/ErrorView';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import ScreenHeader from '../../components/ScreenHeader';
 import SectionHeader from '../../components/SectionHeader';
+import { useChromeScroll } from '../../context/ChromeContext';
 import { useLocalProfile } from '../../context/LocalProfileContext';
 import { COLORS } from '../../constants/config';
 import { buildFollowingFeed } from '../../lib/feed';
@@ -15,6 +16,7 @@ import type { Post } from '../../lib/types';
 
 export default function FollowingScreen() {
   const { profile, beginOnboarding } = useLocalProfile();
+  const onChromeScroll = useChromeScroll();
   const [refreshing, setRefreshing] = React.useState(false);
   const { data, loading, error, refetch } = useQuery(GET_HOME_POSTS, {
     variables: { first: 80 },
@@ -47,6 +49,8 @@ export default function FollowingScreen() {
       <ScreenHeader title="Following" showSearch showSettings />
       <ScrollView
         contentContainerStyle={styles.content}
+        onScroll={onChromeScroll}
+        scrollEventThrottle={16}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}

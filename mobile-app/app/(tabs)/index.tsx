@@ -21,6 +21,7 @@ import { buildPersonalizedFeed, dedupePosts, filterPostsBySegment, pickHeroPost 
 import { GET_HOME_POSTS } from '../../lib/queries/posts';
 import type { ContentType } from '../../lib/localProfile';
 import { useLocalProfile } from '../../context/LocalProfileContext';
+import { useChromeScroll } from '../../context/ChromeContext';
 import { fetchChannelVideos, type YouTubeVideo } from '../../lib/youtube/service';
 import type { Post } from '../../lib/types';
 
@@ -34,6 +35,7 @@ const SEGMENTS: { value: ContentType | 'videos'; label: string }[] = [
 export default function HomeScreen() {
   const router = useRouter();
   const { profile } = useLocalProfile();
+  const onChromeScroll = useChromeScroll();
   const [segment, setSegment] = React.useState<ContentType | 'videos'>(
     profile.selectedContentTypes[0] ?? 'latest'
   );
@@ -93,6 +95,8 @@ export default function HomeScreen() {
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.content}
+        onScroll={onChromeScroll}
+        scrollEventThrottle={16}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}

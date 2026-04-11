@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { maskInstallId } from '@/app/lib/mobileBackend';
+import { updateMobilePreferences } from '@/app/lib/notifications';
 
 export async function PUT(request: NextRequest) {
   try {
@@ -21,6 +22,15 @@ export async function PUT(request: NextRequest) {
       followedAuthorSlugs: body.followedAuthorSlugs,
       digestHour: body.digestHour,
       pushStatus: body.pushStatus,
+    });
+
+    await updateMobilePreferences({
+      installId,
+      followedGameSlugs: body.followedGameSlugs,
+      followedCategorySlugs: body.followedCategorySlugs,
+      followedAuthorSlugs: body.followedAuthorSlugs,
+      digestHour: typeof body.digestHour === 'number' ? body.digestHour : null,
+      pushStatus: typeof body.pushStatus === 'string' ? body.pushStatus : undefined,
     });
 
     return NextResponse.json({

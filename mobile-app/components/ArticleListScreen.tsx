@@ -6,6 +6,7 @@ import ScreenHeader from './ScreenHeader';
 import LoadingSpinner from './LoadingSpinner';
 import ErrorView from './ErrorView';
 import { COLORS } from '../constants/config';
+import { useChromeScroll } from '../context/ChromeContext';
 import type { Post } from '../lib/types';
 
 interface ArticleListScreenProps {
@@ -17,6 +18,7 @@ interface ArticleListScreenProps {
 }
 
 export default function ArticleListScreen({ title, query, variables, dataPath = 'posts', showBack }: ArticleListScreenProps) {
+  const onChromeScroll = useChromeScroll();
   const { data, loading, error, refetch, fetchMore } = useQuery(query, {
     variables: { first: 24, ...variables },
     notifyOnNetworkStatusChange: true,
@@ -70,6 +72,8 @@ export default function ArticleListScreen({ title, query, variables, dataPath = 
           </View>
         )}
         contentContainerStyle={styles.list}
+        onScroll={onChromeScroll}
+        scrollEventThrottle={16}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={COLORS.accent} />}
         onEndReached={onEndReached}
         onEndReachedThreshold={0.5}
