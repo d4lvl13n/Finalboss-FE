@@ -18,6 +18,7 @@ export default function AdBanner({
   style = {}
 }: AdBannerProps) {
   const pushed = useRef(false);
+  const insRef = useRef<HTMLModElement | null>(null);
 
   // Layout effect so the <ins> is filled before paint; reduces empty responsive units in complex layouts.
   useLayoutEffect(() => {
@@ -25,9 +26,20 @@ export default function AdBanner({
 
     pushed.current = false;
     let cancelled = false;
+    let widthAttempts = 0;
 
     const pushUnit = () => {
       if (cancelled || pushed.current) return;
+
+      const slotEl = insRef.current;
+      if (!slotEl) return;
+
+      if (slotEl.offsetWidth === 0 && widthAttempts < 12) {
+        widthAttempts += 1;
+        requestAnimationFrame(pushUnit);
+        return;
+      }
+
       pushed.current = true;
       // Let layouts settle (incl. flex max-width); early push often yields blank responsive units.
       requestAnimationFrame(() => {
@@ -66,9 +78,12 @@ export default function AdBanner({
   return (
     <div className={`ad-container ${className}`} style={style}>
       <ins
+        ref={insRef}
         className="adsbygoogle"
         style={{
           display: 'block',
+          width: '100%',
+          minWidth: 0,
           ...style
         }}
         data-ad-client={siteConfig.adsensePublisherId}

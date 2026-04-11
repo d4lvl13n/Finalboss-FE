@@ -22,8 +22,10 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
   useEffect(() => {
     if (!shouldLoad) return
 
+    let cancelled = false
+
     const queueAutoAds = () => {
-      if (!enableAutoAds || window.__pageLevelAdsQueued) return
+      if (!enableAutoAds || window.__pageLevelAdsQueued || cancelled) return
       try {
         window.__pageLevelAdsQueued = true
         const adsQueue = window.adsbygoogle || []
@@ -39,17 +41,25 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
     }
 
     const notifyManualSlots = () => {
+      if (cancelled) return
       window.dispatchEvent(new Event(ADSENSE_SCRIPT_LOADED_EVENT))
     }
 
     /** Page-level auto ads compete with the adsbygoogle queue; run after manual slot pushes have been scheduled. */
     const scheduleAutoAdsAfterManual = () => {
-      if (!enableAutoAds) return
+      if (!enableAutoAds || cancelled) return
       if (SHOW_MANUAL_ADS) {
         setTimeout(() => queueAutoAds(), 250)
       } else {
         queueAutoAds()
       }
+    }
+
+    const markScriptReady = () => {
+      if (cancelled || window.__adScriptLoaded) return
+      window.__adScriptLoaded = true
+      notifyManualSlots()
+      scheduleAutoAdsAfterManual()
     }
 
     const loadScript = () => {
@@ -59,11 +69,16 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
         return
       }
 
-      const existing = document.querySelector<HTMLScriptElement>('script[data-adsbygoogle="true"]')
+      const existing = document.querySelector<HTMLScriptElement>(
+        'script[data-fb-adsense-script="true"], script[src*="pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"]'
+      )
       if (existing) {
-        window.__adScriptLoaded = true
-        notifyManualSlots()
-        scheduleAutoAdsAfterManual()
+        if ((existing as HTMLScriptElement & { dataset: DOMStringMap }).dataset.fbAdsenseReady === 'true') {
+          markScriptReady()
+          return
+        }
+
+        existing.addEventListener('load', markScriptReady, { once: true })
         return
       }
 
@@ -71,11 +86,10 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
       script.async = true
       script.src = ADSENSE_SRC
       script.crossOrigin = 'anonymous'
-      script.setAttribute('data-adsbygoogle', 'true')
+      script.setAttribute('data-fb-adsense-script', 'true')
       script.onload = () => {
-        window.__adScriptLoaded = true
-        notifyManualSlots()
-        scheduleAutoAdsAfterManual()
+        script.dataset.fbAdsenseReady = 'true'
+        markScriptReady()
       }
       document.head.appendChild(script)
     }
@@ -101,10 +115,16 @@ export default function AdScriptLoader({ enableAutoAds }: AdScriptLoaderProps) {
       scheduleLoad()
     } else {
       window.addEventListener('load', scheduleLoad, { once: true })
-      return () => window.removeEventListener('load', scheduleLoad)
+      return () => {
+        cancelled = true
+        window.removeEventListener('load', scheduleLoad)
+      }
+    }
+
+    return () => {
+      cancelled = true
     }
   }, [enableAutoAds, shouldLoad])
 
   return null
 }
-
