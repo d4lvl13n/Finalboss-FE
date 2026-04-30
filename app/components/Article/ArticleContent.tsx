@@ -325,7 +325,10 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         cleanedHtml = html.slice(0, verdictIdx);
       } else {
         // Only score found, no verdict heading — remove the score paragraph
-        cleanedHtml = html.replace(/<p[^>]*>[\s\S]*?(?:Score|Provisional\s+score)\s*:?\s*\d+(?:[.,]\d+)?\s*\/\s*10[\s\S]*?<\/p>/gi, '');
+        cleanedHtml = html.replace(
+          /<p\b[^>]*>(?:(?!<\/p>)[\s\S])*(?:Score|Provisional\s+score)\s*:?\s*\d+(?:[.,]\d+)?\s*\/\s*10(?:(?!<\/p>)[\s\S])*<\/p>/gi,
+          ''
+        );
       }
 
       const config: ReviewConfig = {
