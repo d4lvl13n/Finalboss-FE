@@ -13,6 +13,7 @@ import { PLACEHOLDER_BASE64 } from '@/app/utils/placeholder';
 import { useRouter } from 'next/navigation';
 import { SearchResult } from '@/app/types/search';
 import { t } from '@/app/lib/i18n';
+import { normalizeWordPressImageSrc } from '@/app/lib/imageUrl';
 
 export default function SearchOverlay() {
   const { isSearchOpen, closeSearch, searchQuery, setSearchQuery } = useSearch();
@@ -132,7 +133,7 @@ export default function SearchOverlay() {
                       <Link href={`/${result.slug}`} onClick={closeSearch}>
                         <div className="relative h-40">
                           <Image
-                            src={result.featuredImage?.node?.sourceUrl || PLACEHOLDER_BASE64}
+                            src={normalizeWordPressImageSrc(result.featuredImage?.node?.sourceUrl) || PLACEHOLDER_BASE64}
                             alt={result.title}
                             fill
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

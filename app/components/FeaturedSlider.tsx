@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { useMediaQuery } from 'react-responsive';
 import { useSwipeable } from 'react-swipeable';
 import { t } from '../lib/i18n';
+import { imageSrcWithFallback } from '../lib/imageUrl';
 
 // Define interfaces for our data structure
 interface FeaturedImage {
@@ -198,7 +199,7 @@ export default function FeaturedSlider() {
               {/* Image with blur placeholder */}
               <div className="relative w-full h-full">
                 <Image
-                  src={featuredArticles[currentIndex]?.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+                  src={imageSrcWithFallback(featuredArticles[currentIndex]?.featuredImage?.node?.sourceUrl)}
                   alt={featuredArticles[currentIndex]?.title || 'Featured article'}
                   fill
                   priority={currentIndex === 0}
@@ -295,7 +296,7 @@ export default function FeaturedSlider() {
           <>
             <div className="absolute left-0 top-0 w-24 h-full opacity-30 blur-sm">
               <Image
-                src={featuredArticles[(currentIndex - 1 + featuredArticles.length) % featuredArticles.length]?.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+                src={imageSrcWithFallback(featuredArticles[(currentIndex - 1 + featuredArticles.length) % featuredArticles.length]?.featuredImage?.node?.sourceUrl)}
                 alt="Previous"
                 fill
                 className="object-cover"
@@ -303,7 +304,7 @@ export default function FeaturedSlider() {
             </div>
             <div className="absolute right-0 top-0 w-24 h-full opacity-30 blur-sm">
               <Image
-                src={featuredArticles[(currentIndex + 1) % featuredArticles.length]?.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+                src={imageSrcWithFallback(featuredArticles[(currentIndex + 1) % featuredArticles.length]?.featuredImage?.node?.sourceUrl)}
                 alt="Next"
                 fill
                 className="object-cover"

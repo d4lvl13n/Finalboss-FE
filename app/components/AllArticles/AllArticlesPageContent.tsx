@@ -4,8 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_POSTS } from '../../lib/queries/getAllPosts';
 import client from '../../lib/apolloClient';
-import Header from '../Header';
-import Footer from '../Footer';
 import PageHeader from '../PageHeader';
 import ResponsiveArticleGrid from '../ResponsiveArticleGrid';
 
@@ -80,7 +78,6 @@ export default function AllArticlesPageContent({ initialArticles, initialHasNext
 
   return (
     <>
-      <Header />
       <PageHeader 
         title="All Articles" 
         description="Browse our complete collection of gaming news, features, and stories"
@@ -136,7 +133,6 @@ export default function AllArticlesPageContent({ initialArticles, initialHasNext
           )}
         </div>
       </section>
-      <Footer />
     </>
   );
 }

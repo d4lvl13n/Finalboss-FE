@@ -59,7 +59,7 @@ function validateConfig() {
     ['NEXT_PUBLIC_WORDPRESS_URL', siteConfig.wordpressUrl, 'https://backend.finalboss.io'],
   ] as const;
 
-  for (const [envVar, value, fallback] of critical) {
+  for (const [envVar, , fallback] of critical) {
     if (!process.env[envVar]) {
       console.warn(
         `[siteConfig] Missing env var ${envVar} — falling back to "${fallback}". Set it in .env.local for production.`

@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import client from '@/app/lib/apolloClient';
 import { GET_SUBCATEGORY_ARTICLES } from '@/app/lib/queries/getSubcategoryArticles';
+import { imageSrcWithFallback } from '@/app/lib/imageUrl';
 
 interface GuideArticle {
   id: string;
@@ -110,7 +111,7 @@ export default function GuideCategoryClient({
             >
               <Link href={`/${article.slug}`} className="block h-full">
                 <Image
-                  src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+                  src={imageSrcWithFallback(article.featuredImage?.node?.sourceUrl)}
                   alt={article.title}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-110"

@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { GET_AUTHOR_POSTS, AuthorPost } from '../../lib/queries/getAuthor';
 import { formatDate } from '../../utils/formatDate';
 import client from '../../lib/apolloClient';
+import { normalizeWordPressImageSrc } from '../../lib/imageUrl';
 
 interface AuthorArticlesGridProps {
   authorId: number;
@@ -107,9 +108,9 @@ export default function AuthorArticlesGrid({ authorId, authorName }: AuthorArtic
                 >
                   {/* Image */}
                   <div className="relative aspect-video overflow-hidden">
-                    {post.featuredImage?.node?.sourceUrl ? (
+                    {normalizeWordPressImageSrc(post.featuredImage?.node?.sourceUrl) ? (
                       <Image
-                        src={post.featuredImage.node.sourceUrl}
+                        src={normalizeWordPressImageSrc(post.featuredImage?.node?.sourceUrl)!}
                         alt={post.title}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -186,4 +187,3 @@ export default function AuthorArticlesGrid({ authorId, authorName }: AuthorArtic
     </section>
   );
 }
-

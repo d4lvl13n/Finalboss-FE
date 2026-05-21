@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useQuery, DocumentNode } from '@apollo/client';
 import Link from 'next/link';
 import Image from 'next/image';
+import { imageSrcWithFallback } from '../lib/imageUrl';
 
 interface ArticleNode {
   id: string;
@@ -87,7 +88,7 @@ const ArticleGrid = <Vars extends Record<string, unknown>>({
               <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                 <div className="relative h-48">
                   <Image
-                    src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+                    src={imageSrcWithFallback(article.featuredImage?.node?.sourceUrl)}
                     alt={article.title}
                     fill
                     sizes="(max-width: 1024px) 100vw, 33vw"

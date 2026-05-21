@@ -24,7 +24,7 @@ const POSTS_PAGE_SIZE = 12;
 
 export async function generateStaticParams() {
   const gameTags = await fetchAllGameTags();
-  return gameTags.map((tag) => ({ slug: tag.slug }));
+  return gameTags.filter((tag) => tag.hasPosts).map((tag) => ({ slug: tag.slug }));
 }
 
 function slugifyGameTitle(title: string): string {
@@ -64,6 +64,10 @@ function getGameOgImage(data: Record<string, unknown>): string | undefined {
 function stripHtml(value: string | undefined): string {
   if (!value) return '';
   return value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function hasRelatedPosts(gameTag: { posts?: { nodes?: unknown[] } }) {
+  return Boolean(gameTag.posts?.nodes?.length);
 }
 
 function buildDescription(value: string | undefined): string {
@@ -447,6 +451,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (gameTag) {
       const gameData = buildGameFromTag(gameTag);
       const description = buildDescription(gameTag.description || gameData.description || gameData.name);
+      const hasArticleContext = hasRelatedPosts(gameTag);
       return buildPageMetadata({
         title: `${gameData.name} - Game Details`,
         description: description || gameData.name,
@@ -454,7 +459,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         image: gameData.og_image_url || gameData.cover_url || undefined,
         type: 'website',
         robots: {
-          index: true,
+          index: hasArticleContext,
           follow: true,
         },
       });

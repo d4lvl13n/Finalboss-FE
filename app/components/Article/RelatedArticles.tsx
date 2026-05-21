@@ -8,6 +8,7 @@ import { FaArrowLeft, FaArrowRight, FaUser, FaTags } from 'react-icons/fa';
 import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
 import { t } from '../../lib/i18n';
 import { formatDate } from '../../utils/formatDate';
+import { normalizeWordPressImageSrc } from '../../lib/imageUrl';
 
 interface RelatedArticle {
   id: string;
@@ -69,7 +70,10 @@ export default function RelatedArticles({
   }
 
   // Helper function to render article card
-  const renderArticleCard = (article: RelatedArticle, index: number, size: 'small' | 'medium' = 'medium') => (
+  const renderArticleCard = (article: RelatedArticle, index: number, size: 'small' | 'medium' = 'medium') => {
+    const imageUrl = normalizeWordPressImageSrc(article.featuredImage?.node.sourceUrl);
+
+    return (
     <motion.div
       key={article.id}
       initial={{ opacity: 0, y: 20 }}
@@ -80,10 +84,10 @@ export default function RelatedArticles({
       }`}
     >
       <Link href={`/${article.slug}`} className="block h-full">
-        {article.featuredImage ? (
+        {imageUrl ? (
           <div className="relative h-full">
             <Image
-              src={article.featuredImage.node.sourceUrl}
+              src={imageUrl}
               alt={article.title}
               fill
               sizes={size === 'small' ? '300px' : '400px'}
@@ -127,7 +131,8 @@ export default function RelatedArticles({
         </div>
       </Link>
     </motion.div>
-  );
+    );
+  };
 
   // Helper function to render sequential navigation
   const renderSequentialNav = () => {

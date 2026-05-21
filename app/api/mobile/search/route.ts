@@ -146,7 +146,14 @@ export async function GET(request: NextRequest) {
         return (right.rating ?? 0) - (left.rating ?? 0);
       })
       .slice(0, 12)
-      .map(({ score, ...game }) => game);
+      .map((game) => ({
+        name: game.name,
+        slug: game.slug,
+        description: game.description,
+        igdbId: game.igdbId,
+        igdbData: game.igdbData,
+        rating: game.rating,
+      }));
 
     return NextResponse.json({
       articles,

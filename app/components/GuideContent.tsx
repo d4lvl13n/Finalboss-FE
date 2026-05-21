@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useQuery } from '@apollo/client';
 import { GET_LATEST_GUIDES } from '../lib/queries/getLatestGuides';
 import client from '../lib/apolloClient';
+import { normalizeWordPressImageSrc } from '../lib/imageUrl';
 
 interface GuideArticle {
   id: string;
@@ -60,9 +61,9 @@ const GuideContent = () => {
               className="block bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
             >
               <div className="relative h-48">
-                {guide.featuredImage && (
+                {normalizeWordPressImageSrc(guide.featuredImage?.node.sourceUrl) && (
                   <Image
-                    src={guide.featuredImage.node.sourceUrl}
+                    src={normalizeWordPressImageSrc(guide.featuredImage?.node.sourceUrl)!}
                     alt={guide.title}
                     fill
                     sizes="(max-width: 1024px) 100vw, 25vw"

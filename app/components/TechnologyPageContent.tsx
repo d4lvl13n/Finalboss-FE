@@ -12,6 +12,7 @@ import PageHeader from './PageHeader';
 import { motion } from 'framer-motion';
 import { FaArrowRight, FaMicrochip, FaBolt } from 'react-icons/fa';
 import { t } from '../lib/i18n';
+import { imageSrcWithFallback } from '../lib/imageUrl';
 
 interface Article {
   id: string;
@@ -43,7 +44,7 @@ const colorSchemes = [
 
 // Futuristic Tech Card - same design as TechnologySection
 const TechCard = ({ article, index }: { article: Article; index: number }) => {
-  const imageUrl = article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
   const category = article.categories?.nodes?.[0]?.name || t('tech.categoryDefault');
   const scheme = colorSchemes[index % colorSchemes.length];
 
@@ -166,7 +167,7 @@ const TechCard = ({ article, index }: { article: Article; index: number }) => {
 
 // Compact Tech Card for mobile
 const CompactTechCard = ({ article, index }: { article: Article; index: number }) => {
-  const imageUrl = article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
   const scheme = colorSchemes[index % colorSchemes.length];
 
   return (
@@ -205,7 +206,7 @@ const CompactTechCard = ({ article, index }: { article: Article; index: number }
 
 // Featured Tech Card - Larger for first article
 const FeaturedTechCard = ({ article }: { article: Article }) => {
-  const imageUrl = article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
   const category = article.categories?.nodes?.[0]?.name || t('tech.categoryDefault');
 
   return (

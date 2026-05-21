@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { buildPageMetadata } from '../../../lib/seo';
 import siteConfig from '../../../lib/siteConfig';
 import { ARTICLE_PAGE_SIZE, fetchPaginatedArticles } from '../../../lib/pagination';
+import { normalizeWordPressImageSrc } from '../../../lib/imageUrl';
 
 interface PageProps {
   params: { page: string };
@@ -66,9 +67,9 @@ export default async function PaginatedArticlesPage({ params }: PageProps) {
               className="block bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-yellow-400/20 transition-shadow"
             >
               <div className="relative h-48">
-                {article.featuredImage?.node?.sourceUrl && (
+                {normalizeWordPressImageSrc(article.featuredImage?.node?.sourceUrl) && (
                   <Image
-                    src={article.featuredImage.node.sourceUrl}
+                    src={normalizeWordPressImageSrc(article.featuredImage?.node?.sourceUrl)!}
                     alt={article.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
@@ -104,4 +105,3 @@ export default async function PaginatedArticlesPage({ params }: PageProps) {
     </div>
   );
 }
-

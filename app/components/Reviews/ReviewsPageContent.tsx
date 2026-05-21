@@ -16,6 +16,7 @@ import { FaStar, FaArrowRight, FaUser, FaCalendar } from 'react-icons/fa';
 import siteConfig from '../../lib/siteConfig';
 import { t } from '../../lib/i18n';
 import { formatDateLong, formatDate } from '../../utils/formatDate';
+import { imageSrcWithFallback } from '../../lib/imageUrl';
 
 interface Review {
   id: string;
@@ -46,7 +47,7 @@ interface Review {
 
 // Featured Review Card - Large prominent display (same as ReviewsSlider)
 const FeaturedReviewCard = ({ review }: { review: Review }) => {
-  const imageUrl = review.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(review.featuredImage?.node?.sourceUrl);
   
   return (
     <motion.div
@@ -145,7 +146,7 @@ const FeaturedReviewCard = ({ review }: { review: Review }) => {
 
 // Review Card - Grid style (same as ReviewsSlider)
 const ReviewCard = ({ review, index }: { review: Review; index: number }) => {
-  const imageUrl = review.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(review.featuredImage?.node?.sourceUrl);
   
   return (
     <motion.div
@@ -209,7 +210,7 @@ const ReviewCard = ({ review, index }: { review: Review; index: number }) => {
 
 // Compact Review Card for mobile
 const CompactReviewCard = ({ review, index }: { review: Review; index: number }) => {
-  const imageUrl = review.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(review.featuredImage?.node?.sourceUrl);
   
   return (
     <motion.div

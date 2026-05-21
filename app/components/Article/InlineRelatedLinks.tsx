@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { normalizeWordPressImageSrc } from '../../lib/imageUrl';
 
 type InlineArticle = {
   id: string;
@@ -24,16 +25,19 @@ export default function InlineRelatedLinks({ articles }: { articles: InlineArtic
           ⚡ Keep Exploring ⚡
         </h2>
         <div className="space-y-3">
-          {articles.map((article) => (
-            <Link
-              key={article.id}
-              href={`/${article.slug}`}
-              className="group flex items-center gap-4 rounded-xl bg-white/5 p-3 hover:bg-yellow-400/10 transition-colors"
-            >
-              {article.featuredImage?.node?.sourceUrl && (
+          {articles.map((article) => {
+            const imageUrl = normalizeWordPressImageSrc(article.featuredImage?.node?.sourceUrl);
+
+            return (
+              <Link
+                key={article.id}
+                href={`/${article.slug}`}
+                className="group flex items-center gap-4 rounded-xl bg-white/5 p-3 hover:bg-yellow-400/10 transition-colors"
+              >
+              {imageUrl && (
                 <div className="relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-md">
                   <Image
-                    src={article.featuredImage.node.sourceUrl}
+                    src={imageUrl}
                     alt={article.title}
                     fill
                     sizes="96px"
@@ -45,10 +49,10 @@ export default function InlineRelatedLinks({ articles }: { articles: InlineArtic
                 {article.title}
               </span>
             </Link>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
   );
 }
-

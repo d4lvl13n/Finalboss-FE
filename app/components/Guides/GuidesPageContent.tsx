@@ -13,6 +13,7 @@ import PageHeader from '../PageHeader';
 import { FaArrowRight, FaBookOpen, FaGamepad } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
 import { t } from '../../lib/i18n';
+import { imageSrcWithFallback } from '../../lib/imageUrl';
 
 interface Category {
   id: string;
@@ -67,7 +68,7 @@ const borderGradients = [
 
 // Modern Guide Card with glassmorphism - same design as GuidesSection
 const GuideCard = ({ guide, index }: { guide: Guide; index: number }) => {
-  const imageUrl = guide.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(guide.featuredImage?.node?.sourceUrl);
   const category = guide.categories?.nodes?.[0]?.name || t('guide.categoryDefault');
   const gradient = gradients[index % gradients.length];
   const borderGradient = borderGradients[index % borderGradients.length];
@@ -168,8 +169,7 @@ const GuideCard = ({ guide, index }: { guide: Guide; index: number }) => {
 
 // Compact Guide Card for mobile
 const CompactGuideCard = ({ guide, index }: { guide: Guide; index: number }) => {
-  const imageUrl = guide.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
-  const borderGradient = borderGradients[index % borderGradients.length];
+  const imageUrl = imageSrcWithFallback(guide.featuredImage?.node?.sourceUrl);
 
   return (
     <motion.div
@@ -207,7 +207,7 @@ const CompactGuideCard = ({ guide, index }: { guide: Guide; index: number }) => 
 
 // Featured Guide Card - Larger for first article
 const FeaturedGuideCard = ({ guide }: { guide: Guide }) => {
-  const imageUrl = guide.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(guide.featuredImage?.node?.sourceUrl);
   const category = guide.categories?.nodes?.[0]?.name || t('guide.categoryDefault');
 
   return (
@@ -293,7 +293,7 @@ const FeaturedGuideCard = ({ guide }: { guide: Guide }) => {
 const SubcategoryCard = ({ category, index }: { category: Category; index: number }) => {
   const gradient = gradients[index % gradients.length];
   const borderGradient = borderGradients[index % borderGradients.length];
-  const imageUrl = category.posts?.nodes?.[0]?.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(category.posts?.nodes?.[0]?.featuredImage?.node?.sourceUrl);
 
   return (
     <motion.div

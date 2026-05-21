@@ -9,6 +9,7 @@ import client from '../lib/apolloClient';
 import { motion } from 'framer-motion';
 import { FaArrowRight, FaStar, FaChevronLeft, FaChevronRight, FaUser, FaCalendar } from 'react-icons/fa';
 import { formatDateLong, formatDate } from '../utils/formatDate';
+import { imageSrcWithFallback } from '../lib/imageUrl';
 
 interface ReviewNode {
   id: string;
@@ -30,7 +31,7 @@ interface ReviewNode {
 
 // Featured Review Card - Large prominent display
 const FeaturedReviewCard = ({ review }: { review: ReviewNode }) => {
-  const imageUrl = review.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(review.featuredImage?.node?.sourceUrl);
   
   return (
     <motion.div
@@ -129,7 +130,7 @@ const FeaturedReviewCard = ({ review }: { review: ReviewNode }) => {
 
 // Smaller review card for the slider
 const ReviewCard = ({ review, index }: { review: ReviewNode; index: number }) => {
-  const imageUrl = review.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(review.featuredImage?.node?.sourceUrl);
   
   return (
     <motion.div
@@ -179,7 +180,10 @@ const ReviewCard = ({ review, index }: { review: ReviewNode; index: number }) =>
 };
 
 // Compact review for mobile list
-const CompactReviewCard = ({ review, index }: { review: ReviewNode; index: number }) => (
+const CompactReviewCard = ({ review, index }: { review: ReviewNode; index: number }) => {
+  const imageUrl = imageSrcWithFallback(review.featuredImage?.node?.sourceUrl);
+
+  return (
   <motion.div
     initial={{ opacity: 0, x: -20 }}
     animate={{ opacity: 1, x: 0 }}
@@ -191,7 +195,7 @@ const CompactReviewCard = ({ review, index }: { review: ReviewNode; index: numbe
     >
       <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden">
         <Image
-          src={review.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+          src={imageUrl}
           alt={review.title}
           fill
           sizes="80px"
@@ -209,7 +213,8 @@ const CompactReviewCard = ({ review, index }: { review: ReviewNode; index: numbe
       </div>
     </Link>
   </motion.div>
-);
+  );
+};
 
 const ReviewsSlider = () => {
   const { data, loading, error } = useQuery(GET_REVIEWS, {
@@ -406,7 +411,7 @@ const ReviewsSlider = () => {
                   <Link href={`/${review.slug}`} className="group flex gap-4 p-3 rounded-xl hover:bg-gray-800/50 transition-colors">
                     <div className="relative w-32 h-24 flex-shrink-0 rounded-lg overflow-hidden">
                       <Image
-                        src={review.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+                        src={imageSrcWithFallback(review.featuredImage?.node?.sourceUrl)}
                         alt={review.title}
                         fill
                         sizes="128px"
@@ -478,7 +483,7 @@ const ReviewsSlider = () => {
             <Link href={`/${featuredReview.slug}`} className="block group">
               <div className="relative h-[280px] rounded-xl overflow-hidden">
                 <Image
-                  src={featuredReview.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+                  src={imageSrcWithFallback(featuredReview.featuredImage?.node?.sourceUrl)}
                   alt={featuredReview.title}
                   fill
                   sizes="100vw"

@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 import { FaArrowRight, FaChevronLeft, FaChevronRight, FaBookOpen, FaGamepad } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
 import { t } from '../lib/i18n';
+import { imageSrcWithFallback } from '../lib/imageUrl';
 
 interface GuideArticle {
   id: string;
@@ -31,7 +32,7 @@ interface GuideArticle {
 
 // Modern Guide Card with glassmorphism and hover effects
 const GuideCard = ({ guide, index }: { guide: GuideArticle; index: number }) => {
-  const imageUrl = guide.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(guide.featuredImage?.node?.sourceUrl);
   const category = guide.categories?.nodes?.[0]?.name || t('guide.categoryDefault');
   
   // Gradient colors based on index for variety

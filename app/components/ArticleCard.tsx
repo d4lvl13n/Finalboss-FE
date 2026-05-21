@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { formatDate } from '../utils/formatDate';
+import { imageSrcWithFallback } from '../lib/imageUrl';
 
 interface ArticleCardProps {
   article: {
@@ -41,13 +42,14 @@ interface ArticleCardProps {
 function CompactCard({ article, basePath = '' }: ArticleCardProps) {
   const href = basePath ? `${basePath}/${article.slug}` : `/${article.slug}`;
   const category = article.categories?.nodes?.[0];
+  const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
   
   return (
     <Link href={href} className="flex gap-3 p-2 bg-gray-800/30 rounded-lg hover:bg-gray-800/50 transition-colors group">
       {/* Thumbnail */}
       <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-700">
         <Image
-          src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+          src={imageUrl}
           alt={article.title}
           fill
           sizes="80px"
@@ -80,6 +82,7 @@ function CompactCard({ article, basePath = '' }: ArticleCardProps) {
 function FeaturedCard({ article, index = 0, basePath = '' }: ArticleCardProps) {
   const href = basePath ? `${basePath}/${article.slug}` : `/${article.slug}`;
   const category = article.categories?.nodes?.[0];
+  const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
   
   return (
     <motion.div
@@ -90,7 +93,7 @@ function FeaturedCard({ article, index = 0, basePath = '' }: ArticleCardProps) {
       <Link href={href} className="block group">
         <div className="relative aspect-[16/9] md:aspect-[16/10] rounded-xl overflow-hidden bg-gray-800">
           <Image
-            src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+            src={imageUrl}
             alt={article.title}
             fill
             sizes="(max-width: 768px) 100vw, 55vw"
@@ -136,6 +139,7 @@ function FeaturedCard({ article, index = 0, basePath = '' }: ArticleCardProps) {
 function DefaultCard({ article, index = 0, basePath = '' }: ArticleCardProps) {
   const href = basePath ? `${basePath}/${article.slug}` : `/${article.slug}`;
   const category = article.categories?.nodes?.[0];
+  const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
   
   return (
     <motion.div
@@ -147,7 +151,7 @@ function DefaultCard({ article, index = 0, basePath = '' }: ArticleCardProps) {
       <Link href={href} className="block">
         <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-gray-800">
           <Image
-            src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+            src={imageUrl}
             alt={article.title}
             fill
             sizes="(max-width: 768px) 50vw, 33vw"

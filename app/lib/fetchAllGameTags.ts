@@ -4,6 +4,10 @@ import { GET_ALL_GAME_TAGS } from './queries/gameQueries';
 
 export interface GameTagNode {
   slug: string;
+  hasPosts?: boolean;
+  posts?: {
+    nodes?: { id: string }[];
+  };
 }
 
 interface GameTagsQueryResult {
@@ -43,7 +47,12 @@ export async function fetchAllGameTags(
     }
 
     const nodes = data?.gameTags?.nodes ?? [];
-    tags.push(...nodes);
+    tags.push(
+      ...nodes.map((node) => ({
+        slug: node.slug,
+        hasPosts: Boolean(node.posts?.nodes?.length),
+      }))
+    );
 
     hasNextPage = Boolean(data?.gameTags?.pageInfo?.hasNextPage);
     after = data?.gameTags?.pageInfo?.endCursor ?? null;

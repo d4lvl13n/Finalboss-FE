@@ -8,6 +8,7 @@ import { ResponsiveAd } from '../AdSense/AdBanner';
 import { SHOW_MANUAL_ADS, ENABLE_EZOIC } from '../../lib/adsConfig';
 import InlineContentUpgrade from '../LeadCapture/InlineContentUpgrade';
 import { t } from '../../lib/i18n';
+import { stripDocumentTagsFromHtml } from '../../lib/wpContent';
 
 interface ArticleBodyWithAdsProps {
   content: string;
@@ -111,7 +112,7 @@ function isTopLevelH2(node: DOMNode): boolean {
 }
 
 function sanitizeContentForSectioning(content: string): string {
-  return content
+  return stripDocumentTagsFromHtml(content)
     .replace(/<([a-zA-Z]+[^>]*)<(?=[^!])/g, '&lt;$1&lt;')
     .replace(/<(?![a-zA-Z/!])/g, '&lt;')
     .replace(

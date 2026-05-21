@@ -18,6 +18,11 @@ export const GET_GAME_TAG_BY_SLUG = gql`
       description
       igdbId
       igdbData
+      posts(first: 1) {
+        nodes {
+          id
+        }
+      }
     }
   }
 `;
@@ -69,6 +74,11 @@ export const GET_ALL_GAME_TAGS = gql`
     gameTags(first: $first, after: $after) {
       nodes {
         slug
+        posts(first: 1) {
+          nodes {
+            id
+          }
+        }
       }
       pageInfo {
         hasNextPage

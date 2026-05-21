@@ -7,6 +7,8 @@
    type MiniPost = { slug: string; title?: string; image?: string };
    import { PLACEHOLDER_BASE64 } from '../utils/placeholder';
    import siteConfig from '../lib/siteConfig';
+   import { normalizeWordPressImageSrc } from '../lib/imageUrl';
+   import { stripDocumentTagsFromHtml } from '../lib/wpContent';
    import PokemonStatsCard from './Pokemon/PokemonStatsCard';
 
    export default function ProcessedContent({ content }: { content: string }) {
@@ -47,7 +49,11 @@
                  });
                  const json = await res.json();
                  const post = json?.data?.post;
-                 return { slug, title: post?.title, image: post?.featuredImage?.node?.sourceUrl } as MiniPost;
+                 return {
+                   slug,
+                   title: post?.title,
+                   image: normalizeWordPressImageSrc(post?.featuredImage?.node?.sourceUrl),
+                 } as MiniPost;
                } catch {
                  return { slug } as MiniPost;
                }
@@ -109,19 +115,17 @@
         
         if (domNode instanceof Element && domNode.name === 'img') {
            const { src, alt, width, height } = domNode.attribs;
+           if (!src) return undefined;
            // Default aspect ratio if not provided
            const w = parseInt(width) || 800;
            const h = parseInt(height) || 450;
-           // const aspectRatio = w / h;
-           // Use the original src without domain replacement
-           const processedSrc = src;
+           const processedSrc = normalizeWordPressImageSrc(src);
+           if (!processedSrc) return undefined;
            // Use a wrapper div to reserve space and prevent blinking
            return (
              <div
                style={{
-                 position: 'relative',
                  width: '100%',
-                 aspectRatio: `${w} / ${h}`,
                  maxWidth: w,
                  margin: '1.5rem 0',
                }}
@@ -130,8 +134,9 @@
              <Image
                src={processedSrc}
                alt={alt || ''}
-                 fill
-                 style={{ objectFit: 'contain' }}
+                 width={w}
+                 height={h}
+                 style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
                  placeholder="blur"
                  blurDataURL={PLACEHOLDER_BASE64}
                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
@@ -232,7 +237,7 @@
 
      // Sanitize malformed HTML tags from WordPress (e.g. "emvisual<")
      // that would crash html-react-parser with "Invalid tag" errors.
-     const sanitized = content
+     const sanitized = stripDocumentTagsFromHtml(content)
        .replace(/<([a-zA-Z]+[^>]*)<(?=[^!])/g, '&lt;$1&lt;')  // fix tags containing stray '<'
        .replace(/<(?![a-zA-Z/!])/g, '&lt;')  // fix lone '<' not followed by valid tag start
        // Convert [pokemon:name] shortcodes to HTML elements for the parser

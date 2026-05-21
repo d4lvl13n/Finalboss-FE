@@ -156,7 +156,7 @@ export default function GamesIndexClient({
         genreFilter === allLabel || tag.genres.includes(genreFilter);
       return matchesPlatform && matchesGenre;
     });
-  }, [decoratedTags, platformFilter, genreFilter]);
+  }, [allLabel, decoratedTags, platformFilter, genreFilter]);
 
   const handleLoadMore = async () => {
     if (!pageInfo.hasNextPage || loading) {

@@ -12,6 +12,7 @@ import { FaSearch } from 'react-icons/fa';
 import { SearchResult } from '@/app/types/search';
 import { t } from '@/app/lib/i18n';
 import { formatDateShort } from '@/app/utils/formatDate';
+import { normalizeWordPressImageSrc } from '@/app/lib/imageUrl';
 
 export default function SearchPageClient() {
   const searchParams = useSearchParams();
@@ -122,7 +123,7 @@ export default function SearchPageClient() {
                     <Link href={`/${result.slug}`}>
                       <div className="relative h-48">
                         <Image
-                          src={result.featuredImage?.node?.sourceUrl || PLACEHOLDER_BASE64}
+                          src={normalizeWordPressImageSrc(result.featuredImage?.node?.sourceUrl) || PLACEHOLDER_BASE64}
                           alt={result.title}
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -170,4 +171,3 @@ export default function SearchPageClient() {
     </main>
   );
 }
-

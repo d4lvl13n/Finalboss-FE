@@ -22,6 +22,7 @@ import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
 import client from '../../lib/apolloClient';
 import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
 import siteConfig from '../../lib/siteConfig';
+import { normalizeWordPressImageSrc } from '../../lib/imageUrl';
 import ReviewSummary, { ReviewConfig } from '../Review/ReviewSummary';
 import ReviewJsonLd from '../Seo/ReviewJsonLd';
 import Breadcrumbs from '../Breadcrumbs';
@@ -157,6 +158,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
   const updatedDate = article.modified ? formatDate(article.modified) : null;
   const showUpdatedTimestamp =
     article.modified && new Date(article.modified).getTime() !== new Date(article.date).getTime();
+  const featuredImageSrc = normalizeWordPressImageSrc(article.featuredImage?.node.sourceUrl);
 
   // Detect review category
   const isReview = Boolean(
@@ -354,10 +356,10 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
       {/* Hero Image with Title Overlay */}
       <div className="relative h-[50vh] sm:h-[55vh] md:h-[60vh] overflow-hidden">
-        {article.featuredImage && !featuredImageError ? (
+        {featuredImageSrc && !featuredImageError ? (
           <motion.div className="absolute inset-0" >
             <Image
-              src={article.featuredImage.node.sourceUrl}
+              src={featuredImageSrc}
               alt={article.title}
               fill
               sizes="100vw"
@@ -464,7 +466,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               <>
                 <ReviewSummary
                   articleTitle={article.title}
-                  fallbackImage={article.featuredImage?.node?.sourceUrl}
+                  fallbackImage={featuredImageSrc}
                   config={reviewConfig}
                 />
                 <ReviewJsonLd
@@ -473,7 +475,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                   authorName={article.author?.node?.name}
                   rating={typeof reviewConfig.score === 'number' ? reviewConfig.score : undefined}
                   reviewBody={reviewConfig.conclusion}
-                  imageUrl={reviewConfig.backgroundImage || article.featuredImage?.node?.sourceUrl}
+                  imageUrl={reviewConfig.backgroundImage || featuredImageSrc}
                 />
               </>
             )}

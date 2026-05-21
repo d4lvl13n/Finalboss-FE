@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { absoluteUrl } from '../lib/seo';
+import { normalizeWordPressImageSrc } from '../lib/imageUrl';
 import siteConfig, { intlLocale } from '../lib/siteConfig';
 import { cache } from 'react';
 
@@ -72,6 +73,28 @@ interface PageProps {
   params: { slug: string };
 }
 
+function stripHtml(value: string | undefined): string {
+  return value ? value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() : '';
+}
+
+function cleanArticleTitle(value: string | undefined, fallback: string): string {
+  const rawTitle = stripHtml(value || fallback);
+  const withoutBrandSuffix = rawTitle
+    .replace(/\s*(?:[-–—|:]\s*)(?:FinalBoss(?:\.io)?|Final Boss(?:\.io)?)(?:\s*[-–—|:].*)?$/i, '')
+    .trim();
+
+  return withoutBrandSuffix || stripHtml(fallback);
+}
+
+function buildMetaDescription(value: string | undefined, fallback: string): string {
+  const description = stripHtml(value || fallback);
+  if (description.length <= 155) {
+    return description;
+  }
+
+  return `${description.slice(0, 152).trimEnd()}...`;
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const baseUrl = siteConfig.url;
   const article = await getPost(params.slug);
@@ -82,11 +105,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  const stripHtml = (value: string | undefined) =>
-    value ? value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim() : '';
   const seo = article.seo;
-  const seoTitle = seo?.title || article.title;
-  const description = seo?.metaDesc || stripHtml(article.excerpt || article.title);
+  const seoTitle = cleanArticleTitle(seo?.title || article.title, article.title);
+  const ogTitle = cleanArticleTitle(seo?.opengraphTitle || seoTitle, article.title);
+  const description = buildMetaDescription(seo?.metaDesc || article.excerpt, article.title);
+  const ogDescription = buildMetaDescription(seo?.opengraphDescription || description, article.title);
   const authorName = article.author?.node?.name;
 
   // Discover requires og:image ≥1200px wide for hero cards.
@@ -94,7 +117,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // featured image is missing or too narrow.
   const mediaWidth = article.featuredImage?.node?.mediaDetails?.width;
   const mediaHeight = article.featuredImage?.node?.mediaDetails?.height;
-  const featuredUrl = article.featuredImage?.node?.sourceUrl;
+  const featuredUrl = normalizeWordPressImageSrc(article.featuredImage?.node?.sourceUrl);
   const hasLargeEnoughImage = featuredUrl && typeof mediaWidth === 'number' && mediaWidth >= 1200;
   const rawImage = hasLargeEnoughImage ? featuredUrl : siteConfig.ogImagePath;
   const imageUrl = absoluteUrl(rawImage);
@@ -112,8 +135,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     keywords: article.categories?.nodes?.map((c: { name: string }) => c.name),
     authors: authorName ? [{ name: authorName }] : undefined,
     openGraph: {
-      title: seo?.opengraphTitle || seoTitle,
-      description: seo?.opengraphDescription || description,
+      title: ogTitle,
+      description: ogDescription,
       siteName: siteConfig.siteName,
       images: [ogImage],
       url: `${baseUrl}/${article.slug}`,
@@ -128,8 +151,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       site: siteConfig.twitterHandle,
-      title: seo?.opengraphTitle || seoTitle,
-      description: seo?.opengraphDescription || description,
+      title: ogTitle,
+      description: ogDescription,
       images: [imageUrl],
     },
     alternates: {
@@ -166,7 +189,7 @@ export default async function ArticlePage({ params }: PageProps) {
             '@context': 'https://schema.org',
             '@type': 'NewsArticle',
             headline: article.title,
-            image: [article.featuredImage?.node?.sourceUrl].filter(Boolean),
+            image: [normalizeWordPressImageSrc(article.featuredImage?.node?.sourceUrl)].filter(Boolean),
             author: {
               '@type': 'Person',
               name: article.author?.node?.name,

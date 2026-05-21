@@ -8,10 +8,10 @@ import { useQuery } from '@apollo/client';
 import { GET_LATEST_POSTS } from '../lib/queries/getLatestPosts';
 import client from '../lib/apolloClient';
 import { FaArrowRight } from 'react-icons/fa';
-import { motion } from 'framer-motion';
 import LatestSidebar, { formatTimeAgo } from './LatestSidebar';
 import { t } from '../lib/i18n';
 import { formatDateShort } from '../utils/formatDate';
+import { imageSrcWithFallback } from '../lib/imageUrl';
 
 // Define the Article interface
 interface Article {
@@ -39,12 +39,15 @@ interface Article {
 }
 
 // Featured article card (smaller than before) - Optimized for LCP and CLS
-const FeaturedArticle = ({ article }: { article: Article }) => (
+const FeaturedArticle = ({ article }: { article: Article }) => {
+  const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
+
+  return (
   <Link href={`/${article.slug}`} className="group block">
     {/* Fixed height container to prevent CLS */}
     <div className="relative h-[220px] sm:h-[280px] md:h-[380px] lg:h-[420px] rounded-xl overflow-hidden bg-gray-800">
       <Image
-        src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+        src={imageUrl}
         alt={article.title}
         fill
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 680px"
@@ -81,14 +84,18 @@ const FeaturedArticle = ({ article }: { article: Article }) => (
       </div>
     </div>
   </Link>
-);
+  );
+};
 
 // Secondary article cards (below featured) - Fixed height to prevent CLS
-const SecondaryArticle = ({ article }: { article: Article; index: number }) => (
+const SecondaryArticle = ({ article }: { article: Article; index: number }) => {
+  const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
+
+  return (
   <Link href={`/${article.slug}`} className="group block h-[180px] md:h-[200px]">
     <div className="relative h-[120px] md:h-[130px] rounded-lg overflow-hidden mb-2 bg-gray-800">
       <Image
-        src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+        src={imageUrl}
         alt={article.title}
         fill
         sizes="(max-width: 768px) 50vw, 220px"
@@ -108,17 +115,21 @@ const SecondaryArticle = ({ article }: { article: Article; index: number }) => (
       {article.title}
     </h3>
   </Link>
-);
+  );
+};
 
 // Compact card for mobile - Fixed height to prevent CLS
-const CompactArticle = ({ article }: { article: Article }) => (
+const CompactArticle = ({ article }: { article: Article }) => {
+  const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
+
+  return (
   <Link 
     href={`/${article.slug}`}
     className="flex gap-3 p-2 rounded-lg bg-gray-800/30 hover:bg-gray-800/50 transition-colors h-[88px]"
   >
     <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-700">
       <Image
-        src={article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg'}
+        src={imageUrl}
         alt={article.title}
         fill
         sizes="80px"
@@ -135,7 +146,8 @@ const CompactArticle = ({ article }: { article: Article }) => (
       </p>
     </div>
   </Link>
-);
+  );
+};
 
 const LatestArticles = () => {
   const { loading, error, data } = useQuery(GET_LATEST_POSTS, {

@@ -163,8 +163,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
-    // Game hub pages
-    ...gameTags.map((tag) => ({
+    // Game hub pages: only include hubs that have at least one related article.
+    ...gameTags.filter((tag) => tag.hasPosts).map((tag) => ({
       url: `${baseUrl}/game/${tag.slug}`,
       changeFrequency: 'weekly' as const,
       priority: 0.6,

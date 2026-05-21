@@ -9,6 +9,7 @@ import client from '../lib/apolloClient';
 import { motion } from 'framer-motion';
 import { FaArrowRight, FaChevronLeft, FaChevronRight, FaMicrochip, FaBolt } from 'react-icons/fa';
 import { HiCpuChip } from 'react-icons/hi2';
+import { imageSrcWithFallback } from '../lib/imageUrl';
 
 interface Article {
   id: string;
@@ -30,7 +31,7 @@ interface Article {
 
 // Futuristic Tech Card with circuit board aesthetic
 const TechCard = ({ article, index }: { article: Article; index: number }) => {
-  const imageUrl = article.featuredImage?.node?.sourceUrl || '/images/placeholder.svg';
+  const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
   const category = article.categories?.nodes?.[0]?.name || 'Tech';
   
   // Cyber color schemes
@@ -318,7 +319,7 @@ const TechnologySection = () => {
                 </motion.div>
               </div>
               <p className="text-gray-500 text-sm md:text-base mt-1 hidden md:block font-mono">
-                // Latest in gaming hardware & software
+                {'// Latest in gaming hardware & software'}
               </p>
             </div>
           </div>
