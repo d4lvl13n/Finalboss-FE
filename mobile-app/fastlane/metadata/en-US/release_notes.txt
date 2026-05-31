@@ -1,1 +1,6 @@
-Initial release of FinalBoss.io for iOS. Browse gaming news, read reviews, follow guides, and explore our game database.
+What's new in 1.0.1:
+
+• Redesigned navigation — a sleeker bottom bar plus a new slide-out side menu with all categories, search, and settings
+• Quick search moved to the top bar for faster access
+• Subscribe to the FinalBoss daily digest right inside the app
+• Performance and stability improvements
