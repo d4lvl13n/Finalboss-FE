@@ -4,8 +4,8 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "build:ios": "eas build --platform ios",
     "build:android": "eas build --platform android",
@@ -29,6 +29,7 @@
     "expo-router": "~4.0.0",
     "expo-splash-screen": "~0.29.0",
     "expo-status-bar": "~2.0.0",
+    "expo-store-review": "~8.0.1",
     "expo-web-browser": "~14.0.0",
     "graphql": "^16.9.0",
     "react": "18.3.1",

@@ -21,8 +21,10 @@ import RenderHtml from 'react-native-render-html';
 import ArticleCard from '../../components/ArticleCard';
 import ErrorView from '../../components/ErrorView';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import NewsletterInline from '../../components/NewsletterInline';
 import ScreenHeader from '../../components/ScreenHeader';
 import SectionHeader from '../../components/SectionHeader';
+import YouTubeEmbed, { getYouTubeVideoId } from '../../components/YouTubeEmbed';
 import { COLORS, CONFIG } from '../../constants/config';
 import { useChromeScroll } from '../../context/ChromeContext';
 import { useLocalProfile } from '../../context/LocalProfileContext';
@@ -44,13 +46,29 @@ if (Platform.OS !== 'web') {
   try {
     const iframePlugin = require('@native-html/iframe-plugin');
     const webview = require('react-native-webview');
-    customHTMLElementModels = { iframe: iframePlugin.iframeModel };
-    renderers = { iframe: iframePlugin.default };
     WebViewComponent = webview.default;
+    customHTMLElementModels = { iframe: iframePlugin.iframeModel };
+    const DefaultIframeRenderer = iframePlugin.default;
+    // Route YouTube iframes through YouTubeEmbed (loaded with a valid origin so
+    // YouTube doesn't reject them with "Error 153"); any other iframe falls
+    // back to the default plugin renderer.
+    renderers = {
+      iframe: (props: any) => {
+        const videoId = getYouTubeVideoId(props?.tnode?.attributes?.src);
+        if (videoId) {
+          return <YouTubeEmbed videoId={videoId} />;
+        }
+        return <DefaultIframeRenderer {...props} />;
+      },
+    };
   } catch {
     // Ignore optional iframe support issues on runtimes without native modules.
   }
 }
+
+// Stable references so RenderHtml doesn't rebuild its render tree each render.
+const IGNORED_STYLES: string[] = [];
+const SELECTABLE_TEXT_PROPS = { selectable: true } as const;
 
 function snapshotToPost(snapshot: ArticleSnapshot): Post {
   return {
@@ -174,7 +192,13 @@ export default function ArticleDetailScreen() {
   });
 
   const cachedSnapshot = slug ? profile.cachedArticles[slug] : undefined;
-  const article = data?.post ?? (cachedSnapshot ? snapshotToPost(cachedSnapshot) : null);
+  // Memoized so a cache-derived article (revisits / offline) keeps a stable
+  // identity across renders; otherwise the article-dependent effects below
+  // re-fire every render and trigger "Maximum update depth exceeded".
+  const article = React.useMemo(
+    () => data?.post ?? (cachedSnapshot ? snapshotToPost(cachedSnapshot) : null),
+    [data?.post, cachedSnapshot]
+  );
 
   React.useEffect(() => {
     if (!slug || sessionBootstrappedRef.current) {
@@ -186,12 +210,12 @@ export default function ArticleDetailScreen() {
   }, [beginArticleSession, slug]);
 
   React.useEffect(() => {
-    if (!article) {
-      return;
+    // Only persist authoritative server content. Caching the cache-derived
+    // article would rewrite the snapshot it was built from and loop forever.
+    if (data?.post) {
+      void cacheArticle(data.post);
     }
-
-    void cacheArticle(article);
-  }, [article, cacheArticle]);
+  }, [data?.post, cacheArticle]);
 
   React.useEffect(() => {
     if (!article) {
@@ -244,6 +268,86 @@ export default function ArticleDetailScreen() {
     };
   }, [article]);
 
+  const fontScale = profile.textScale === 'large' ? 1.08 : 1;
+
+  // Memoized so scroll-driven re-renders don't rebuild the HTML render engine
+  // (react-native-render-html warns about costly TRenderEngineProvider updates
+  // when these props change identity on every render).
+  const tagsStyles = React.useMemo(
+    () => ({
+      body: { color: COLORS.textSecondary, fontSize: 16 * fontScale, lineHeight: 26 * fontScale },
+      p: { marginBottom: 16 },
+      h1: {
+        color: COLORS.text,
+        fontSize: 26 * fontScale,
+        fontWeight: '700' as const,
+        marginTop: 24,
+        marginBottom: 12,
+      },
+      h2: {
+        color: COLORS.text,
+        fontSize: 22 * fontScale,
+        fontWeight: '700' as const,
+        marginTop: 20,
+        marginBottom: 10,
+      },
+      h3: {
+        color: COLORS.text,
+        fontSize: 18 * fontScale,
+        fontWeight: '600' as const,
+        marginTop: 16,
+        marginBottom: 8,
+      },
+      a: { color: COLORS.accent, textDecorationLine: 'none' as const },
+      img: { borderRadius: 10 },
+      blockquote: {
+        borderLeftWidth: 3,
+        borderLeftColor: COLORS.accent,
+        paddingLeft: 16,
+        marginLeft: 0,
+        fontStyle: 'italic' as const,
+        color: COLORS.textSecondary,
+      },
+      li: { color: COLORS.textSecondary, marginBottom: 6 },
+      strong: { color: COLORS.text, fontWeight: '600' as const },
+      figcaption: {
+        color: COLORS.textMuted,
+        fontSize: 13,
+        textAlign: 'center' as const,
+        marginTop: 6,
+      },
+    }),
+    [fontScale]
+  );
+
+  const renderersProps = React.useMemo(
+    () => ({
+      a: {
+        onPress: (_: unknown, href: string) => {
+          if (href) {
+            void WebBrowser.openBrowserAsync(href);
+          }
+        },
+      },
+      img: {
+        enableExperimentalPercentWidth: true,
+      },
+      ...(WebViewComponent
+        ? {
+            iframe: {
+              scalesPageToFit: true,
+              webViewProps: {
+                allowsFullscreenVideo: true,
+              },
+            },
+          }
+        : {}),
+    }),
+    []
+  );
+
+  const htmlSource = React.useMemo(() => ({ html: article?.content ?? '' }), [article]);
+
   if (loading && !article) {
     return <LoadingSpinner />;
   }
@@ -269,7 +373,6 @@ export default function ArticleDetailScreen() {
   const followingAuthor = author?.slug ? isAuthorFollowed(author.slug) : false;
   const contentType = getContentTypeForPost(article);
   const isGuideOrReview = contentType === 'guides' || contentType === 'reviews';
-  const fontScale = profile.textScale === 'large' ? 1.08 : 1;
   const displayCopy =
     cachedSnapshot && !data?.post ? 'Offline copy available' : getArticleDek(article);
 
@@ -341,50 +444,6 @@ export default function ArticleDetailScreen() {
       newsletterTriggeredRef.current = true;
       openNewsletterPrompt('article');
     }
-  };
-
-  const tagsStyles = {
-    body: { color: COLORS.textSecondary, fontSize: 16 * fontScale, lineHeight: 26 * fontScale },
-    p: { marginBottom: 16 },
-    h1: {
-      color: COLORS.text,
-      fontSize: 26 * fontScale,
-      fontWeight: '700' as const,
-      marginTop: 24,
-      marginBottom: 12,
-    },
-    h2: {
-      color: COLORS.text,
-      fontSize: 22 * fontScale,
-      fontWeight: '700' as const,
-      marginTop: 20,
-      marginBottom: 10,
-    },
-    h3: {
-      color: COLORS.text,
-      fontSize: 18 * fontScale,
-      fontWeight: '600' as const,
-      marginTop: 16,
-      marginBottom: 8,
-    },
-    a: { color: COLORS.accent, textDecorationLine: 'none' as const },
-    img: { borderRadius: 10 },
-    blockquote: {
-      borderLeftWidth: 3,
-      borderLeftColor: COLORS.accent,
-      paddingLeft: 16,
-      marginLeft: 0,
-      fontStyle: 'italic' as const,
-      color: COLORS.textSecondary,
-    },
-    li: { color: COLORS.textSecondary, marginBottom: 6 },
-    strong: { color: COLORS.text, fontWeight: '600' as const },
-    figcaption: {
-      color: COLORS.textMuted,
-      fontSize: 13,
-      textAlign: 'center' as const,
-      marginTop: 6,
-    },
   };
 
   return (
@@ -488,9 +547,9 @@ export default function ArticleDetailScreen() {
           {article.content ? (
             <RenderHtml
               contentWidth={width - 32}
-              source={{ html: article.content }}
+              source={htmlSource}
               tagsStyles={tagsStyles}
-              ignoredStyles={[]}
+              ignoredStyles={IGNORED_STYLES}
               emSize={16}
               {...(customHTMLElementModels && {
                 customHTMLElementModels,
@@ -498,29 +557,8 @@ export default function ArticleDetailScreen() {
               {...(renderers && { renderers })}
               {...(WebViewComponent ? { WebView: WebViewComponent } : {})}
               enableExperimentalMarginCollapsing
-              renderersProps={{
-                a: {
-                  onPress: (_: unknown, href: string) => {
-                    if (href) {
-                      void WebBrowser.openBrowserAsync(href);
-                    }
-                  },
-                },
-                img: {
-                  enableExperimentalPercentWidth: true,
-                },
-                ...(WebViewComponent
-                  ? {
-                      iframe: {
-                        scalesPageToFit: true,
-                        webViewProps: {
-                          allowsFullscreenVideo: true,
-                        },
-                      },
-                    }
-                  : {}),
-              }}
-              defaultTextProps={{ selectable: true }}
+              renderersProps={renderersProps}
+              defaultTextProps={SELECTABLE_TEXT_PROPS}
             />
           ) : null}
 
@@ -529,28 +567,20 @@ export default function ArticleDetailScreen() {
             <Text style={styles.endCapText}>
               Keep FinalBoss working like a daily habit instead of a one-off read.
             </Text>
-            <View style={styles.endCapButtons}>
-              {(primaryGameTag || category?.slug) ? (
-                <Pressable
-                  style={styles.primaryCta}
-                  onPress={() => {
-                    void handleMainFollow();
-                  }}
-                >
-                  <Ionicons name="notifications-outline" size={18} color={COLORS.background} />
-                  <Text style={styles.primaryCtaText}>
-                    {mainFollowActive ? 'Alerts Enabled' : 'Get Alerts'}
-                  </Text>
-                </Pressable>
-              ) : null}
+            {(primaryGameTag || category?.slug) ? (
               <Pressable
-                style={styles.secondaryCta}
-                onPress={() => openNewsletterPrompt('manual')}
+                style={styles.primaryCta}
+                onPress={() => {
+                  void handleMainFollow();
+                }}
               >
-                <Ionicons name="mail-outline" size={18} color={COLORS.text} />
-                <Text style={styles.secondaryCtaText}>Get The Daily Digest</Text>
+                <Ionicons name="notifications-outline" size={18} color={COLORS.background} />
+                <Text style={styles.primaryCtaText}>
+                  {mainFollowActive ? 'Alerts Enabled' : 'Get Alerts'}
+                </Text>
               </Pressable>
-            </View>
+            ) : null}
+            <NewsletterInline source="article" />
           </View>
 
           <View style={styles.relatedSection}>

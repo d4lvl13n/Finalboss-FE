@@ -9,6 +9,7 @@ import type { YouTubeVideo } from '../lib/youtube/service';
 
 function formatViewCount(count: string): string {
   const n = parseInt(count, 10);
+  if (Number.isNaN(n)) return '';
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M views`;
   if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K views`;
   return `${n} views`;
@@ -21,7 +22,11 @@ interface VideoCardProps {
 
 export default function VideoCard({ video, compact = false }: VideoCardProps) {
   const router = useRouter();
-  const timeAgo = formatDistanceToNow(new Date(video.publishedAt), { addSuffix: true });
+  const publishedDate = new Date(video.publishedAt);
+  const timeAgo = Number.isNaN(publishedDate.getTime())
+    ? ''
+    : formatDistanceToNow(publishedDate, { addSuffix: true });
+  const viewLabel = formatViewCount(video.viewCount);
   const cardStyle = compact ? styles.compactCard : styles.card;
   const thumbnailStyle = compact ? styles.compactThumbnail : styles.thumbnail;
 
@@ -41,9 +46,9 @@ export default function VideoCard({ video, compact = false }: VideoCardProps) {
           {video.title}
         </Text>
         <View style={styles.metaRow}>
-          <Text style={styles.metaText}>{formatViewCount(video.viewCount)}</Text>
-          <Text style={styles.metaDot}>·</Text>
-          <Text style={styles.metaText}>{timeAgo}</Text>
+          {viewLabel ? <Text style={styles.metaText}>{viewLabel}</Text> : null}
+          {viewLabel && timeAgo ? <Text style={styles.metaDot}>·</Text> : null}
+          {timeAgo ? <Text style={styles.metaText}>{timeAgo}</Text> : null}
         </View>
       </View>
       <Pressable

@@ -15,7 +15,7 @@ import { GET_HOME_POSTS } from '../../lib/queries/posts';
 import type { Post } from '../../lib/types';
 
 export default function FollowingScreen() {
-  const { profile, beginOnboarding } = useLocalProfile();
+  const { profile } = useLocalProfile();
   const onChromeScroll = useChromeScroll();
   const [refreshing, setRefreshing] = React.useState(false);
   const { data, loading, error, refetch } = useQuery(GET_HOME_POSTS, {
@@ -60,27 +60,11 @@ export default function FollowingScreen() {
         }
       >
         {!hasFollows ? (
-          <View style={styles.emptyBlock}>
-            <EmptyState
-              icon="sparkles-outline"
-              title="Following now starts from your onboarding picks"
-              description="This feed is seeded from your selected platforms, genres, and content types. Follow a game, category, or writer to make it even sharper."
-              actionLabel="Update Interests"
-              onAction={beginOnboarding}
-            />
-            {(profile.selectedPlatforms.length > 0 || profile.selectedGenres.length > 0) ? (
-              <View style={styles.summaryCard}>
-                <Text style={styles.summaryTitle}>Current Preferences</Text>
-                <Text style={styles.summaryText}>
-                  {[
-                    ...profile.selectedPlatforms,
-                    ...profile.selectedGenres,
-                    ...profile.selectedContentTypes,
-                  ].join(' • ')}
-                </Text>
-              </View>
-            ) : null}
-          </View>
+          <EmptyState
+            icon="sparkles-outline"
+            title="Your Following feed"
+            description="Follow a game, category, or writer — tap Follow on any story or game page and their latest coverage lands here. Until then, here's what's fresh on FinalBoss."
+          />
         ) : null}
 
         {hasFollows && followingFeed.length === 0 ? (
@@ -93,7 +77,7 @@ export default function FollowingScreen() {
 
         {followingFeed.length > 0 ? (
           <>
-            <SectionHeader title="Fresh From Your Follows" />
+            <SectionHeader title={hasFollows ? 'Fresh From Your Follows' : 'Fresh on FinalBoss'} />
             {followingFeed.map((post) => (
               <ArticleCard key={post.id} article={post} />
             ))}

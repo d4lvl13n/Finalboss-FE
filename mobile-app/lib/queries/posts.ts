@@ -49,8 +49,8 @@ export const GET_LATEST_POSTS = gql`
 `;
 
 export const GET_HOME_POSTS = gql`
-  query GetHomePosts($first: Int = 60) {
-    posts(first: $first, where: { orderby: { field: DATE, order: DESC } }) {
+  query GetHomePosts($first: Int = 60, $after: String) {
+    posts(first: $first, after: $after, where: { orderby: { field: DATE, order: DESC } }) {
       nodes {
         ${POST_FIELDS}
       }

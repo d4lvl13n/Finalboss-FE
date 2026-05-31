@@ -3,9 +3,9 @@ import { Platform } from 'react-native';
 import Constants from 'expo-constants';
 import type { PropsWithChildren } from 'react';
 import NewsletterPromptSheet from '../components/NewsletterPromptSheet';
-import OnboardingSheet from '../components/OnboardingSheet';
 import PushPermissionSheet from '../components/PushPermissionSheet';
 import { triggerHaptic } from '../lib/haptics';
+import { requestInAppReview } from '../lib/review';
 import {
   getDefaultLocalProfile,
   loadLocalProfile,
@@ -60,20 +60,17 @@ type PromptReason =
   | 'article'
   | 'library'
   | 'manual'
+  | 'auto'
   | null;
 
 interface LocalProfileContextValue {
   profile: LocalProfile;
   hydrated: boolean;
-  onboardingVisible: boolean;
   newsletterPromptReason: PromptReason;
   pushPromptVisible: boolean;
   savedArticles: ArticleSnapshot[];
   continueReading: ArticleProgress[];
   savedGames: GameSnapshot[];
-  beginOnboarding: () => void;
-  completeOnboarding: (selections: OnboardingSelections) => Promise<void>;
-  dismissOnboarding: () => void;
   isArticleSaved: (slug: string) => boolean;
   isGameSaved: (slug: string) => boolean;
   isGameFollowed: (slug: string) => boolean;
@@ -99,6 +96,7 @@ interface LocalProfileContextValue {
   openNewsletterPrompt: (reason: Exclude<PromptReason, null>) => void;
   closeNewsletterPrompt: () => Promise<void>;
   setNewsletterSubscribed: () => Promise<void>;
+  submitNewsletter: (email: string, source?: string) => Promise<void>;
   dismissPushPrompt: () => Promise<void>;
   requestPushPermission: () => Promise<void>;
 }
@@ -135,7 +133,6 @@ function uniqueRecentSearches(values: string[], nextValue?: string) {
 export function LocalProfileProvider({ children }: PropsWithChildren) {
   const [profile, setProfile] = React.useState<LocalProfile>(getDefaultLocalProfile());
   const [hydrated, setHydrated] = React.useState(false);
-  const [onboardingVisible, setOnboardingVisible] = React.useState(false);
   const [newsletterPromptReason, setNewsletterPromptReason] =
     React.useState<PromptReason>(null);
   const [pushPromptVisible, setPushPromptVisible] = React.useState(false);
@@ -176,7 +173,10 @@ export function LocalProfileProvider({ children }: PropsWithChildren) {
           return;
         }
         setProfile(storedProfile);
-        setOnboardingVisible(!storedProfile.onboardingCompleted);
+        // Register the install with the backend on launch (previously this only
+        // happened when onboarding completed). Best-effort; the app works
+        // fully without it.
+        syncInstall(storedProfile).catch(() => {});
       })
       .finally(() => {
         if (mounted) {
@@ -211,16 +211,17 @@ export function LocalProfileProvider({ children }: PropsWithChildren) {
   }, []);
 
   const updateProfile = React.useCallback(
-    async (updater: (current: LocalProfile) => LocalProfile) => {
-      let nextProfile = getDefaultLocalProfile();
-
-      setProfile((current) => {
-        nextProfile = updater(current);
-        return nextProfile;
-      });
-
-      return nextProfile;
-    },
+    (updater: (current: LocalProfile) => LocalProfile) =>
+      // Resolve once the state updater has actually run so callers awaiting the
+      // result (save/follow/onboarding sync) always observe the committed
+      // profile instead of relying on React's eager-state optimization.
+      new Promise<LocalProfile>((resolve) => {
+        setProfile((current) => {
+          const next = updater(current);
+          resolve(next);
+          return next;
+        });
+      }),
     []
   );
 
@@ -267,6 +268,29 @@ export function LocalProfileProvider({ children }: PropsWithChildren) {
     setPushPromptVisible(true);
   }, []);
 
+  // Keep a live reference to the latest profile so the delayed auto-prompt
+  // evaluates current eligibility (subscribed / throttle) when it fires.
+  const profileRef = React.useRef(profile);
+  profileRef.current = profile;
+
+  const autoPromptScheduledRef = React.useRef(false);
+
+  // Slide the free-game-keys signup sheet up a few seconds after the app
+  // settles — the iOS share-sheet style moment, throttled like every other
+  // newsletter prompt so it never nags a subscriber or a recent dismisser.
+  React.useEffect(() => {
+    if (!hydrated || autoPromptScheduledRef.current) {
+      return;
+    }
+
+    autoPromptScheduledRef.current = true;
+    const timer = setTimeout(() => {
+      maybeOpenNewsletterPrompt('auto', profileRef.current);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, [hydrated, maybeOpenNewsletterPrompt]);
+
   const bestEffortLog = React.useCallback(
     (name: string, payload?: Record<string, unknown>) => {
       logMobileEvent(profile.installId, name, payload).catch(() => {
@@ -275,34 +299,6 @@ export function LocalProfileProvider({ children }: PropsWithChildren) {
     },
     [profile.installId]
   );
-
-  const completeOnboarding = React.useCallback(
-    async (selections: OnboardingSelections) => {
-      const nextProfile = await updateProfile((current) => ({
-        ...current,
-        onboardingCompleted: true,
-        selectedPlatforms: selections.selectedPlatforms,
-        selectedGenres: selections.selectedGenres,
-        selectedContentTypes: selections.selectedContentTypes,
-      }));
-
-      setOnboardingVisible(false);
-      triggerHaptic(nextProfile.hapticsEnabled, 'success');
-      bestEffortLog('onboarding_completed', {
-        selectedPlatforms: selections.selectedPlatforms,
-        selectedGenres: selections.selectedGenres,
-        selectedContentTypes: selections.selectedContentTypes,
-      });
-      syncInstall(nextProfile).catch(() => {
-        // Local onboarding should work even if sync is unavailable.
-      });
-    },
-    [bestEffortLog, updateProfile]
-  );
-
-  const dismissOnboarding = React.useCallback(() => {
-    setOnboardingVisible(false);
-  }, []);
 
   const cacheArticle = React.useCallback(
     async (article: Post) => {
@@ -458,36 +454,57 @@ export function LocalProfileProvider({ children }: PropsWithChildren) {
       const snapshot = toArticleSnapshot(article);
       const normalizedProgress = Math.max(0, Math.min(100, Math.round(progress)));
       const completed = normalizedProgress >= 90;
+      let shouldRequestReview = false;
 
-      await updateProfile((current) => ({
-        ...current,
-        cachedArticles: {
-          ...current.cachedArticles,
-          [snapshot.slug]: {
-            ...current.cachedArticles[snapshot.slug],
-            ...snapshot,
+      await updateProfile((current) => {
+        const alreadyCompleted = current.recentArticleProgress[snapshot.slug]?.completed;
+        // Ask for an App Store rating once, the first time an engaged reader
+        // finishes an article — a genuine delight moment, never on launch.
+        shouldRequestReview =
+          completed &&
+          !alreadyCompleted &&
+          !current.reviewRequested &&
+          current.articleSessionCount >= 2;
+
+        return {
+          ...current,
+          reviewRequested: current.reviewRequested || shouldRequestReview,
+          cachedArticles: {
+            ...current.cachedArticles,
+            [snapshot.slug]: {
+              ...current.cachedArticles[snapshot.slug],
+              ...snapshot,
+            },
           },
-        },
-        recentArticleProgress: {
-          ...current.recentArticleProgress,
-          [snapshot.slug]: {
-            slug: snapshot.slug,
-            title: snapshot.title,
-            progress: normalizedProgress,
-            completed,
-            updatedAt: new Date().toISOString(),
-            imageUrl: snapshot.imageUrl,
-            authorName: snapshot.authorName,
-            categoryName: snapshot.categoryName,
-            categorySlug: snapshot.categorySlug,
+          recentArticleProgress: {
+            ...current.recentArticleProgress,
+            [snapshot.slug]: {
+              slug: snapshot.slug,
+              title: snapshot.title,
+              progress: normalizedProgress,
+              completed,
+              updatedAt: new Date().toISOString(),
+              imageUrl: snapshot.imageUrl,
+              authorName: snapshot.authorName,
+              categoryName: snapshot.categoryName,
+              categorySlug: snapshot.categorySlug,
+            },
           },
-        },
-      }));
+        };
+      });
 
       bestEffortLog('article_progress', {
         slug: snapshot.slug,
         progress: normalizedProgress,
       });
+
+      if (shouldRequestReview) {
+        bestEffortLog('review_prompt_requested', { slug: snapshot.slug });
+        // Let the reading UI settle before the system sheet appears.
+        setTimeout(() => {
+          void requestInAppReview();
+        }, 1200);
+      }
     },
     [bestEffortLog, updateProfile]
   );
@@ -586,6 +603,23 @@ export function LocalProfileProvider({ children }: PropsWithChildren) {
     }));
   }, [updateProfile]);
 
+  // Shared Kit subscribe path used by every capture surface (the prompt sheet,
+  // the in-article inline form, the side menu). Pipes to the same
+  // /api/newsletter/subscribe → Kit v4 endpoint the website uses.
+  const submitNewsletter = React.useCallback(
+    async (email: string, source = 'mobile') => {
+      await subscribeToNewsletter({
+        email,
+        installId: profile.installId,
+        interests: getInterestLabels(profile),
+      });
+      await setNewsletterSubscribed();
+      triggerHaptic(profile.hapticsEnabled, 'success');
+      bestEffortLog('newsletter_subscribed', { source });
+    },
+    [bestEffortLog, profile, setNewsletterSubscribed]
+  );
+
   const dismissPushPrompt = React.useCallback(async () => {
     setPushPromptVisible(false);
     await updateProfile((current) => ({
@@ -664,15 +698,11 @@ export function LocalProfileProvider({ children }: PropsWithChildren) {
     () => ({
       profile,
       hydrated,
-      onboardingVisible,
       newsletterPromptReason,
       pushPromptVisible,
       savedArticles,
       continueReading,
       savedGames,
-      beginOnboarding: () => setOnboardingVisible(true),
-      completeOnboarding,
-      dismissOnboarding,
       isArticleSaved: (slug: string) => profile.savedArticleSlugs.includes(slug),
       isGameSaved: (slug: string) => profile.savedGameSlugs.includes(slug),
       isGameFollowed: (slug: string) => profile.followedGameSlugs.includes(slug),
@@ -695,6 +725,7 @@ export function LocalProfileProvider({ children }: PropsWithChildren) {
       openNewsletterPrompt,
       closeNewsletterPrompt,
       setNewsletterSubscribed,
+      submitNewsletter,
       dismissPushPrompt,
       requestPushPermission,
     }),
@@ -705,13 +736,10 @@ export function LocalProfileProvider({ children }: PropsWithChildren) {
       clearCache,
       clearRecentSearches,
       closeNewsletterPrompt,
-      completeOnboarding,
       continueReading,
-      dismissOnboarding,
       dismissPushPrompt,
       hydrated,
       newsletterPromptReason,
-      onboardingVisible,
       openNewsletterPrompt,
       profile,
       pushPromptVisible,
@@ -722,6 +750,7 @@ export function LocalProfileProvider({ children }: PropsWithChildren) {
       setDigestHour,
       setHapticsEnabled,
       setNewsletterSubscribed,
+      submitNewsletter,
       setTextScale,
       toggleFollowAuthor,
       toggleFollowCategory,
@@ -734,31 +763,11 @@ export function LocalProfileProvider({ children }: PropsWithChildren) {
   return (
     <LocalProfileContext.Provider value={contextValue}>
       {children}
-      <OnboardingSheet
-        visible={hydrated && onboardingVisible}
-        onComplete={completeOnboarding}
-        initialSelections={{
-          selectedPlatforms: profile.selectedPlatforms,
-          selectedGenres: profile.selectedGenres,
-          selectedContentTypes: profile.selectedContentTypes,
-        }}
-      />
       <NewsletterPromptSheet
         visible={newsletterPromptReason !== null}
         reason={newsletterPromptReason}
         onClose={closeNewsletterPrompt}
-        onSubmit={async (email) => {
-          await subscribeToNewsletter({
-            email,
-            installId: profile.installId,
-            interests: getInterestLabels(profile),
-          });
-          await setNewsletterSubscribed();
-          triggerHaptic(profile.hapticsEnabled, 'success');
-          bestEffortLog('newsletter_subscribed', {
-            reason: newsletterPromptReason,
-          });
-        }}
+        onSubmit={(email) => submitNewsletter(email, newsletterPromptReason ?? 'mobile')}
       />
       <PushPermissionSheet
         visible={pushPromptVisible}

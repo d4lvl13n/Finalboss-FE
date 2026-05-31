@@ -37,7 +37,7 @@ export default function GameCard({ tag, compact = false }: GameCardProps) {
           <Image source={{ uri: coverUrl }} style={styles.compactCover} contentFit="cover" />
         ) : (
           <View style={[styles.compactCover, styles.placeholder]}>
-            <Text style={styles.placeholderText}>{tag.name[0]}</Text>
+            <Text style={styles.placeholderText}>{tag.name?.[0] ?? '?'}</Text>
           </View>
         )}
         <View style={styles.compactInfo}>

@@ -26,39 +26,42 @@ export default function NewsletterPromptSheet({
   onClose,
   onSubmit,
 }: NewsletterPromptSheetProps) {
-  const [step, setStep] = React.useState(0);
   const [email, setEmail] = React.useState('');
   const [submitting, setSubmitting] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     if (!visible) {
-      setStep(0);
       setEmail('');
       setSubmitting(false);
       setError(null);
+    }
+  }, [visible]);
+
+  const title = 'Free game keys, every month';
+
+  const description =
+    'Join the FinalBoss daily digest and newsletter — and we drop free game keys into your inbox every single month.';
+
+  const handleSubmit = async () => {
+    if (!email.includes('@')) {
+      setError('Enter a valid email address.');
       return;
     }
 
-    if (reason === 'manual' || reason === 'library') {
-      setStep(1);
-    } else {
-      setStep(0);
+    try {
+      setSubmitting(true);
+      setError(null);
+      await onSubmit(email.trim());
+    } catch {
+      setError('Subscription failed. Try again.');
+    } finally {
+      setSubmitting(false);
     }
-  }, [reason, visible]);
-
-  const title =
-    reason === 'library'
-      ? 'Build your daily FinalBoss briefing'
-      : 'Get the stories worth coming back for';
-
-  const description =
-    reason === 'article'
-      ? 'Drop into the daily digest and get new reviews, sharp guides, and follow-up coverage before it disappears in the feed.'
-      : 'Turn FinalBoss into a repeat habit with the daily digest and the best game-driven stories.';
+  };
 
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={styles.overlay}
@@ -66,60 +69,44 @@ export default function NewsletterPromptSheet({
         <BlurView intensity={44} tint="dark" style={StyleSheet.absoluteFillObject} />
         <SafeAreaView style={styles.safeArea}>
           <View style={styles.card}>
+            <View style={styles.grabber} />
             <Pressable onPress={onClose} style={styles.closeButton}>
               <Text style={styles.closeText}>Later</Text>
             </Pressable>
 
-            {step === 0 ? (
-              <>
-                <Text style={styles.kicker}>Daily Digest</Text>
-                <Text style={styles.title}>{title}</Text>
-                <Text style={styles.description}>{description}</Text>
-                <Pressable onPress={() => setStep(1)} style={styles.primaryButton}>
-                  <Text style={styles.primaryButtonText}>Add My Email</Text>
-                </Pressable>
-              </>
-            ) : (
-              <>
-                <Text style={styles.kicker}>One More Step</Text>
-                <Text style={styles.title}>Where should we send it?</Text>
-                <TextInput
-                  value={email}
-                  onChangeText={setEmail}
-                  autoCapitalize="none"
-                  keyboardType="email-address"
-                  autoCorrect={false}
-                  placeholder="you@example.com"
-                  placeholderTextColor={COLORS.textMuted}
-                  style={styles.input}
-                />
-                {error ? <Text style={styles.errorText}>{error}</Text> : null}
-                <Pressable
-                  disabled={submitting}
-                  onPress={async () => {
-                    if (!email.includes('@')) {
-                      setError('Enter a valid email address.');
-                      return;
-                    }
-
-                    try {
-                      setSubmitting(true);
-                      setError(null);
-                      await onSubmit(email.trim());
-                    } catch {
-                      setError('Subscription failed. Try again.');
-                    } finally {
-                      setSubmitting(false);
-                    }
-                  }}
-                  style={[styles.primaryButton, submitting && styles.disabledButton]}
-                >
-                  <Text style={styles.primaryButtonText}>
-                    {submitting ? 'Subscribing…' : 'Subscribe'}
-                  </Text>
-                </Pressable>
-              </>
-            )}
+            <Text style={styles.kicker}>🎁 Free Game Keys</Text>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.description}>{description}</Text>
+            <TextInput
+              value={email}
+              onChangeText={(value) => {
+                setEmail(value);
+                setError(null);
+              }}
+              autoCapitalize="none"
+              keyboardType="email-address"
+              autoCorrect={false}
+              placeholder="you@example.com"
+              placeholderTextColor={COLORS.textMuted}
+              style={styles.input}
+              editable={!submitting}
+              onSubmitEditing={() => {
+                void handleSubmit();
+              }}
+              returnKeyType="go"
+            />
+            {error ? <Text style={styles.errorText}>{error}</Text> : null}
+            <Pressable
+              disabled={submitting}
+              onPress={() => {
+                void handleSubmit();
+              }}
+              style={[styles.primaryButton, submitting && styles.disabledButton]}
+            >
+              <Text style={styles.primaryButtonText}>
+                {submitting ? 'Subscribing…' : 'Subscribe'}
+              </Text>
+            </Pressable>
           </View>
         </SafeAreaView>
       </KeyboardAvoidingView>
@@ -144,6 +131,14 @@ const styles = StyleSheet.create({
     gap: 14,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.08)',
+  },
+  grabber: {
+    alignSelf: 'center',
+    width: 40,
+    height: 5,
+    borderRadius: 3,
+    backgroundColor: 'rgba(255,255,255,0.25)',
+    marginBottom: 2,
   },
   closeButton: {
     alignSelf: 'flex-end',

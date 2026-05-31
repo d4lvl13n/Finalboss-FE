@@ -233,5 +233,11 @@ export function filterPostsBySegment(posts: Post[], segment: ContentType) {
     return [];
   }
 
+  // "Latest" is the full feed (every article type, newest first); the other
+  // segments narrow to their content type.
+  if (segment === 'latest') {
+    return posts;
+  }
+
   return posts.filter((post) => getContentTypeForPost(post) === segment);
 }

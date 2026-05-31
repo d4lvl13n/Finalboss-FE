@@ -64,6 +64,7 @@ export interface LocalProfile {
   followCount: number;
   saveCount: number;
   articleSessionCount: number;
+  reviewRequested: boolean;
   digestHour: number;
   hapticsEnabled: boolean;
   textScale: TextScale;
@@ -110,6 +111,7 @@ export function getDefaultLocalProfile(): LocalProfile {
     followCount: 0,
     saveCount: 0,
     articleSessionCount: 0,
+    reviewRequested: false,
     digestHour: 18,
     hapticsEnabled: true,
     textScale: 'default',
@@ -153,6 +155,7 @@ export function migrateLocalProfile(input: unknown): LocalProfile {
     followCount: candidate.followCount ?? fallback.followCount,
     saveCount: candidate.saveCount ?? fallback.saveCount,
     articleSessionCount: candidate.articleSessionCount ?? fallback.articleSessionCount,
+    reviewRequested: candidate.reviewRequested ?? fallback.reviewRequested,
     digestHour: candidate.digestHour ?? fallback.digestHour,
     hapticsEnabled: candidate.hapticsEnabled ?? fallback.hapticsEnabled,
     textScale: candidate.textScale ?? fallback.textScale,

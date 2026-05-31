@@ -1,14 +1,13 @@
 import React from 'react';
 import { Linking, Pressable, Share, StyleSheet, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
-import { WebView } from 'react-native-webview';
 import { Ionicons } from '@expo/vector-icons';
 import ScreenHeader from '../../components/ScreenHeader';
+import YouTubeEmbed from '../../components/YouTubeEmbed';
 import { COLORS } from '../../constants/config';
 
 export default function VideoDetailScreen() {
   const { id, title } = useLocalSearchParams<{ id: string; title?: string }>();
-  const embedUrl = `https://www.youtube.com/embed/${id}?playsinline=1&rel=0`;
   const youtubeUrl = `https://www.youtube.com/watch?v=${id}`;
   const videoTitle = title || 'FinalBoss Video';
 
@@ -42,14 +41,7 @@ export default function VideoDetailScreen() {
       />
 
       <View style={styles.playerWrap}>
-        <WebView
-          source={{ uri: embedUrl }}
-          allowsFullscreenVideo
-          javaScriptEnabled
-          domStorageEnabled
-          mediaPlaybackRequiresUserAction={false}
-          style={styles.webview}
-        />
+        {id ? <YouTubeEmbed videoId={id} card={false} /> : null}
       </View>
 
       <View style={styles.content}>

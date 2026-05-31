@@ -5,7 +5,7 @@ export const CONFIG = {
   GRAPHQL_ENDPOINT: 'https://backend.finalboss.io/graphql',
   MOBILE_API_URL: 'https://finalboss.io/api/mobile',
   NEWSLETTER_URL: 'https://finalboss.io/api/newsletter/subscribe',
-  IOS_APP_STORE_URL: 'https://apps.apple.com/app/id6744387896',
+  IOS_APP_STORE_URL: 'https://apps.apple.com/app/id6761368813',
 } as const;
 
 export const COLORS = {

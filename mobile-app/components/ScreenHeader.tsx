@@ -7,6 +7,7 @@ import { useRouter } from 'expo-router';
 import { Image } from 'expo-image';
 import { COLORS } from '../constants/config';
 import { useChrome } from '../context/ChromeContext';
+import { useSideMenu } from '../context/SideMenuContext';
 
 interface ScreenHeaderProps {
   title?: string;
@@ -14,6 +15,7 @@ interface ScreenHeaderProps {
   showBack?: boolean;
   showSearch?: boolean;
   showSettings?: boolean;
+  showMenu?: boolean;
   rightAction?: React.ReactNode;
 }
 
@@ -23,10 +25,12 @@ export default function ScreenHeader({
   showBack,
   showSearch = true,
   showSettings = false,
+  showMenu = true,
   rightAction,
 }: ScreenHeaderProps) {
   const insets = useSafeAreaInsets();
   const router = useRouter();
+  const { openMenu } = useSideMenu();
   const hasLargeTitle = Boolean(largeTitle);
   const { progress, revealChrome } = useChrome();
   const shellHeight = insets.top + (hasLargeTitle ? 112 : 84);
@@ -72,6 +76,11 @@ export default function ScreenHeader({
               </Pressable>
             ) : (
               <View style={styles.brandBlock}>
+                {showMenu ? (
+                  <Pressable onPress={openMenu} style={styles.menuBtn} hitSlop={8}>
+                    <Ionicons name="menu" size={22} color={COLORS.text} />
+                  </Pressable>
+                ) : null}
                 <Image source={require('../assets/logo.png')} style={styles.logo} contentFit="contain" />
                 {title ? <Text style={styles.brandText}>{title}</Text> : <Text style={styles.brandText}>FinalBoss</Text>}
               </View>
@@ -186,6 +195,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 9,
+  },
+  menuBtn: {
+    width: 38,
+    height: 38,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 19,
+    backgroundColor: 'rgba(255,255,255,0.04)',
   },
   logo: {
     width: 24,

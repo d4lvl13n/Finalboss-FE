@@ -5,6 +5,7 @@ import Constants from 'expo-constants';
 import ScreenHeader from '../components/ScreenHeader';
 import SelectionChip from '../components/SelectionChip';
 import { COLORS, CONFIG } from '../constants/config';
+import { openStoreReviewPage } from '../lib/review';
 import { useChromeScroll } from '../context/ChromeContext';
 import { useLocalProfile } from '../context/LocalProfileContext';
 import type { TextScale } from '../lib/localProfile';
@@ -79,7 +80,6 @@ function Row({
 export default function SettingsScreen() {
   const onChromeScroll = useChromeScroll();
   const {
-    beginOnboarding,
     clearCache,
     openNewsletterPrompt,
     profile,
@@ -199,13 +199,6 @@ export default function SettingsScreen() {
               onPress={() => handleTextScale('large')}
             />
           </View>
-          <View style={styles.inlineDivider} />
-          <Row
-            icon="sparkles-outline"
-            label="Update Interests"
-            value={`${profile.selectedPlatforms.length + profile.selectedGenres.length + profile.selectedContentTypes.length} selected`}
-            onPress={beginOnboarding}
-          />
         </Section>
 
         <Section title="Following">
@@ -251,8 +244,10 @@ export default function SettingsScreen() {
         <Section title="About">
           <Row
             icon="star-outline"
-            label="Rate on the App Store"
-            onPress={() => Linking.openURL(CONFIG.IOS_APP_STORE_URL)}
+            label="Rate FinalBoss"
+            onPress={() => {
+              void openStoreReviewPage();
+            }}
           />
           <View style={styles.rowDivider} />
           <Row

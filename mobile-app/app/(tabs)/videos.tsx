@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, FlatList, StyleSheet, RefreshControl } from 'react-native';
-import ScreenHeader from '../components/ScreenHeader';
-import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorView from '../components/ErrorView';
-import VideoCard from '../components/VideoCard';
-import { COLORS } from '../constants/config';
-import { useChromeScroll } from '../context/ChromeContext';
-import { fetchChannelVideos, type YouTubeVideo } from '../lib/youtube/service';
+import ScreenHeader from '../../components/ScreenHeader';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import ErrorView from '../../components/ErrorView';
+import VideoCard from '../../components/VideoCard';
+import { COLORS } from '../../constants/config';
+import { useChromeScroll } from '../../context/ChromeContext';
+import { fetchChannelVideos, type YouTubeVideo } from '../../lib/youtube/service';
 
 export default function VideosScreen() {
   const onChromeScroll = useChromeScroll();
@@ -57,7 +57,7 @@ export default function VideosScreen() {
 
   return (
     <View style={styles.container}>
-      <ScreenHeader largeTitle="Videos" showBack showSettings />
+      <ScreenHeader title="Videos" showSearch showSettings />
       <FlatList
         data={videos}
         keyExtractor={(item) => item.id}

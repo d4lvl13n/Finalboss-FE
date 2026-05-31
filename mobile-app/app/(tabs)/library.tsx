@@ -71,11 +71,16 @@ export default function LibraryScreen() {
     savedArticles,
     savedGames,
     openNewsletterPrompt,
+    profile,
   } = useLocalProfile();
   const onChromeScroll = useChromeScroll();
 
   const isEmpty =
     continueReading.length === 0 && savedArticles.length === 0 && savedGames.length === 0;
+  const followCount =
+    profile.followedGameSlugs.length +
+    profile.followedCategorySlugs.length +
+    profile.followedAuthorSlugs.length;
 
   return (
     <View style={styles.container}>
@@ -85,6 +90,24 @@ export default function LibraryScreen() {
         onScroll={onChromeScroll}
         scrollEventThrottle={16}
       >
+        <Pressable
+          style={styles.followingCard}
+          onPress={() => router.push('/(tabs)/following' as never)}
+        >
+          <View style={styles.followingIcon}>
+            <Ionicons name="sparkles" size={18} color={COLORS.accent} />
+          </View>
+          <View style={styles.followingText}>
+            <Text style={styles.followingTitle}>Following</Text>
+            <Text style={styles.followingSubtitle}>
+              {followCount > 0
+                ? `${followCount} game${followCount === 1 ? '' : 's'}, topics & writers you follow`
+                : 'Games, topics & writers you follow'}
+            </Text>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color={COLORS.textMuted} />
+        </Pressable>
+
         {isEmpty ? (
           <EmptyState
             icon="bookmark-outline"
@@ -176,6 +199,38 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingBottom: 120,
     gap: 24,
+  },
+  followingCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    backgroundColor: COLORS.surface,
+    borderRadius: 18,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+  },
+  followingIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.surfaceElevated,
+  },
+  followingText: {
+    flex: 1,
+  },
+  followingTitle: {
+    color: COLORS.text,
+    fontSize: 16,
+    fontWeight: '800',
+  },
+  followingSubtitle: {
+    color: COLORS.textMuted,
+    fontSize: 13,
+    marginTop: 2,
   },
   section: {
     gap: 12,

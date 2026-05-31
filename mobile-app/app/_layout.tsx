@@ -9,6 +9,8 @@ import client from '../lib/apolloClient';
 import { COLORS } from '../constants/config';
 import { ChromeProvider } from '../context/ChromeContext';
 import { LocalProfileProvider } from '../context/LocalProfileContext';
+import { SideMenuProvider } from '../context/SideMenuContext';
+import SideMenu from '../components/SideMenu';
 
 let NotificationsModule: typeof import('expo-notifications') | null = null;
 const isExpoGo = Constants.appOwnership === 'expo';
@@ -83,24 +85,26 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <ChromeProvider>
           <LocalProfileProvider>
-            <StatusBar style="light" />
-            <NotificationBindings />
-            <Stack
-              screenOptions={{
-                headerShown: false,
-                contentStyle: { backgroundColor: COLORS.background },
-                animation: 'slide_from_right',
-              }}
-            >
-              <Stack.Screen name="(tabs)" />
-              <Stack.Screen name="article/[slug]" />
-              <Stack.Screen name="game/[slug]" />
-              <Stack.Screen name="category/[slug]" />
-              <Stack.Screen name="videos" />
-              <Stack.Screen name="videos/[id]" />
-              <Stack.Screen name="search" />
-              <Stack.Screen name="settings" />
-            </Stack>
+            <SideMenuProvider>
+              <StatusBar style="light" />
+              <NotificationBindings />
+              <Stack
+                screenOptions={{
+                  headerShown: false,
+                  contentStyle: { backgroundColor: COLORS.background },
+                  animation: 'slide_from_right',
+                }}
+              >
+                <Stack.Screen name="(tabs)" />
+                <Stack.Screen name="article/[slug]" />
+                <Stack.Screen name="game/[slug]" />
+                <Stack.Screen name="category/[slug]" />
+                <Stack.Screen name="videos/[id]" />
+                <Stack.Screen name="search" />
+                <Stack.Screen name="settings" />
+              </Stack>
+              <SideMenu />
+            </SideMenuProvider>
           </LocalProfileProvider>
         </ChromeProvider>
       </SafeAreaProvider>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Pressable, StyleSheet, View } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,10 +11,8 @@ type TabIcon = React.ComponentProps<typeof Ionicons>['name'];
 
 const tabs: { name: string; title: string; icon: TabIcon; iconFocused: TabIcon }[] = [
   { name: 'index', title: 'Home', icon: 'home-outline', iconFocused: 'home' },
-  { name: 'following', title: 'Following', icon: 'sparkles-outline', iconFocused: 'sparkles' },
-  { name: 'search', title: 'Search', icon: 'search-outline', iconFocused: 'search' },
+  { name: 'videos', title: 'Videos', icon: 'play-circle-outline', iconFocused: 'play-circle' },
   { name: 'games', title: 'Games', icon: 'grid-outline', iconFocused: 'grid' },
-  { name: 'library', title: 'Library', icon: 'bookmark-outline', iconFocused: 'bookmark' },
 ];
 
 export default function FloatingTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
@@ -28,7 +26,7 @@ export default function FloatingTabBar({ state, descriptors, navigation }: Botto
 
   const opacity = progress.interpolate({
     inputRange: [0, 1],
-    outputRange: [1, 0.86],
+    outputRange: [1, 0],
   });
 
   return (
@@ -37,18 +35,15 @@ export default function FloatingTabBar({ state, descriptors, navigation }: Botto
       style={[
         styles.wrap,
         {
-          bottom: Math.max(insets.bottom, 10),
+          bottom: Math.max(insets.bottom, 12),
           opacity,
           transform: [{ translateY }],
         },
       ]}
     >
-      <View style={styles.shadow} />
       <View style={styles.shell}>
-        <BlurView intensity={88} tint="dark" style={StyleSheet.absoluteFillObject} />
-        <View style={styles.chromaticBlue} />
-        <View style={styles.chromaticGold} />
-        <View style={styles.chromaticGlow} />
+        <BlurView intensity={80} tint="dark" style={StyleSheet.absoluteFillObject} />
+        <View style={styles.tint} />
         <View style={styles.highlight} />
         <View style={styles.row}>
           {tabs.map((tab) => {
@@ -59,7 +54,6 @@ export default function FloatingTabBar({ state, descriptors, navigation }: Botto
 
             const route = state.routes[routeIndex];
             const focused = state.index === routeIndex;
-            const color = focused ? COLORS.text : COLORS.textMuted;
             const iconName = focused ? tab.iconFocused : tab.icon;
 
             return (
@@ -90,10 +84,13 @@ export default function FloatingTabBar({ state, descriptors, navigation }: Botto
                 ]}
                 accessibilityRole="button"
                 accessibilityState={focused ? { selected: true } : {}}
-                accessibilityLabel={descriptors[route.key]?.options.tabBarAccessibilityLabel}
+                accessibilityLabel={descriptors[route.key]?.options.tabBarAccessibilityLabel ?? tab.title}
               >
-                <Ionicons name={iconName} size={20} color={focused ? COLORS.background : color} />
-                <Text style={[styles.label, focused && styles.labelActive]}>{tab.title}</Text>
+                <Ionicons
+                  name={iconName}
+                  size={23}
+                  color={focused ? COLORS.background : COLORS.textSecondary}
+                />
               </Pressable>
             );
           })}
@@ -106,90 +103,53 @@ export default function FloatingTabBar({ state, descriptors, navigation }: Botto
 const styles = StyleSheet.create({
   wrap: {
     position: 'absolute',
-    left: 14,
-    right: 14,
-  },
-  shadow: {
-    ...StyleSheet.absoluteFillObject,
-    borderRadius: 34,
-    backgroundColor: 'rgba(4, 8, 20, 0.26)',
-    shadowColor: '#040812',
-    shadowOpacity: 0.4,
-    shadowRadius: 30,
-    shadowOffset: { width: 0, height: 18 },
+    right: 16,
+    // right-adjusted compact bar
+    alignItems: 'flex-end',
   },
   shell: {
     overflow: 'hidden',
-    borderRadius: 34,
+    borderRadius: 28,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.18)',
-    backgroundColor: 'rgba(20, 28, 48, 0.34)',
+    borderColor: 'rgba(255,255,255,0.14)',
+    backgroundColor: 'rgba(16, 22, 40, 0.5)',
+    shadowColor: '#040812',
+    shadowOpacity: 0.38,
+    shadowRadius: 24,
+    shadowOffset: { width: 0, height: 14 },
   },
-  chromaticBlue: {
-    position: 'absolute',
-    left: -18,
-    bottom: -12,
-    width: 118,
-    height: 78,
-    borderRadius: 999,
-    backgroundColor: 'rgba(86, 153, 255, 0.18)',
-  },
-  chromaticGold: {
-    position: 'absolute',
-    right: -10,
-    top: -18,
-    width: 124,
-    height: 84,
-    borderRadius: 999,
-    backgroundColor: 'rgba(250, 204, 21, 0.14)',
-  },
-  chromaticGlow: {
-    position: 'absolute',
-    left: '24%',
-    right: '24%',
-    top: -22,
-    height: 54,
-    borderRadius: 999,
-    backgroundColor: 'rgba(255,255,255,0.06)',
+  tint: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(11, 16, 32, 0.28)',
   },
   highlight: {
     position: 'absolute',
-    inset: 1,
-    borderRadius: 33,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(255,255,255,0.22)',
+    left: 1,
+    right: 1,
+    top: 1,
+    height: '52%',
+    borderTopLeftRadius: 27,
+    borderTopRightRadius: 27,
+    backgroundColor: 'rgba(255,255,255,0.06)',
   },
   row: {
     flexDirection: 'row',
-    gap: 8,
-    paddingHorizontal: 10,
-    paddingTop: 10,
-    paddingBottom: 12,
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 6,
+    paddingVertical: 6,
   },
   item: {
-    flex: 1,
-    minHeight: 58,
+    width: 48,
+    height: 48,
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 4,
-    borderRadius: 22,
+    borderRadius: 24,
   },
   itemActive: {
     backgroundColor: COLORS.accent,
-    shadowColor: '#FACC15',
-    shadowOpacity: 0.2,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 6 },
   },
   itemPressed: {
-    opacity: 0.86,
-  },
-  label: {
-    color: COLORS.textMuted,
-    fontSize: 11,
-    fontWeight: '700',
-  },
-  labelActive: {
-    color: COLORS.background,
+    opacity: 0.7,
   },
 });
