@@ -23,3 +23,7 @@ KEY FEATURES
 - YouTube video feed
 - Dark mode optimized interface
 - Fast, clean reading experience
+
+—
+Terms of Use (EULA): https://finalboss.io/terms-of-service
+Privacy Policy: https://finalboss.io/privacy-policy
