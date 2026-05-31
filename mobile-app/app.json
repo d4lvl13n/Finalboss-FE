@@ -2,7 +2,7 @@
   "expo": {
     "name": "FinalBoss.io",
     "slug": "finalboss",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Your daily source for gaming news, reviews, guides, and game database. Stay up to date with the latest in gaming, technology, and entertainment.",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
