@@ -515,28 +515,30 @@ export default function ArticleContent({ article }: ArticleContentProps) {
           {/* Right Sidebar - Desktop Only */}
           {isDesktop && (
             <div className="hidden xl:block w-[420px] flex-shrink-0 ml-6">
-              {/* Latest articles scrolls away normally; only the ad stack below is sticky.
-                  The full stack (~1200px) is taller than the viewport — making it all
-                  sticky would pin the top and leave the ads cut off below the fold. */}
-              <div className="space-y-6">
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.8 }}
-                  className="bg-gray-800/30 rounded-xl p-5 border border-gray-700/30"
-                >
-                  <LatestSidebar
-                    articles={latestData?.posts?.nodes || []}
-                    title={t('common.latest')}
-                    showAllLink="/gaming"
-                    showAllText={t('article.viewAll')}
-                    maxItems={10}
-                    accentColor="yellow"
-                    maxHeight="420px"
-                  />
-                </motion.div>
+              {/* Latest articles scrolls away normally; only the ad stack below is
+                  sticky (the full stack is taller than the viewport — pinning it all
+                  would leave the ads cut off below the fold). The sticky div must be
+                  a DIRECT child of this column: position:sticky only travels within
+                  its parent's height, and the column stretches to the article height
+                  while any intermediate wrapper would not. */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+                className="bg-gray-800/30 rounded-xl p-5 border border-gray-700/30 mb-6"
+              >
+                <LatestSidebar
+                  articles={latestData?.posts?.nodes || []}
+                  title={t('common.latest')}
+                  showAllLink="/gaming"
+                  showAllText={t('article.viewAll')}
+                  maxItems={10}
+                  accentColor="yellow"
+                  maxHeight="420px"
+                />
+              </motion.div>
 
-                <div className="sticky top-24 space-y-6">
+              <div className="sticky top-24 space-y-6">
                 {SHOW_MANUAL_ADS && (
                   <motion.div
                     initial={{ opacity: 0, x: 20 }}
@@ -564,7 +566,6 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                     </div>
                   </motion.div>
                 )}
-                </div>
               </div>
             </div>
           )}

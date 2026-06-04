@@ -185,5 +185,15 @@ export class YouTubeService {
   }
 }
 
-// Create a singleton instance
-export const youtubeService = YouTubeService.getInstance();
+// Lazy singleton accessor: resolves on first use, NOT at import time.
+// The previous eager getInstance() threw when the optional YouTube env vars
+// were missing, which killed `next build` for every route importing this
+// module (sitemap, /videos pages, /api/youtube/*). Errors now surface at
+// call time, where callers already handle them.
+export const youtubeService: YouTubeService = new Proxy({} as YouTubeService, {
+  get(_target, prop) {
+    const service = YouTubeService.getInstance();
+    const value = Reflect.get(service, prop, service);
+    return typeof value === 'function' ? value.bind(service) : value;
+  },
+});
