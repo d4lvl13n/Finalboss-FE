@@ -13,8 +13,6 @@ import { formatDate } from '../../utils/formatDate';
 // ProcessedContent now used via ArticleBodyWithAds
 import RelatedArticles from './RelatedArticles';
 import { ResponsiveAd, VerticalAd } from '../AdSense/AdBanner';
-import { EzoicArticleTop, EzoicArticleContent, EzoicArticleBottom, EzoicSidebar, EzoicPageManager } from '../Ezoic';
-import { ENABLE_EZOIC, EZOIC_SLOTS } from '../../lib/adsConfig';
 // InlineContentUpgrade now rendered via ArticleBodyWithAds
 import InlineRelatedLinks from './InlineRelatedLinks';
 import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../../lib/queries/getRelatedPosts';
@@ -451,7 +449,6 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 <ResponsiveAd adSlot="5844341661" />
               </div>
               )}
-              {ENABLE_EZOIC && <EzoicArticleTop placeholderId={EZOIC_SLOTS.articleTop} />}
 
             <ArticleBodyWithAds
               content={contentCleaned}
@@ -508,7 +505,6 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             </div>
 
               {/* End-of-content ad removed — in-article ads + bottom ad provide better coverage */}
-              {ENABLE_EZOIC && <EzoicArticleContent placeholderId={EZOIC_SLOTS.articleContent} />}
             </div>
           </div>
 
@@ -553,19 +549,6 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                   </motion.div>
                 )}
 
-                {ENABLE_EZOIC && (
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 1.0 }}
-                    className="bg-gray-800/20 rounded-xl p-4 border border-gray-700/20"
-                  >
-                    <div className="ad-label text-xs mb-3">{t('article.adLabel')}</div>
-                    <div className="flex justify-center">
-                      <EzoicSidebar placeholderId={EZOIC_SLOTS.sidebarRight} />
-                    </div>
-                  </motion.div>
-                )}
               </div>
             </div>
           )}
@@ -579,15 +562,6 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         <ResponsiveAd adSlot="9184820874" />
       </div>
       )}
-      {ENABLE_EZOIC && (
-        <div className="max-w-4xl mx-auto px-4">
-          <EzoicArticleBottom placeholderId={EZOIC_SLOTS.articleBottom} />
-        </div>
-      )}
-
-      {/* Ezoic SPA page manager — handles define/enable/display/refresh lifecycle */}
-      {ENABLE_EZOIC && <EzoicPageManager />}
-
       {/* Enhanced Related Articles Section */}
       <RelatedArticles 
         articles={articlesToShow}

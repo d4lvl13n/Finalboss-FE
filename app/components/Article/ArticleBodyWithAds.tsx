@@ -5,7 +5,7 @@ import { Element, htmlToDOM, type DOMNode } from 'html-react-parser';
 import { render } from 'dom-serializer';
 import ProcessedContent from '../ProcessedContent';
 import { ResponsiveAd } from '../AdSense/AdBanner';
-import { SHOW_MANUAL_ADS, ENABLE_EZOIC } from '../../lib/adsConfig';
+import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
 import InlineContentUpgrade from '../LeadCapture/InlineContentUpgrade';
 import { t } from '../../lib/i18n';
 import { stripDocumentTagsFromHtml } from '../../lib/wpContent';
@@ -50,7 +50,7 @@ export default function ArticleBodyWithAds({
 
           {/* In-article ad every N sections (skip first section, skip last) */}
           {i > 0 && i < totalSections - 1 && (i + 1) % AD_EVERY_N_SECTIONS === 0 && (
-            (SHOW_MANUAL_ADS || ENABLE_EZOIC) && (
+            SHOW_MANUAL_ADS && (
               <div className="my-8 not-prose">
                 <div className="ad-label text-center text-xs text-gray-500 mb-2">{t('article.adLabel')}</div>
                 {SHOW_MANUAL_ADS && <ResponsiveAd adSlot="5844341661" />}

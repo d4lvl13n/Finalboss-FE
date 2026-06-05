@@ -10,8 +10,7 @@ import { SearchProvider } from './components/Search/SearchContext';
 import SearchOverlay from './components/Search/SearchOverlay';
 import LeadCaptureManager from './components/LeadCapture/LeadCaptureManager';
 import AdScriptLoader from './components/AdSense/AdScriptLoader';
-import { EzoicScriptLoader } from './components/Ezoic';
-import { ENABLE_AUTO_ADS, ENABLE_EZOIC } from './lib/adsConfig';
+import { ENABLE_AUTO_ADS } from './lib/adsConfig';
 import BackToTop from './components/BackToTop';
 import siteConfig, { intlLocale } from './lib/siteConfig';
 
@@ -89,9 +88,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
-        {ENABLE_EZOIC && <link rel="preconnect" href="https://www.ezojs.com" crossOrigin="anonymous" />}
-        {ENABLE_EZOIC && <link rel="preconnect" href="https://the.gatekeeperconsent.com" crossOrigin="anonymous" />}
-        {ENABLE_EZOIC && <link rel="preconnect" href="https://g.ezoic.net" crossOrigin="anonymous" />}
         <link rel="preconnect" href="https://www.google-analytics.com" />
         <link rel="preconnect" href="https://i.ytimg.com" />
         <link rel="alternate" type="application/rss+xml" title={`${siteConfig.name} Articles`} href={`${siteConfig.url}/feeds/articles`} />
@@ -132,7 +128,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             `}
           </Script>
         )}
-        <EzoicScriptLoader />
 
       </head>
       <body className="font-body overflow-x-clip w-full">
