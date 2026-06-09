@@ -98,6 +98,53 @@ export async function ensureDb() {
         create index if not exists idx_notification_deliveries_article_slug
         on notification_deliveries (article_slug, sent_at desc);
       `);
+
+      // --- Article reactions (👍/👎 "was this helpful") ---
+      await pool.query(`
+        create table if not exists article_reactions (
+          id bigserial primary key,
+          slug text not null,
+          post_id text,
+          kind text not null check (kind in ('up','down')),
+          client_id text,
+          created_at timestamptz not null default now(),
+          updated_at timestamptz not null default now()
+        );
+      `);
+      await pool.query(`
+        create unique index if not exists uniq_reaction_client
+        on article_reactions (slug, client_id) where client_id is not null;
+      `);
+      await pool.query(`
+        create index if not exists idx_reactions_slug on article_reactions (slug);
+      `);
+
+      // 👎 follow-up: what was missing (content-quality signal for GPBot)
+      await pool.query(`
+        create table if not exists article_reaction_feedback (
+          id bigserial primary key,
+          slug text not null,
+          reason text not null,
+          created_at timestamptz not null default now()
+        );
+      `);
+      await pool.query(`
+        create index if not exists idx_reaction_feedback_slug
+        on article_reaction_feedback (slug, created_at desc);
+      `);
+
+      // 👍 follow-up: email opt-in captured from the reaction popup
+      await pool.query(`
+        create table if not exists article_reaction_emails (
+          id bigserial primary key,
+          email text not null,
+          slug text,
+          game text,
+          reaction text,
+          created_at timestamptz not null default now(),
+          unique(email, slug)
+        );
+      `);
     })();
   }
 

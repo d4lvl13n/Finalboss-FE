@@ -26,6 +26,7 @@ import ReviewJsonLd from '../Seo/ReviewJsonLd';
 import Breadcrumbs from '../Breadcrumbs';
 import TableOfContents from './TableOfContents';
 import ArticleBodyWithAds from './ArticleBodyWithAds';
+import ArticleReactions from './ArticleReactions';
 import ReadingProgressBar from '../ReadingProgressBar';
 import LatestSidebar from '../LatestSidebar';
 import GameMetaCard from '../GameMetaCard';
@@ -454,6 +455,15 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               articleTitle={article.title}
               categoryName={primaryCategory?.name || 'Gaming'}
             />
+
+            {/* "Was this helpful?" reactions + email/feedback capture */}
+            {currentSlug && (
+              <ArticleReactions
+                slug={currentSlug}
+                postId={article.id}
+                game={primaryGameTag?.name}
+              />
+            )}
 
             {articlesToShow.length > 0 && (
               <InlineRelatedLinks articles={articlesToShow.slice(0, 3)} />
