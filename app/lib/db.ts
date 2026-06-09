@@ -119,21 +119,26 @@ export async function ensureDb() {
         create index if not exists idx_reactions_slug on article_reactions (slug);
       `);
 
-      // 👎 follow-up: what was missing (content-quality signal for GPBot)
+      // 👎 follow-up: what was missing (content-quality signal for GPBot).
+      // reason is nullable (free-text notes alone are allowed); notes optional.
       await pool.query(`
         create table if not exists article_reaction_feedback (
           id bigserial primary key,
           slug text not null,
-          reason text not null,
+          reason text,
+          notes text,
           created_at timestamptz not null default now()
         );
       `);
+      // Migrate tables created before these columns existed.
+      await pool.query(`alter table article_reaction_feedback add column if not exists notes text;`);
+      await pool.query(`alter table article_reaction_feedback alter column reason drop not null;`);
       await pool.query(`
         create index if not exists idx_reaction_feedback_slug
         on article_reaction_feedback (slug, created_at desc);
       `);
 
-      // 👍 follow-up: email opt-in captured from the reaction popup
+      // 👍 follow-up: email opt-in (+ optional free-text note) from the popup
       await pool.query(`
         create table if not exists article_reaction_emails (
           id bigserial primary key,
@@ -141,10 +146,12 @@ export async function ensureDb() {
           slug text,
           game text,
           reaction text,
+          notes text,
           created_at timestamptz not null default now(),
           unique(email, slug)
         );
       `);
+      await pool.query(`alter table article_reaction_emails add column if not exists notes text;`);
     })();
   }
 

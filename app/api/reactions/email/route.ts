@@ -18,17 +18,18 @@ export async function OPTIONS() {
 // Stores in Neon AND pushes to Kit (tagged by game/source via fields, with fallback).
 export async function POST(req: NextRequest) {
   try {
-    const { email, slug, game, reaction } = await req.json();
+    const { email, slug, game, reaction, notes } = await req.json();
     if (!email || typeof email !== 'string' || !email.includes('@')) {
       return NextResponse.json({ error: 'valid email required' }, { status: 400, headers: CORS });
     }
+    const cleanNotes = typeof notes === 'string' && notes.trim() ? notes.trim().slice(0, 2000) : null;
 
     // 1) Persist locally (idempotent per email+slug)
     await db.query(
-      `insert into article_reaction_emails (email, slug, game, reaction)
-       values ($1, $2, $3, $4)
-       on conflict (email, slug) do nothing`,
-      [email, slug || null, game || null, reaction || null]
+      `insert into article_reaction_emails (email, slug, game, reaction, notes)
+       values ($1, $2, $3, $4, $5)
+       on conflict (email, slug) do update set notes = coalesce(excluded.notes, article_reaction_emails.notes)`,
+      [email, slug || null, game || null, reaction || null, cleanNotes]
     );
 
     // 2) Push to Kit. Custom fields may not exist in the account, so degrade gracefully.

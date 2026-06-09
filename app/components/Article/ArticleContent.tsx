@@ -26,7 +26,25 @@ import ReviewJsonLd from '../Seo/ReviewJsonLd';
 import Breadcrumbs from '../Breadcrumbs';
 import TableOfContents from './TableOfContents';
 import ArticleBodyWithAds from './ArticleBodyWithAds';
-import ArticleReactions from './ArticleReactions';
+import ArticleReactions, { type ContentType } from './ArticleReactions';
+
+/** Map the article's categories to a content type so reaction copy fits
+ *  (a review never says "guide"). "Gaming" is the news/opinion catch-all. */
+function detectContentType(
+  categories: { name?: string }[] | undefined,
+  isReview: boolean
+): ContentType {
+  if (isReview) return 'review';
+  const names = (categories || []).map((c) => (c?.name || '').toLowerCase());
+  const has = (s: string) => names.some((n) => n.includes(s));
+  if (has('review')) return 'review';
+  if (has('guide') || has('walkthrough')) return 'guide';
+  if (has('interview')) return 'interview';
+  if (has('tech')) return 'tech';
+  if (has('movie') || has('tv') || has('cinema')) return 'entertainment';
+  if (names.includes('top') || has('best of')) return 'list';
+  return 'news';
+}
 import ReadingProgressBar from '../ReadingProgressBar';
 import LatestSidebar from '../LatestSidebar';
 import GameMetaCard from '../GameMetaCard';
@@ -462,6 +480,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 slug={currentSlug}
                 postId={article.id}
                 game={primaryGameTag?.name}
+                contentType={detectContentType(article.categories?.nodes, isReview)}
               />
             )}
 

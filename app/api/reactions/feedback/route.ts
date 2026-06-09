@@ -15,17 +15,23 @@ export async function OPTIONS() {
   return new NextResponse(null, { status: 204, headers: CORS });
 }
 
-// POST /api/reactions/feedback { slug, reason } -> stores the 👎 reason (quality signal)
+// POST /api/reactions/feedback { slug, reason?, notes? } -> stores the 👎 signal.
+// reason (chip) and notes (free text) are both optional, but at least one is required.
 export async function POST(req: NextRequest) {
   try {
-    const { slug, reason } = await req.json();
-    if (!slug || typeof reason !== 'string' || !ALLOWED.has(reason)) {
+    const { slug, reason, notes } = await req.json();
+    const cleanReason = typeof reason === 'string' && ALLOWED.has(reason) ? reason : null;
+    const cleanNotes = typeof notes === 'string' && notes.trim() ? notes.trim().slice(0, 2000) : null;
+    if (!slug || (!cleanReason && !cleanNotes)) {
       return NextResponse.json(
-        { error: 'slug and reason (outdated|incomplete|wrong) required' },
+        { error: 'slug and at least one of reason (outdated|incomplete|wrong) or notes required' },
         { status: 400, headers: CORS }
       );
     }
-    await db.query(`insert into article_reaction_feedback (slug, reason) values ($1, $2)`, [slug, reason]);
+    await db.query(
+      `insert into article_reaction_feedback (slug, reason, notes) values ($1, $2, $3)`,
+      [slug, cleanReason, cleanNotes]
+    );
     return NextResponse.json({ ok: true }, { headers: CORS });
   } catch (e) {
     console.error('[reactions/feedback] error:', e);

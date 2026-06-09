@@ -4,13 +4,34 @@ import { useEffect, useState } from 'react';
 
 type Counts = { up: number; down: number };
 type Mode = 'idle' | 'upEmail' | 'downFeedback' | 'done';
+export type ContentType =
+  | 'review'
+  | 'guide'
+  | 'list'
+  | 'tech'
+  | 'entertainment'
+  | 'interview'
+  | 'news';
 
 interface Props {
   slug: string;
   postId?: string | number;
-  /** Primary game name — used in the email hook ("new {game} guides"). */
+  /** Primary game name — used in the email hook ("new {game} {plural}"). */
   game?: string;
+  /** Derived from the article's category — drives the copy. */
+  contentType?: ContentType;
 }
+
+/** Category-aware copy so a review never says "guide", etc. */
+const COPY: Record<ContentType, { question: string; plural: string }> = {
+  review: { question: 'Was this review useful?', plural: 'reviews' },
+  guide: { question: 'Was this guide helpful?', plural: 'guides' },
+  list: { question: 'Was this list worth your time?', plural: 'rankings' },
+  tech: { question: 'Was this breakdown useful?', plural: 'coverage' },
+  entertainment: { question: 'Did you enjoy this read?', plural: 'coverage' },
+  interview: { question: 'Did you enjoy this interview?', plural: 'coverage' },
+  news: { question: 'Was this worth your time?', plural: 'news' },
+};
 
 const REASONS: { key: string; label: string }[] = [
   { key: 'outdated', label: 'Outdated' },
@@ -36,12 +57,16 @@ function getClientId(): string {
   }
 }
 
-export default function ArticleReactions({ slug, postId, game }: Props) {
+export default function ArticleReactions({ slug, postId, game, contentType = 'news' }: Props) {
   const [counts, setCounts] = useState<Counts>({ up: 0, down: 0 });
   const [voted, setVoted] = useState<'up' | 'down' | null>(null);
   const [mode, setMode] = useState<Mode>('idle');
   const [email, setEmail] = useState('');
+  const [notes, setNotes] = useState('');
+  const [reason, setReason] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+
+  const copy = COPY[contentType] ?? COPY.news;
   const gameLabel = game && game.trim() ? game.trim() : 'gaming';
 
   useEffect(() => {
@@ -95,7 +120,7 @@ export default function ArticleReactions({ slug, postId, game }: Props) {
       await fetch('/api/reactions/email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, slug, game: gameLabel, reaction: 'up' }),
+        body: JSON.stringify({ email, slug, game: gameLabel, reaction: 'up', notes }),
       });
     } catch {
       /* ignore */
@@ -104,14 +129,14 @@ export default function ArticleReactions({ slug, postId, game }: Props) {
     setMode('done');
   }
 
-  async function submitFeedback(reason: string) {
-    if (busy) return;
+  async function submitFeedback() {
+    if (busy || (!reason && !notes.trim())) return;
     setBusy(true);
     try {
       await fetch('/api/reactions/feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ slug, reason }),
+        body: JSON.stringify({ slug, reason, notes }),
       });
     } catch {
       /* ignore */
@@ -120,7 +145,7 @@ export default function ArticleReactions({ slug, postId, game }: Props) {
     setMode('done');
   }
 
-  const btn = (kind: 'up' | 'down') => {
+  const voteBtn = (kind: 'up' | 'down') => {
     const active = voted === kind;
     const isUp = kind === 'up';
     return (
@@ -145,42 +170,54 @@ export default function ArticleReactions({ slug, postId, game }: Props) {
     );
   };
 
+  const notesField = (placeholder: string) => (
+    <textarea
+      value={notes}
+      onChange={(e) => setNotes(e.target.value)}
+      placeholder={placeholder}
+      rows={2}
+      maxLength={2000}
+      className="w-full resize-y rounded-lg border border-gray-600 bg-gray-900/70 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-yellow-400 focus:outline-none"
+    />
+  );
+
   return (
     <section
       className="my-10 rounded-xl border border-gray-700/60 bg-gray-800/40 p-5 sm:p-6"
-      aria-label="Rate this guide"
+      aria-label="Rate this article"
     >
-      {/* IDLE — the ask */}
+      {/* IDLE — the ask (category-aware) */}
       {mode === 'idle' && (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h3 className="text-base font-bold text-white sm:text-lg">Was this guide helpful?</h3>
+          <h3 className="text-base font-bold text-white sm:text-lg">{copy.question}</h3>
           <div className="flex items-center gap-3">
-            {btn('up')}
-            {btn('down')}
+            {voteBtn('up')}
+            {voteBtn('down')}
           </div>
         </div>
       )}
 
-      {/* 👍 — email opt-in */}
+      {/* 👍 — email opt-in + notes */}
       {mode === 'upEmail' && (
-        <div className="flex flex-col gap-3">
+        <form onSubmit={submitEmail} className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
             <span className="text-xl">🎮</span>
             <h3 className="text-base font-bold text-white sm:text-lg">Glad it helped!</h3>
           </div>
           <p className="text-sm text-gray-300">
-            Get new <span className="font-semibold text-yellow-400">{gameLabel}</span> guides in your inbox — no spam,
-            just the good stuff.
+            Get new <span className="font-semibold text-yellow-400">{gameLabel}</span> {copy.plural} in your inbox — no
+            spam, just the good stuff.
           </p>
-          <form onSubmit={submitEmail} className="flex flex-col gap-2 sm:flex-row">
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@email.com"
-              className="flex-1 rounded-lg border border-gray-600 bg-gray-900/70 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-yellow-400 focus:outline-none"
-            />
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@email.com"
+            className="w-full rounded-lg border border-gray-600 bg-gray-900/70 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-yellow-400 focus:outline-none"
+          />
+          {notesField('Tell us what you liked (optional)')}
+          <div className="flex items-center gap-3">
             <button
               type="submit"
               disabled={busy || !email.includes('@')}
@@ -188,32 +225,50 @@ export default function ArticleReactions({ slug, postId, game }: Props) {
             >
               {busy ? '…' : 'Notify me'}
             </button>
-          </form>
-          <button
-            onClick={() => setMode('done')}
-            className="self-start text-xs text-gray-500 underline-offset-2 hover:text-gray-400 hover:underline"
-          >
-            No thanks
-          </button>
-        </div>
+            <button
+              type="button"
+              onClick={() => setMode('done')}
+              className="text-xs text-gray-500 underline-offset-2 hover:text-gray-400 hover:underline"
+            >
+              No thanks
+            </button>
+          </div>
+        </form>
       )}
 
-      {/* 👎 — what was missing */}
+      {/* 👎 — what was missing: chips + notes */}
       {mode === 'downFeedback' && (
         <div className="flex flex-col gap-3">
-          <h3 className="text-base font-bold text-white sm:text-lg">Thanks — what was missing?</h3>
+          <h3 className="text-base font-bold text-white sm:text-lg">Sorry about that — what was missing?</h3>
           <div className="flex flex-wrap gap-2">
-            {REASONS.map((r) => (
-              <button
-                key={r.key}
-                onClick={() => submitFeedback(r.key)}
-                disabled={busy}
-                className="rounded-lg border border-gray-600/70 bg-gray-800/60 px-4 py-2 text-sm font-medium text-gray-200 transition-colors hover:border-yellow-400 hover:text-yellow-400 disabled:opacity-50"
-              >
-                {r.label}
-              </button>
-            ))}
+            {REASONS.map((r) => {
+              const on = reason === r.key;
+              return (
+                <button
+                  key={r.key}
+                  type="button"
+                  onClick={() => setReason(on ? null : r.key)}
+                  className={[
+                    'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
+                    on
+                      ? 'border-yellow-400 bg-yellow-400/15 text-yellow-400'
+                      : 'border-gray-600/70 bg-gray-800/60 text-gray-200 hover:border-gray-500',
+                  ].join(' ')}
+                >
+                  {r.label}
+                </button>
+              );
+            })}
           </div>
+          {notesField('Tell us what was missing (optional)')}
+          <button
+            type="button"
+            onClick={submitFeedback}
+            disabled={busy || (!reason && !notes.trim())}
+            className="self-start rounded-lg bg-gray-700 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-gray-600 disabled:opacity-50"
+          >
+            {busy ? '…' : 'Send feedback'}
+          </button>
         </div>
       )}
 
@@ -221,7 +276,7 @@ export default function ArticleReactions({ slug, postId, game }: Props) {
       {mode === 'done' && (
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm text-gray-300">
-            {voted === 'up' ? "Thanks for the love — you're in. 🎉" : "Thanks — we'll make it better."}
+            {voted === 'up' ? 'Thanks for the love! 🎉' : "Thanks — we'll make it better."}
           </p>
           <div className="flex items-center gap-4 text-sm text-gray-400">
             <span className="flex items-center gap-1.5">
