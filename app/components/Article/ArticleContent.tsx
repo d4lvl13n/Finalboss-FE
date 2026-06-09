@@ -355,8 +355,10 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       {/* Reading Progress Bar */}
       <ReadingProgressBar />
 
-      {/* Hero Image with Title Overlay */}
-      <div className="relative h-[50vh] sm:h-[55vh] md:h-[60vh] overflow-hidden">
+      {/* Hero Image with Title Overlay. Mobile height reduced (38vh) so guide
+          readers reach the TOC + first answer with far less scroll; desktop
+          keeps the full cinematic hero. */}
+      <div className="relative h-[38vh] sm:h-[55vh] md:h-[60vh] overflow-hidden">
         {featuredImageSrc && !featuredImageError ? (
           <motion.div className="absolute inset-0" >
             <Image
@@ -442,13 +444,9 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             {/* Table of Contents for long articles */}
             <TableOfContents content={contentCleaned} minHeadings={4} />
 
-              {/* 🎯 AD PLACEMENT 1: High-performing above-the-fold ad */}
-              {SHOW_MANUAL_ADS && (
-              <div className="article-ad-top">
-                <div className="ad-label">{t('article.adLabel')}</div>
-                <ResponsiveAd adSlot="5844341661" />
-              </div>
-              )}
+              {/* AD PLACEMENT 1 moved INTO the body: now injected after the
+                  1st–2nd intro paragraph by ArticleBodyWithAds (higher CTR than
+                  a banner sitting above all content). */}
 
             <ArticleBodyWithAds
               content={contentCleaned}

@@ -40,39 +40,80 @@ export default function ArticleBodyWithAds({
 
   const proseClass = `${sourceSansClassName} prose prose-lg prose-invert mx-auto max-w-3xl text-[18px] md:text-[19px] leading-8 tracking-[0.0025em]`;
 
-  return (
-    <div>
-      {sections.map((sectionHtml, i) => (
-        <React.Fragment key={i}>
-          <div className={proseClass}>
-            <ProcessedContent content={sectionHtml} />
-          </div>
-
-          {/* In-article ad every N sections (skip first section, skip last) */}
-          {i > 0 && i < totalSections - 1 && (i + 1) % AD_EVERY_N_SECTIONS === 0 && (
-            SHOW_MANUAL_ADS && (
-              <div className="my-8 not-prose">
-                <div className="ad-label text-center text-xs text-gray-500 mb-2">{t('article.adLabel')}</div>
-                {SHOW_MANUAL_ADS && <ResponsiveAd adSlot="5844341661" />}
-              </div>
-            )
-          )}
-
-          {/* Mid-article email CTA */}
-          {i === ctaIndex && totalSections >= 4 && (
-            <div className="my-8 not-prose">
-              <InlineContentUpgrade
-                title={t('article.contentUpgrade.title')}
-                description={t('article.contentUpgrade.description')}
-                bonusContent={t('article.contentUpgrade.bonus', { category: categoryName })}
-                articleTopic={articleTitle}
-              />
-            </div>
-          )}
-        </React.Fragment>
-      ))}
+  const adUnit = (
+    <div className="my-8 not-prose">
+      <div className="ad-label text-center text-xs text-gray-500 mb-2">{t('article.adLabel')}</div>
+      <ResponsiveAd adSlot="5844341661" />
     </div>
   );
+
+  return (
+    <div>
+      {sections.map((sectionHtml, i) => {
+        // Section 0 is the intro (everything before the first H2). Inject the
+        // first ad after its 1st–2nd paragraph: the reader is past the hook and
+        // engaged, which converts better than a banner above all content.
+        if (i === 0 && SHOW_MANUAL_ADS) {
+          const [head, tail] = splitAfterParagraphs(sectionHtml, 2);
+          return (
+            <React.Fragment key={i}>
+              <div className={proseClass}>
+                <ProcessedContent content={head} />
+              </div>
+              {adUnit}
+              {tail && (
+                <div className={proseClass}>
+                  <ProcessedContent content={tail} />
+                </div>
+              )}
+            </React.Fragment>
+          );
+        }
+
+        return (
+          <React.Fragment key={i}>
+            <div className={proseClass}>
+              <ProcessedContent content={sectionHtml} />
+            </div>
+
+            {/* Deeper in-article ad every N sections (skip first + last) */}
+            {SHOW_MANUAL_ADS && i > 0 && i < totalSections - 1 && (i + 1) % AD_EVERY_N_SECTIONS === 0 && adUnit}
+
+            {/* Mid-article email CTA */}
+            {i === ctaIndex && totalSections >= 4 && (
+              <div className="my-8 not-prose">
+                <InlineContentUpgrade
+                  title={t('article.contentUpgrade.title')}
+                  description={t('article.contentUpgrade.description')}
+                  bonusContent={t('article.contentUpgrade.bonus', { category: categoryName })}
+                  articleTopic={articleTitle}
+                />
+              </div>
+            )}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+}
+
+/**
+ * Splits HTML after the Nth top-level `</p>`. Returns [head, tail]. Used to drop
+ * an ad into the intro after the 1st–2nd paragraph. If fewer than N paragraphs
+ * exist, head is the whole string and tail is empty (ad lands after the intro).
+ */
+function splitAfterParagraphs(html: string, n: number): [string, string] {
+  const re = /<\/p>/gi;
+  let count = 0;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(html)) !== null) {
+    count++;
+    if (count === n) {
+      const cut = match.index + match[0].length;
+      return [html.slice(0, cut), html.slice(cut)];
+    }
+  }
+  return [html, ''];
 }
 
 /**

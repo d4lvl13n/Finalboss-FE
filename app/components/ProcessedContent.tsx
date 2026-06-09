@@ -73,18 +73,20 @@
        return () => { isCancelled = true; };
      }, [relatedSlugs, wpGraphql]);
 
-    // Counter for generating unique heading IDs
-    let headingCounter = 0;
-    
     const options: HTMLReactParserOptions = {
       replace: (domNode) => {
-        // Add IDs to headings for Table of Contents
+        // Add IDs to headings for Table of Contents.
+        // ID is derived from the heading TEXT only (no positional counter): this
+        // file renders each article SECTION through a separate instance, so a
+        // counter would reset per-section and never match the whole-article
+        // indices TableOfContents computes — that broke every jump-link after the
+        // first H2. A pure text slug is stable across both. (See TableOfContents.tsx.)
         if (domNode instanceof Element && ['h2', 'h3', 'h4'].includes(domNode.name)) {
           const text = domToReact(domNode.children as unknown as DOMNode[]);
-          const textContent = typeof text === 'string' ? text : 
+          const textContent = typeof text === 'string' ? text :
             (Array.isArray(text) ? text.map(t => typeof t === 'string' ? t : '').join('') : '');
-          const id = domNode.attribs?.id || 
-            `heading-${headingCounter++}-${textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
+          const id = domNode.attribs?.id ||
+            textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
           
           const HeadingTag = domNode.name as 'h2' | 'h3' | 'h4';
           return (

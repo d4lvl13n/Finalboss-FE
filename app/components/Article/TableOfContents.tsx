@@ -18,7 +18,8 @@ interface TableOfContentsProps {
 
 export default function TableOfContents({ content, minHeadings = 3 }: TableOfContentsProps) {
   const [headings, setHeadings] = useState<TocItem[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
+  // Open by default: on guide content the TOC is the "jump to my answer" feature.
+  const [isOpen, setIsOpen] = useState(true);
   const [activeId, setActiveId] = useState<string>('');
 
   useEffect(() => {
@@ -26,20 +27,19 @@ export default function TableOfContents({ content, minHeadings = 3 }: TableOfCon
     const headingRegex = /<h([2-4])[^>]*(?:id="([^"]*)")?[^>]*>(.*?)<\/h[2-4]>/gi;
     const matches: TocItem[] = [];
     let match;
-    let index = 0;
 
     while ((match = headingRegex.exec(content)) !== null) {
       const level = parseInt(match[1]);
       const existingId = match[2];
       const text = match[3].replace(/<[^>]*>/g, '').trim();
       
-      // Generate ID from text if not present
-      const id = existingId || `heading-${index}-${text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
+      // Generate ID from text only — MUST match ProcessedContent's scheme (pure
+      // text slug, no positional counter) so jump-links resolve. See that file.
+      const id = existingId || text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
       
       if (text) {
         matches.push({ id, text, level });
       }
-      index++;
     }
 
     setHeadings(matches);
