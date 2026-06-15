@@ -24,6 +24,8 @@ interface WpRestPost {
 const DEFAULT_BATCH_SIZE = 100 // WP REST hard-caps per_page at 100
 const MAX_PAGES = 1000 // safety guard (~100k posts)
 const MAX_RETRIES = 3
+const CONCURRENCY = 8 // pages fetched in parallel — keeps generation well under the function timeout
+                      // (58 sequential pages ≈ 34s → 504; in chunks of 8 it's ~5s) without hammering WP
 
 // Normalize a WP "_gmt" timestamp (UTC but lacking the trailing Z) to a real ISO string.
 function toIso(gmt?: string, local?: string): string | undefined {
@@ -107,10 +109,15 @@ export async function fetchAllPosts(batchSize = DEFAULT_BATCH_SIZE): Promise<Fet
 
   collect(first.rows)
 
-  for (let page = 2; page <= totalPages; page++) {
-    const result = await fetchPage(base, perPage, page)
-    if (!result) continue // skip just this page; keep the rest of the sitemap intact
-    collect(result.rows)
+  // Fetch remaining pages in bounded-concurrency chunks so a large sitemap (dozens
+  // of pages) generates in a few seconds instead of ~34s sequential (which 504s).
+  const remaining = Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => i + 2)
+  for (let i = 0; i < remaining.length; i += CONCURRENCY) {
+    const chunk = remaining.slice(i, i + CONCURRENCY)
+    const results = await Promise.all(chunk.map((page) => fetchPage(base, perPage, page)))
+    for (const result of results) {
+      if (result) collect(result.rows) // skip only failed pages; keep the rest intact
+    }
   }
 
   return { posts, total: total || posts.length }

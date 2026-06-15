@@ -11,6 +11,9 @@ import siteConfig from './lib/siteConfig'
 // posts without needing a manual rebuild (we rarely redeploy). One deploy
 // activates this; after that the sitemap self-refreshes every 24h.
 export const revalidate = 86400 // 24 hours
+// Headroom for (re)generation: building the full sitemap fans out to WP/YouTube.
+// Default serverless limit is too low and caused Googlebot 504s on cold regenerations.
+export const maxDuration = 60
 
 interface YouTubeVideo {
   id: string
