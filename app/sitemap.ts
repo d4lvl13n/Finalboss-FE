@@ -7,6 +7,11 @@ import { GET_ALL_AUTHORS } from './lib/queries/getAuthor'
 import { GET_GUIDE_CATEGORIES_AND_POSTS } from './lib/queries/getGuideCategories'
 import siteConfig from './lib/siteConfig'
 
+// Regenerate the sitemap via ISR once a day, so it reflects new AND deleted
+// posts without needing a manual rebuild (we rarely redeploy). One deploy
+// activates this; after that the sitemap self-refreshes every 24h.
+export const revalidate = 86400 // 24 hours
+
 interface YouTubeVideo {
   id: string
   publishedAt: string
