@@ -179,54 +179,104 @@ export default async function ArticlePage({ params }: PageProps) {
     article.gameTags = gameTags;
   }
 
+  // Category-aware structured data: Review (with a real rating) for reviews,
+  // NewsArticle for news, Article otherwise — so Google treats each type correctly
+  // and we only claim rich-result schema we actually back with on-page data.
+  const categoryNodes: { name?: string; slug?: string }[] = article.categories?.nodes || [];
+  const hasCategory = (...names: string[]) =>
+    categoryNodes.some(
+      (c) => names.includes((c.slug || '').toLowerCase()) || names.includes((c.name || '').toLowerCase()),
+    );
+  // "gaming" is FinalBoss's de-facto news bucket (there is no "news" category).
+  const isNews = hasCategory('gaming');
+  const isReview = hasCategory('review', 'reviews');
+  const primaryCategory = categoryNodes[0]?.name;
+
+  const reviewedGame = article.gameTags?.nodes?.[0] as { name?: string; slug?: string } | undefined;
+  const scoreMatch =
+    typeof article.content === 'string'
+      ? article.content.match(/(?:Score|Provisional\s+score)\s*:?\s*(\d+(?:[.,]\d+)?)\s*\/\s*10/i)
+      : null;
+  const reviewScore = scoreMatch ? Number(scoreMatch[1].replace(',', '.')) : null;
+
+  const ldImage = [normalizeWordPressImageSrc(article.featuredImage?.node?.sourceUrl)].filter(Boolean);
+  const ldAuthor = {
+    '@type': 'Person',
+    name: article.author?.node?.name,
+    description: article.author?.node?.description,
+    image: article.author?.node?.avatar?.url,
+    sameAs: [
+      article.author?.node?.social?.twitter && `https://x.com/${article.author.node.social.twitter}`,
+      article.author?.node?.social?.linkedin,
+      article.author?.node?.social?.website,
+    ].filter(Boolean),
+  };
+  const ldPublisher = {
+    '@type': 'Organization',
+    name: siteConfig.name,
+    logo: { '@type': 'ImageObject', url: `${siteConfig.url}${siteConfig.logoPath}` },
+  };
+  const ldDescription = (article.excerpt || article.title || '')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const ldPageId = `${siteConfig.url}/${article.slug}`;
+
+  // A valid Review rich result requires a real on-page rating + the reviewed item.
+  const postSchema =
+    isReview && reviewScore != null && reviewedGame?.name
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'Review',
+          name: article.title,
+          itemReviewed: {
+            '@type': 'VideoGame',
+            name: reviewedGame.name,
+            ...(reviewedGame.slug ? { url: `${siteConfig.url}/game/${reviewedGame.slug}` } : {}),
+          },
+          reviewRating: { '@type': 'Rating', ratingValue: reviewScore, bestRating: 10, worstRating: 0 },
+          author: ldAuthor,
+          publisher: ldPublisher,
+          datePublished: article.date,
+          dateModified: article.modified,
+          reviewBody: ldDescription,
+          image: ldImage,
+          inLanguage: siteConfig.lang,
+          mainEntityOfPage: { '@type': 'WebPage', '@id': ldPageId },
+        }
+      : {
+          '@context': 'https://schema.org',
+          // A review is never NewsArticle; news (gaming) is, everything else is Article.
+          '@type': isNews && !isReview ? 'NewsArticle' : 'Article',
+          ...(primaryCategory ? { articleSection: primaryCategory } : {}),
+          headline: article.title,
+          image: ldImage,
+          author: ldAuthor,
+          publisher: ldPublisher,
+          datePublished: article.date,
+          dateModified: article.modified,
+          description: ldDescription,
+          isAccessibleForFree: true,
+          inLanguage: siteConfig.lang,
+          mainEntityOfPage: { '@type': 'WebPage', '@id': ldPageId },
+          ...(article.gameTags?.nodes?.length
+            ? {
+                about: article.gameTags.nodes.map((tag: { name: string; slug: string }) => ({
+                  '@type': 'VideoGame',
+                  name: tag.name,
+                  url: `${siteConfig.url}/game/${tag.slug}`,
+                })),
+              }
+            : {}),
+        };
+
   return (
     <>
       <Header />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'NewsArticle',
-            headline: article.title,
-            image: [normalizeWordPressImageSrc(article.featuredImage?.node?.sourceUrl)].filter(Boolean),
-            author: {
-              '@type': 'Person',
-              name: article.author?.node?.name,
-              description: article.author?.node?.description,
-              image: article.author?.node?.avatar?.url,
-              sameAs: [
-                article.author?.node?.social?.twitter &&
-                  `https://x.com/${article.author.node.social.twitter}`,
-                article.author?.node?.social?.linkedin,
-                article.author?.node?.social?.website,
-              ].filter(Boolean),
-            },
-            publisher: {
-              '@type': 'Organization',
-              name: siteConfig.name,
-              logo: {
-                '@type': 'ImageObject',
-                url: `${siteConfig.url}${siteConfig.logoPath}`,
-              },
-            },
-            datePublished: article.date,
-            dateModified: article.modified,
-            description: (article.excerpt || article.title || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim(),
-            isAccessibleForFree: true,
-            inLanguage: siteConfig.lang,
-            mainEntityOfPage: {
-              '@type': 'WebPage',
-              '@id': `${siteConfig.url}/${article.slug}`,
-            },
-            ...(article.gameTags?.nodes?.length ? {
-              about: article.gameTags.nodes.map((tag: { name: string; slug: string }) => ({
-                '@type': 'VideoGame',
-                name: tag.name,
-                url: `${siteConfig.url}/game/${tag.slug}`,
-              })),
-            } : {}),
-          }),
+          __html: JSON.stringify(postSchema),
         }}
       />
       {/* Breadcrumb structured data */}
