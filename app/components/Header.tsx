@@ -32,6 +32,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ href, children, onClick }) => (
 const navItems = [
   { name: t('nav.news'), href: '/gaming' },
   { name: t('nav.reviews'), href: '/reviews' },
+  { name: t('nav.laptops'), href: '/gaming-laptops' },
   { name: t('nav.guides'), href: '/guides' },
   { name: t('nav.technology'), href: '/technology' },
   { name: t('nav.videos'), href: '/videos' },
@@ -264,6 +265,7 @@ const Header: React.FC = () => {
                 </MenuItem>
                 {[
                   { key: 'nav.reviews', href: '/reviews' },
+                  { key: 'nav.laptops', href: '/gaming-laptops' },
                   { key: 'nav.guides', href: '/guides' },
                   { key: 'nav.videos', href: '/videos' },
                   { key: 'nav.technology', href: '/technology' },

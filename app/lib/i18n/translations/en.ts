@@ -7,6 +7,7 @@ export const en = {
     technology: 'Technology',
     videos: 'Videos',
     games: 'Games',
+    laptops: 'Laptops',
     team: 'Team',
     allArticles: 'All Articles',
     writeForUs: 'Write For Us',

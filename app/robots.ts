@@ -10,6 +10,10 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/', '/private/'],
     },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: [
+      `${baseUrl}/sitemap.xml`,
+      `${baseUrl}/games/sitemap.xml`,
+      `${baseUrl}/gaming-laptops/sitemap.xml`,
+    ],
   }
 }

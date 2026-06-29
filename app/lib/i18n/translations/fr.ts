@@ -9,6 +9,7 @@ export const fr = {
     technology: 'Technologie',
     videos: 'Vidéos',
     games: 'Jeux',
+    laptops: 'PC Portables',
     team: 'Équipe',
     allArticles: 'Tous les articles',
     writeForUs: 'Écrire pour nous',
