@@ -40,20 +40,33 @@ export default function MethodologyPage() {
 
           <h1 className="text-3xl font-bold text-white sm:text-4xl">How we research gaming laptops</h1>
           <p className="mt-4 text-lg leading-relaxed text-gray-300">
-            FinalBoss maintains a structured database of {familyCount} gaming-laptop families
-            ({configCount} configurations) for 2026. Every product, brand and category page is generated
-            from that one dataset, so the facts stay consistent across the whole section. Here is exactly
-            how the data is sourced, checked and kept current.
+            The FinalBoss hardware team maintains a structured database of {familyCount} gaming-laptop
+            families ({configCount} configurations) for 2026 — every model researched, cross-checked and
+            given a verdict by us, then turned into the product, category and buying-guide pages across the
+            site. Here is how we work, and why you can trust what you read here.
           </p>
 
           <section className="mt-10 space-y-3">
-            <h2 className="text-xl font-bold text-white">Sourcing</h2>
+            <h2 className="text-xl font-bold text-white">How we research each laptop</h2>
             <p className="text-gray-400">
-              Each laptop starts from the manufacturer&apos;s official spec page, then every figure is
-              cross-referenced against independent testing and owner reports — primarily Notebookcheck,
-              Tom&apos;s Hardware, PCWorld, RTINGS, TechRadar and PCGamer, plus brand-specific Reddit
-              communities for real-world reliability. The specific sources used for each laptop are listed,
-              with links, in the &quot;Sources &amp; data quality&quot; box on its page.
+              We start from the manufacturer&apos;s spec sheet — and treat it as a claim to verify, not a
+              fact. Our team then pressure-tests every figure against the independent labs and owner
+              communities we trust most: Notebookcheck, Tom&apos;s Hardware, PCWorld, RTINGS, TechRadar,
+              PCGamer and the brand-specific owner forums where real-world reliability actually shows up. A
+              spec sheet will never tell you whether a laptop throttles, coil-whines, or holds together after
+              six months — that is the part we dig for, model by model. Wherever a figure leans on a source,
+              we cite it, with a link, in the &quot;Sources &amp; data quality&quot; box on that laptop&apos;s page.
+            </p>
+          </section>
+
+          <section className="mt-8 space-y-3">
+            <h2 className="text-xl font-bold text-white">Our verdicts are our own</h2>
+            <p className="text-gray-400">
+              The summaries, the pros and cons, the rankings and the buying guides are FinalBoss&apos;s
+              independent editorial judgment — not a manufacturer&apos;s marketing line, and not any single
+              reviewer&apos;s score. We weigh the evidence, reconcile the contradictions (below), and tell you
+              what we would actually buy and who it is for. No brand pays for placement, and an affiliate link
+              never moves a laptop up a list.
             </p>
           </section>
 

@@ -15,7 +15,8 @@ import { buildPageMetadata, absoluteUrl } from '@/app/lib/seo';
 import Byline from '@/app/components/laptops/Byline';
 import { getAllGuides, getGuide } from '@/app/lib/laptops/guides';
 import { getLaptopImage } from '@/app/lib/laptops/images';
-import { startingPriceLabel, DATASET_DATE } from '@/app/lib/laptops/format';
+import { familyGpuTiers } from '@/app/lib/laptops/queries';
+import { startingPriceLabel, DATASET_DATE, gpuTierLabel, panelLabel } from '@/app/lib/laptops/format';
 import { amazonLinkForConfig } from '@/app/lib/laptops/affiliate';
 import type { Configuration, LaptopFamily } from '@/app/lib/laptops/types';
 
@@ -159,6 +160,20 @@ function cheapestConfig(f: LaptopFamily): Configuration {
   return [...f.configurations].sort((a, b) => (a.priceUsd ?? Infinity) - (b.priceUsd ?? Infinity))[0];
 }
 
+// Live at-a-glance specs for a pick — pulled from the dataset, never stale.
+function specHighlights(f: LaptopFamily): string[] {
+  const chips: string[] = [];
+  const tiers = familyGpuTiers(f).filter((t) => t !== 'other');
+  if (tiers.length) chips.push(tiers.map(gpuTierLabel).join(' / '));
+  if (f.displaySizeInches) {
+    chips.push(`${f.displaySizeInches}"${f.display ? ` ${panelLabel(f.display.panelType)}` : ''}`);
+  }
+  if (f.memory?.installed) chips.push(f.memory.installed.split('(')[0].trim());
+  else if (f.memory?.maxGb) chips.push(`${f.memory.maxGb} GB max`);
+  if (f.build?.weightKg) chips.push(f.build.weightKg.split('(')[0].trim());
+  return chips;
+}
+
 function PickRow({ rank, family, note }: { rank: number; family: LaptopFamily; note: string }) {
   const img = getLaptopImage(family.slug);
   const link = amazonLinkForConfig(cheapestConfig(family));
@@ -180,7 +195,17 @@ function PickRow({ rank, family, note }: { rank: number; family: LaptopFamily; n
           {family.name}
         </Link>
         <p className="text-sm font-semibold text-amber-400">{startingPriceLabel(family)}</p>
-        {note ? <p className="mt-1 text-sm text-gray-400">{note}</p> : null}
+        <div className="mt-1.5 flex flex-wrap gap-1.5">
+          {specHighlights(family).map((s, i) => (
+            <span
+              key={i}
+              className="rounded bg-gray-800 px-1.5 py-0.5 text-[11px] font-medium text-gray-300"
+            >
+              {s}
+            </span>
+          ))}
+        </div>
+        {note ? <p className="mt-2 text-sm text-gray-400">{note}</p> : null}
         <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
           <Link href={`/gaming-laptops/${family.slug}`} className="font-semibold text-gray-300 hover:text-white">
             Full details →
