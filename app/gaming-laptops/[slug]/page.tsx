@@ -7,12 +7,16 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
 import { buildPageMetadata, absoluteUrl } from '@/app/lib/seo';
 import AmazonBox from '@/app/components/laptops/AmazonBox';
 import LaptopCard from '@/app/components/laptops/LaptopCard';
+import ProsCons from '@/app/components/laptops/ProsCons';
+import Byline from '@/app/components/laptops/Byline';
+import TermLinker from '@/app/components/laptops/TermLinker';
 
 import {
   getAllFamilies,
@@ -31,6 +35,7 @@ import {
 } from '@/app/lib/laptops/format';
 import { amazonLinkForConfig } from '@/app/lib/laptops/affiliate';
 import { getLaptopImage } from '@/app/lib/laptops/images';
+import { categoriesForFamily } from '@/app/lib/laptops/categories';
 import type {
   Configuration,
   LaptopFamily,
@@ -62,6 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${family.name}: Specs, Price & Review | FinalBoss.io`,
     description,
     path: `/gaming-laptops/${family.slug}`,
+    image: getLaptopImage(family.slug)?.url,
     type: 'article',
     modifiedTime: `${family.lastVerified}T00:00:00.000Z`,
     keywords: [family.name, family.manufacturer, 'gaming laptop', '2026'],
@@ -121,15 +127,21 @@ export default function LaptopPage({ params }: Props) {
                 {family.display ? <Chip>{panelLabel(family.display.panelType)}</Chip> : null}
                 {family.build?.weightKg ? <Chip>{family.build.weightKg}</Chip> : null}
               </div>
+
+              <div className="mt-4">
+                <Byline lastVerified={family.lastVerified} />
+              </div>
             </div>
 
             {heroImage ? (
-              <div className="overflow-hidden rounded-xl border border-gray-800 bg-gray-950/40 p-4">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+              <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-gray-800 bg-gray-950/40">
+                <Image
                   src={heroImage.url}
                   alt={heroImage.alt}
-                  className="mx-auto max-h-64 w-full object-contain"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 380px"
+                  className="object-contain p-4"
                 />
               </div>
             ) : null}
@@ -139,13 +151,19 @@ export default function LaptopPage({ params }: Props) {
           <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
             <div className="min-w-0 space-y-10">
               {family.summary ? (
-                <p className="text-lg leading-relaxed text-gray-300">{family.summary}</p>
+                <p className="text-lg leading-relaxed text-gray-300">
+                  <TermLinker text={family.summary} />
+                </p>
               ) : (
                 <p className="rounded-lg border border-gray-800 bg-gray-900/50 p-4 text-sm text-gray-400">
                   Detailed specs for this model are being finalised. The configurations and where-to-buy
                   links below are current as of {formatVerifiedDate(family.lastVerified)}.
                 </p>
               )}
+
+              <ProsCons pros={family.pros} cons={family.cons} />
+
+              <AlsoIn family={family} />
 
               {/* Configurations */}
               <section>
@@ -348,6 +366,37 @@ function Chip({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Hub-and-spoke internal links: brand hub + every category/collection this
+// family belongs to. Turns the flat list into a crawlable topical cluster.
+function AlsoIn({ family }: { family: LaptopFamily }) {
+  const cats = categoriesForFamily(family);
+  if (!cats.length) return null;
+  const linkCls =
+    'rounded-full border border-gray-700 bg-gray-900 px-3 py-1.5 text-sm text-gray-300 hover:border-gray-600 hover:text-white';
+  return (
+    <section>
+      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-500">Also in</h2>
+      <div className="flex flex-wrap gap-2">
+        <Link href={`/gaming-laptops/brands/${brandSlug(family.manufacturer)}`} className={linkCls}>
+          {family.manufacturer}
+        </Link>
+        {cats.map((c) => (
+          <Link key={c.slug} href={`/gaming-laptops/best/${c.slug}`} className={linkCls}>
+            {c.label}
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/** ISO date + n days, for offers.priceValidUntil. */
+function addDays(iso: string, n: number): string {
+  const d = new Date(`${iso}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h2 className="mb-4 text-xl font-bold text-white">{children}</h2>;
 }
@@ -525,6 +574,7 @@ function JsonLd({ family, faqs }: { family: LaptopFamily; faqs: Faq[] }) {
   const url = absoluteUrl(`/gaming-laptops/${family.slug}`);
   const price = startingPrice(family);
 
+  const img = getLaptopImage(family.slug);
   const product: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -532,8 +582,21 @@ function JsonLd({ family, faqs }: { family: LaptopFamily; faqs: Faq[] }) {
     category: 'Gaming Laptop',
     brand: { '@type': 'Brand', name: family.manufacturer },
     url,
+    ...(img ? { image: absoluteUrl(img.url) } : {}),
     ...(family.summary ? { description: family.summary } : {}),
   };
+  if (family.pros?.length) {
+    product.positiveNotes = {
+      '@type': 'ItemList',
+      itemListElement: family.pros.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p })),
+    };
+  }
+  if (family.cons?.length) {
+    product.negativeNotes = {
+      '@type': 'ItemList',
+      itemListElement: family.cons.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c })),
+    };
+  }
   if (price != null) {
     product.offers = {
       '@type': 'AggregateOffer',
@@ -541,6 +604,7 @@ function JsonLd({ family, faqs }: { family: LaptopFamily; faqs: Faq[] }) {
       lowPrice: price,
       offerCount: family.configurations.length,
       availability: 'https://schema.org/InStock',
+      priceValidUntil: addDays(family.lastVerified, 30),
       url,
     };
   }

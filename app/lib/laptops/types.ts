@@ -188,4 +188,8 @@ export interface LaptopFamily {
 
   /** One-paragraph editorial synthesis (the part competitors can't clone). */
   summary?: string;
+
+  /** Scannable buying pros/cons (2–4 each), synthesized from summary + specs. */
+  pros?: string[];
+  cons?: string[];
 }

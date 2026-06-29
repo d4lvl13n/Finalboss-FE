@@ -266,6 +266,8 @@ const Header: React.FC = () => {
                 {[
                   { key: 'nav.reviews', href: '/reviews' },
                   { key: 'nav.laptops', href: '/gaming-laptops' },
+                  { key: 'nav.laptopGuides', href: '/gaming-laptops/guides' },
+                  { key: 'nav.laptopGlossary', href: '/gaming-laptops/glossary' },
                   { key: 'nav.guides', href: '/guides' },
                   { key: 'nav.videos', href: '/videos' },
                   { key: 'nav.technology', href: '/technology' },

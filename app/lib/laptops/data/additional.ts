@@ -83,6 +83,17 @@ export const ADDITIONAL: LaptopFamily[] = [
     ],
     summary:
       "Eluktronics' liquid-cooled flagship pairs an RTX 5090 (175 W MAX-P) with a 48 GB / 300 Hz QHD package and a clean, bloatware-free Windows install. The HYDROC closed-loop cooling and aluminum chassis are the headline, with pricing from $2,599 for the RTX 5080 base config. The catch for buyers: as a boutique direct-to-consumer brand it had no independent review at research time, so the specs are largely manufacturer-stated.",
+    pros: [
+      'Liquid-cooled RTX 5090 (175 W MAX-P)',
+      '300 Hz QHD, Mini-LED option',
+      'Bloatware-free Windows install',
+      'Aluminum chassis, Wi-Fi 7 + TB4',
+    ],
+    cons: [
+      'Specs manufacturer-stated (no independent review)',
+      'Only 1-year warranty',
+      'Heavy at 2.83 kg',
+    ],
   },
 
   {
@@ -155,6 +166,18 @@ export const ADDITIONAL: LaptopFamily[] = [
     ],
     summary:
       "A lighter, more affordable Eluktronics built on AMD's Ryzen 9 8945HX with an RTX 5070 capped at 100 W (+15 W Dynamic Boost). At 2.28 kg with a resin (polycarbonate) chassis it trades premium materials for portability and a $1,499 RTX 5060 starting price, and it forgoes Thunderbolt (USB-C 3.2 Gen 2 only) and Wi-Fi 7. Like its sibling, it had no independent review at research time.",
+    pros: [
+      'Affordable from $1,499 (RTX 5060 base)',
+      'Light at 2.28 kg',
+      'Upgradeable RAM to 64 GB',
+      'Bloatware-free Windows install',
+    ],
+    cons: [
+      'Resin (polycarbonate) chassis',
+      'No Thunderbolt; Wi-Fi 6E only',
+      'RTX 5070 capped at 100 W',
+      'No independent review found',
+    ],
   },
 
   {
@@ -218,6 +241,17 @@ export const ADDITIONAL: LaptopFamily[] = [
     ],
     summary:
       'A US-boutique Clevo barebone dressed up by Maingear: Core Ultra 9 275HX, a 140 W RTX 5070 Ti and a 300 Hz QHD+ panel from around $2,299. PCWorld\'s "power with caveats" verdict confirms the Clevo chassis — which Maingear doesn\'t disclose in marketing — and noted the as-reviewed price climbs with upgrades. Capable hardware, but you are paying a boutique premium over the underlying ODM design.',
+    pros: [
+      'RTX 5070 Ti at 140 W, 300 Hz QHD+',
+      'RAM upgradeable to 96 GB',
+      'Wi-Fi 7 + Gen 5 SSD',
+      'Independently reviewed (PCWorld)',
+    ],
+    cons: [
+      'Undisclosed Clevo barebone',
+      'Boutique premium over shared ODM design',
+      'As-tested price climbs with upgrades',
+    ],
   },
 
   {
@@ -291,6 +325,17 @@ export const ADDITIONAL: LaptopFamily[] = [
     ],
     summary:
       "A true 18\" mobile workstation: a 175 W RTX 5090, Advanced Optimus MUX, dual Thunderbolt 5 and extreme expandability — up to 256 GB RAM across four SO-DIMMs and as much as 32 TB of RAID storage, with Linux and Windows Server options. It is heavy (3.6 kg) and expensive (from $5,504), and the only performance data at research time came from Eurocom's own benchmark lab rather than an independent reviewer. A niche pick for engineers and content pros more than mainstream gamers.",
+    pros: [
+      '175 W RTX 5090 with Advanced Optimus MUX',
+      'Up to 256 GB RAM / 32 TB RAID',
+      'Dual Thunderbolt 5',
+      'Linux & Windows Server options',
+    ],
+    cons: [
+      'Heavy 18" chassis (3.6 kg)',
+      'Expensive from $5,504',
+      "Performance data from maker's own lab only",
+    ],
   },
 
   {
@@ -357,6 +402,16 @@ export const ADDITIONAL: LaptopFamily[] = [
     ],
     summary:
       'Now under Corsair, Origin PC\'s EON16-X V2 is a relatively light (2.22 kg) aluminum 16" offering RTX 5080 or 5090 at 175 W, a 300 Hz QHD+ panel and a 2-year warranty. How-To Geek summed it up as "power gaming at a premium" — strong performance with boutique pricing, from roughly $3,191 for the RTX 5080 via Corsair. Note that pricing differs between originpc.com and corsair.com, since the same machine is sold through both.',
+    pros: [
+      'RTX 5080/5090 at 175 W',
+      'Light 2.22 kg aluminum chassis',
+      '300 Hz QHD+ (100% sRGB), TB4 + Wi-Fi 7',
+      '2-year warranty, independently reviewed',
+    ],
+    cons: [
+      'Boutique premium pricing (~$3,191+)',
+      'Pricing differs across Origin/Corsair storefronts',
+    ],
   },
 
   // Table 2 — European / Regional Clevo-based -------------------------------
@@ -423,6 +478,16 @@ export const ADDITIONAL: LaptopFamily[] = [
     ],
     summary:
       "A Lenovo-owned Medion flagship sold mainly in Germany, the UK and the Netherlands — not officially in North America. It pairs a Core Ultra 9 275HX and a 175 W RTX 5080 (RTX 5090 optional) with a matte 300 Hz QHD+ IPS panel, 2 TB of Gen 5 storage and an aluminum chassis. Pricing is European and inconsistent across markets (£2,199.99 UK vs €3,199.95 DE), and independent testing was limited to retailer listings at research time.",
+    pros: [
+      '175 W RTX 5080 (RTX 5090 optional)',
+      'Matte 300 Hz QHD+ + Gen 5 SSD',
+      'Aluminum chassis, 2-year warranty',
+    ],
+    cons: [
+      'Europe-only (no North America support)',
+      'Inconsistent UK vs DE pricing',
+      'No major independent review',
+    ],
   },
 
   {
@@ -484,6 +549,15 @@ export const ADDITIONAL: LaptopFamily[] = [
     ],
     summary:
       "The 18\" sibling steps up to a larger 240 Hz QHD+ (100% sRGB) panel and a 99.8 Wh battery while keeping the 275HX and 175 W RTX 5080 (RTX 5090 optional) core. Like the 16, it is a Europe-only Medion (DE/UK/NL), but it did draw independent coverage from NotebookCheck and TechRadar. Pricing is genuinely ambiguous — quoted around €3,700 for the RTX 5080 and ~€5,650 for the RTX 5090 — so cross-currency conversions are estimates.",
+    pros: [
+      'Large 18" 240 Hz QHD+ (100% sRGB)',
+      '99.8 Wh battery',
+      'Independently reviewed (NotebookCheck, TechRadar)',
+    ],
+    cons: [
+      'Europe-only (no North America support)',
+      'Cross-currency pricing is ambiguous',
+    ],
   },
 
   // Table 3 — Secondary OEM family (collector edition) ----------------------
@@ -562,5 +636,16 @@ export const ADDITIONAL: LaptopFamily[] = [
     ],
     summary:
       'A limited-run collector\'s Titan 18: the full 175 W RTX 5090, a 4K-class 240 Hz Mini-LED (HDR 1000) panel, 64 GB RAM expandable to 128 GB, dual Thunderbolt 5 and an acid-etched "Dragon Edition" chassis. The catch is the price — roughly $7,000 to $12,000 depending on config, versus around $3,999 for a standard Titan 18 with an RTX 5080. You are paying a steep premium for largely cosmetic exclusivity on top of an already hot, heavy (~4.2 kg) flagship platform.',
+    pros: [
+      'Full 175 W RTX 5090',
+      '4K 240 Hz Mini-LED (HDR 1000)',
+      '64 GB RAM (to 128 GB) + dual TB5',
+      'Acid-etched collector chassis',
+    ],
+    cons: [
+      'Steep collector premium (~$7,000–$12,000)',
+      'Runs hot and loud at full draw',
+      'Heavy at ~4.2 kg',
+    ],
   },
 ];

@@ -86,6 +86,18 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     ],
     summary:
       'A no-compromise 18" flagship — RTX 5090 at the full 175 W, a 4K Mini LED panel, and up to 128 GB RAM. The trade-off is heat and noise: owners report 96–100 °C CPU temps and prominent fan noise at full draw, and there is no G-Sync. A desk-bound powerhouse, not a quiet one.',
+    pros: [
+      'Full 175 W RTX 5090',
+      '4K (UHD+) Mini LED, 120 Hz',
+      'Upgradeable RAM (to 128 GB)',
+      'Wi-Fi 7',
+    ],
+    cons: [
+      'CPU hits 96–100 °C under load',
+      'Loud fans at full draw',
+      'No G-Sync / Advanced Optimus',
+      'Heavy (~3.3 kg)',
+    ],
   },
 
   // Table 2 -----------------------------------------------------------------
@@ -162,6 +174,18 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     ],
     summary:
       'A 16" OLED that out-benchmarks the bigger Titan thanks to 300 W of OverBoost headroom — and frequently sells well below MSRP. The honest knocks are a plasticky base, a flexing lid, and no G-Sync. Strong performance-per-dollar when discounted, less so at full price.',
+    pros: [
+      '240 Hz OLED',
+      '175 W RTX 5090 + 300 W OverBoost',
+      'Upgradeable RAM (to 128 GB)',
+      'Often discounted below MSRP',
+    ],
+    cons: [
+      'Plasticky base, flexing lid',
+      'Glossy OLED shows glare & fingerprints',
+      'Very warm CPU',
+      'No G-Sync / Advanced Optimus',
+    ],
   },
 
   // Table 3 -----------------------------------------------------------------
@@ -215,6 +239,17 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     ],
     summary:
       'The value performance pick of MSI\'s 2026 line: a full 175 W RTX 5080 with dual Thunderbolt 5 around $3,199, undercutting the flashier Raider and Titan. Less is documented about its build, and there are isolated overheating reports, but on paper it\'s a lot of GPU for the money.',
+    pros: [
+      'Full 175 W RTX 5080',
+      'Dual Thunderbolt 5',
+      '240 Hz screen',
+      'Undercuts Raider & Titan (~$3,199)',
+    ],
+    cons: [
+      'IPS panel, not OLED',
+      'Isolated overheating reports',
+      'Build quality lightly documented',
+    ],
   },
 
   // Table 4 -----------------------------------------------------------------
@@ -277,6 +312,17 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     ],
     summary:
       'A genuinely thin (16.65 mm), 1.99 kg all-aluminum 16" with an OLED and Panther Lake silicon — MSI\'s style-led option. Pricing wasn\'t set at research time, and the big question mark is sustained thermals, since the previous Stealth ran hot in the same thin form factor.',
+    pros: [
+      'Thin 16.65 mm, 1.99 kg',
+      '240 Hz OLED',
+      'All-aluminum build',
+      'Panther Lake silicon',
+    ],
+    cons: [
+      'Thin chassis risks throttling',
+      'Predecessor ran hot under load',
+      'Pricing not set at launch',
+    ],
   },
 
   // Table 5 -----------------------------------------------------------------
@@ -352,6 +398,17 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     ],
     summary:
       'A solid mid-ranger with upgradeable RAM (to 96 GB) and a 240 Hz screen around $1,499 — but it carries real caveats: the USB-C port routes through the iGPU and breaks external-monitor gaming (use HDMI), the thermal paste reportedly dries out quickly, and the 8 GB VRAM is tight at 1440p.',
+    pros: [
+      'Upgradeable RAM (to 96 GB)',
+      '240 Hz screen',
+      'Affordable (~$1,499)',
+    ],
+    cons: [
+      'USB-C breaks external-monitor gaming (use HDMI)',
+      'Thermal paste dries out within 2 years',
+      '8 GB VRAM tight at 1440p',
+      'Only Wi-Fi 6E',
+    ],
   },
 
   // Table 6 -----------------------------------------------------------------
@@ -420,6 +477,17 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     ],
     summary:
       'A $999 RTX 5070 on a last-gen Raptor Lake CPU — strong frames-per-dollar with genuinely upgradeable RAM. The consistent compromise reviewers cite is a dim display; otherwise it\'s a sensible budget pick if you can live with 16:9 and a plastic build.',
+    pros: [
+      'RTX 5070 from $999',
+      'Upgradeable RAM (to 96 GB)',
+      'QHD 165 Hz panel option',
+    ],
+    cons: [
+      'Dim display',
+      'Last-gen Raptor Lake CPU',
+      '16:9 panel, plastic build',
+      'Only Wi-Fi 6E',
+    ],
   },
 
   // Table 7 -----------------------------------------------------------------
@@ -495,6 +563,17 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     ],
     summary:
       'A $999 entry machine whose headline RTX 5050 is hamstrung by a 45 W power limit — it can trail the older RTX 4060. Combined with a 65% sRGB panel and 512 GB storage, it\'s only worth it at a real discount; if you want the GPU to stretch its legs, look at the 100 W "Max" variant instead.',
+    pros: [
+      'Upgradeable RAM (2 slots)',
+      '144 Hz panel',
+      'Light (2.2 kg)',
+    ],
+    cons: [
+      '45 W TGP limits the RTX 5050 (can trail RTX 4060)',
+      'Poor 65% sRGB panel',
+      '512 GB storage, low for 2026',
+      'No vapor chamber, warm idle',
+    ],
   },
 
   // Table 8 -----------------------------------------------------------------
@@ -559,6 +638,17 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     ],
     summary:
       'A slim (19 mm) 2.3 kg 16" OLED that pairs an RTX 5090 with AMD\'s X3D CPU — which keeps both chips in the low 80s °C, cooler than the Intel rivals. The recurring complaint is noise: the performance fan preset is very loud. Pricing for the 2026 GEN 2 wasn\'t public at research time.',
+    pros: [
+      '175 W RTX 5090 + AMD X3D CPU',
+      '240 Hz OLED',
+      'Slim 19 mm, 2.3 kg',
+      'Cool low-80s °C chips',
+    ],
+    cons: [
+      'Very loud performance fan preset',
+      'RAM caps at 64 GB',
+      '2026 pricing not public',
+    ],
   },
 
   // Table 9 -----------------------------------------------------------------
@@ -618,6 +708,18 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     ],
     summary:
       'The 18" big brother: an overclockable 175 W RTX 5090, a Mini LED panel, and extreme expandability (up to 128 GB RAM and 6 TB of SSD across 3 slots) plus Thunderbolt 5. Independent reviews were thin at research time, and at 270 W it will run hot and loud — a true desktop replacement.',
+    pros: [
+      'Overclockable 175 W RTX 5090',
+      '240 Hz Mini LED',
+      'Up to 128 GB RAM + 6 TB SSD',
+      'Thunderbolt 5',
+    ],
+    cons: [
+      'Runs hot & loud at 270 W',
+      'Heavy (~3.5 kg)',
+      'Limited BIOS options vs Alienware',
+      'Pricing unclear at launch',
+    ],
   },
 
   // Table 10 ----------------------------------------------------------------
@@ -691,6 +793,17 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     ],
     summary:
       'A big-screen 18" with a MUX switch and up to an RTX 5080 — but it makes real compromises: the 32 GB RAM is soldered (no upgrades), the fans hit a very loud 57 dB(A) under load, and the 300-nit panel and 76 Wh battery are both on the small side. Buy the capacity you need up front.',
+    pros: [
+      'MUX Switch',
+      'Up to RTX 5080',
+      'Up to 4 TB SSD',
+    ],
+    cons: [
+      'RAM soldered at 32 GB (no upgrades)',
+      'Very loud (~57 dB)',
+      'Dim 300-nit panel',
+      'Small 76 Wh battery',
+    ],
   },
 
   // Table 11 ----------------------------------------------------------------
@@ -754,5 +867,16 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     ],
     summary:
       'A 1.9 kg slim creator-gaming 16" with upgradeable RAM and a clean aluminum design — but the RTX 5070 is capped at just 85 W, so real-world gaming lands below what the GPU name suggests, and there\'s no Thunderbolt. Better as a portable creator machine than a frame-rate-first gaming laptop.',
+    pros: [
+      'Light 1.9 kg slim aluminum',
+      'Upgradeable RAM (to 64 GB)',
+      'MUX Switch',
+      'Up to 4 TB SSD',
+    ],
+    cons: [
+      '85 W TGP limits the RTX 5070',
+      'No Thunderbolt (USB4 only)',
+      'Only Wi-Fi 6E',
+    ],
   },
 ];

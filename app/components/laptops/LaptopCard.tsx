@@ -2,6 +2,7 @@
 // index, and brand/category pages. Pure server component.
 
 import Link from 'next/link';
+import Image from 'next/image';
 import type { LaptopFamily } from '@/app/lib/laptops/types';
 import { familyGpuTiers } from '@/app/lib/laptops/queries';
 import { gpuTierLabel, panelLabel, startingPriceLabel } from '@/app/lib/laptops/format';
@@ -17,18 +18,22 @@ export default function LaptopCard({ family }: { family: LaptopFamily }) {
       className="group flex flex-col overflow-hidden rounded-xl border border-gray-800 bg-gray-900/50 transition-colors hover:border-gray-700 hover:bg-gray-900"
     >
       {/* Thumbnail */}
-      <div className="flex aspect-[16/10] items-center justify-center bg-gray-950/40 p-3">
-        {image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={image.url}
-            alt={image.alt}
-            loading="lazy"
-            className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-[1.03]"
-          />
-        ) : (
-          <span className="text-xs text-gray-600">{family.manufacturer}</span>
-        )}
+      <div className="bg-gray-950/40 p-3">
+        <div className="relative aspect-[16/10]">
+          {image ? (
+            <Image
+              src={image.url}
+              alt={image.alt}
+              fill
+              sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
+              className="object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center">
+              <span className="text-xs text-gray-600">{family.manufacturer}</span>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Body */}

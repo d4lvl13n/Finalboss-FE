@@ -126,6 +126,18 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     ],
     summary:
       'A high-power 16" RTX 5080 machine with one of the better cooling setups in its class (full vapor chamber, Tri-Fan, liquid metal) wrapped in a plastic but easily-serviceable chassis. The recurring caveat across this line is coil whine; cooling and upgradeability are its strengths.',
+    pros: [
+      'Full 175 W RTX 5080',
+      '300 Hz panel + G-SYNC',
+      'Strong cooling (vapor chamber, Tri-Fan, liquid metal)',
+      'Upgradeable RAM to 64 GB (tool-less Q-Latch)',
+    ],
+    cons: [
+      'Coil whine reported across this line',
+      'Plastic chassis',
+      'Short gaming battery (~1.5–2 hrs)',
+      'Minor IPS backlight bleed on some units',
+    ],
   },
 
   // R02 ---------------------------------------------------------------------
@@ -242,6 +254,18 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     ],
     summary:
       'The 18" sibling of the Strix G16, upgraded to a 1600-nit Mini LED panel for 2026. Same strong cooling and serviceability, same coil-whine caveat — a desktop-replacement for players who want screen real estate and HDR punch over portability.',
+    pros: [
+      'Full 175 W RTX 5080',
+      '1600-nit Mini LED, 240 Hz + G-SYNC',
+      'Strong cooling (vapor chamber, Tri-Fan, liquid metal)',
+      'Upgradeable RAM to 64 GB (tool-less Q-Latch)',
+    ],
+    cons: [
+      'Coil whine reported on G18 line',
+      'Heavy (3.5 kg), not portable',
+      'Short gaming battery (~1–1.5 hrs)',
+      'Some corner backlight bleed on Mini LED units',
+    ],
   },
 
   // R03 / R04 ---------------------------------------------------------------
@@ -372,6 +396,18 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     ],
     summary:
       'The premium thin-and-light pick: a gorgeous 240 Hz OLED in a 1.95 kg CNC-aluminum body. The trade-offs are inherent to the form factor — soldered RAM, a thermally-constrained RTX 5090, and a recurring hinge-creak complaint. Buy it for the screen and portability, not for sustained flagship performance.',
+    pros: [
+      '240 Hz OLED (1100 nits, HDR True Black 1000)',
+      'Premium CNC aluminum, light (1.95 kg)',
+      'Up to RTX 5090 + G-SYNC',
+      'Vapor chamber + liquid metal cooling',
+    ],
+    cons: [
+      'Soldered RAM (not upgradeable)',
+      'RTX 5090 thermally constrained — throttles under load',
+      'Recurring hinge-creak complaint',
+      'Armoury Crate instability reported',
+    ],
   },
 
   // R05 / R06 ---------------------------------------------------------------
@@ -487,6 +523,18 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     ],
     summary:
       'The 1.5 kg ultra-portable icon, now with a 3K OLED. It is the most "carry-everywhere" gaming laptop here, but upgradeability is the worst in the segment (soldered RAM, a single M.2 on the AMD model). A lifestyle/productivity machine that games well, not a sustained-performance rig.',
+    pros: [
+      'Ultra-portable (1.5 kg, extremely thin)',
+      '3K OLED (Nebula HDR) + G-SYNC',
+      'Premium CNC aluminum',
+      '100 W USB-C PD charging',
+    ],
+    cons: [
+      'Soldered RAM, single M.2 on AMD (3/10 upgradeability)',
+      'Thin chassis throttles sustained load',
+      'Short gaming battery (~1–2 hrs)',
+      'Armoury Crate crash/black-screen history',
+    ],
   },
 
   // R07 ---------------------------------------------------------------------
@@ -588,6 +636,18 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     ],
     summary:
       'The mainstream OLED-or-IPS TUF, now with the option of an OLED panel and a 290HX Plus CPU. Genuinely upgradeable (2× SO-DIMM, 2× M.2) — but check the configuration: the single-channel 16 GB base is a known performance trap, and 2026 units carry a sleep-bug and Wi-Fi caveat.',
+    pros: [
+      'OLED (165 Hz) or 300 Hz IPS option',
+      'Upgradeable RAM to 64 GB (2× SO-DIMM, 2× M.2)',
+      'Thunderbolt 4',
+      'G-SYNC + VRR',
+    ],
+    cons: [
+      'Single-channel 16 GB base hurts performance until upgraded',
+      'Sleep/wake bug reported on 2026 units',
+      'Wi-Fi card unreliability (recurring TUF complaint)',
+      'Thermal-management issues reported',
+    ],
   },
 
   // R08 ---------------------------------------------------------------------
@@ -688,6 +748,18 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     ],
     summary:
       'The AMD counterpart to the F16, pairing a Zen 4 Ryzen 9 with the RTX 5070. Same upgradeable chassis and OLED option — and the same single-channel-RAM caveat, plus owner reports of hinge and touchpad wear over time.',
+    pros: [
+      'OLED (165 Hz) or 300 Hz IPS option',
+      'Upgradeable RAM to 64 GB (2× SO-DIMM, 2× M.2)',
+      'Dual USB-C (DP 2.1)',
+      'G-SYNC + VRR',
+    ],
+    cons: [
+      'Single-channel RAM by default hurts performance',
+      'Shaky hinge reported over time',
+      'Touchpad degradation reported after months',
+      'Some thermal throttling',
+    ],
   },
 
   // R09 ---------------------------------------------------------------------
@@ -774,6 +846,18 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     ],
     summary:
       'A big, durable 18" workhorse with a 300 Hz IPS panel and — unusually for this list — a clean thermal/acoustic bill of health (no coil whine, no throttling in Performance mode). The one watch-out is SSD thermal throttling under sustained write workloads.',
+    pros: [
+      'No coil whine, no CPU/GPU throttling',
+      '300 Hz IPS + G-SYNC',
+      'Upgradeable RAM to 64 GB (2× M.2)',
+      'Decent light battery (~5–6 hrs)',
+    ],
+    cons: [
+      'SSD throttles under sustained writes',
+      'Heavy (2.8 kg)',
+      'Loud under load (~55 dB Turbo)',
+      'IPS panel only (no OLED)',
+    ],
   },
 
   // R10 ---------------------------------------------------------------------
@@ -860,6 +944,18 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     ],
     summary:
       'Strictly speaking the odd one out: a 1.48 kg compact running Strix Halo with the integrated Radeon 8060S and no discrete GPU. Strong for productivity and light gaming, but reviewers are clear it is poor value if you actually want discrete-GPU frame rates.',
+    pros: [
+      'Compact and light (1.48 kg)',
+      'Strong for productivity / light gaming (Strix Halo, 24 threads)',
+      'SSD upgradeable (2× M.2)',
+      'USB4 PD charging',
+    ],
+    cons: [
+      'iGPU only — no discrete GPU, weak gaming value',
+      'Soldered RAM, capped at 32 GB',
+      'Modest IPS panel (100% sRGB only)',
+      'Very limited 2026 owner data',
+    ],
   },
 
   // R11 / R12 ---------------------------------------------------------------
@@ -987,6 +1083,18 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     ],
     summary:
       'One of the fastest and best-regarded 16" gaming laptops — full 175 W GPUs, a 240 Hz OLED, genuine upgradeability, and a very good aluminum build. The honest trade-offs are a hot CPU (90–100 °C under load) and the now-fixed launch G-SYNC quirk. A flagship that earns its price.',
+    pros: [
+      'Full 175 W RTX 5080 / 5090',
+      '240 Hz OLED (HDR TrueBlack 1000) + G-SYNC',
+      'Upgradeable RAM to 64 GB (2× M.2)',
+      'Very good aluminum build + vapor chamber',
+    ],
+    cons: [
+      'Hot CPU under load (~90–100 °C)',
+      'G-SYNC missing at launch (added via BIOS)',
+      'Chassis/keyboard creak reported',
+      'Short gaming battery (~1–1.5 hrs)',
+    ],
   },
 
   // R13 ---------------------------------------------------------------------
@@ -1095,6 +1203,18 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     ],
     summary:
       'A lightweight 1.78 kg aluminum OLED machine with a premium feel and strong battery life. The catch is real: the RTX 5060 is held to 95 W in Performance mode and needs an awkward manual override to reach its rated TGP, and the RAM is soldered. Buy it for portability and the screen, not raw GPU output.',
+    pros: [
+      'Lightweight aluminum (1.78 kg)',
+      '240 Hz OLED (HDR TrueBlack 1000) + G-SYNC',
+      'Strong battery life (~6–8 hrs light)',
+      '2× Thunderbolt 4',
+    ],
+    cons: [
+      'GPU capped at 95 W in Performance mode (impractical manual override)',
+      'Soldered RAM (not upgradeable)',
+      'Mediocre Realtek Wi-Fi speeds',
+      'No vapor chamber',
+    ],
   },
 
   // R14 ---------------------------------------------------------------------
@@ -1188,6 +1308,18 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     ],
     summary:
       "Arguably the value pick of the Legion line: a 16-core Ryzen 9 with an RTX 5070 and a 165 Hz OLED, genuinely upgradeable, and frequently discounted well below MSRP (seen at ~$1,439). Thin on independent 2026 thermal data, but the spec-to-price ratio is the standout.",
+    pros: [
+      'Value pick — 16-core Ryzen 9 + RTX 5070 from $1,999 (seen ~$1,439)',
+      '165 Hz OLED (HDR TrueBlack 1000)',
+      'Upgradeable RAM to 64 GB (2× SO-DIMM, 2× M.2)',
+      'Aluminum build + Super Rapid Charge',
+    ],
+    cons: [
+      'VRR only (no G-SYNC)',
+      'Limited independent 2026 thermal data',
+      '8 GB GPU VRAM',
+      'Short gaming battery (~1–1.5 hrs)',
+    ],
   },
 
   // R15 / R16 ---------------------------------------------------------------
@@ -1315,5 +1447,17 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     ],
     summary:
       'The budget entry point: an RTX 5060 for often well under $1,000 on sale. Two caveats define the buying decision — the single-channel 16 GB default should be upgraded to dual-channel immediately, and the Realtek Wi-Fi is weak. Past Intel-LOQ motherboard issues appear resolved in this generation.',
+    pros: [
+      'Affordable RTX 5060 (often under $1,000 on sale)',
+      'Upgradeable RAM to 32 GB (empty slot) + 2× M.2',
+      '100 W USB-C PD charging',
+      '144 Hz FHD IPS',
+    ],
+    cons: [
+      'Single-channel 16 GB default hurts gaming until upgraded',
+      'Weak/unstable Realtek Wi-Fi',
+      'FHD-only panel, modest brightness (300–318 nits)',
+      'No vapor chamber; CPU spikes can stutter',
+    ],
   },
 ];

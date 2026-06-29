@@ -10,6 +10,8 @@ export const fr = {
     videos: 'Vidéos',
     games: 'Jeux',
     laptops: 'PC Portables',
+    laptopGuides: 'Guides PC Portables',
+    laptopGlossary: 'Glossaire PC Portables',
     team: 'Équipe',
     allArticles: 'Tous les articles',
     writeForUs: 'Écrire pour nous',

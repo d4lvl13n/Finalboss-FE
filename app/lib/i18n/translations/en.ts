@@ -8,6 +8,8 @@ export const en = {
     videos: 'Videos',
     games: 'Games',
     laptops: 'Laptops',
+    laptopGuides: 'Laptop Guides',
+    laptopGlossary: 'Laptop Glossary',
     team: 'Team',
     allArticles: 'All Articles',
     writeForUs: 'Write For Us',

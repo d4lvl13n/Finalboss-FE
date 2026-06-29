@@ -126,6 +126,18 @@ export const ACER_EU: LaptopFamily[] = [
     ],
     summary:
       "Acer's 18-inch flagship pairs full 175 W RTX 5090/5080 GPUs and a 24-core Arrow Lake-HX CPU with a 250 Hz Mini-LED panel and class-leading upgradeability (four RAM slots, three M.2). The honest catch is thermals: reviewers measure CPU throttling in Performance mode, a GPU hotspot near 105 °C and very loud Turbo-mode fans. A genuine desktop replacement where serviceability and the screen are the draw, not quiet sustained performance.",
+    pros: [
+      'Full 175 W RTX 5090 / 5080',
+      'Class-leading upgradeability (4 RAM, 3 M.2)',
+      '250 Hz Mini-LED, ~700 nits',
+      'Thunderbolt 5 + Wi-Fi 7',
+    ],
+    cons: [
+      'CPU throttles in Performance mode',
+      'Extremely loud in Turbo',
+      'GPU hotspot near 105 °C',
+      'SSD throttles under sustained load',
+    ],
   },
 
   // Rows 3 / 4 --------------------------------------------------------------
@@ -222,6 +234,16 @@ export const ACER_EU: LaptopFamily[] = [
     ],
     summary:
       'A mid-range enthusiast 16-incher with RTX 5070/5070 Ti options and a 240 Hz IPS panel, sensibly serviceable (2× RAM, 2× M.2). The defining complaint is the highly reflective display, and the lack of a MUX switch is a notable omission at this tier. Frequently discounted (the RTX 5070 has been seen around $1,500), it competes on value rather than polish.',
+    pros: [
+      'RTX 5070 / 5070 Ti options',
+      '240 Hz IPS panel',
+      'Serviceable (2 RAM, 2 M.2)',
+      'Frequently discounted (~$1,500)',
+    ],
+    cons: [
+      'Highly reflective display',
+      'No GPU MUX switch',
+    ],
   },
 
   // Rows 5 / 6 --------------------------------------------------------------
@@ -345,6 +367,17 @@ export const ACER_EU: LaptopFamily[] = [
     ],
     summary:
       'The slim sibling of the Neo 16, trading thickness for a 2.19 kg metal chassis and a 240 Hz OLED (a 165 Hz OLED arrives on the 2026 Panther Lake refresh). RTX 5070 Ti power is held to ~115 W to fit the thin body, and reviewers flag SSD throttling over time, a very reflective screen and below-average battery life. A looks-and-portability pick rather than a sustained-performance one.',
+    pros: [
+      '240 Hz OLED (500 nits, 100% DCI-P3)',
+      'Slim 2.19 kg metal chassis',
+      'Serviceable (2 RAM, 2 M.2)',
+    ],
+    cons: [
+      'RTX 5070 Ti held to ~115 W',
+      'SSD throttles over time',
+      'Below-average battery life',
+      'Very reflective screen',
+    ],
   },
 
   // Rows 7 / 8 --------------------------------------------------------------
@@ -448,6 +481,17 @@ export const ACER_EU: LaptopFamily[] = [
     ],
     summary:
       "Acer's budget 16-inch line, offered with an AMD Ryzen 5 + RTX 5050 or an Intel Core 9 + RTX 5070 (held to 85 W), on a 1920×1200 180 Hz IPS panel. It earns praise for battery life but runs hot at the chassis (max ~59 °C bottom) and ships a slow microSD reader. Genuinely upgradeable (2× SO-DIMM, 2× M.2), it's an entry-level value play with modest ambitions.",
+    pros: [
+      'Genuinely upgradeable (2 RAM, 2 M.2)',
+      'Praised battery life',
+      '180 Hz IPS panel',
+    ],
+    cons: [
+      'RTX 5070 held to 85 W',
+      'Runs hot (~59 °C bottom)',
+      'Slow microSD reader',
+      'Limited reviews on Intel SKU',
+    ],
   },
 
   // Row 9 -------------------------------------------------------------------
@@ -544,6 +588,17 @@ export const ACER_EU: LaptopFamily[] = [
     ],
     summary:
       'The slim Nitro variant in a mostly-aluminum 2.18 kg body with a 4-zone-RGB keyboard, but it makes real compromises: the RTX 5060 is capped at 85 W versus its 115 W maximum, the LPDDR5 is soldered (no RAM upgrades), the webcam is 720p and there is no USB4/Thunderbolt. The keyboard also shows mushy flex. Decent value on paper, but the throttled GPU and soldered RAM cap its ceiling.',
+    pros: [
+      'Slim mostly-aluminum 2.18 kg body',
+      '180 Hz IPS, 100% sRGB',
+      '4-zone RGB keyboard',
+    ],
+    cons: [
+      'RTX 5060 capped at 85 W (vs 115 W)',
+      'Soldered LPDDR5 — no RAM upgrades',
+      '720p webcam; no USB4/Thunderbolt',
+      'Mushy keyboard flex',
+    ],
   },
 
   // Row 10 ------------------------------------------------------------------
@@ -623,6 +678,16 @@ export const ACER_EU: LaptopFamily[] = [
     ],
     summary:
       "A 2022 AMD Advantage machine (RX 6800M + Ryzen 7 6800HS, 240 Hz IPS) retained here only as a historical reference. It is discontinued, removed from Corsair's site, and its driver support has ended, so it is a used-market item rather than a 2026 purchase. Notable historically for its streamer-focused design, it is not recommended new.",
+    pros: [
+      '240 Hz QHD IPS panel',
+      'Streamer-focused design',
+      'Upgradeable RAM (2 slots)',
+    ],
+    cons: [
+      'Discontinued — used market only',
+      'Driver support has ended',
+      'Limited storage (single M.2)',
+    ],
   },
 
   // Rows 11 / 12 ------------------------------------------------------------
@@ -745,6 +810,18 @@ export const ACER_EU: LaptopFamily[] = [
     ],
     summary:
       'The repairability champion: a modular RTX 5070 / Ryzen AI laptop with a swappable GPU module, upgradeable CPU and interchangeable I/O — a perfect 10/10 upgradeability score. The trade-offs are real, though: the GPU runs at just 100 W on AC (50 W on battery), BIOS bugs persist, fit-and-finish (mushy keyboard, visible seams) feels cheap for the price, and it carries a clear premium over equivalent RTX 5070 laptops. Buy it for the philosophy and longevity, not raw value or peak frame rates.',
+    pros: [
+      'Industry-leading repairability (10/10)',
+      'Swappable GPU module, upgradeable CPU',
+      'Interchangeable I/O Expansion Cards',
+      'Up to 96 GB RAM, 240 W USB-C charging',
+    ],
+    cons: [
+      'GPU limited to 100 W AC / 50 W battery',
+      'Persistent BIOS bugs',
+      'Cheap fit & finish for the price',
+      'Clear price premium vs rivals',
+    ],
   },
 
   // Rows 13 / 14 ------------------------------------------------------------
@@ -870,6 +947,18 @@ export const ACER_EU: LaptopFamily[] = [
     ],
     summary:
       "Schenker's enthusiast flagship is among the fastest 16-inch laptops here — a full 175 W RTX 5090, a 300 Hz Mini-LED panel, fully unlocked BIOS/overclocking and excellent aluminum build, with no thermal throttling at 175 W GPU / up to ~200 W CPU. The Intel E25 and AMD 9955HX3D A25 differ in I/O: the E25 lacks true TB4/TB5 and has reported Killer Wi-Fi instability, while the A25 has no USB4/Thunderbolt and some owners report occasional freezes. A specialist pick with class-leading performance and serviceability, sold mainly in Europe.",
+    pros: [
+      'Full 175 W RTX 5090, no throttling',
+      '300 Hz Mini-LED (1500+ nits HDR)',
+      'Unlocked BIOS / overclocking',
+      'Excellent, serviceable aluminum build',
+    ],
+    cons: [
+      'No true TB4/TB5 (E25); no USB4 on A25',
+      'Killer Wi-Fi instability (E25)',
+      'Occasional freezes on A25',
+      'Loud fans (55.5 dB at Overboost)',
+    ],
   },
 
   // Row 15 ------------------------------------------------------------------
@@ -957,6 +1046,17 @@ export const ACER_EU: LaptopFamily[] = [
     ],
     summary:
       'A value-enthusiast workstation hybrid: Ryzen AI 9 HX 370 + RTX 5070 (115 W) in an excellent 2.15 kg aluminum chassis with a 300 Hz IPS panel, up to 128 GB RAM and strong serviceability — and no thermal throttling at 115 W. The downsides are loud fans under sustained load, a fingerprint-prone surface and no Thunderbolt. Starting around €1,579, it is one of the better spec-per-euro picks in this group.',
+    pros: [
+      'Full 115 W RTX 5070, no throttling',
+      '300 Hz IPS panel',
+      'Up to 128 GB RAM, serviceable',
+      'Strong value (~€1,579)',
+    ],
+    cons: [
+      'Loud fans under sustained load',
+      'Fingerprint-prone surface',
+      'No Thunderbolt',
+    ],
   },
 
   // Row 16 ------------------------------------------------------------------
@@ -1044,6 +1144,17 @@ export const ACER_EU: LaptopFamily[] = [
     ],
     summary:
       "XMG's first OLED laptop puts a 2880×1800 120 Hz panel into a thin 2.13 kg aluminum body with Core Ultra 9 275HX + RTX 5070 (115 W), Thunderbolt 4 and Wi-Fi 7. It runs without thermal throttling, but the OLED's HDR brightness is limited, factory calibration isn't optimal, and there is no Advanced Optimus. A premium thin-and-light for buyers who prioritize the OLED and build over outright GPU power.",
+    pros: [
+      '2880×1800 OLED panel',
+      'Thin 2.13 kg aluminum build',
+      'Thunderbolt 4 + Wi-Fi 7',
+      'No throttling, serviceable (128 GB max)',
+    ],
+    cons: [
+      'Limited OLED HDR brightness',
+      'Suboptimal factory calibration',
+      'No Advanced Optimus',
+    ],
   },
 
   // Row 17 ------------------------------------------------------------------
@@ -1138,5 +1249,15 @@ export const ACER_EU: LaptopFamily[] = [
     ],
     summary:
       'A gaming-workstation hybrid built around an RTX 5070 Ti (140 W) and Core Ultra 9 275HX with up to 128 GB RAM and full serviceability in a 2.52 kg chassis. It does not thermally throttle, but the fans are very loud under load, there is no Advanced Optimus and no TB4/TB5. Around €2,480, it targets users who want sustained performance and RAM capacity over acoustics or portability.',
+    pros: [
+      'Full 140 W RTX 5070 Ti, no throttling',
+      '300 Hz IPS panel',
+      'Up to 128 GB RAM, full serviceability',
+    ],
+    cons: [
+      'Very loud fans under load',
+      'No Advanced Optimus; no TB4/TB5',
+      'Surfaces accumulate dirt',
+    ],
   },
 ];

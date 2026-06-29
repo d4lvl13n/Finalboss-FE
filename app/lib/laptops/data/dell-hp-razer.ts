@@ -129,6 +129,18 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
     ],
     summary:
       "Alienware's 30th-anniversary 16-incher is a genuinely powerful, well-built (aluminum + ABS) machine with a 240 Hz panel that can be upgraded to OLED — but the OLED and the top 290HX Plus CPU are sold only as a forced ~$3,900+ bundle. The consistent caveat across the line is heat: CPUs hit ~100 °C under load with E-core throttling at idle, though reviewers say the real-world fps impact is usually small. Factor in the heavy 360 W charger if you plan to travel with it.",
+    pros: [
+      'RTX 5080 at 150 W GPU',
+      '240 Hz QHD+ panel, OLED upgrade option',
+      'Aluminum + ABS build, G-SYNC + Advanced Optimus',
+      'Wi-Fi 7 + Thunderbolt 4/5',
+    ],
+    cons: [
+      'CPU hits ~100 °C under load',
+      'E-core thermal throttling at idle',
+      'OLED locked to a ~$3,900+ forced bundle',
+      'Heavy 360 W charger (~2 kg)',
+    ],
   },
 
   // Row 4 -------------------------------------------------------------------
@@ -223,6 +235,18 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
     ],
     summary:
       'The 18" flagship pairs a full 175 W RTX 5090 with a 300 Hz IPS panel (no OLED at this size) in a ~4 kg, 99 Wh desktop-replacement. It is fast, but thermals are the weak spot: owners report 80–100 °C idle E-core temps, near-continuous fan noise, and at least one documented unit exchange for erratic P-core behaviour that Dell first dismissed as normal. A powerhouse with real QC variance — buy from a returnable retailer.',
+    pros: [
+      'Full 175 W RTX 5090',
+      '300 Hz IPS panel, G-SYNC + Advanced Optimus',
+      'RAM to 64 GB, storage to 2 TB',
+      '99 Wh battery, dual Thunderbolt 5',
+    ],
+    cons: [
+      '80–100 °C E-core idle temps',
+      'Near-continuous fan noise',
+      'Documented QC / erratic P-core variance',
+      'Heavy ~4 kg, no OLED at 18 inch',
+    ],
   },
 
   // Row 5 -------------------------------------------------------------------
@@ -318,6 +342,18 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
     ],
     summary:
       'Positioned as the value Alienware (and the de-facto Dell G-Series replacement), the 16X Aurora runs its RTX 5060 at the full 115 W — meaningfully faster than the 80 W cap on the cheaper 16 Aurora. Street pricing swings widely (from ~$1,450 on sale to $1,849+ list), and early batches drew complaints of GPU throttling, coil whine and fast battery drain. Solid value when discounted, but check the unit and factor in Dell\'s inconsistent support.',
+    pros: [
+      'RTX 5060 at full 115 W',
+      '240 Hz QHD+ IPS, G-SYNC + Advanced Optimus',
+      'Often ~$1,450–$1,650 on sale',
+      '2.6 kg, Wi-Fi 7 + Thunderbolt 4',
+    ],
+    cons: [
+      'Early units: GPU throttling + coil whine',
+      'Reports of overheating / fast battery drain',
+      'Inconsistent Dell support',
+      'List price climbs to $1,849+',
+    ],
   },
 
   // Row 6 -------------------------------------------------------------------
@@ -412,6 +448,18 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
     ],
     summary:
       "The entry Alienware that replaced the Dell G-Series, and its headline compromise is structural: the RTX 5060 is hard-capped at 80 W (vs 115 W on the 16X Aurora), so it trails its own GPU tier, and the Core 7 240H has no NPU for Copilot+ features. Tom's Hardware and PCWorld both call it overpriced for the trade-offs. Worth it only at the low end of its $1,149–$1,499 range — otherwise the 16X Aurora is the better buy.",
+    pros: [
+      'Affordable from $1,149',
+      'Large 96 Wh battery',
+      '32 GB RAM + 1 TB SSD standard',
+      'Light 2.57 kg, Wi-Fi 7',
+    ],
+    cons: [
+      'RTX 5060 hard-capped at 80 W',
+      'Core 7 240H lacks an NPU (no Copilot+)',
+      'Only 120 Hz / 300 nits, no G-SYNC',
+      'Reviewers call it overpriced for the trade-offs',
+    ],
   },
 
   // Rows 7–8 ----------------------------------------------------------------
@@ -519,6 +567,18 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
     ],
     summary:
       "HP's 2026 Omen 16 (now merged with the HyperX brand) is a 2.4 kg machine with a strong 165 Hz OLED (1100-nit HDR) offered in both Intel and AMD flavours. The two diverge in ways worth knowing: the Intel RTX 5070 ships with 8 GB VRAM plus a dust-clearing reverse-fan mode, while the AMD variant gets 12 GB VRAM but drops the light bar and reverse-fan feature and uses USB4 instead of Thunderbolt. Early units shipped single-channel 16 GB RAM (a known performance trap), and US pricing wasn't confirmed at research time.",
+    pros: [
+      '165 Hz OLED, 1100-nit HDR',
+      'Light ~2.4 kg',
+      'Upgradeable, non-soldered RAM to 64 GB',
+      'Intel or AMD; AMD ships 12 GB VRAM',
+    ],
+    cons: [
+      'Early units shipped single-channel RAM',
+      'Intel RTX 5070 only 8 GB VRAM',
+      'AMD drops light bar + reverse-fan, USB4 only',
+      'US pricing unconfirmed at research time',
+    ],
   },
 
   // Rows 9–10 ---------------------------------------------------------------
@@ -630,6 +690,18 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
     ],
     summary:
       'The enthusiast Omen, available with a 175 W RTX 5090 (Intel) or RTX 5080 (AMD) behind a 240 Hz OLED. Reliability is the headline concern: a 290-reply r/HPOmen PSA thread documents mid-session shutdowns, suspected liquid-metal leaks and motherboard failures, with HP repairs stretching 2–3 months — and the AMD variant is cited far more often in thermal/fan complaints than the Intel one. Oddly, the AMD top config ($4,569) costs more than the Intel RTX 5090 ($4,469) despite the slower GPU. Favour the Intel build, from a returnable seller.',
+    pros: [
+      '175 W RTX 5090 (Intel)',
+      '240 Hz OLED, 1100-nit HDR',
+      'Storage up to 2 TB PCIe Gen 5',
+      'Intel build runs clean and quiet',
+    ],
+    cons: [
+      'Motherboard failures + mid-session shutdowns reported',
+      'HP repairs stretch 2–3 months',
+      'AMD variant: erratic fans, higher surface temps',
+      'AMD config priced above the Intel RTX 5090',
+    ],
   },
 
   // Row 11 ------------------------------------------------------------------
@@ -728,6 +800,18 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
     ],
     summary:
       'A gorgeous 1.64 kg CNC-aluminum 14-incher with a 3K 120 Hz OLED — undone for gaming by a hard 75 W GPU cap. Owners report the RTX 5060/5070 silicon badly underperforming its tier, overheating during sustained work, and an unresolved HP support discrepancy over the power limit; community vBIOS bypasses exist but risk the warranty. Excellent as a premium thin-and-light, frustrating as a gaming machine.',
+    pros: [
+      'Light 1.64 kg CNC-aluminum unibody',
+      '3K 120 Hz OLED, G-SYNC',
+      'Dual Thunderbolt 4, Wi-Fi 7',
+      'From $1,099',
+    ],
+    cons: [
+      'GPU hard-capped at 75 W',
+      'Underperforms its tier; overheats under sustained load',
+      'Soldered, non-upgradeable RAM',
+      'PSU insufficient under external-monitor load',
+    ],
   },
 
   // Row 12 ------------------------------------------------------------------
@@ -821,6 +905,18 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
     ],
     summary:
       "HP's budget gaming entry at ~$699–$799, and it shows: a 62.5% sRGB 1080p panel, 512 GB of storage and a plastic chassis. The recurring owner complaints are structural and span generations — hinge cracking after about a year, display flicker within two, plus overheating and fast battery drain. A reasonable frames-per-dollar pick only if you treat it as semi-disposable and upgrade the RAM/storage yourself.",
+    pros: [
+      'Cheap from $699',
+      '144 Hz 1080p panel',
+      'RTX 5050 frames-per-dollar',
+      'User-upgradeable RAM and storage',
+    ],
+    cons: [
+      'Hinge cracking reported after ~1 year',
+      'Display flicker within 2 years',
+      'Subpar cooling; overheating + battery drain',
+      'Dim 62.5% sRGB panel, plastic chassis',
+    ],
   },
 
   // Rows 13–14 --------------------------------------------------------------
@@ -935,6 +1031,18 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
     ],
     summary:
       'The Blade 14 is the most desirable small chassis here — a 1.63 kg CNC-aluminum unibody with a 3K OLED and AMD\'s Ryzen AI 9 365 — but the soldered LPDDR5X and a single M.2 cap upgradeability. Its reputation problem is durability: r/razer documents recurring post-warranty motherboard failures (a ~1–2 year pattern), battery bloat and persistent Synapse software gripes. The RTX 5070 model\'s 8 GB VRAM is also tight for the native 2880×1800 panel.',
+    pros: [
+      'Premium 1.63 kg CNC-aluminum unibody',
+      '3K OLED, G-SYNC, DisplayHDR TrueBlack',
+      'RTX 5060/5070 at 115 W',
+      'Wi-Fi 7, dual USB4',
+    ],
+    cons: [
+      'Recurring post-warranty motherboard failures',
+      'Soldered RAM + single M.2 (low repairability)',
+      'RTX 5070 8 GB VRAM tight for the 3K panel',
+      'Battery bloat + Synapse software gripes',
+    ],
   },
 
   // Rows 15–16 --------------------------------------------------------------
@@ -1040,6 +1148,18 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
     ],
     summary:
       "Razer's 2026 Blade 16 switches to Intel Panther Lake and the fastest laptop RAM available (LPDDR5X-9600, soldered), behind a 240 Hz 1000-nit OLED in a ~2.1 kg unibody. The good news is thermals: owners report the 175 W GPUs running cooler than the 2025 model and sustaining 150–165 W. The catches are a few startup-freeze returns, the usual Synapse software niggles, and pricing that drifts between sources ($3,499–$5,599 depending on config and region).",
+    pros: [
+      '175 W RTX 5080/5090, cooler than 2025',
+      '240 Hz 1000-nit OLED',
+      'Fastest laptop RAM (LPDDR5X-9600)',
+      'Slim ~2.1 kg, Thunderbolt 5',
+    ],
+    cons: [
+      'Soldered RAM (low repairability)',
+      'Some startup-freeze return reports',
+      'Synapse software glitches persist',
+      'Pricey ($3,499–$5,599)',
+    ],
   },
 
   // Rows 17–18 --------------------------------------------------------------
@@ -1147,5 +1267,17 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
     ],
     summary:
       "The 18\" Blade is a true desktop replacement — a dual-mode panel (4K 240 Hz or FHD+ 440 Hz), up to a 175 W RTX 5090, up to 128 GB RAM and dual Thunderbolt 5/4 — in a 3.2 kg body that makes portability moot. The 2026 refresh swaps in the 290HX Plus CPU (a minor ~100 MHz bump over the 275HX) and a brighter 600-nit panel, but pushes the top config to a record $6,999. It's too new for reliability patterns to have emerged; pricing is the main thing to watch, with the RTX 5090 starting near $4,499.",
+    pros: [
+      '175 W RTX 5090, up to 128 GB RAM',
+      '4K 240 Hz / FHD+ 440 Hz dual-mode panel',
+      'Premium CNC-aluminum unibody, Thunderbolt 5 + 4',
+      'Triple-fan cooling, 600-nit panel',
+    ],
+    cons: [
+      'Heavy 3.2 kg desktop replacement',
+      'Top config a record $6,999',
+      'Too new for reliability patterns',
+      'Only a minor ~100 MHz CPU bump over 2025',
+    ],
   },
 ];

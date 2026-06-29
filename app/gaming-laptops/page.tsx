@@ -9,7 +9,7 @@ import Footer from '@/app/components/Footer';
 import { buildPageMetadata } from '@/app/lib/seo';
 import LaptopCard from '@/app/components/laptops/LaptopCard';
 import { getAllFamilies, allBrands } from '@/app/lib/laptops/queries';
-import { listCategories } from '@/app/lib/laptops/categories';
+import { listSpecCategories, listCollections, categoryChipLabel } from '@/app/lib/laptops/categories';
 
 export const revalidate = 3600;
 
@@ -25,7 +25,8 @@ export default function GamingLaptopsIndex() {
     .slice()
     .sort((a, b) => a.manufacturer.localeCompare(b.manufacturer) || a.name.localeCompare(b.name));
   const brands = allBrands();
-  const categories = listCategories();
+  const specCats = listSpecCategories();
+  const collections = listCollections();
 
   return (
     <>
@@ -38,20 +39,46 @@ export default function GamingLaptopsIndex() {
               {families.length} laptop families with full specs, configurations, reliability notes and
               where-to-buy links — from budget RTX 5050 machines to RTX 5090 flagships.
             </p>
+            <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+              <Link href="/gaming-laptops/guides" className="font-semibold text-amber-400 hover:text-amber-300">
+                Buying guides →
+              </Link>
+              <Link href="/gaming-laptops/glossary" className="font-semibold text-amber-400 hover:text-amber-300">
+                Glossary →
+              </Link>
+              <Link href="/gaming-laptops/methodology" className="text-gray-400 hover:text-gray-300">
+                How we research →
+              </Link>
+            </div>
           </header>
 
           {/* Browse by category */}
           <section className="mb-8">
             <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-500">Browse by category</h2>
             <div className="flex flex-wrap gap-2">
-              {categories.map((c) => (
+              {specCats.map((c) => (
                 <Link
                   key={c.slug}
                   href={`/gaming-laptops/best/${c.slug}`}
                   className="rounded-full border border-gray-700 bg-gray-900 px-3 py-1.5 text-sm text-gray-300 hover:border-gray-600 hover:text-white"
                 >
-                  {c.title.replace(' Gaming Laptops (2026)', '').replace('Best ', '')}{' '}
-                  <span className="text-gray-500">({c.count})</span>
+                  {categoryChipLabel(c.title)} <span className="text-gray-500">({c.count})</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          {/* Browse by need */}
+          <section className="mb-8">
+            <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-500">Browse by need</h2>
+            <div className="flex flex-wrap gap-2">
+              {collections.map((c) => (
+                <Link
+                  key={c.slug}
+                  href={`/gaming-laptops/best/${c.slug}`}
+                  className="rounded-full border border-gray-700 bg-gray-900 px-3 py-1.5 text-sm text-gray-300 hover:border-gray-600 hover:text-white"
+                >
+                  {categoryChipLabel(c.title)} <span className="text-gray-500">({c.count})</span>
                 </Link>
               ))}
             </div>

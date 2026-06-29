@@ -11,6 +11,7 @@ import { buildPageMetadata, absoluteUrl } from '@/app/lib/seo';
 import LaptopCard from '@/app/components/laptops/LaptopCard';
 import { allBrands, getFamiliesByBrand, familyGpuTiers } from '@/app/lib/laptops/queries';
 import { gpuTierLabel, startingPrice, formatPrice } from '@/app/lib/laptops/format';
+import { getLaptopImage } from '@/app/lib/laptops/images';
 
 export const revalidate = 3600;
 
@@ -30,6 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${name} Gaming Laptops (2026): Specs, Prices & Reviews | FinalBoss.io`,
     description: `Every ${name} gaming laptop for 2026 — specs, configurations, reliability notes and pricing for all ${families.length} models.`,
     path: `/gaming-laptops/brands/${params.brand}`,
+    image: getLaptopImage(families[0].slug)?.url,
   });
 }
 
@@ -45,18 +47,28 @@ export default function BrandPage({ params }: Props) {
   const prices = families.map(startingPrice).filter((p): p is number => p != null);
   const tiers = Array.from(new Set(families.flatMap(familyGpuTiers)));
 
-  const itemList = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    name: `${name} gaming laptops (2026)`,
-    numberOfItems: families.length,
-    itemListElement: sorted.map((f, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      url: absoluteUrl(`/gaming-laptops/${f.slug}`),
-      name: f.name,
-    })),
-  };
+  const graph = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Gaming Laptops', item: absoluteUrl('/gaming-laptops') },
+        { '@type': 'ListItem', position: 2, name, item: absoluteUrl(`/gaming-laptops/brands/${params.brand}`) },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: `${name} gaming laptops (2026)`,
+      numberOfItems: families.length,
+      itemListElement: sorted.map((f, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: absoluteUrl(`/gaming-laptops/${f.slug}`),
+        name: f.name,
+      })),
+    },
+  ];
 
   return (
     <>
@@ -89,6 +101,10 @@ export default function BrandPage({ params }: Props) {
                 </span>
               </span>
             </div>
+            <p className="mt-3 max-w-2xl text-sm text-gray-400">
+              {name}&apos;s complete 2026 gaming-laptop range — specs, configurations, reliability notes and
+              live pricing for every model, compiled from manufacturer specs and independent reviews.
+            </p>
           </header>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -99,7 +115,9 @@ export default function BrandPage({ params }: Props) {
         </div>
       </main>
       <Footer />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemList) }} />
+      {graph.map((node, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }} />
+      ))}
     </>
   );
 }
