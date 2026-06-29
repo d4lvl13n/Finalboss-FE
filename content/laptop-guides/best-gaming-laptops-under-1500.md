@@ -30,7 +30,6 @@ faq:
   - q: Which under-$1,500 laptop is most upgradeable?
     a: "The MSI Crosshair 16 HX AI and MSI Katana 15 HX both take RAM up to 96 GB, and the ASUS TUF F16/A16, Lenovo LOQ 15 and Acer Nitro V offer two SO-DIMM slots plus dual M.2 — far more serviceable than thin-and-light rivals."
 ---
-
 Under $1,500 is, for our money, the most rewarding bracket in gaming laptops. It is the point where the RTX 5070 stops being a stretch and where you no longer have to trade away the screen to afford the GPU — the compromise that defines everything below $1,000. If you want to play modern titles at 1440p, or high-refresh 1080p, without remortgaging, this is the segment to shop.
 
 It is also a segment full of asterisks. In 2026 the same GPU name can mean very different machines — an RTX 5070 fed 115 W is a different beast from one held to 85 W — and the cheapest configurations quietly cut corners on RAM, panels and cooling that you only discover once the box is open. This guide exists to surface those traps before you spend.
@@ -46,10 +45,6 @@ The picks below span the whole bracket, from the Lenovo LOQ 15 that regularly se
 **Panel.** This is the first bracket where you get a real choice. Both ASUS TUF models offer an OLED (165 Hz) or 300 Hz IPS panel at 100% DCI-P3 — genuinely rare for the money — while the Crosshair 16 runs a 240 Hz QHD+ screen. At the other end, the Katana's chief compromise is a dim display and the Alienware tops out at 120 Hz. Decide whether you want colour-and-contrast (OLED) or raw refresh.
 
 **Cooling and VRAM.** Thin budget chassis throttle and run hot — the Acer Nitro V reaches roughly 59 °C at the base under load, and Crosshair owners report thermal paste drying out within two years. And note that every RTX 5070 here ships with 8 GB of VRAM: workable at 1440p today, but tight in the most demanding titles.
-
-## How we picked
-
-These are FinalBoss's own verdicts, drawn from our laptop database rather than reposted from a manufacturer spec sheet. We weight real-world GPU wattage, panel quality, cooling and long-term serviceability over headline numbers, and we read owner reports for the failure modes that only show up months in. For the full rubric, see [our methodology](/gaming-laptops/methodology).
 
 ## Which should you buy?
 

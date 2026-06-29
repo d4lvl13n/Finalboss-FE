@@ -30,7 +30,6 @@ faq:
   - q: Do I need an 18-inch desktop replacement, or is a 16-inch enough?
     a: "A 16-inch like the Legion Pro 7i or Razer Blade 16 runs the same full 175 W GPU and is far easier to carry. Go 18-inch only if you want a 4K panel, 128 GB of RAM and the largest cooling surface — the MSI Titan 18 delivers all three, at ~3.3 kg and with prominent fan noise."
 ---
-
 AAA gaming at high settings is where laptop GPUs separate from one another — and the deciding factor is not just the chip but how many watts it is allowed to draw. The same RTX 5090 can be capped at 95 W in a thin chassis or run flat-out at 175 W, and the gap is enormous. Every machine on this list runs its RTX 5080 or 5090 at the full 175 W, so the GPU name on the box is the GPU power you actually get.
 
 This guide is for the player who wants to max out the latest releases — ray tracing on, settings cranked, at native 1440p or 4K — and is willing to trade portability and battery life for sustained performance. In 2026 that means an HX-class CPU, a high-refresh OLED or Mini-LED panel, and a cooling system built to hold full wattage under load. These are mains-tethered performance machines first.
@@ -45,10 +44,6 @@ At this tier the spec sheet hides more than it shows. Four things separate a gre
 - **Cooling that holds the line.** Sustained frame rates depend on the heatsink, not the launch benchmark. The XMG Neo 16 runs 175 W with no thermal throttling, the ASUS ROG Strix G16 pairs a vapor chamber with a tri-fan and liquid metal, and the Gigabyte AORUS Master 16's AMD X3D chip keeps both CPU and GPU in the low 80s °C. Watch the CPU side too — the Intel-based Titan 18 and Legion Pro 7i both run hot (90–100 °C).
 - **A high-refresh, high-quality panel.** A 240 Hz OLED (Legion Pro 7i, Razer Blade 16, AORUS Master 16) or a 300 Hz Mini-LED (XMG Neo 16) is what turns extra frames into a visibly smoother game. Check for G-Sync/VRR — the Raider 16 and Titan 18 both omit it.
 - **Heat-and-noise reality.** Nothing here is quiet or long-lived off the charger. Gaming battery life is roughly 1–2 hours across the board, and the loudest machines (Titan 18, AORUS Master 16's performance preset) are genuinely loud. Budget for headphones and a desk.
-
-## How we picked
-
-These are FinalBoss's own verdicts, drawn from our laptop database rather than a roundup of other sites. For this guide we required a verified full 175 W RTX 5080 or 5090 configuration, then weighted sustained performance, cooling and panel quality — and we surface each machine's real reliability caveats (coil whine, hot CPUs, soldered RAM) instead of burying them. The live price and key specs on every card update automatically. For the full process, see [our methodology](/gaming-laptops/methodology).
 
 ## Which should you buy?
 

@@ -26,7 +26,6 @@ faq:
   - q: Which of these budget laptops will last longest?
     a: "The Lenovo LOQ 15 and Acer Nitro V 16 AI are the safer long-term bets: both are genuinely serviceable and carry no structural complaints, and the Nitro V is praised for battery life. The HP Victus 15 is the opposite — owners report hinge cracking after about a year and display flicker within two — so buy it only if you treat it as semi-disposable."
 ---
-
 A gaming laptop under $1,000 in 2026 is an exercise in setting expectations correctly. You are buying an RTX 5050 or RTX 5060 — with one outlier that sneaks in an RTX 5070 — alongside a 1080p IPS panel and a plastic chassis, and almost always one deliberate corner cut, whether that is the display, the cooling or the RAM configuration. Go in knowing that, and this is a genuinely rewarding segment.
 
 The good news: this generation's budget GPUs handle 1080p high settings comfortably, DLSS does the heavy lifting in demanding titles, and nearly every machine here lets you upgrade RAM and storage yourself. The bad news: budget is exactly where manufacturers economise, so two laptops at the same price can deliver very different experiences depending on a single spec like memory channels or GPU power limit.
@@ -41,10 +40,6 @@ At this price the spec sheet hides more than it reveals. Four things separate a 
 - **The single-channel RAM trap.** Several budget machines, the **Lenovo LOQ 15** included, ship 16 GB as a single stick. Single-channel memory starves the GPU and measurably lowers frame rates until you add a second matched stick for dual-channel. Favour a model with an empty SO-DIMM slot and budget for the cheap upgrade.
 - **The panel.** Colour coverage swings wildly down here. The LOQ 15 hits a strong 99% sRGB at 144 Hz, but the Cyborg 15 (65% sRGB) and **HP Victus 15** (62.5% sRGB) ship washed-out, office-grade screens. Treat 144 Hz as the floor; the **Acer Nitro V 16 AI** even pushes a 16-inch 180 Hz panel.
 - **Cooling and build.** Plastic is a given; weak cooling and weak hinges are not. The Victus 15 carries documented overheating and hinge-cracking complaints, and none of our picks here pair the GPU with a vapor chamber — so read the review notes on sustained temperatures before you commit.
-
-## How we picked
-
-These are FinalBoss's own verdicts, drawn from our internal laptop database — not a reshuffle of someone else's roundup. Every pick is scored on the same criteria: real GPU performance for the price, panel quality, upgradeability and documented reliability. We deliberately favour machines you can open and upgrade over sealed ones, because at this budget the second stick of RAM or the spare M.2 slot is often what makes a laptop worth owning. For the full breakdown of how we weight specs, see [our methodology](/gaming-laptops/methodology).
 
 ## Which should you buy?
 

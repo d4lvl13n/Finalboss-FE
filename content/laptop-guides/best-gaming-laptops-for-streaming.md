@@ -28,7 +28,6 @@ faq:
   - q: Will fan noise get picked up by my microphone?
     a: "It can — most of these run loud under a combined game-and-encode load, the Raider and AORUS especially. If the laptop sits near your mic, budget for an external mic with noise suppression, or run a quieter fan profile and lean on NVENC to keep CPU heat down."
 ---
-
 Streaming is one of the most demanding things you can ask a gaming laptop to do, because you are running two heavy jobs at once: a modern game and a live video encode. If you broadcast to Twitch, YouTube or Kick while you play — or record gameplay to edit later — this guide is for you. Casual play and even competitive esports lean mostly on the GPU; streaming adds a second, continuous load that has to run for the whole session without the machine backing off.
 
 In 2026 that load lands on two kinds of silicon. Intel's 24-core Arrow Lake-HX chips and AMD's 16-core, 32-thread Ryzen 9 parts both have the multi-threaded muscle to game and encode together, and NVIDIA's RTX 50-series adds a strong NVENC hardware encoder that can take the work off the CPU entirely. The hardware is there. What separates these machines is whether the cooling keeps it fed for three hours, not three minutes.
@@ -43,10 +42,6 @@ So our priority here is different from a pure gaming list. We care less about pe
 - **Enough RAM, ideally upgradeable.** OBS, a browser full of dashboards, chat tools and capture software add up fast. 32 GB is comfortable, and the Legion Pro 5, Legion Pro 7i, Strix G16 and XMG Neo 16 all take SO-DIMMs you can push to 64 GB.
 - **A panel you can monitor on.** You watch your own scene as much as the game. The OLED picks — Legion Pro 7i and AORUS Master 16 at 240 Hz, Legion Pro 5 at 165 Hz — make that easy to read.
 - **Acoustics.** Combined load means loud fans. If the laptop sits near your mic, factor in a quieter fan profile or an external mic with noise suppression.
-
-## How we picked
-
-These are FinalBoss's own verdicts, drawn from our gaming-laptop database rather than reposted from a roundup. We weighted multi-core CPU performance and sustained cooling above everything else, then looked at panel quality for monitoring, RAM headroom, real-world acoustics and owner-reported reliability. Every claim above is grounded in the specs and reports we track for each machine. For the full scoring approach, see [our methodology](/gaming-laptops/methodology).
 
 ## Which should you buy?
 

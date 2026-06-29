@@ -30,7 +30,6 @@ faq:
   - q: Does single-channel RAM really hurt gaming performance?
     a: "Yes, and it is a common trap at this price. The Lenovo LOQ 15 and the base ASUS TUF F16 ship 16 GB as a single stick, which measurably lowers frame rates until you add a second module for dual-channel. Both are user-upgradeable, so check the config and budget for the cheap fix if needed."
 ---
-
 Two grand is the sweet spot of the gaming-laptop market. Below it you are managing compromises; above it you are paying a steep premium for marginal flagship gains. At this cap you can have a genuinely capable RTX 5070 or 5070 Ti machine that drives high-refresh 1440p comfortably, with enough CPU and cooling to keep frame rates sustained rather than peaky.
 
 This guide is for the buyer who wants real performance for years, not just a spec sheet. In 2026 the upper-mid tier splits cleanly into two camps: thick, well-cooled performance machines like the **Lenovo Legion Pro 5 Gen 10** and **Acer Predator Helios Neo 16 AI** that prioritise sustained wattage and upgradeability, and premium thin-and-lights like the **Razer Blade 14** that trade headroom for a chassis you actually want to carry. Rarely do you get both in one laptop.
@@ -48,10 +47,6 @@ One expectation to set early: most laptops in this bracket pair the RTX 5070 wit
 **VRAM.** Eight gigabytes is the floor across most of these picks. It runs everything at 1440p now, but reviews already call it tight for the Blade 14's native 3K OLED and at 1440p on the **MSI Crosshair 16 HX AI**. If you want genuine headroom, the Helios Neo's RTX 5070 Ti is the way to get it.
 
 **The single-channel RAM trap.** Several value machines — the **Lenovo LOQ 15** and the base **TUF F16** among them — ship 16 GB as a single stick, which measurably drops gaming performance until you add a second module. Always check whether a configuration is single- or dual-channel, and budget for the cheap upgrade where it applies.
-
-## How we picked
-
-These are FinalBoss's own verdicts, drawn from our laptop database rather than a roundup of other sites. Every pick starts at or below roughly $2,000, and we weighed sustained GPU wattage, panel quality, upgradeability and documented owner reliability — not just headline specs. Where a machine carries a known flaw, we name it. For the full scoring approach see [our methodology](/gaming-laptops/methodology), and the [glossary](/gaming-laptops/glossary) if any term here is unfamiliar.
 
 ## Which should you buy?
 

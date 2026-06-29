@@ -30,7 +30,6 @@ faq:
   - q: What is the best portable laptop for creators?
     a: "The ASUS ROG Zephyrus G16 at 1.95 kg and the Razer Blade 16 at around 2.1 kg both pair a flagship GPU with a colour-accurate OLED in a genuinely travel-friendly body, unlike the heavier 18-inch desktop replacements such as the Helios 18 AI."
 ---
-
 Content creators ask more of a laptop than gamers do. A frame that stutters for a second in a shooter is forgettable; a render that drops frames, a colour grade that looks wrong on delivery, or a timeline that chokes on 4K media is not. The machines on this list are chosen for that workload — video editing, 3D, photography and on-device AI — where the GPU's VRAM, the panel's colour accuracy and the CPU's core count matter as much as raw frame rates.
 
 In 2026 the creator-grade segment has consolidated around a clear recipe: an RTX 5080 (16 GB) or RTX 5090 (24 GB), driven hard at up to 175 W, behind a 100% DCI-P3 OLED or Mini-LED panel. That pairing — flagship GPU plus reference-grade screen — is what separates a genuine portable studio from a gaming laptop with a creator sticker on it.
@@ -46,10 +45,6 @@ A few criteria do most of the work in this segment:
 - **CPU cores carry the export.** Encoding, simulation and background tasks lean on the CPU. The 24-core Arrow Lake-HX chips in the Legion Pro 7i, Helios 18 AI and XMG Neo 16 chew through that; AMD's X3D part in the AORUS Master 16 does the same while running noticeably cooler.
 - **Sustained power, not peak.** A 175 W GPU rating only counts if the chassis can hold it. The XMG Neo 16 sustains 175 W with no throttling; the slim Zephyrus G16 caps and throttles its RTX 5090; the Helios 18 AI throttles its CPU in Performance mode. Match the body to how long your renders run.
 - **Memory headroom.** Heavy timelines and 3D scenes want 32 GB minimum, 64 GB ideally. The Legion Pro 7i, AORUS Master 16, XMG Neo 16 and Helios 18 AI take user-upgradeable RAM (the Helios up to 256 GB); the Blade 16 and Zephyrus G16 solder it, so size it correctly at checkout.
-
-## How we picked
-
-These are FinalBoss's own verdicts, drawn from our laptop database rather than aggregated from other sites. We track each machine's real specs, sustained-performance behaviour and documented reliability — including the owner threads and review measurements most roundups skip — and only laptops that clear a colour-accurate panel plus a 16 GB+ flagship GPU made the shortlist. From there we weighted sustained render performance, memory capacity and portability. You can read the full process in [our methodology](/gaming-laptops/methodology).
 
 ## Which should you buy?
 

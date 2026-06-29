@@ -28,7 +28,6 @@ faq:
   - q: Do I need a discrete GPU for programming?
     a: "Not for most coding, but it helps for local ML, CUDA work, game development or driving multiple high-res displays. Mind the VRAM: several picks carry 8 GB, while the Legion Pro 7i (16/24 GB) and TUF A18 (12 GB) give more headroom for larger models."
 ---
-
 A programming laptop is graded on a different scale than a pure gaming rig. Frame rates matter far less than the things you actually feel during a workday: how much memory you can throw at VMs and containers, how fast the CPU chews through a multi-threaded build, whether the keyboard is still comfortable after eight hours, and how long you can work unplugged. A discrete GPU is genuinely useful — for local ML, CUDA work, game development or driving a wall of displays — but it sits below memory and serviceability on the priority list.
 
 In 2026 the encouraging news is that the laptops which get this right are also some of the best-value machines on the market. The catch is that the thinnest, most premium gaming laptops — the Razer and Zephyrus lines — solder their RAM, which rules them out for a machine you want to grow over three or four years. Every pick below ships with user-upgradeable memory.
@@ -43,10 +42,6 @@ We've leaned toward chassis you can open, CPUs with real core counts, and builds
 - **Build, keyboard and cooling.** You'll type on this for hours. We favour aluminum builds (the **XMG Core 16** and both Legions) and machines that hold their clocks — the XMG Core 16 and **TUF A18** both run without CPU/GPU throttling, where the Legion Pro 7i trades hotter CPU temps (90–100 °C) for its flagship speed.
 - **Battery, if you leave the desk.** Gaming laptops are not endurance champions, but light-use figures vary. The 18" **TUF A18** manages roughly 5–6 hours of light work and the **XMG Core 16** packs a large 99.8 Wh battery; if you're mostly docked, prioritise I/O instead — the TUF F16's Thunderbolt 4 makes single-cable desk setups easy.
 - **GPU as a bonus, not the headline.** Any of these RTX cards handles local ML or CUDA experimentation. Just watch VRAM: several picks carry 8 GB, while the **Legion Pro 7i** (16/24 GB) and **TUF A18** (12 GB) leave more headroom for larger models.
-
-## How we picked
-
-These are FinalBoss's own verdicts, drawn from our laptop database rather than a reshuffle of other sites' rankings. We required user-upgradeable RAM, then weighted CPU core count, build quality, cooling and battery above peak GPU output — because that's the order that matters for development work. Each pick's live price and key specs are pulled straight from our dataset below, so they never go stale. For the full scoring approach, see [our methodology](/gaming-laptops/methodology).
 
 ## Which should you buy?
 

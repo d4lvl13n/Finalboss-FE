@@ -30,7 +30,6 @@ faq:
   - q: Is a thin-and-light gaming laptop worth it?
     a: "Yes, if portability and the screen matter more than sustained power. The ROG Zephyrus G16 and Razer Blade 16 pack flagship GPUs into sub-2.2 kg bodies with superb OLED panels, but both use soldered RAM, and the Zephyrus throttles its RTX 5090 under extended load. The Blade 16 is the better-cooled of the two, though it commands a premium."
 ---
-
 The 2026 gaming-laptop field is defined by NVIDIA's RTX 50-series and a hard split between two design philosophies: heavy desktop-replacements that run their GPUs at the full 175 W, and slim machines that trade sustained power for portability. This guide is our cross-tier shortlist — the laptops we would actually recommend, whether you're spending entry-level money or buying a flagship.
 
 We cover every tier in one place. At the top sit full-power 16-inch machines like the [Lenovo Legion Pro 7i Gen 10](/gaming-laptops/lenovo-legion-pro-7i-gen-10) and [ASUS ROG Strix G16](/gaming-laptops/asus-rog-strix-g16-2026); in the middle, the value-focused [Lenovo Legion Pro 5 Gen 10](/gaming-laptops/lenovo-legion-pro-5-gen-10); and at the entry end, the [Lenovo LOQ 15](/gaming-laptops/lenovo-loq-15-2026) and [Alienware 16X Aurora](/gaming-laptops/alienware-aurora-16x) for affordable 1080p to 1440p play. If portability is the priority, the slim [Razer Blade 16](/gaming-laptops/razer-blade-16) and [ROG Zephyrus G16](/gaming-laptops/asus-rog-zephyrus-g16-2026) make the list too.
@@ -48,10 +47,6 @@ One thing to set expectations: nearly every high-power machine here trades batte
 **Cooling.** Sustained framerates live or die on thermals. The Strix G16's full vapor chamber, Tri-Fan and liquid-metal setup is among the best in its class; the Legion Pro 7i pairs a vapor chamber with healthy GPU temps but the aforementioned hot CPU; the budget LOQ 15 makes do with two fans and no vapor chamber, so expect CPU spikes to occasionally stutter.
 
 **Upgradeability.** If you want to add RAM later, that rules some machines out. The Legion Pro 5, Legion Pro 7i and LOQ 15 use replaceable SO-DIMMs; the Zephyrus G16 and Razer Blade 16 solder their memory, so the configuration you buy is the one you keep.
-
-## How we picked
-
-These are FinalBoss's own verdicts, drawn from our laptop database rather than a reshuffle of other sites' lists. For each machine we weighted sustained GPU and CPU power, cooling, panel quality, upgradeability and documented reliability from owner reports and independent reviews — not spec sheets alone. You can read the full process in [our methodology](/gaming-laptops/methodology), and every pick links through to its detailed write-up with live pricing and the specific watch-outs.
 
 ## Which should you buy?
 

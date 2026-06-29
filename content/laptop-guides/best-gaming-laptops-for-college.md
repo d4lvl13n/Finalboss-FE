@@ -28,7 +28,6 @@ faq:
   - q: Is the single-channel RAM warning really a big deal?
     a: "Yes. The LOQ 15, TUF A16 and TUF F16 all ship their 16 GB base as a single stick, which measurably drags down gaming frame rates until you add a second module to run dual-channel. Budget for that upgrade up front."
 ---
-
 A gaming laptop for college lives a double life. It has to run your games in the dorm at night, then survive a crowded backpack, a three-hour lecture and a library all-nighter the next day. That pushes the priorities away from peak frame rates and toward the things that actually shape a campus day: how much it weighs, how long it lasts off the charger, and how easily you can keep it alive between classes.
 
 In 2026 that balance is easier to strike than it used to be. RTX 5060-class graphics now land in genuinely affordable machines like the **Lenovo LOQ 15** and **Acer Nitro V 16 AI**, while OLED panels — once a flagship-only luxury — show up on the **ASUS TUF A16** and **F16** and even the feathery **ROG Zephyrus G14**. The catch is that "gaming laptop" still mostly means short gaming battery and real weight, so the right pick depends on how you'll actually carry and charge it.
@@ -43,10 +42,6 @@ For a student, the spec sheet matters less than how the laptop fits your routine
 - **Battery and charging flexibility.** Almost every gaming laptop manages only ~1–2 hours while gaming, so the number that matters on campus is light-use battery. The **Legion 7a** is the standout here at roughly 6–8 hours of light use. Just as useful, the **LOQ 15** and **Zephyrus G14** charge over 100 W USB-C PD, so a power bank or a shared USB-C charger can top them up between classes.
 - **Durability and build.** Aluminum machines like the Legion 7a and Zephyrus G14 feel built to last; the plastic TUF, Nitro and LOQ chassis are decent but worth babying — note the owner reports of hinge and touchpad wear on the TUF A16 over time.
 - **Upgradeability to last four years.** The LOQ 15, TUF A16/F16 and Nitro V 16 AI all take a second RAM stick (up to 32–64 GB) and another SSD, so they grow with your coursework. The portable Zephyrus G14 and Legion 7a use **soldered memory** — configure enough up front. And mind the single-channel-RAM trap: the LOQ 15 and both TUF models ship their 16 GB base as one stick, which holds back frame rates until you add a second.
-
-## How we picked
-
-These are FinalBoss's own verdicts, drawn straight from our laptop database — every weight, panel, battery figure and reliability caveat above comes from our own per-model research, not a roundup of other sites. We deliberately weighted portability, real-world battery, charging flexibility and long-term upgradeability over outright GPU power, because that's what a campus machine is actually judged on. For the full scoring approach, see [our methodology](/gaming-laptops/methodology).
 
 ## Which should you buy?
 
