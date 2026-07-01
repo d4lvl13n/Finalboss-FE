@@ -10,6 +10,7 @@ export const fr = {
     videos: 'Vidéos',
     games: 'Jeux',
     laptops: 'PC Portables',
+    handhelds: 'Consoles Portables',
     laptopGuides: 'Guides PC Portables',
     laptopGlossary: 'Glossaire PC Portables',
     team: 'Équipe',

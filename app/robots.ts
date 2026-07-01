@@ -14,6 +14,7 @@ export default function robots(): MetadataRoute.Robots {
       `${baseUrl}/sitemap.xml`,
       `${baseUrl}/games/sitemap.xml`,
       `${baseUrl}/gaming-laptops/sitemap.xml`,
+      `${baseUrl}/handhelds/sitemap.xml`,
     ],
   }
 }
