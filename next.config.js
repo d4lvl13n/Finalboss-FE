@@ -171,6 +171,18 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Duplicate-content consolidations (2026-07-01): collapse near-identical
+      // dupes onto the canonical keeper so ranking signals concentrate on one URL.
+      {
+        source: '/crimson-desert-how-to-get-the-baby-wyvern',
+        destination: '/crimson-desert-how-to-get-the-baby-wyvern-2',
+        permanent: true,
+      },
+      {
+        source: '/diablo-4-frost-juggernaut-paladin-build-for-endgame',
+        destination: '/diablo-4-how-to-build-frost-juggernaut-paladin',
+        permanent: true,
+      },
       {
         source: '/articles/:slug',
         destination: '/:slug',

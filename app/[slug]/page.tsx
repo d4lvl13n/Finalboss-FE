@@ -27,43 +27,62 @@ const GET_POST_GAME_TAGS = gql`
   }
 `;
 
-// Deduplicate the post query between generateMetadata and the page component
+// Reject if a promise doesn't settle within `ms`. We deliberately DON'T use an
+// AbortController signal in the fetch: passing a signal marks the underlying
+// fetch uncacheable, which forces the whole route to render dynamically on every
+// request (defeating `revalidate = 60`). With a plain timeout race, the fetch
+// stays ISR-eligible, so a brief WordPress slowdown no longer forces a live
+// round-trip — and no longer 404s every article at once.
+function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout>;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms);
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer)) as Promise<T>;
+}
+
+// Deduplicate the post query between generateMetadata and the page component.
 // React cache() ensures the same slug only fetches once per request lifecycle.
+//
+// IMPORTANT: this must throw on a fetch failure (network/timeout/GraphQL error)
+// and only return null for a GENUINE "post does not exist". A thrown error
+// renders the error boundary (HTTP 500, which Google retries), whereas a null
+// triggers notFound() (HTTP 404). Swallowing failures into null was soft-404'ing
+// valid articles whenever the backend hiccuped.
 const getPost = cache(async (slug: string) => {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 10000); // 10s timeout
-  try {
-    const { data } = await client.query({
-      query: GET_POST_BY_SLUG,
-      variables: { id: slug },
-      context: { fetchOptions: { signal: controller.signal } },
-    });
-    return data?.post || null;
-  } catch (err) {
-    // If the request timed out or failed, return null
-    console.error(`[getPost] Failed to fetch post "${slug}":`, err);
-    return null;
-  } finally {
-    clearTimeout(timeout);
+  const { data, errors } = await withTimeout(
+    client.query({ query: GET_POST_BY_SLUG, variables: { id: slug } }),
+    10000,
+    `[getPost] "${slug}"`,
+  );
+
+  if (!data?.post) {
+    if (errors && errors.length) {
+      // errorPolicy:'all' returns GraphQL errors here instead of throwing.
+      // An empty result caused by a backend error is NOT a real 404.
+      throw new Error(
+        `[getPost] GraphQL error for "${slug}": ${errors
+          .map((e: { message: string }) => e.message)
+          .join('; ')}`,
+      );
+    }
+    return null; // genuine 404: query succeeded, no errors, no post
   }
+  return data.post;
 });
 
-// Fetch gameTags separately with its own timeout
+// gameTags is supplementary (the taxonomy may not exist on all backends), so a
+// failure here degrades gracefully to null and must NEVER fail the page.
 const getPostGameTags = cache(async (slug: string) => {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 5000); // 5s timeout
   try {
-    const { data } = await client.query({
-      query: GET_POST_GAME_TAGS,
-      variables: { id: slug },
-      context: { fetchOptions: { signal: controller.signal } },
-    });
+    const { data } = await withTimeout(
+      client.query({ query: GET_POST_GAME_TAGS, variables: { id: slug } }),
+      5000,
+      `[getPostGameTags] "${slug}"`,
+    );
     return data?.post?.gameTags || null;
   } catch {
-    // gameTags taxonomy not available or timed out — skip silently
     return null;
-  } finally {
-    clearTimeout(timeout);
   }
 });
 

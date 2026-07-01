@@ -12,6 +12,7 @@ import LeadCaptureManager from './components/LeadCapture/LeadCaptureManager';
 import AdScriptLoader from './components/AdSense/AdScriptLoader';
 import { ENABLE_AUTO_ADS } from './lib/adsConfig';
 import BackToTop from './components/BackToTop';
+import GAPageviews from './components/GAPageviews';
 import siteConfig, { intlLocale } from './lib/siteConfig';
 
 // Optimize font loading
@@ -104,29 +105,28 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <meta name="google-site-verification" content={siteConfig.siteVerification} />
         )}
 
-        {/* Google Analytics */}
+        {/* Google Analytics (gtag.js).
+            The initial pageview fires here via gtag's default send_page_view,
+            capturing the FULL page_location (query string intact) + document.referrer,
+            so organic/paid source attribution is preserved. Do NOT set page_path here:
+            overriding it with window.location.pathname drops the query string (utm/gclid)
+            and collapses attribution to (direct). SPA route-change pageviews are sent by
+            the GAPageviews component below. */}
         {siteConfig.analyticsId && (
-          <Script
-            src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.analyticsId}`}
-            strategy="afterInteractive"
-          />
-        )}
-        {siteConfig.analyticsId && (
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.analyticsId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){window.dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${siteConfig.analyticsId}', {
-                page_path: window.location.pathname,
-                transport_type: 'beacon',
-                web_vitals: {
-                  send_page_views: true,
-                  send_timings: true
-                }
-              });
+              gtag('config', '${siteConfig.analyticsId}', { transport_type: 'beacon' });
             `}
-          </Script>
+            </Script>
+          </>
         )}
 
       </head>
@@ -141,6 +141,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </SearchProvider>
         </div>
         <AdScriptLoader enableAutoAds={ENABLE_AUTO_ADS} />
+        {siteConfig.analyticsId && <GAPageviews gaId={siteConfig.analyticsId} />}
         <Analytics />
         <SpeedInsights />
       </body>
