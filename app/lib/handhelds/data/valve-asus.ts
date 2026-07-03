@@ -335,6 +335,7 @@ export const VALVE_ASUS: Handheld[] = [
       },
       {
         id: 'ROG-ALLY-Z1X',
+        asin: 'B0C52RFZXB',
         label: 'Ryzen Z1 Extreme · 16 GB · 512 GB',
         apu: {
           vendor: 'AMD',
@@ -464,6 +465,7 @@ export const VALVE_ASUS: Handheld[] = [
     configurations: [
       {
         id: 'ROG-ALLY-X',
+        asin: 'B0D49B5DTD',
         label: 'Ryzen Z1 Extreme · 24 GB · 1 TB',
         apu: {
           vendor: 'AMD',
@@ -590,6 +592,7 @@ export const VALVE_ASUS: Handheld[] = [
     configurations: [
       {
         id: 'ROG-XBOX-ALLY',
+        asin: 'B0FM6C3ZMN',
         label: 'Ryzen Z2 A · 16 GB · 512 GB',
         apu: {
           vendor: 'AMD',

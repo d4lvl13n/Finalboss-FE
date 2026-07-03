@@ -391,7 +391,7 @@ function CompareLinks({ handheld, comparisons }: { handheld: Handheld; compariso
 
 function ConfigRow({ config, productName }: { config: Configuration; productName: string }) {
   const price = priceAsOf(config);
-  const link = amazonLinkForConfig(config);
+  const link = amazonLinkForConfig(config, productName);
   const apu = config.apu;
   const specLine = [
     apu.model,

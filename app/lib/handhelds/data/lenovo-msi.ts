@@ -27,6 +27,7 @@ export const LENOVO_MSI: Handheld[] = [
     configurations: [
       {
         id: 'LEGION-GO-1',
+        asin: 'B0CM74YFSP',
         label: 'Ryzen Z1 Extreme · 16 GB · 512 GB',
         apu: {
           vendor: 'AMD',
@@ -159,6 +160,7 @@ export const LENOVO_MSI: Handheld[] = [
     configurations: [
       {
         id: 'LEGION-GO-S-WIN',
+        asin: 'B0DTBN55K9',
         label: 'Ryzen Z2 Go · 16/32 GB · 512 GB / 1 TB',
         apu: {
           vendor: 'AMD',
@@ -287,6 +289,7 @@ export const LENOVO_MSI: Handheld[] = [
     configurations: [
       {
         id: 'LEGION-GO-S-STOS',
+        asin: 'B0FYFF5GLT',
         label: 'Ryzen Z2 Go · 32 GB · 1 TB (SteamOS)',
         apu: {
           vendor: 'AMD',
@@ -415,6 +418,7 @@ export const LENOVO_MSI: Handheld[] = [
       },
       {
         id: 'LEGION-GO-2-Z2X',
+        asin: 'B0G573TMZS',
         label: 'Ryzen Z2 Extreme · 32 GB · 1 TB / 2 TB',
         apu: {
           vendor: 'AMD',
@@ -597,6 +601,7 @@ export const LENOVO_MSI: Handheld[] = [
       },
       {
         id: 'MSI-CLAW-A1M-U7-1T',
+        asin: 'B0CXGDNGRQ',
         label: 'Core Ultra 7 155H · 16 GB · 1 TB',
         apu: {
           vendor: 'Intel',
@@ -733,6 +738,7 @@ export const LENOVO_MSI: Handheld[] = [
     configurations: [
       {
         id: 'MSI-CLAW8-AI',
+        asin: 'B0DLPYC184',
         label: 'Core Ultra 7 258V · 32 GB · 1 TB',
         apu: {
           vendor: 'Intel',
@@ -864,6 +870,7 @@ export const LENOVO_MSI: Handheld[] = [
     configurations: [
       {
         id: 'MSI-CLAW-A8',
+        asin: 'B0GL4N9YQV',
         label: 'Ryzen Z2 Extreme · 24 GB · 1 TB',
         apu: {
           vendor: 'AMD',
