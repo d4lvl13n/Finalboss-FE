@@ -42,8 +42,8 @@ export const LENOVO_MSI: Handheld[] = [
         ramGb: 16,
         ramType: 'DDR5 7500 MT/s',
         storage: '512 GB PCIe 4.0 NVMe (M.2 2242)',
-        priceUsd: 699.99,
-        priceNote: '$699.99 launch (2023); ~$499–600 clearance in 2026',
+        priceUsd: 999.99,
+        priceNote: 'Now ~$999.99 at Best Buy (~$899 on sale) — up ~$300 from the $699.99 launch amid the 2026 memory shortage',
       },
     ],
     display: {
@@ -174,9 +174,9 @@ export const LENOVO_MSI: Handheld[] = [
         ramGb: 16,
         ramType: 'LPDDR5x 6400 MT/s (16 GB base / 32 GB upper)',
         storage: '512 GB base / 1 TB upper — PCIe 4.0 NVMe (M.2 2242)',
-        priceUsd: 599.99,
+        priceUsd: 729.99,
         priceNote:
-          '$599.99 announced target; ~$599–729 street (tested 16 GB config up to $729.99 at Best Buy)',
+          'Base 16 GB config now ~$729.99 regular (~$549.99 on sale); launched at $599.99 — pricing rose through the 2026 memory shortage, and higher 32 GB / 1 TB tiers cost more',
       },
     ],
     display: {
@@ -302,9 +302,9 @@ export const LENOVO_MSI: Handheld[] = [
         ramGb: 32,
         ramType: 'LPDDR5x 6400 MT/s',
         storage: '1 TB PCIe 4.0 NVMe (M.2 2242)',
-        priceUsd: 499,
+        priceUsd: 899.99,
         priceNote:
-          '$499–649 launch (SteamOS, tiered); ~$729 for the 32 GB / 1 TB reviewed config',
+          'This 32 GB / 1 TB SteamOS config now ~$899.99 at Best Buy; the entry SteamOS tier launched at $549.99 and has risen sharply in the 2026 memory shortage (Lenovo direct has listed it $1,049+)',
       },
     ],
     display: {
@@ -411,7 +411,7 @@ export const LENOVO_MSI: Handheld[] = [
         ramType: 'LPDDR5x 8000 MT/s',
         storage: '1 TB PCIe Gen 4 NVMe (M.2 2242)',
         priceUsd: 1099.99,
-        priceNote: '$1,099.99 (IGN); Windows Central reported $1,049',
+        priceNote: '$1,099.99 launch (≈ current Best Buy sale price); regular price has since risen to ~$1,499–1,599 in the 2026 memory shortage',
       },
       {
         id: 'LEGION-GO-2-Z2X',
@@ -430,8 +430,8 @@ export const LENOVO_MSI: Handheld[] = [
         ramGb: 32,
         ramType: 'LPDDR5x 8000 MT/s',
         storage: '1 TB / 2 TB PCIe Gen 4 NVMe (M.2 2242)',
-        priceUsd: 1349.99,
-        priceNote: '$1,349.99 – $1,479.99',
+        priceUsd: 1999.99,
+        priceNote: 'Now ~$1,999.99 (1 TB, Best Buy) and up to $2,849.99 for the 2 TB config direct from Lenovo — surged from the $1,349.99 launch in the 2026 memory shortage',
       },
     ],
     display: {
@@ -525,14 +525,14 @@ export const LENOVO_MSI: Handheld[] = [
       },
     ],
     summary:
-      'The Legion Go 2 upgrades to a gorgeous 8.8" OLED VRR panel, a 74 Wh battery and Zen 5 Ryzen Z2 / Z2 Extreme silicon, keeping the detachable controllers and kickstand. It is a genuine flagship — and priced like one at $1,099–$1,480 — while remaining very heavy (922 g) and still subject to Windows 11 standby drain.',
+      'The Legion Go 2 upgrades to a gorgeous 8.8" OLED VRR panel, a 74 Wh battery and Zen 5 Ryzen Z2 / Z2 Extreme silicon, keeping the detachable controllers and kickstand. It is a genuine flagship — and priced like one: it launched at $1,099–$1,480 but 2026’s memory-shortage hikes pushed it to roughly $1,999 (1 TB) and up to $2,849 (2 TB) at regular pricing — while remaining very heavy (922 g) and still subject to Windows 11 standby drain.',
     pros: [
       'Excellent 8.8" OLED 144 Hz VRR display (97% DCI-P3)',
       'Large 74 Wh battery and Zen 5 Z2 / Z2 Extreme performance',
       'Detachable controllers, kickstand and dual USB4',
     ],
     cons: [
-      'Very expensive ($1,099–$1,480)',
+      'Very expensive, and pricier since 2026’s memory hikes (~$1,999 for 1 TB, up to $2,849 for 2 TB)',
       'Very heavy at 922 g',
       'Windows 11 sleep drain and early build-quality reports',
     ],
@@ -573,7 +573,7 @@ export const LENOVO_MSI: Handheld[] = [
         ramType: 'LPDDR5 6400 MT/s',
         storage: '512 GB PCIe 4.0 NVMe (M.2 2230)',
         priceUsd: 699.99,
-        priceNote: '$699.99 launch; discontinued — ~$389 clearance',
+        priceNote: '$699.99 launch MSRP; EOL — last clearance ~$389.99, now sold out at major US retailers',
       },
       {
         id: 'MSI-CLAW-A1M-U7',
@@ -593,7 +593,7 @@ export const LENOVO_MSI: Handheld[] = [
         ramType: 'LPDDR5 6400 MT/s',
         storage: '512 GB PCIe 4.0 NVMe (M.2 2230)',
         priceUsd: 749.99,
-        priceNote: '$749.99 launch; discontinued — ~$400–500',
+        priceNote: '$749.99 launch MSRP; discontinued — street clearance ~$509 (Walmart)',
       },
       {
         id: 'MSI-CLAW-A1M-U7-1T',
@@ -613,7 +613,7 @@ export const LENOVO_MSI: Handheld[] = [
         ramType: 'LPDDR5 6400 MT/s',
         storage: '1 TB PCIe 4.0 NVMe (M.2 2230)',
         priceUsd: 799.99,
-        priceNote: '$799.99 launch; discontinued — ~$400–500',
+        priceNote: '$799.99 launch MSRP; EOL — may still sell near MSRP while remaining stock lasts',
       },
     ],
     display: {
@@ -733,7 +733,7 @@ export const LENOVO_MSI: Handheld[] = [
     configurations: [
       {
         id: 'MSI-CLAW8-AI',
-        label: 'Core Ultra 7 258V · 32 GB · 512 GB / 1 TB',
+        label: 'Core Ultra 7 258V · 32 GB · 1 TB',
         apu: {
           vendor: 'Intel',
           model: 'Core Ultra 7 258V',
@@ -747,9 +747,9 @@ export const LENOVO_MSI: Handheld[] = [
         },
         ramGb: 32,
         ramType: 'LPDDR5x 8533 MT/s (onboard)',
-        storage: '512 GB / 1 TB PCIe Gen 4 NVMe (M.2 2230)',
-        priceUsd: 899.99,
-        priceNote: '$899.99 (512 GB); ~$999 for the 1 TB config',
+        storage: '1 TB PCIe Gen 4 NVMe (M.2 2230)',
+        priceUsd: 1119,
+        priceNote: 'US ships 1 TB-only (A2VM) at ~$1,119 — up from the $899.99 launch amid the 2026 DRAM shortage; the 512 GB tier is the separate 7-inch Claw 7 AI+',
       },
     ],
     display: {
@@ -828,7 +828,7 @@ export const LENOVO_MSI: Handheld[] = [
       {
         field: 'priceUsd',
         detail:
-          'Reviewed-unit MSRP: Notebookcheck lists $899.99 (512 GB); PCMag also $899.99 but for 1 TB; Wikipedia/MSI cite $999 — likely different storage bundles, with $899.99 and $999 both active SKUs',
+          'Launched at $899.99; the US SKU is 1 TB-only (A2VM) and 2026’s DRAM shortage pushed street pricing to ~$1,119. The 512 GB tier some early coverage cited belongs to the separate 7-inch Claw 7 AI+, not this 8-inch model.',
       },
     ],
     summary:

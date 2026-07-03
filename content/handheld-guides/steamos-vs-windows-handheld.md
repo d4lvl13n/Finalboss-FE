@@ -5,7 +5,7 @@ description: "The clearest same-hardware comparison in the category — the Legi
 updated: 2026-06-29
 picks:
   - slug: lenovo-legion-go-s-steamos
-    note: "The clean SteamOS half of a direct comparison: identical hardware to the Windows Legion Go S, but Notebookcheck measured it running significantly faster, quieter and more efficiently, with better suspend/resume. $499 starting price."
+    note: "The clean SteamOS half of a direct comparison: identical hardware to the Windows Legion Go S, but Notebookcheck measured it running significantly faster, quieter and more efficiently, with better suspend/resume."
   - slug: lenovo-legion-go-s-windows
     note: "The Windows half of the same chassis, same Ryzen Z2 Go APU, same 8-inch 120 Hz screen and 55.5 Wh battery — but reviewers were blunt that Windows leaves real performance on the table compared to the SteamOS version of this exact hardware."
   - slug: valve-steam-deck-oled
@@ -36,6 +36,6 @@ The result, per Notebookcheck's testing, wasn't close: the [SteamOS Legion Go S]
 
 ## Which should you buy?
 
-If your library lives on Steam and you value battery life and a console-like experience above software flexibility, a **SteamOS handheld** — the **Legion Go S (SteamOS)** at $499, or the **Steam Deck OLED** if you want the more polished, higher-brightness screen — is the stronger choice, backed by direct evidence from the identical Windows hardware running worse.
+If your library lives on Steam and you value battery life and a console-like experience above software flexibility, a **SteamOS handheld** — the **Legion Go S (SteamOS)**, or the **Steam Deck OLED** if you want the more polished, higher-brightness screen — is the stronger choice, backed by direct evidence from the identical Windows hardware running worse.
 
 If you need software outside the Steam ecosystem, want Game Pass or other storefronts, or want features like USB4 eGPU support, a **Windows handheld** like the **ROG Ally X** is the more flexible option. Just go in aware that, chip-for-chip, you're trading some of SteamOS's efficiency for that flexibility — the Legion Go S comparison shows exactly how much.

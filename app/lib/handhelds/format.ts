@@ -6,6 +6,14 @@ import type { Configuration, Handheld, OS, PanelType } from './types';
 /** Dataset compilation date — the canonical "as of" for prices and specs. */
 export const DATASET_DATE = '2026-06-29';
 
+/**
+ * Standing disclaimer shown near any price. A global memory-chip shortage made
+ * handheld pricing unusually volatile through 2026 (multiple hikes across
+ * Valve, Lenovo and MSI), so a static figure can drift within weeks.
+ */
+export const PRICE_VOLATILITY_NOTE =
+  'Handheld prices are unusually volatile in 2026 due to a global memory-chip shortage — we show the best figure at our last check, but always confirm the live price at the retailer.';
+
 const OS_LABELS: Record<OS, string> = {
   SteamOS: 'SteamOS',
   Windows: 'Windows 11',

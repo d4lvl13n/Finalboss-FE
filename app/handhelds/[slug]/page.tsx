@@ -31,6 +31,7 @@ import {
   startingPrice,
   formatPrice,
   formatVerifiedDate,
+  PRICE_VOLATILITY_NOTE,
 } from '@/app/lib/handhelds/format';
 import { amazonLinkForConfig } from '@/app/lib/handhelds/affiliate';
 import { getHandheldImage } from '@/app/lib/handhelds/images';
@@ -151,6 +152,7 @@ export default function HandheldPage({ params }: Props) {
                     <ConfigRow key={c.id} config={c} productName={h.name} />
                   ))}
                 </div>
+                <p className="mt-3 text-xs text-gray-500">{PRICE_VOLATILITY_NOTE}</p>
               </section>
 
               {h.display ? (

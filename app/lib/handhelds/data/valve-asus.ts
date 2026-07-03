@@ -43,8 +43,8 @@ export const VALVE_ASUS: Handheld[] = [
         ramGb: 16,
         ramType: 'LPDDR5 6400 MT/s',
         storage: '256 GB NVMe SSD (M.2 2230, user-replaceable)',
-        priceUsd: 399,
-        priceNote: 'Current MSRP (256 GB LCD, still sold by Valve)',
+        priceNote: 'Discontinued for new sale (Dec 2025); ~$319 Certified Refurbished from Valve, stock rotating',
+        statusNote: 'New units discontinued — Certified Refurbished ~$319 from Valve when in stock',
       },
       {
         id: 'SD-LCD-512',
@@ -133,12 +133,12 @@ export const VALVE_ASUS: Handheld[] = [
     conflicts: [
       {
         field: 'Pricing',
-        detail: '256 GB LCD is quoted at both its original $399 (2022) and the current $789 — Valve restructured pricing at the OLED launch; both are accurate for their time.',
+        detail: 'Launched at $399 (256 GB) in 2022; Valve discontinued new LCD sales in late 2025, so it now exists only as Certified Refurbished stock (~$319).',
       },
     ],
 
     summary:
-      'The LCD Steam Deck is the value entry into SteamOS: a well-supported, easily repairable handheld whose Zen 2 / RDNA 2 APU is now dated but still fine for indies and older AAA at 800p. Its standout features remain the twin haptic trackpads and Valve’s excellent suspend/resume. In 2026 the OLED model is the better buy for most, leaving the LCD as a discount option.',
+      'The LCD Steam Deck is the value entry into SteamOS: a well-supported, easily repairable handheld whose Zen 2 / RDNA 2 APU is now dated but still fine for indies and older AAA at 800p. Its standout features remain the twin haptic trackpads and Valve’s excellent suspend/resume. In late 2025 Valve discontinued new LCD sales, so in 2026 it lives on mainly as a ~$319 Certified Refurbished option — the cheapest way into SteamOS when stock is available.',
     pros: [
       'Cheapest route into the polished SteamOS ecosystem',
       'Twin haptic trackpads — unmatched for mouse-driven games',
@@ -188,8 +188,8 @@ export const VALVE_ASUS: Handheld[] = [
         ramGb: 16,
         ramType: 'LPDDR5 6400 MT/s',
         storage: '512 GB NVMe SSD (M.2 2230, user-replaceable)',
-        priceUsd: 549,
-        priceNote: 'Current MSRP (512 GB OLED)',
+        priceUsd: 789,
+        priceNote: 'Current MSRP after Valve’s May 2026 price increase (was $549)',
       },
       {
         id: 'SD-OLED-1TB',
@@ -208,8 +208,8 @@ export const VALVE_ASUS: Handheld[] = [
         ramGb: 16,
         ramType: 'LPDDR5 6400 MT/s',
         storage: '1 TB NVMe SSD (M.2 2230, user-replaceable)',
-        priceUsd: 649,
-        priceNote: 'Current MSRP (1 TB OLED)',
+        priceUsd: 949,
+        priceNote: 'Current MSRP after Valve’s May 2026 price increase (was $649)',
         statusNote: '1 TB SKU adds premium anti-glare etched glass',
       },
     ],
@@ -330,8 +330,8 @@ export const VALVE_ASUS: Handheld[] = [
         ramGb: 16,
         ramType: 'LPDDR5 6400 MT/s',
         storage: '512 GB PCIe 4.0 NVMe (M.2 2230, user-replaceable)',
-        priceUsd: 499,
-        priceNote: 'Launch MSRP; now discontinued/clearance (~$200–300 used)',
+        priceUsd: 599.99,
+        priceNote: '$599.99 launch MSRP (June 2023); discontinued — open-box ~$450–470',
       },
       {
         id: 'ROG-ALLY-Z1X',
@@ -350,8 +350,8 @@ export const VALVE_ASUS: Handheld[] = [
         ramGb: 16,
         ramType: 'LPDDR5 6400 MT/s',
         storage: '512 GB PCIe 4.0 NVMe (M.2 2230, user-replaceable)',
-        priceUsd: 699,
-        priceNote: 'Launch MSRP; now discontinued/clearance (~$350–450 used)',
+        priceUsd: 699.99,
+        priceNote: '$699.99 launch MSRP; discontinued/EOL — ASUS store clearance ~$499.99',
       },
     ],
 
@@ -479,8 +479,8 @@ export const VALVE_ASUS: Handheld[] = [
         ramGb: 24,
         ramType: 'LPDDR5x 7467 MT/s',
         storage: '1 TB PCIe 4.0 NVMe (M.2 2280, user-replaceable)',
-        priceUsd: 799,
-        priceNote: 'MSRP; current street ~$700–800',
+        priceUsd: 799.99,
+        priceNote: 'Current MSRP (still sold at $799.99; ASUS held price through the 2026 memory crunch)',
       },
     ],
 
@@ -606,7 +606,7 @@ export const VALVE_ASUS: Handheld[] = [
         ramType: 'LPDDR5x 6400 MT/s',
         storage: '512 GB PCIe 4.0 NVMe (M.2 2280, user-replaceable)',
         priceUsd: 599.99,
-        priceNote: '$599.99 MSRP (ASUS US store)',
+        priceNote: '$599.99 MSRP (ASUS US store); Amazon/Best Buy have run a recurring $499.99 promo since ~April 2026',
       },
     ],
 

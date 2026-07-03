@@ -7,7 +7,7 @@ picks:
   - slug: valve-steam-deck-oled
     note: "Our overall pick: a gorgeous 90 Hz HDR OLED, twin haptic trackpads and the most polished suspend/resume of any handheld. The Zen 2/RDNA 2 APU is unchanged from the LCD model, so it's not the fastest chip here, but nothing else feels this finished."
   - slug: lenovo-legion-go-s-steamos
-    note: "The value pick — the same chassis as the Windows Legion Go S, but Notebookcheck measured it running significantly faster, quieter and more efficiently once SteamOS replaces Windows. Hall-effect sticks and triggers at $499."
+    note: "The value pick — the same chassis as the Windows Legion Go S, but Notebookcheck measured it running significantly faster, quieter and more efficiently once SteamOS replaces Windows. Hall-effect sticks and triggers, and it runs the same hardware more efficiently than the Windows version."
   - slug: asus-rog-ally-x
     note: "The Windows all-rounder: an 80 Wh battery (roughly double the original Ally), 24 GB of RAM, a 1 TB SSD and USB4/Thunderbolt. Sticks are still potentiometer rather than Hall Effect, and Windows suspend/resume still adds friction."
   - slug: asus-rog-xbox-ally-x
@@ -42,6 +42,6 @@ At the SteamOS end, the [Valve Steam Deck OLED](/handhelds/valve-steam-deck-oled
 
 ## Which should you buy?
 
-If you want the single most polished handheld regardless of OS, the **Steam Deck OLED** remains our overall pick — a 90 Hz HDR OLED, twin trackpads and suspend/resume nothing else in this list quite matches. If you want that same SteamOS polish for less money, the **Legion Go S (SteamOS)** at $499 is the value standout, especially once you know the identical Windows chassis runs the same hardware worse.
+If you want the single most polished handheld regardless of OS, the **Steam Deck OLED** remains our overall pick — a 90 Hz HDR OLED, twin trackpads and suspend/resume nothing else in this list quite matches. If you want that same SteamOS polish on a bigger screen with Hall-effect sticks, the **Legion Go S (SteamOS)** is the standout, especially once you know the identical Windows chassis runs the same hardware worse.
 
 For a well-rounded Windows machine, the **ROG Ally X** is the pick — 80 Wh battery, 24 GB RAM and USB4 in a chassis ASUS has clearly iterated on. Want the most power available on Windows? The **ROG Xbox Ally X** and **Legion Go 2** both bring flagship-class Zen 5 silicon, with the Xbox Ally X the lighter and cheaper of the two, and the Legion Go 2 winning on screen quality if you don't mind the extra weight. And if battery efficiency is your top priority, the **MSI Claw 8 AI+** is the one to beat.

@@ -45,9 +45,9 @@ export const COMPARISON_PAIRS: ComparisonPair[] = [
   {
     a: 'valve-steam-deck-lcd',
     b: 'valve-steam-deck-oled',
-    verdict: `Same Zen 2 / RDNA 2 APU, same SteamOS polish — the OLED model just does everything the LCD does better: a 90 Hz HDR OLED panel versus 60 Hz LCD, a bigger 50 Wh battery versus 40 Wh, Wi-Fi 6E, and ~30 g less weight. The LCD Steam Deck survives mainly as the budget entry point into SteamOS.`,
-    whoA: `Buy the LCD Steam Deck if minimizing upfront cost matters more than screen quality or battery life.`,
-    whoB: `Buy the Steam Deck OLED for the best Steam Deck experience — HDR OLED, more battery, Wi-Fi 6E — worth the extra cost for most buyers.`,
+    verdict: `Same Zen 2 / RDNA 2 APU, same SteamOS polish — the OLED model just does everything the LCD does better: a 90 Hz HDR OLED panel versus 60 Hz LCD, a bigger 50 Wh battery versus 40 Wh, Wi-Fi 6E, and ~30 g less weight. Note that Valve discontinued new LCD sales in late 2025 — it now exists only as ~$319 Certified Refurbished stock, so in 2026 the OLED is effectively the only Steam Deck you can buy new.`,
+    whoA: `Consider the LCD Steam Deck only as refurbished — it's the cheapest way into SteamOS if you can find Valve's rotating Certified Refurbished stock and don't mind the 60 Hz LCD.`,
+    whoB: `Buy the Steam Deck OLED — it's the current new Steam Deck, with an HDR OLED panel, more battery and Wi-Fi 6E.`,
   },
   {
     a: 'lenovo-legion-go',
@@ -94,8 +94,8 @@ export const COMPARISON_PAIRS: ComparisonPair[] = [
   {
     a: 'lenovo-legion-go-s-steamos',
     b: 'valve-steam-deck-oled',
-    verdict: `The Legion Go S (SteamOS) undercuts the Steam Deck OLED's starting price while offering a bigger 8-inch 120 Hz screen and genuine Hall-effect sticks — something the Steam Deck still lacks. The Steam Deck OLED counters with a lighter body, an OLED panel with HDR, and Valve's more mature, longer-refined SteamOS implementation.`,
-    whoA: `Buy the Legion Go S (SteamOS) if you want a bigger screen, Hall-effect sticks and a lower starting price on the same efficient OS.`,
+    verdict: `The Legion Go S (SteamOS) offers a bigger 8-inch 120 Hz screen and genuine Hall-effect sticks — something the Steam Deck still lacks — on the same efficient OS. It launched cheaper than the Steam Deck, but 2026's memory-shortage price hikes have pushed it above the OLED at most retailers, so its old price advantage has eroded. The Steam Deck OLED counters with a lighter body, an OLED panel with HDR, and Valve's more mature, longer-refined SteamOS implementation.`,
+    whoA: `Buy the Legion Go S (SteamOS) if you want a bigger screen and Hall-effect sticks on the same efficient OS, and can stomach its risen 2026 pricing.`,
     whoB: `Buy the Steam Deck OLED if you want the most polished SteamOS experience and a vivid HDR OLED panel, even without Hall-effect sticks.`,
   },
   {

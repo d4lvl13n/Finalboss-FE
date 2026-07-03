@@ -15,7 +15,7 @@ import { buildPageMetadata, absoluteUrl } from '@/app/lib/seo';
 import Byline from '@/app/components/handhelds/Byline';
 import { getAllGuides, getGuide } from '@/app/lib/handhelds/guides';
 import { getHandheldImage } from '@/app/lib/handhelds/images';
-import { startingPriceLabel, DATASET_DATE, osLabel, panelLabel } from '@/app/lib/handhelds/format';
+import { startingPriceLabel, DATASET_DATE, osLabel, panelLabel, PRICE_VOLATILITY_NOTE } from '@/app/lib/handhelds/format';
 import { amazonLinkForConfig } from '@/app/lib/handhelds/affiliate';
 import type { Configuration, Handheld } from '@/app/lib/handhelds/types';
 
@@ -131,6 +131,7 @@ export default function GuidePage({ params }: Props) {
               <PickRow key={pick.slug} rank={i + 1} handheld={pick.handheld} note={pick.note} />
             ))}
           </ol>
+          <p className="mt-3 text-xs text-gray-500">{PRICE_VOLATILITY_NOTE}</p>
 
           {guide.faq.length ? (
             <section className="mt-12">

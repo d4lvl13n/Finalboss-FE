@@ -21,7 +21,7 @@ import {
   type ResolvedComparison,
   type SpecRow,
 } from '@/app/lib/handhelds/comparisons';
-import { startingPrice, formatPrice } from '@/app/lib/handhelds/format';
+import { startingPrice, formatPrice, PRICE_VOLATILITY_NOTE } from '@/app/lib/handhelds/format';
 import { getHandheldImage } from '@/app/lib/handhelds/images';
 import type { Handheld } from '@/app/lib/handhelds/types';
 
@@ -119,6 +119,7 @@ export default function ComparePage({ params }: Props) {
                 </tbody>
               </table>
             </div>
+            <p className="mt-3 text-xs text-gray-500">{PRICE_VOLATILITY_NOTE}</p>
           </section>
 
           {/* Pros / cons side by side */}

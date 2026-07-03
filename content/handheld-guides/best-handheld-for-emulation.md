@@ -7,7 +7,7 @@ picks:
   - slug: valve-steam-deck-oled
     note: "The default emulation handheld: a 16:10 1280×800 OLED, twin haptic trackpads for mouse-driven systems and light-gun games, built-in gyro, and a 50 Wh battery that comfortably outlasts a single-charge Windows equivalent. Its Zen 2/RDNA 2 APU is dated for modern AAA gaming but has more than enough headroom for emulation up through most current-gen systems."
   - slug: lenovo-legion-go-s-steamos
-    note: "A cheaper 16:10 SteamOS option at $499 with genuine Hall-effect sticks and gyro on an 8-inch 120 Hz screen — great for general emulation, though it skips the trackpads that make mouse- and stylus-driven systems easier on the Deck and Zotac Zone."
+    note: "A 16:10 SteamOS option with genuine Hall-effect sticks and gyro on an 8-inch 120 Hz screen — great for general emulation, though it skips the trackpads that make mouse- and stylus-driven systems easier on the Deck and Zotac Zone."
   - slug: zotac-zone
     note: "The pick if trackpads and gyro matter most to you: dual trackpads, haptic feedback and radial dials make DS/3DS, PSP and light-gun emulation noticeably more comfortable than stick-only handhelds. The 48.5 Wh battery is the weak point — expect shorter sessions than the Deck."
   - slug: lenovo-legion-go-2
@@ -38,6 +38,6 @@ The [Steam Deck OLED](/handhelds/valve-steam-deck-oled) is the default pick than
 
 ## Which should you buy?
 
-For most people, the **Steam Deck OLED** is still the best all-around emulation handheld — trackpads, gyro, a 16:10 screen and strong battery life in one well-supported package. If you want the same general profile for less money and don't mind losing the trackpads, the **Legion Go S (SteamOS)** is a strong $499 alternative.
+For most people, the **Steam Deck OLED** is still the best all-around emulation handheld — trackpads, gyro, a 16:10 screen and strong battery life in one well-supported package. If you want the same general profile for less money and don't mind losing the trackpads, the **Legion Go S (SteamOS)** is a strong alternative.
 
 If trackpads and haptics are your top priority — especially for touchscreen or light-gun systems — the **Zotac Zone** goes furthest on that front, at the cost of battery life. And if you want the most screen real estate for upscaled or high-resolution emulation and don't mind the extra size and cost, the **Legion Go 2** is the premium choice.

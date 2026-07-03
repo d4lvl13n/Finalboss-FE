@@ -1,35 +1,39 @@
 ---
 slug: best-handheld-under-500
-title: Best Handheld Gaming PC Under $500
-description: "The handhelds that genuinely start at $500 or less in 2026 — led by the $399 Steam Deck LCD, still the best-value way into PC handheld gaming."
+title: Cheapest Handheld Gaming PCs in 2026 (Under $500 & the Clearance Routes)
+description: "The sub-$500 handheld has nearly vanished in 2026's memory shortage. Here are the genuinely cheapest ways into PC handheld gaming right now — the last budget models plus the clearance, open-box and refurbished routes."
 updated: 2026-06-29
 picks:
+  - slug: ayn-loki
+    note: "The last genuinely sub-$500 NEW handheld family. Configs run from ~$249 (Athlon Silver) through ~$299 (Ryzen 5 Mendocino) to ~$499 (Ryzen 5 6600U). These are low-power chips — set expectations at lighter indie and emulation rather than demanding AAA — but nothing else new lands this cheap in 2026."
   - slug: valve-steam-deck-lcd
-    note: "The best handheld under $500, full stop. At $399 the 256 GB LCD is still sold by Valve, runs the mature SteamOS software, and pairs dual haptic trackpads and gyro with a 7-inch 60 Hz screen. You give up the OLED model's brighter panel and bigger battery, but nothing else here matches its price-to-polish."
-  - slug: lenovo-legion-go-s-steamos
-    note: "The step-up SteamOS pick if you want a bigger, faster screen. At $499 it brings genuine Hall-effect sticks and triggers and an 8-inch 120 Hz display, and — per Notebookcheck's testing — runs markedly more efficiently than the same chassis on Windows."
+    note: "The cheapest way into full SteamOS — but only refurbished. Valve discontinued new LCD sales in late 2025; a 256 GB Certified Refurbished unit sells for around $319 when it's in stock, with the same trackpads, gyro and mature software as the pricier OLED. Stock rotates, so you have to catch it."
+  - slug: msi-claw-a1m
+    note: "A clearance play, if you can still find one. The 2024 Intel Meteor Lake Claw dropped to roughly $389 on clearance, but it's now sold out at major US retailers. Only worth chasing at that price — its battery life and launch software were its weak points."
   - slug: asus-rog-ally-2023
-    note: "The budget Windows option: the base Ryzen Z1 configuration starts at $499 with a 1080p 120 Hz FreeSync display and Hall Effect triggers. It's discontinued and carries two well-documented issues — a heat-adjacent SD card reader prone to failure, and potentiometer stick drift — so buy with eyes open."
+    note: "The budget Windows route: discontinued, so new stock is gone, but open-box units run ~$450–470. A capable 1080p 120 Hz Windows handheld if you accept its two documented issues — a heat-adjacent SD card reader and drift-prone potentiometer sticks."
 faq:
-  - q: What's the best handheld gaming PC under $500?
-    a: "The $399 Steam Deck LCD. It's the cheapest device here, and its mature SteamOS software, trackpads and gyro make it the most polished sub-$500 handheld you can buy. If you'd rather have a bigger, faster screen and Hall-effect sticks, the $499 Lenovo Legion Go S (SteamOS) is the step up."
-  - q: Is the Steam Deck LCD still worth buying in 2026?
-    a: "Yes — at $399 it remains the best-value entry into PC handheld gaming. It's the same core experience as the pricier OLED model, minus the brighter OLED panel, the slightly larger battery and a bit of extra performance headroom. For most first-time buyers on a budget, the LCD is the smart pick."
-  - q: Is the original ROG Ally worth buying at $499 in 2026?
-    a: "With caveats. It's discontinued, and the two most-cited hardware issues — an SD card reader positioned near heat that has damaged cards for some owners, and drift-prone potentiometer sticks — are real, documented problems rather than rare edge cases. If you can live with those risks, the base Z1 configuration at $499 is still a capable 1080p 120 Hz Windows handheld."
+  - q: What's the cheapest handheld gaming PC in 2026?
+    a: "For a new unit, the AYN Loki — its entry configs start around $249–299, and it's essentially the only sub-$500 new handheld left after 2026's price hikes. For the best cheap experience overall, a Certified Refurbished Steam Deck LCD (~$319 when in stock) gets you Valve's mature SteamOS software for a little more."
+  - q: Why did handheld prices go up in 2026?
+    a: "A global memory-chip (DRAM/NAND) shortage drove up component costs through 2026, and makers passed it on. Valve raised Steam Deck OLED prices in May 2026, and Lenovo and MSI hiked their handhelds repeatedly — so the sub-$500 new market that existed at launch has largely evaporated. The cheapest routes now are clearance, open-box and refurbished."
+  - q: Is a refurbished Steam Deck worth it?
+    a: "Yes — Valve's own Certified Refurbished program tests and warranties the units, and at ~$319 the refurbished LCD is the cheapest way into full SteamOS. The catch is availability: stock is limited and rotates, so you may have to wait for it to come back in stock."
 ---
-Handheld gaming PC pricing crept upward through 2025 and into 2026 — most of the field now starts between $600 and $1,150. But a few genuinely good devices still land at or under $500, and the cheapest of them is also one of the best. As of this compilation, three handhelds in our database start at $500 or less: the [Steam Deck LCD](/handhelds/valve-steam-deck-lcd) at $399, and the [Lenovo Legion Go S (SteamOS)](/handhelds/lenovo-legion-go-s-steamos) and original [ASUS ROG Ally](/handhelds/asus-rog-ally-2023) at $499 each.
+Handheld gaming PC pricing didn't just creep up in 2026 — a global memory-chip shortage pushed it up hard, with Valve, Lenovo and MSI all raising prices through the year. The sub-$500 *new* handheld, which was a real category at launch, has almost disappeared. So this is an honest map of the cheapest ways in right now: the one budget family still standing, plus the clearance, open-box and refurbished routes worth knowing.
 
-## What to look for at this price
+One note on the prices shown next to each pick below: those are launch MSRPs from our database. For the discontinued models here, the real budget number is in the clearance/open-box/refurbished figure we call out in each pick — that's what you'd actually pay today, not the MSRP.
 
-**SteamOS punches above its price.** Two of the three picks here run SteamOS, and it's a real advantage at the budget end: a console-style interface, strong battery efficiency, and — on the Legion Go S — measurably better performance than the identical hardware running Windows. If you don't specifically need Windows, SteamOS is the easier, longer-lasting experience.
+## What to look for at the bottom of the market
 
-**Hall Effect vs. potentiometer sticks matters more at the budget end.** The original ROG Ally uses potentiometer sticks, and stick drift is one of the most-cited complaints against it. The Legion Go S uses genuine Hall-effect sticks and triggers, which resist that kind of wear-related drift by design. (The Steam Deck's sticks are potentiometer too, but it's rarely singled out for drift the way the Ally is.)
+**New vs. clearance vs. refurbished.** Only the AYN Loki is genuinely new-and-cheap in 2026. Everything else on this list is a discontinued model living on through clearance stock, open-box units or Valve's refurbished program — which means limited, rotating availability. If a price looks great, buy when you see it, because it may not last.
 
-**Check what "$499" actually gets you.** The Ally's $499 price is for the base Ryzen Z1 configuration, not the faster Z1 Extreme (which starts at $699). The Legion Go S's $499 tier is likewise the entry point of a range that goes up from there — read the configuration details on each product page before you buy.
+**Manage expectations on the truly cheap chips.** The Loki's ~$249–299 tiers use low-power AMD APUs (Mendocino, Athlon) that are fine for emulation and lighter indie games but won't push modern AAA. Its ~$499 Ryzen 5 6800U-class tier is the one that plays more demanding games.
+
+**Refurbished SteamOS is the value sweet spot.** If you can catch it, the ~$319 Certified Refurbished Steam Deck LCD gives you Valve's mature software, trackpads and gyro for barely more than the Loki's mid tier — and it's a warrantied unit, not a gamble.
 
 ## Which should you buy?
 
-For most people, the **Steam Deck LCD** at $399 is the answer: it's the cheapest option, the software is the most mature in the category, and the trackpads and gyro give it input flexibility the others can't match. It's the handheld we'd hand a first-time buyer without hesitation.
+If you want something **new** and as cheap as possible, the **AYN Loki** is effectively your only sub-$500 new option — just pick the tier that matches your games, and don't expect flagship performance from the entry chips.
 
-Step up to the **Legion Go S (SteamOS)** if you want a bigger 8-inch 120 Hz screen and Hall-effect sticks and can stretch to $499. And choose the **ROG Ally (2023)** only if you specifically want Windows at this price — just go in aware of the SD-card and stick-drift issues that follow this model, and budget for the possibility of a repair down the line.
+If you want the **best cheap experience** and can wait for stock, a **Certified Refurbished Steam Deck LCD** at ~$319 is the one to hold out for — it's the most polished handheld you can get at this price. And if you specifically want Windows on a budget, an **open-box ROG Ally (2023)** around $450 is the route, provided you go in aware of its SD-card and stick-drift quirks.
