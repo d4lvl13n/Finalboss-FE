@@ -23,6 +23,7 @@ import {
   brandSlug,
 } from '@/app/lib/handhelds/queries';
 import { categoriesForHandheld } from '@/app/lib/handhelds/categories';
+import { comparisonsFor, type ResolvedComparison } from '@/app/lib/handhelds/comparisons';
 import {
   osLabel,
   panelLabel,
@@ -71,6 +72,7 @@ export default function HandheldPage({ params }: Props) {
   const image = getHandheldImage(h.slug);
   const headline = headlineConfig(h);
   const alternatives = comparableHandhelds(h, 4);
+  const comparisons = comparisonsFor(h.slug);
   const faqs = buildFaqs(h);
 
   return (
@@ -138,6 +140,8 @@ export default function HandheldPage({ params }: Props) {
               <ProsCons pros={h.pros} cons={h.cons} />
 
               <AlsoIn handheld={h} />
+
+              <CompareLinks handheld={h} comparisons={comparisons} />
 
               {/* Configurations */}
               <section>
@@ -353,6 +357,31 @@ function AlsoIn({ handheld }: { handheld: Handheld }) {
             {c.label}
           </Link>
         ))}
+      </div>
+    </section>
+  );
+}
+
+function CompareLinks({ handheld, comparisons }: { handheld: Handheld; comparisons: ResolvedComparison[] }) {
+  if (!comparisons.length) return null;
+  return (
+    <section>
+      <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-500">
+        Compare the {handheld.name}
+      </h2>
+      <div className="flex flex-wrap gap-2">
+        {comparisons.map((c) => {
+          const other = c.handheldA.slug === handheld.slug ? c.handheldB : c.handheldA;
+          return (
+            <Link
+              key={c.slug}
+              href={`/handhelds/compare/${c.slug}`}
+              className="rounded-full border border-gray-700 bg-gray-900 px-3 py-1.5 text-sm text-gray-300 hover:border-gray-600 hover:text-white"
+            >
+              vs {other.name}
+            </Link>
+          );
+        })}
       </div>
     </section>
   );

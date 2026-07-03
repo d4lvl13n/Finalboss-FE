@@ -38,6 +38,15 @@ export default function HandheldsIndex() {
               where-to-buy links — SteamOS and Windows, from the Steam Deck to the ROG Ally and beyond.
             </p>
             <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+              <Link href="/handhelds/compare" className="font-semibold text-amber-400 hover:text-amber-300">
+                Compare handhelds →
+              </Link>
+              <Link href="/handhelds/guides" className="text-gray-300 hover:text-white">
+                Buying guides →
+              </Link>
+              <Link href="/handhelds/glossary" className="text-gray-400 hover:text-gray-300">
+                Glossary →
+              </Link>
               <Link href="/handhelds/methodology" className="text-gray-400 hover:text-gray-300">
                 How we research →
               </Link>
