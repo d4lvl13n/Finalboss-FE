@@ -23,6 +23,7 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     configurations: [
       {
         id: 'G26-001',
+        asin: 'B0GTS1LF1F',
         label: 'RTX 5080 · Core Ultra 9 290HX Plus',
         cpu: {
           vendor: 'Intel',
@@ -284,6 +285,7 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     configurations: [
       {
         id: 'G26-003',
+        asin: 'B0FGRHGY1L',
         label: 'RTX 5070 Ti · Core Ultra 9 386H',
         cpu: { vendor: 'Intel', model: 'Core Ultra 9 386H', architecture: 'Panther Lake', cores: 16, threads: 16, boostClock: '4.9 GHz' },
         gpu: {
@@ -441,6 +443,7 @@ export const ASUS_LENOVO: LaptopFamily[] = [
       },
       {
         id: 'G26-006',
+        asin: 'B0FCPP5K2R',
         label: 'Intel · Core Ultra 9 386H · RTX 5080',
         cpu: { vendor: 'Intel', model: 'Core Ultra 9 386H', architecture: 'Panther Lake', cores: 16, threads: 16, boostClock: '4.9 GHz' },
         gpu: {
@@ -989,6 +992,7 @@ export const ASUS_LENOVO: LaptopFamily[] = [
       },
       {
         id: 'G26-012',
+        asin: 'B0FK453MMS',
         label: 'RTX 5090 · Core Ultra 9 275HX',
         cpu: { vendor: 'Intel', model: 'Core Ultra 9 275HX', architecture: 'Arrow Lake-HX', cores: 24, threads: 24, boostClock: '5.4 GHz' },
         gpu: {
@@ -1113,6 +1117,7 @@ export const ASUS_LENOVO: LaptopFamily[] = [
     configurations: [
       {
         id: 'G26-013',
+        asin: 'B0H1JZ397X',
         label: 'RTX 5060 · Ryzen AI 9 HX 470',
         cpu: { vendor: 'AMD', model: 'Ryzen AI 9 HX 470', architecture: 'Zen 5 / Gorgon Point', cores: 12, threads: 24, boostClock: '5.1 GHz' },
         gpu: {

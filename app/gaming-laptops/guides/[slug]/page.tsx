@@ -176,7 +176,7 @@ function specHighlights(f: LaptopFamily): string[] {
 
 function PickRow({ rank, family, note }: { rank: number; family: LaptopFamily; note: string }) {
   const img = getLaptopImage(family.slug);
-  const link = amazonLinkForConfig(cheapestConfig(family));
+  const link = amazonLinkForConfig(cheapestConfig(family), family.name);
   return (
     <li className="flex gap-4 rounded-xl border border-gray-800 bg-gray-900/40 p-4">
       <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-amber-500 text-sm font-bold text-gray-950">

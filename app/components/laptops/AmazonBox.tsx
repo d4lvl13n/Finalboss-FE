@@ -18,7 +18,7 @@ interface AmazonBoxProps {
 }
 
 export default function AmazonBox({ config, productName }: AmazonBoxProps) {
-  const link = amazonLinkForConfig(config);
+  const link = amazonLinkForConfig(config, productName);
   const price = config ? priceAsOf(config) : null;
   const cta = link.isDirect ? 'View on Amazon' : 'Check price on Amazon';
 

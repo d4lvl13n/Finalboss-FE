@@ -23,6 +23,7 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     configurations: [
       {
         id: 'G26-017',
+        asin: 'B0F1DWFQTX',
         label: 'RTX 5090 · Core Ultra 9 285HX / 290HX Plus',
         cpu: { vendor: 'Intel', model: 'Core Ultra 9 285HX / 290HX Plus', architecture: 'Arrow Lake-HX', cores: 24, boostClock: '5.5 GHz' },
         gpu: { ...nvidia('GeForce RTX 5090 Laptop', 'rtx-5090'), tgpWatts: 175, tgpNote: '175 W (Dynamic Boost)' },
@@ -340,6 +341,7 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     configurations: [
       {
         id: 'G26-024',
+        asin: 'B0FXY1SC64',
         label: 'RTX 5070 · Core Ultra 7 255HX / Ultra 9 275HX',
         cpu: { vendor: 'Intel', model: 'Core Ultra 7 255HX / Ultra 9 275HX', architecture: 'Arrow Lake-HX' },
         gpu: { ...nvidia('GeForce RTX 5070 Laptop', 'rtx-5070'), tgpWatts: 115, tgpNote: '115 W (Dynamic Boost); 170 W combined CPU+GPU' },
@@ -426,6 +428,7 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     configurations: [
       {
         id: 'G26-026',
+        asin: 'B0DZFVBQLK',
         label: 'RTX 5070 · Core i9-14900HX / i7-14650HX',
         cpu: { vendor: 'Intel', model: 'Core i9-14900HX / i7-14650HX', architecture: 'Raptor Lake-HX', boostClock: '5.8 GHz' },
         gpu: { ...nvidia('GeForce RTX 5070 Laptop', 'rtx-5070'), tgpWatts: 115, tgpNote: '115 W (Dynamic Boost)' },
@@ -513,6 +516,7 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
       },
       {
         id: 'G26-029',
+        asin: 'B0G3XXP67F',
         label: 'RTX 5060 · Core 7 240H / Core 5 210H',
         cpu: { vendor: 'Intel', model: 'Core 7 240H / Core 5 210H' },
         gpu: nvidia('GeForce RTX 5060 Laptop', 'rtx-5060'),
@@ -591,6 +595,7 @@ export const MSI_GIGABYTE: LaptopFamily[] = [
     configurations: [
       {
         id: 'G26-030',
+        asin: 'B0H4NKX21Q',
         label: 'RTX 5090 · Ryzen 9 9955HX3D',
         cpu: { vendor: 'AMD', model: 'Ryzen 9 9955HX3D', architecture: 'Zen 5 + 3D V-Cache', cores: 16, threads: 32, boostClock: '5.4 GHz' },
         gpu: { ...nvidia('GeForce RTX 5090 Laptop', 'rtx-5090'), tgpWatts: 175, tgpNote: '175 W (Dynamic Boost)' },

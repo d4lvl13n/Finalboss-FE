@@ -14,28 +14,45 @@ import type { Configuration } from './types';
  */
 export const GENERIC_AMAZON_LAPTOPS_URL = 'https://amzn.to/3SwRlJr';
 
-/** Associate tag, if configured. Without it we cannot earn on bare /dp/ links. */
-const ASSOCIATE_TAG = process.env.NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG || '';
+// The FinalBoss Amazon Associates tag is public (it appears in every affiliate
+// URL), so it's safe to hardcode as the default; an env var can still override.
+const ASSOCIATE_TAG = process.env.NEXT_PUBLIC_AMAZON_ASSOCIATE_TAG || 'finalboss517-20';
 
 export interface AmazonLink {
   url: string;
-  /** true ⇒ deep-links to the specific product; false ⇒ generic category box. */
+  /** true ⇒ deep-links to the specific product; false ⇒ search/category box. */
   isDirect: boolean;
 }
 
+/** Tagged Amazon search for a product name — the fallback when we have no ASIN. */
+function searchUrl(query: string): string {
+  return `https://www.amazon.com/s?k=${encodeURIComponent(query)}&tag=${encodeURIComponent(ASSOCIATE_TAG)}`;
+}
+
 /**
- * Resolve the Amazon CTA for a configuration.
- * Deep-links only when we have both an ASIN and a tag (so the click is
- * attributable); otherwise returns the generic monetised short link.
+ * Best Amazon CTA for a configuration:
+ *   1. verified ASIN → tagged /dp/<asin> deep link (isDirect)
+ *   2. product name  → tagged Amazon search for that model
+ *   3. neither       → the generic gaming-laptops short link
+ * Laptop listings are config-specific and churn fast, so the product-name
+ * search is usually the more durable link than a fixed per-config ASIN.
  */
-export function amazonLinkForConfig(config?: Configuration | null): AmazonLink {
-  if (config?.asin && ASSOCIATE_TAG) {
+export function amazonLinkForConfig(config?: Configuration | null, productName?: string): AmazonLink {
+  if (config?.asin) {
     return {
       url: `https://www.amazon.com/dp/${encodeURIComponent(config.asin)}?tag=${encodeURIComponent(ASSOCIATE_TAG)}`,
       isDirect: true,
     };
   }
+  if (productName && productName.trim()) {
+    return { url: searchUrl(productName.trim()), isDirect: false };
+  }
   return { url: GENERIC_AMAZON_LAPTOPS_URL, isDirect: false };
+}
+
+/** Tagged Amazon search link for an arbitrary product name. */
+export function amazonSearchLink(productName: string): AmazonLink {
+  return { url: searchUrl(productName), isDirect: false };
 }
 
 /** Convenience for non-config CTAs (hubs, category pages, sidebars). */

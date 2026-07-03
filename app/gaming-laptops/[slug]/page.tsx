@@ -412,7 +412,7 @@ function FactRow({ label, value }: { label: string; value: string }) {
 
 function ConfigRow({ config, productName }: { config: Configuration; productName: string }) {
   const price = priceAsOf(config);
-  const link = amazonLinkForConfig(config);
+  const link = amazonLinkForConfig(config, productName);
   return (
     <div className="rounded-lg border border-gray-800 bg-gray-900/40 p-4">
       <div className="flex flex-wrap items-start justify-between gap-3">

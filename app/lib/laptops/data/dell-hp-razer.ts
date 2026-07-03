@@ -371,6 +371,7 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
     configurations: [
       {
         id: 'G26-040',
+        asin: 'B0FBHXJG7K',
         label: 'RTX 5060 · Core 7 240H',
         cpu: { vendor: 'Intel', model: 'Core 7 240H', architecture: 'Raptor Lake Refresh (no NPU)', cores: 10, boostClock: '5.2 GHz' },
         gpu: { ...nvidia('GeForce RTX 5060 Laptop', 'rtx-5060'), tgpWatts: 80, tgpNote: '80 W hard-capped (confirmed Tom\'s Hardware & Notebookcheck)' },
@@ -943,6 +944,7 @@ export const DELL_HP_RAZER: LaptopFamily[] = [
       },
       {
         id: 'G26-048',
+        asin: 'B0DYLB2QRF',
         label: 'RTX 5070 · Ryzen AI 9 365',
         cpu: { vendor: 'AMD', model: 'Ryzen AI 9 365', architecture: 'Zen 5 / Strix Point', cores: 10, boostClock: '5.0 GHz' },
         gpu: { ...nvidia('GeForce RTX 5070 Laptop', 'rtx-5070'), tgpWatts: 115, tgpNote: '100 W + 15 W Dynamic Boost (115 W max)' },

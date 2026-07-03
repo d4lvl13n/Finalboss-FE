@@ -32,6 +32,7 @@ export const ACER_EU: LaptopFamily[] = [
       },
       {
         id: 'G26-054',
+        asin: 'B0G4SMDFMH',
         label: 'RTX 5080 · Core Ultra 9 275HX',
         cpu: { vendor: 'Intel', model: 'Core Ultra 9 275HX', architecture: 'Arrow Lake-HX', cores: 24, threads: 24, boostClock: '5.4 GHz' },
         gpu: { ...nvidia('GeForce RTX 5080 Laptop', 'rtx-5080'), tgpWatts: 175 },
@@ -156,6 +157,7 @@ export const ACER_EU: LaptopFamily[] = [
     configurations: [
       {
         id: 'G26-055',
+        asin: 'B0FN15LKGD',
         label: 'RTX 5070 Ti · Core Ultra 7 255HX',
         cpu: { vendor: 'Intel', model: 'Core Ultra 7 255HX', architecture: 'Arrow Lake-HX', cores: 20, threads: 20, boostClock: '5.0 GHz' },
         gpu: { ...nvidia('GeForce RTX 5070 Ti Laptop', 'rtx-5070-ti'), tgpWatts: 140 },
@@ -396,6 +398,7 @@ export const ACER_EU: LaptopFamily[] = [
     configurations: [
       {
         id: 'G26-059',
+        asin: 'B0FTT7JVJM',
         label: 'AMD · RTX 5050 · Ryzen 5 240',
         cpu: { vendor: 'AMD', model: 'Ryzen 5 240', architecture: 'Hawk Point-HS (Zen 4)', cores: 6, threads: 12, boostClock: '5.0 GHz' },
         gpu: { ...nvidia('GeForce RTX 5050 Laptop', 'rtx-5050'), tgpWatts: 95, tgpNote: '+15 W Dynamic Boost' },
