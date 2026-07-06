@@ -19,6 +19,7 @@ import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../..
 import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
 import client from '../../lib/apolloClient';
 import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
+import { contextualizeKinguinLinks } from '../../lib/kinguin';
 import siteConfig from '../../lib/siteConfig';
 import { normalizeWordPressImageSrc } from '../../lib/imageUrl';
 import ReviewSummary, { ReviewConfig } from '../Review/ReviewSummary';
@@ -366,6 +367,11 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
   const { config: reviewConfig, cleaned: contentCleaned } = extractReviewConfig(article.content);
 
+  // Make the in-article Kinguin link game-specific: a guide about <game> should
+  // send readers to keys for THAT game (geo-agnostic, relevant to a global PC
+  // audience), not the generic homepage. No-ops when the post has no game tag.
+  const contentFinal = contextualizeKinguinLinks(contentCleaned, primaryGameTag?.name);
+
   return (
     // overflow-x-clip (NOT hidden): hidden creates a scroll container and silently
     // disables position:sticky for all descendants (sidebar ads). clip clips without
@@ -468,7 +474,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                   a banner sitting above all content). */}
 
             <ArticleBodyWithAds
-              content={contentCleaned}
+              content={contentFinal}
               sourceSansClassName={sourceSans.className}
               articleTitle={article.title}
               categoryName={primaryCategory?.name || 'Gaming'}

@@ -38,6 +38,27 @@ export default function ArticleBodyWithAds({
   // Place email CTA roughly in the middle
   const ctaIndex = Math.max(1, Math.floor(totalSections / 2));
 
+  // Ad density scales with article length: long guides (>= 6 sections) get an
+  // ad every 2 sections; short news keeps the sparser every-3 cadence. This
+  // targets the deep, high-dwell guide content without over-loading thin posts.
+  const adCadence = totalSections >= 6 ? 2 : AD_EVERY_N_SECTIONS;
+  // Precompute which section indices get a mid-article ad (skip first, last, and
+  // the email-CTA section so nothing stacks), capped so even very long guides
+  // stay within AdSense's "content must exceed ads" guidance.
+  const MAX_MID_ADS = 4;
+  const midAdIndices = new Set<number>();
+  if (SHOW_MANUAL_ADS) {
+    let placed = 0;
+    for (let i = 1; i < totalSections - 1; i++) {
+      if ((i + 1) % adCadence === 0 && i !== ctaIndex && placed < MAX_MID_ADS) {
+        midAdIndices.add(i);
+        placed += 1;
+      }
+    }
+  }
+  // End-of-article ad: high viewability, non-interruptive; only on longer reads.
+  const showEndAd = SHOW_MANUAL_ADS && totalSections >= 5;
+
   const proseClass = `${sourceSansClassName} prose prose-lg prose-invert mx-auto max-w-3xl text-[18px] md:text-[19px] leading-8 tracking-[0.0025em]`;
 
   const adUnit = (
@@ -76,8 +97,8 @@ export default function ArticleBodyWithAds({
               <ProcessedContent content={sectionHtml} />
             </div>
 
-            {/* Deeper in-article ad every N sections (skip first + last) */}
-            {SHOW_MANUAL_ADS && i > 0 && i < totalSections - 1 && (i + 1) % AD_EVERY_N_SECTIONS === 0 && adUnit}
+            {/* Deeper in-article ad — density scales with article length (see midAdIndices) */}
+            {midAdIndices.has(i) && adUnit}
 
             {/* Mid-article email CTA */}
             {i === ctaIndex && totalSections >= 4 && (
@@ -93,6 +114,9 @@ export default function ArticleBodyWithAds({
           </React.Fragment>
         );
       })}
+
+      {/* End-of-article ad — after the last section, before related content. */}
+      {showEndAd && adUnit}
     </div>
   );
 }
