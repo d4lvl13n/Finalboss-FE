@@ -13,6 +13,7 @@ import AdScriptLoader from './components/AdSense/AdScriptLoader';
 import { ENABLE_AUTO_ADS } from './lib/adsConfig';
 import BackToTop from './components/BackToTop';
 import GAPageviews from './components/GAPageviews';
+import MetaPixel from './components/MetaPixel';
 import siteConfig, { intlLocale } from './lib/siteConfig';
 
 // Optimize font loading
@@ -142,6 +143,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </div>
         <AdScriptLoader enableAutoAds={ENABLE_AUTO_ADS} />
         {siteConfig.analyticsId && <GAPageviews gaId={siteConfig.analyticsId} />}
+        {siteConfig.metaPixelId && <MetaPixel pixelId={siteConfig.metaPixelId} />}
         <Analytics />
         <SpeedInsights />
       </body>

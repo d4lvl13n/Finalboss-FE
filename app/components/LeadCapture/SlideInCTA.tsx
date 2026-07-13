@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaTimes, FaGamepad, FaBolt } from 'react-icons/fa';
 import { t } from '../../lib/i18n';
+import { trackCompleteRegistration } from '../../lib/fbq';
 
 interface SlideInCTAProps {
   onClose: () => void;
@@ -23,6 +24,7 @@ const SlideInCTA: React.FC<SlideInCTAProps> = ({ onClose }) => {
         body: JSON.stringify({ email, source: 'Slide-in CTA' }),
       });
       if (!res.ok) throw new Error();
+      trackCompleteRegistration('Slide-in CTA');
       setStatus('success');
       setTimeout(onClose, 2500);
     } catch {

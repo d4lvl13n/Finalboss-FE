@@ -7,6 +7,7 @@ import { GameSearch } from './GameSearch';
 import ResponsiveArticleGrid from './ResponsiveArticleGrid';
 import { t } from '../lib/i18n';
 import { formatDateLong } from '../utils/formatDate';
+import TrackViewContent from './TrackViewContent';
 
 interface RelatedArticle {
   id: string;
@@ -44,6 +45,9 @@ export function GameDetails({
 }) {
   return (
       <main className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
+        {/* Meta Pixel content-interest signal */}
+        <TrackViewContent name={game.name} category="Games" type="game" />
+
         {/* Hero Section */}
         <div className="relative h-[70vh] w-full">
           {game.cover_url && (

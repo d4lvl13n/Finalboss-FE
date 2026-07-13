@@ -23,6 +23,8 @@ export const siteConfig = {
 
   // Analytics & Ads
   analyticsId: process.env.NEXT_PUBLIC_GA_ID || 'G-HV2MVVJDN4',
+  // Meta Pixel (dataset) — audience building/retargeting. Empty = pixel not loaded.
+  metaPixelId: process.env.NEXT_PUBLIC_META_PIXEL_ID || '',
   siteVerification:
     process.env.NEXT_PUBLIC_SITE_VERIFICATION || 'e2c216ee3e6ae9705e843d5a227568c93d21a3ac',
   adsensePublisherId: process.env.NEXT_PUBLIC_ADSENSE_PUB_ID || 'ca-pub-7494322760704385',

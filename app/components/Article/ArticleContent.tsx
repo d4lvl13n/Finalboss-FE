@@ -28,6 +28,7 @@ import Breadcrumbs from '../Breadcrumbs';
 import TableOfContents from './TableOfContents';
 import ArticleBodyWithAds from './ArticleBodyWithAds';
 import ArticleReactions, { type ContentType } from './ArticleReactions';
+import TrackViewContent from '../TrackViewContent';
 
 /** Map the article's categories to a content type so reaction copy fits
  *  (a review never says "guide"). "Gaming" is the news/opinion catch-all. */
@@ -377,6 +378,9 @@ export default function ArticleContent({ article }: ArticleContentProps) {
     // disables position:sticky for all descendants (sidebar ads). clip clips without
     // breaking sticky — same pattern as body/#__content in layout.tsx.
     <div className="min-h-screen bg-gray-900 text-gray-200 overflow-x-clip">
+      {/* Meta Pixel content-interest signal (article title + primary category) */}
+      <TrackViewContent name={article.title} category={primaryCategory?.name} />
+
       {/* Reading Progress Bar */}
       <ReadingProgressBar />
 

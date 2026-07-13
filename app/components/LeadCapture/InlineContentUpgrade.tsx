@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaDownload, FaGamepad, FaClock, FaLock } from 'react-icons/fa';
 import { t } from '../../lib/i18n';
+import { trackCompleteRegistration } from '../../lib/fbq';
 
 interface InlineContentUpgradeProps {
   title: string;
@@ -37,6 +38,7 @@ const InlineContentUpgrade: React.FC<InlineContentUpgradeProps> = ({
       });
 
       if (!response.ok) throw new Error();
+      trackCompleteRegistration(`Inline Content Upgrade - ${articleTopic}`);
       setIsSuccess(true);
     } catch (error) {
       console.error('Error submitting form:', error);

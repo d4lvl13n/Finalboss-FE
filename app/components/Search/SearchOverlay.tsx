@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { SearchResult } from '@/app/types/search';
 import { t } from '@/app/lib/i18n';
 import { normalizeWordPressImageSrc } from '@/app/lib/imageUrl';
+import { trackSearch } from '@/app/lib/fbq';
 
 export default function SearchOverlay() {
   const { isSearchOpen, closeSearch, searchQuery, setSearchQuery } = useSearch();
@@ -57,6 +58,7 @@ export default function SearchOverlay() {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (debouncedQuery && debouncedQuery.length >= 3) {
+      trackSearch(debouncedQuery);
       router.push(`/search?q=${encodeURIComponent(debouncedQuery)}`);
       closeSearch();
     }

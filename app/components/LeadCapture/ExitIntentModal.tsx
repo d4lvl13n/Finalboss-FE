@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaTimes, FaGamepad, FaClock, FaGift, FaUsers } from 'react-icons/fa';
 import { t } from '../../lib/i18n';
+import { trackCompleteRegistration } from '../../lib/fbq';
 
 interface ExitIntentModalProps {
   onClose: () => void;
@@ -30,6 +31,7 @@ const ExitIntentModal: React.FC<ExitIntentModalProps> = ({ onClose }) => {
 
       if (!response.ok) throw new Error();
 
+      trackCompleteRegistration('Exit Intent Modal');
       setIsSuccess(true);
       setTimeout(() => {
         onClose();
