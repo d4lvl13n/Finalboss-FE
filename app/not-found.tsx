@@ -19,6 +19,19 @@ const NotFoundPage: React.FC = () => {
   const [dartPosition, setDartPosition] = useState({ x: 0, y: 0 });
   const dartboardRef = useRef<HTMLImageElement>(null);
 
+  // No ads on 404s: this page has no publisher content (AdSense policy), and
+  // bot floods hitting dead URLs would otherwise generate invalid ad
+  // impressions here. pauseAdRequests is AdSense's documented page-level
+  // kill-switch; resume on unmount so SPA-navigating away restores ads.
+  useEffect(() => {
+    const w = window as unknown as { adsbygoogle?: { pauseAdRequests?: number } & unknown[] };
+    w.adsbygoogle = w.adsbygoogle || ([] as unknown as NonNullable<typeof w.adsbygoogle>);
+    w.adsbygoogle.pauseAdRequests = 1;
+    return () => {
+      if (w.adsbygoogle) w.adsbygoogle.pauseAdRequests = 0;
+    };
+  }, []);
+
   useEffect(() => {
     if (countdown > 0) {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
