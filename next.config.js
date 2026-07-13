@@ -153,7 +153,9 @@ const nextConfig = {
               `img-src 'self' data: blob: https://${imagesHostname} https://${wpHostname} https://${baseHostname} i.ytimg.com https://images.igdb.com https://raw.githubusercontent.com ${legacyExternalImageCspSources.join(' ')} https://*.google.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google https://www.facebook.com *.cloudflareinsights.com`,
               `connect-src 'self' https://www.googletagmanager.com https://*.google.com https://*.googleapis.com https://*.google-analytics.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google https://adtrafficquality.google https://www.facebook.com https://connect.facebook.net localhost:3000 ${wpHostname} https://${wpHostname} https://www.googleapis.com *.cloudflareinsights.com`,
               "media-src 'self'",
-              "frame-src 'self' https://www.youtube.com https://www.googletagmanager.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google",
+              // www.google.com is in Google's official AdSense CSP guidance —
+              // ad-verification (adtrafficquality) and some formats frame it.
+              "frame-src 'self' https://www.youtube.com https://www.google.com https://www.googletagmanager.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google",
               "frame-ancestors 'none'",
             ].join('; '),
           },
