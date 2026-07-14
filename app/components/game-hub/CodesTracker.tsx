@@ -6,7 +6,7 @@ import { useState } from 'react';
 import type { CodeEntity } from '@/app/lib/game-hub/types';
 import { SectionHeading, Panel } from './ui';
 
-function CodeRow({ code }: { code: CodeEntity }) {
+function CodeCell({ code }: { code: CodeEntity }) {
   const [copied, setCopied] = useState(false);
   const value = code.canonicalName;
 
@@ -21,11 +21,11 @@ function CodeRow({ code }: { code: CodeEntity }) {
   };
 
   return (
-    <div className="flex items-center justify-between gap-3">
-      <div className="flex flex-wrap items-center gap-3 min-w-0">
-        <span className="font-mono text-yellow-300 bg-gray-900 rounded px-2 py-1">{value}</span>
+    <div className="flex items-center justify-between gap-3 rounded bg-gray-900/40 px-2 py-1.5">
+      <div className="flex flex-wrap items-center gap-2 min-w-0">
+        <span className="font-mono text-yellow-300 bg-gray-900 rounded px-2 py-1 text-sm">{value}</span>
         {code.attributes.reward && (
-          <span className="text-gray-300 text-sm">{code.attributes.reward}</span>
+          <span className="text-gray-400 text-xs">{code.attributes.reward}</span>
         )}
       </div>
       <button
@@ -39,25 +39,45 @@ function CodeRow({ code }: { code: CodeEntity }) {
   );
 }
 
+const INITIAL_VISIBLE = 12;
+
 export default function CodesTracker({
   lastVerified,
   active,
   expired,
+  intro,
 }: {
   lastVerified: string;
   active: CodeEntity[];
   expired: CodeEntity[];
+  intro?: string;
 }) {
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? active : active.slice(0, INITIAL_VISIBLE);
+  const hasMore = active.length > INITIAL_VISIBLE;
+
   return (
     <section>
       <SectionHeading>Codes</SectionHeading>
+      {intro && <p className="mb-5 max-w-3xl text-gray-400 leading-relaxed">{intro}</p>}
       <Panel>
         {active.length > 0 ? (
-          <div className="space-y-3">
-            {active.map((code) => (
-              <CodeRow key={code.slug} code={code} />
-            ))}
-          </div>
+          <>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {visible.map((code) => (
+                <CodeCell key={code.slug} code={code} />
+              ))}
+            </div>
+            {hasMore && (
+              <button
+                type="button"
+                onClick={() => setExpanded((v) => !v)}
+                className="rounded-full bg-gray-700 hover:bg-gray-600 px-4 py-1.5 text-sm mt-4 text-gray-100 transition"
+              >
+                {expanded ? 'Show fewer' : `Show all ${active.length} codes`}
+              </button>
+            )}
+          </>
         ) : (
           <p className="text-gray-400 text-sm">
             No active codes right now — check back after the next update.

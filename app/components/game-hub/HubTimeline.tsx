@@ -22,11 +22,12 @@ function eventDate(iso: string): string {
   }
 }
 
-export default function HubTimeline({ events }: { events: HubTimelineEvent[] }) {
+export default function HubTimeline({ events, intro }: { events: HubTimelineEvent[]; intro?: string }) {
   if (!events.length) return null;
   return (
     <section>
       <SectionHeading>What&apos;s New</SectionHeading>
+      {intro && <p className="mb-5 max-w-3xl text-gray-400 leading-relaxed">{intro}</p>}
       <Panel>
         <ol>
           {events.map((e, i) => (

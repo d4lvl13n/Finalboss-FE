@@ -8,14 +8,17 @@ import { SectionHeading } from './ui';
 export default function SystemsGrid({
   gameSlug,
   systems,
+  intro,
 }: {
   gameSlug: string;
   systems: SystemEntity[];
+  intro?: string;
 }) {
   if (!systems.length) return null;
   return (
     <section>
       <SectionHeading>Systems</SectionHeading>
+      {intro && <p className="mb-5 max-w-3xl text-gray-400 leading-relaxed">{intro}</p>}
       <div className="grid gap-4 md:grid-cols-2">
         {systems.map((s) => (
           <Link

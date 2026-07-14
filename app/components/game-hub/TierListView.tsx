@@ -14,10 +14,12 @@ export default function TierListView({
   gameSlug,
   classes,
   articleUrl,
+  intro,
 }: {
   gameSlug: string;
   classes: ClassEntity[];
   articleUrl?: string;
+  intro?: string;
 }) {
   const [mode, setMode] = useState<Mode>('pve');
 
@@ -32,6 +34,7 @@ export default function TierListView({
   return (
     <section>
       <SectionHeading>Class Tier List</SectionHeading>
+      {intro && <p className="mb-5 max-w-3xl text-gray-400 leading-relaxed">{intro}</p>}
       <Panel>
         <div className="flex gap-2 mb-6">
           {(['pve', 'pvp'] as Mode[]).map((m) => (

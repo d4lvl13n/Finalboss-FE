@@ -12,14 +12,17 @@ function kindLabel(kind?: 'dungeon' | 'world_boss'): string {
 export default function DungeonsGrid({
   gameSlug,
   dungeons,
+  intro,
 }: {
   gameSlug: string;
   dungeons: DungeonEntity[];
+  intro?: string;
 }) {
   if (!dungeons.length) return null;
   return (
     <section>
       <SectionHeading>Dungeons &amp; Bosses</SectionHeading>
+      {intro && <p className="mb-5 max-w-3xl text-gray-400 leading-relaxed">{intro}</p>}
       <div className="grid gap-4 md:grid-cols-2">
         {dungeons.map((d) => (
           <Link

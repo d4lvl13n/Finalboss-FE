@@ -29,6 +29,7 @@ import CodesTracker from '@/app/components/game-hub/CodesTracker';
 import DungeonsGrid from '@/app/components/game-hub/DungeonsGrid';
 import SystemsGrid from '@/app/components/game-hub/SystemsGrid';
 import HubTimeline from '@/app/components/game-hub/HubTimeline';
+import HubNav from '@/app/components/game-hub/HubNav';
 
 // intelligence (api) layout — existing components
 import GameHero from '@/app/components/intelligence/GameHero';
@@ -138,6 +139,17 @@ function GameplayHub({
   const companies: string[] = [];
   const tierArticle = gp.articles.find((a) => a.kind === 'tier_list')?.url;
 
+  const navItems = [
+    gp.classes.length > 0 && { label: 'Tier List', href: '#tier-list' },
+    gp.classes.length > 0 && { label: 'Classes', href: '#classes' },
+    { label: 'Codes', href: '#codes' },
+    gp.dungeons.length > 0 && { label: 'Dungeons', href: '#dungeons' },
+    gp.systems.length > 0 && { label: 'Systems', href: '#systems' },
+    gp.timeline.length > 0 && { label: 'Updates', href: '#updates' },
+    screenshots.length > 0 && { label: 'Screenshots', href: '#screenshots' },
+    readNext.length > 0 && { label: 'Articles', href: '#read-next' },
+  ].filter(Boolean) as { label: string; href: string }[];
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
       <TrackViewContent name={e.canonicalName} category="Games" type="game" />
@@ -181,21 +193,70 @@ function GameplayHub({
         </header>
 
         {description && (
-          <Panel className="mb-10">
+          <Panel className="mb-8">
             <p className="leading-relaxed text-gray-300">{description}</p>
           </Panel>
         )}
 
+        <HubNav items={navItems} />
+
         <div className="space-y-12">
-          {gp.classes.length > 0 && <TierListView gameSlug={slug} classes={gp.classes} articleUrl={tierArticle} />}
-          {gp.classes.length > 0 && <ClassRoster gameSlug={slug} classes={gp.classes} />}
-          <CodesTracker lastVerified={gp.codes.lastVerified} active={gp.codes.active} expired={gp.codes.expired} />
-          {gp.dungeons.length > 0 && <DungeonsGrid gameSlug={slug} dungeons={gp.dungeons} />}
-          {gp.systems.length > 0 && <SystemsGrid gameSlug={slug} systems={gp.systems} />}
-          <HubTimeline events={gp.timeline} />
+          {gp.classes.length > 0 && (
+            <div id="tier-list" className="scroll-mt-28">
+              <TierListView
+                gameSlug={slug}
+                classes={gp.classes}
+                articleUrl={tierArticle}
+                intro="Where each advanced class currently sits in PvE and PvP. Flip between the two — these ratings track the live meta and shift with balance patches, so treat them as a starting point, not gospel."
+              />
+            </div>
+          )}
+          {gp.classes.length > 0 && (
+            <div id="classes" className="scroll-mt-28">
+              <ClassRoster
+                gameSlug={slug}
+                classes={gp.classes}
+                intro="You start on one of eight base classes, each branching into advanced specialisations at around level 15 — and that choice is permanent. Open any class for its role, weapon, playstyle and synergies."
+              />
+            </div>
+          )}
+          <div id="codes" className="scroll-mt-28">
+            <CodesTracker
+              lastVerified={gp.codes.lastVerified}
+              active={gp.codes.active}
+              expired={gp.codes.expired}
+              intro="Redeem these in-game for free rewards like Hunting Permits and Bound Gold. Codes are region-specific and expire over time, so check the verified date below."
+            />
+          </div>
+          {gp.dungeons.length > 0 && (
+            <div id="dungeons" className="scroll-mt-28">
+              <DungeonsGrid
+                gameSlug={slug}
+                dungeons={gp.dungeons}
+                intro="The group PvE that anchors the endgame — dungeons, raids and open-world bosses."
+              />
+            </div>
+          )}
+          {gp.systems.length > 0 && (
+            <div id="systems" className="scroll-mt-28">
+              <SystemsGrid
+                gameSlug={slug}
+                systems={gp.systems}
+                intro="The progression and live-service systems that shape a run, from the permanent advanced-class pick to housing and monetisation."
+              />
+            </div>
+          )}
+          {gp.timeline.length > 0 && (
+            <div id="updates" className="scroll-mt-28">
+              <HubTimeline
+                events={gp.timeline}
+                intro="Recent patches, new classes and collaborations — newest first."
+              />
+            </div>
+          )}
 
           {(genres.length > 0 || platforms.length > 0 || companies.length > 0) && (
-            <section>
+            <section id="facts" className="scroll-mt-28">
               <SectionHeading>Game Facts</SectionHeading>
               <Panel>
                 <div className="grid gap-6 md:grid-cols-2">
@@ -221,7 +282,7 @@ function GameplayHub({
           )}
 
           {screenshots.length > 0 && (
-            <section>
+            <section id="screenshots" className="scroll-mt-28">
               <SectionHeading>Screenshots</SectionHeading>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {screenshots.map((src, i) => (
@@ -240,7 +301,7 @@ function GameplayHub({
           )}
 
           {readNext.length > 0 && (
-            <section>
+            <section id="read-next" className="scroll-mt-28">
               <SectionHeading>Read next on FinalBoss</SectionHeading>
               <ResponsiveArticleGrid articles={readNext} showFeatured={false} featuredCount={0} />
             </section>
