@@ -1,4 +1,5 @@
-// Class detail body. Server component.
+// Class detail body. Warm FinalBoss game-page idiom. Server component.
+// No outer <main>: the route supplies the gradient bg + container.
 
 import Link from 'next/link';
 import type {
@@ -7,25 +8,9 @@ import type {
   GameplayEntityType,
 } from '@/app/lib/game-hub/types';
 import type { EntityDetail } from './entity-detail';
-import { entityPath, tierTone } from './format';
+import { entityPath } from './format';
 import SourceList from './SourceList';
-
-function FactRow({
-  label,
-  value,
-  valueClass = 'text-gray-100',
-}: {
-  label: string;
-  value: string;
-  valueClass?: string;
-}) {
-  return (
-    <div>
-      <div className="text-xs uppercase tracking-wide text-gray-500">{label}</div>
-      <div className={`text-sm font-medium ${valueClass}`}>{value}</div>
-    </div>
-  );
-}
+import { Panel, Pill, FieldLabel, TierBadge } from './ui';
 
 /** Best-effort map of an entity's type to a gameplay route segment. */
 function typeOf(entity: GameplayEntity): GameplayEntityType {
@@ -39,88 +24,92 @@ export default function ClassDetail({ detail }: { detail: EntityDetail }) {
   const a = entity.attributes as ClassAttributes;
 
   return (
-    <div className="space-y-6">
-      <header className="flex items-center gap-3">
-        <h1 className="text-2xl font-bold text-white sm:text-3xl">{entity.canonicalName}</h1>
+    <div className="space-y-8">
+      <header className="flex flex-wrap items-center gap-3">
+        <h1 className="text-3xl md:text-4xl font-bold text-white">{entity.canonicalName}</h1>
         {a.isNew ? (
-          <span className="rounded-full bg-amber-400/10 px-2 py-0.5 text-[11px] font-medium text-amber-400">
+          <span className="bg-yellow-400 text-gray-900 text-[11px] font-bold px-2 py-0.5 rounded-full">
             NEW
           </span>
         ) : null}
       </header>
 
-      <section className="rounded-xl border border-gray-800 bg-gray-900/60 p-5">
-        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-cyan-400">Spec</h2>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <FactRow label="Role" value={a.role || '—'} />
-          <FactRow label="Weapon" value={a.weapon || '—'} />
-          <FactRow label="PvE tier" value={a.pveTier || '—'} valueClass={tierTone(a.pveTier)} />
-          <FactRow label="PvP tier" value={a.pvpTier || '—'} valueClass={tierTone(a.pvpTier)} />
+      <Panel>
+        <div className="grid gap-6 md:grid-cols-2">
+          <div>
+            <FieldLabel>Role</FieldLabel>
+            <p className="text-gray-200">{a.role || '—'}</p>
+          </div>
+          <div>
+            <FieldLabel>Weapon</FieldLabel>
+            <p className="text-gray-200">{a.weapon || '—'}</p>
+          </div>
+          <div>
+            <FieldLabel>PvE Tier</FieldLabel>
+            {a.pveTier ? <TierBadge label="PvE" tier={a.pveTier} /> : <p className="text-gray-400">—</p>}
+          </div>
+          <div>
+            <FieldLabel>PvP Tier</FieldLabel>
+            {a.pvpTier ? <TierBadge label="PvP" tier={a.pvpTier} /> : <p className="text-gray-400">—</p>}
+          </div>
         </div>
+      </Panel>
 
-        {a.playstyle && (
-          <div className="mt-4">
-            <div className="text-xs uppercase tracking-wide text-gray-500">Playstyle</div>
-            <p className="mt-1 text-sm text-gray-300">{a.playstyle}</p>
+      {a.playstyle && (
+        <Panel>
+          <FieldLabel>Playstyle</FieldLabel>
+          <p className="text-gray-300 leading-relaxed">{a.playstyle}</p>
+        </Panel>
+      )}
+
+      {((a.skills && a.skills.length > 0) ||
+        (a.advancedClasses && a.advancedClasses.length > 0)) && (
+        <Panel>
+          <div className="space-y-6">
+            {a.skills && a.skills.length > 0 && (
+              <div>
+                <FieldLabel>Skills</FieldLabel>
+                <div className="flex flex-wrap gap-2">
+                  {a.skills.map((s) => (
+                    <Pill key={s}>{s}</Pill>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {a.advancedClasses && a.advancedClasses.length > 0 && (
+              <div>
+                <FieldLabel>Advanced Classes</FieldLabel>
+                <div className="flex flex-wrap gap-2">
+                  {a.advancedClasses.map((s) => (
+                    <Pill key={s}>{s}</Pill>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        )}
-
-        {a.skills && a.skills.length > 0 && (
-          <div className="mt-4">
-            <div className="mb-2 text-xs uppercase tracking-wide text-gray-500">Skills</div>
-            <div className="flex flex-wrap gap-1.5">
-              {a.skills.map((s) => (
-                <span
-                  key={s}
-                  className="rounded bg-gray-800 px-1.5 py-0.5 text-[11px] font-medium text-gray-300"
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {a.advancedClasses && a.advancedClasses.length > 0 && (
-          <div className="mt-4">
-            <div className="mb-2 text-xs uppercase tracking-wide text-gray-500">Advanced classes</div>
-            <div className="flex flex-wrap gap-1.5">
-              {a.advancedClasses.map((s) => (
-                <span
-                  key={s}
-                  className="rounded bg-gray-800 px-1.5 py-0.5 text-[11px] font-medium text-gray-300"
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <SourceList sources={entity.sources} />
-      </section>
+        </Panel>
+      )}
 
       {related.length > 0 && (
-        <section className="rounded-xl border border-gray-800 bg-gray-900/60 p-5">
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-cyan-400">
-            Synergies &amp; counters
-          </h2>
+        <div>
+          <h3 className="text-xl font-bold text-yellow-400 mb-4">Synergies &amp; Counters</h3>
           <div className="flex flex-wrap gap-2">
             {related.map(({ label, entity: rel }) => (
               <Link
                 key={`${label}-${rel.slug}`}
                 href={entityPath(gameSlug, typeOf(rel), rel.slug)}
-                className="group flex items-center gap-2 rounded-lg border border-gray-800 bg-gray-900/50 px-3 py-1.5 transition-colors hover:border-gray-700 hover:bg-gray-900"
+                className="inline-flex items-center gap-2 bg-gray-700 hover:bg-gray-600 rounded-full px-3 py-1 text-sm transition"
               >
-                <span className="text-[11px] uppercase tracking-wide text-gray-500">{label}</span>
-                <span className="text-sm font-medium text-gray-200 group-hover:text-white">
-                  {rel.canonicalName}
-                </span>
+                <span className="text-[11px] uppercase tracking-wide text-yellow-400">{label}</span>
+                <span className="text-gray-100">{rel.canonicalName}</span>
               </Link>
             ))}
           </div>
-        </section>
+        </div>
       )}
+
+      <SourceList sources={entity.sources} />
     </div>
   );
 }

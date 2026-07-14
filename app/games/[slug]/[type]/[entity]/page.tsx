@@ -60,14 +60,14 @@ export default function EntityDetailPage({ params }: Props) {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-950 text-gray-100">
-        <div className="mx-auto max-w-3xl px-4 py-8">
-          <nav className="mb-6 text-sm text-gray-500">
-            <a href="/games" className="hover:text-gray-300">Games</a>
+      <main className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+        <div className="container mx-auto max-w-4xl px-4 py-8">
+          <nav className="mb-6 text-sm text-gray-400">
+            <a href="/games" className="hover:text-yellow-400">Games</a>
             <span className="px-2">/</span>
-            <a href={gamePath} className="hover:text-gray-300">{detail.game.canonicalName}</a>
+            <a href={gamePath} className="hover:text-yellow-400">{detail.game.canonicalName}</a>
             <span className="px-2">/</span>
-            <span className="text-gray-400">{detail.entity.canonicalName}</span>
+            <span className="text-gray-300">{detail.entity.canonicalName}</span>
           </nav>
 
           {params.type === 'class' ? <ClassDetail detail={detail} /> : <EntityDetailGeneric detail={detail} />}

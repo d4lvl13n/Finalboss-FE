@@ -103,7 +103,9 @@ export interface GameRecord {
   platforms?: string[];
   releaseDate?: string | null; // ISO
   franchise?: string | null;
-  coverImageId?: string | null; // IGDB image id
+  coverImageId?: string | null; // IGDB cover image id
+  screenshots?: string[]; // IGDB screenshot image ids (baked, deterministic)
+  igdbRating?: number | null; // IGDB/critic rating 0-100
   imageUrl?: string | null;
   description?: string; // our own factual summary, never copied prose
   sources: string[];

@@ -1,20 +1,34 @@
 // Game hub — provider-backed. Two layouts behind ONE contract:
-//   • local blueprint games (e.g. Crystal of Atlan) → structured gameplay hub
-//   • api games (GPBot Knowledge API, e.g. GTA VI)   → living-intelligence view
-// The api branch is unchanged from the original intelligence page, so existing
-// api-backed pages render identically. Which layout is chosen depends only on
-// whether the provider returned a `gameplay` payload (local) vs `intelligence`.
+//   • local blueprint games (e.g. Crystal of Atlan) → structured gameplay hub,
+//     rendered in the SAME visual language as the IGDB /game/[slug] page
+//     (GameDetails): gradient bg, cover hero, yellow accents, bg-gray-800 cards.
+//   • api games (GPBot Knowledge API, e.g. GTA VI) → living-intelligence view,
+//     UNCHANGED from the original intelligence page.
 
 import { Metadata } from 'next';
 import { notFound, permanentRedirect } from 'next/navigation';
+import Image from 'next/image';
 
 import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
 import { buildPageMetadata } from '@/app/lib/seo';
 import { igdbImage } from '@/app/lib/knowledge/client';
 import { getGameHub, localGameSlugs } from '@/app/lib/game-hub/provider';
+import { fetchReadNextArticles, type HubArticle } from '@/app/lib/game-hub/related-articles';
 import type { GameHub } from '@/app/lib/game-hub/types';
 import { videoGameJsonLd, itemListJsonLd, breadcrumbJsonLd, graph } from '@/app/lib/jsonld';
+
+import TrackViewContent from '@/app/components/TrackViewContent';
+import ResponsiveArticleGrid from '@/app/components/ResponsiveArticleGrid';
+import { SectionHeading, Panel, Pill, FieldLabel } from '@/app/components/game-hub/ui';
+
+// gameplay (local blueprint) sections — each self-heads with SectionHeading
+import ClassRoster from '@/app/components/game-hub/ClassRoster';
+import TierListView from '@/app/components/game-hub/TierListView';
+import CodesTracker from '@/app/components/game-hub/CodesTracker';
+import DungeonsGrid from '@/app/components/game-hub/DungeonsGrid';
+import SystemsGrid from '@/app/components/game-hub/SystemsGrid';
+import HubTimeline from '@/app/components/game-hub/HubTimeline';
 
 // intelligence (api) layout — existing components
 import GameHero from '@/app/components/intelligence/GameHero';
@@ -24,22 +38,12 @@ import TopicsPanel from '@/app/components/intelligence/TopicsPanel';
 import GameTimeline from '@/app/components/intelligence/GameTimeline';
 import LatestNews from '@/app/components/intelligence/LatestNews';
 
-// gameplay (local blueprint) layout — game-hub components
-import ClassRoster from '@/app/components/game-hub/ClassRoster';
-import TierListView from '@/app/components/game-hub/TierListView';
-import CodesTracker from '@/app/components/game-hub/CodesTracker';
-import DungeonsGrid from '@/app/components/game-hub/DungeonsGrid';
-import SystemsGrid from '@/app/components/game-hub/SystemsGrid';
-import HubTimeline from '@/app/components/game-hub/HubTimeline';
-import ReadNext from '@/app/components/game-hub/ReadNext';
-
 export const revalidate = 3600;
 
 interface Props {
   params: { slug: string };
 }
 
-// Pre-render local blueprint games; api games render on-demand (ISR).
 export function generateStaticParams() {
   return localGameSlugs().map((slug) => ({ slug }));
 }
@@ -52,7 +56,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = (
     hub.seo.description ||
     e.description ||
-    `Live coverage, sentiment and the latest for ${e.canonicalName}.`
+    `Classes, tier list, codes and guides for ${e.canonicalName}.`
   ).slice(0, 200);
   const image = e.imageUrl || igdbImage(e.attributes?.cover_image_id) || undefined;
   return buildPageMetadata({
@@ -74,6 +78,23 @@ export default async function GameHubPage({ params }: Props) {
     permanentRedirect(`/games/${canonical}`);
   }
 
+  // --- Local blueprint hub: render as a FinalBoss game page (GameDetails look)
+  if (hub.gameplay) {
+    const readNext = await fetchReadNextArticles(hub.gameplay.articles);
+    return (
+      <>
+        <Header />
+        <GameplayHub hub={hub} slug={params.slug} readNext={readNext} />
+        <Footer />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(hub, params.slug)) }}
+        />
+      </>
+    );
+  }
+
+  // --- API intelligence hub: unchanged
   return (
     <>
       <Header />
@@ -84,8 +105,7 @@ export default async function GameHubPage({ params }: Props) {
             <span className="px-2">/</span>
             <span className="text-gray-400">{hub.entity.canonicalName}</span>
           </nav>
-
-          {hub.gameplay ? <GameplayHub hub={hub} slug={params.slug} /> : <IntelligenceHub hub={hub} />}
+          <IntelligenceHub hub={hub} />
         </div>
       </main>
       <Footer />
@@ -94,20 +114,140 @@ export default async function GameHubPage({ params }: Props) {
   );
 }
 
-function GameplayHub({ hub, slug }: { hub: GameHub; slug: string }) {
+function GameplayHub({
+  hub,
+  slug,
+  readNext,
+}: {
+  hub: GameHub;
+  slug: string;
+  readNext: HubArticle[];
+}) {
   const gp = hub.gameplay!;
+  const e = hub.entity;
+  const a = e.attributes || {};
+  const cover = e.imageUrl || igdbImage(a.cover_image_id) || null;
+  const description = e.description || null;
+  const ratingRaw = (a as Record<string, unknown>).igdb_rating;
+  const rating = typeof ratingRaw === 'number' ? Math.round(ratingRaw) : null;
+  const platforms = (a.platforms as string[] | undefined) || [];
+  const genres = (a.genres as string[] | undefined) || [];
+  const screenshots = (((a as Record<string, unknown>).screenshots as string[] | undefined) || [])
+    .map((id) => igdbImage(id, 't_screenshot_big'))
+    .filter((u): u is string => Boolean(u));
+  const companies: string[] = [];
   const tierArticle = gp.articles.find((a) => a.kind === 'tier_list')?.url;
+
   return (
-    <div className="space-y-8">
-      <GameHero entity={hub.entity} />
-      {gp.classes.length > 0 && <ClassRoster gameSlug={slug} classes={gp.classes} />}
-      {gp.classes.length > 0 && <TierListView gameSlug={slug} classes={gp.classes} articleUrl={tierArticle} />}
-      <CodesTracker lastVerified={gp.codes.lastVerified} active={gp.codes.active} expired={gp.codes.expired} />
-      {gp.dungeons.length > 0 && <DungeonsGrid gameSlug={slug} dungeons={gp.dungeons} />}
-      {gp.systems.length > 0 && <SystemsGrid gameSlug={slug} systems={gp.systems} />}
-      <HubTimeline events={gp.timeline} />
-      <ReadNext articles={gp.articles} />
-    </div>
+    <main className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+      <TrackViewContent name={e.canonicalName} category="Games" type="game" />
+
+      {/* Hero */}
+      <div className="relative h-[56vh] min-h-[360px] w-full">
+        {cover ? (
+          <>
+            <div className="absolute inset-0 overflow-hidden">
+              <Image src={cover} alt="" fill className="object-cover blur-xl opacity-30" priority unoptimized />
+              <div className="absolute inset-0 bg-gradient-to-b from-gray-900/40 to-gray-900" />
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative h-[360px] w-[270px] overflow-hidden rounded-lg shadow-2xl">
+                <Image src={cover} alt={e.canonicalName} fill className="object-cover" priority unoptimized />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-800 to-gray-900" />
+        )}
+      </div>
+
+      <div className="container mx-auto px-4 py-8">
+        <nav className="mb-4 text-sm text-gray-400">
+          <a href="/games" className="hover:text-yellow-400">Games</a>
+          <span className="px-2">/</span>
+          <span className="text-gray-300">{e.canonicalName}</span>
+        </nav>
+
+        <header className="mb-8 text-center">
+          <h1 className="mb-3 text-4xl font-bold text-white md:text-6xl">{e.canonicalName}</h1>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {rating != null && (
+              <span className="rounded-full bg-yellow-400 px-4 py-2 font-bold text-gray-900">{rating}/100</span>
+            )}
+            {platforms.map((p) => (
+              <span key={p} className="rounded-full bg-gray-700 px-4 py-2 text-gray-200">{p}</span>
+            ))}
+          </div>
+        </header>
+
+        {description && (
+          <Panel className="mb-10">
+            <p className="leading-relaxed text-gray-300">{description}</p>
+          </Panel>
+        )}
+
+        <div className="space-y-12">
+          {gp.classes.length > 0 && <TierListView gameSlug={slug} classes={gp.classes} articleUrl={tierArticle} />}
+          {gp.classes.length > 0 && <ClassRoster gameSlug={slug} classes={gp.classes} />}
+          <CodesTracker lastVerified={gp.codes.lastVerified} active={gp.codes.active} expired={gp.codes.expired} />
+          {gp.dungeons.length > 0 && <DungeonsGrid gameSlug={slug} dungeons={gp.dungeons} />}
+          {gp.systems.length > 0 && <SystemsGrid gameSlug={slug} systems={gp.systems} />}
+          <HubTimeline events={gp.timeline} />
+
+          {(genres.length > 0 || platforms.length > 0 || companies.length > 0) && (
+            <section>
+              <SectionHeading>Game Facts</SectionHeading>
+              <Panel>
+                <div className="grid gap-6 md:grid-cols-2">
+                  {[
+                    { label: 'Genres', items: genres },
+                    { label: 'Platforms', items: platforms },
+                    { label: 'Studios', items: companies },
+                  ]
+                    .filter((b) => b.items && b.items.length > 0)
+                    .map((b) => (
+                      <div key={b.label}>
+                        <FieldLabel>{b.label}</FieldLabel>
+                        <div className="flex flex-wrap gap-2">
+                          {b.items!.map((it) => (
+                            <Pill key={`${b.label}-${it}`}>{it}</Pill>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </Panel>
+            </section>
+          )}
+
+          {screenshots.length > 0 && (
+            <section>
+              <SectionHeading>Screenshots</SectionHeading>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {screenshots.map((src, i) => (
+                  <div key={i} className="group relative h-48 overflow-hidden rounded-lg">
+                    <Image
+                      src={src}
+                      alt={`${e.canonicalName} screenshot ${i + 1}`}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                      unoptimized
+                    />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {readNext.length > 0 && (
+            <section>
+              <SectionHeading>Read next on FinalBoss</SectionHeading>
+              <ResponsiveArticleGrid articles={readNext} showFeatured={false} featuredCount={0} />
+            </section>
+          )}
+        </div>
+      </div>
+    </main>
   );
 }
 

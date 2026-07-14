@@ -16,7 +16,11 @@ export const GAME: GameRecord = {
   platforms: ['PC', 'PlayStation 5', 'iOS', 'Android'],
   releaseDate: null,
   franchise: null,
-  coverImageId: null,
+  // IGDB (174674) presentation art, baked so the hero is deterministic and the
+  // build has no live-IGDB dependency.
+  coverImageId: 'co7h0c',
+  screenshots: ['scptz1', 'scptz2', 'scptz3', 'scptz4', 'scptz5'],
+  igdbRating: 85,
   imageUrl: null,
   description:
     'Crystal of Atlan is a free-to-play magicpunk MMO action-RPG built on Unreal Engine, defined by 3D aerial combo combat and cross-play with shared progression across PC, PS5, iOS and Android.',

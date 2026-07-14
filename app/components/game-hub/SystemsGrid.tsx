@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import type { SystemEntity } from '@/app/lib/game-hub/types';
 import { entityPath } from './format';
+import { SectionHeading } from './ui';
 
 export default function SystemsGrid({
   gameSlug,
@@ -13,20 +14,18 @@ export default function SystemsGrid({
 }) {
   if (!systems.length) return null;
   return (
-    <section className="rounded-xl border border-gray-800 bg-gray-900/60 p-5">
-      <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-cyan-400">Systems</h2>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <section>
+      <SectionHeading>Systems</SectionHeading>
+      <div className="grid gap-4 md:grid-cols-2">
         {systems.map((s) => (
           <Link
             key={s.slug}
             href={entityPath(gameSlug, 'system', s.slug)}
-            className="group flex flex-col overflow-hidden rounded-xl border border-gray-800 bg-gray-900/50 p-4 transition-colors hover:border-gray-700 hover:bg-gray-900"
+            className="block bg-gray-800 rounded-lg p-5 shadow-lg transition hover:ring-1 hover:ring-yellow-400/40"
           >
-            <h3 className="text-sm font-semibold leading-snug text-gray-100 group-hover:text-white">
-              {s.canonicalName}
-            </h3>
+            <h3 className="text-white font-semibold">{s.canonicalName}</h3>
             {s.attributes.summary && (
-              <p className="mt-2 text-sm text-gray-400">{s.attributes.summary}</p>
+              <p className="text-gray-400 text-sm mt-1">{s.attributes.summary}</p>
             )}
           </Link>
         ))}

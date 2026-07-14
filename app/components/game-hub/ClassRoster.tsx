@@ -2,6 +2,7 @@
 
 import type { ClassEntity } from '@/app/lib/game-hub/types';
 import ClassCard from './ClassCard';
+import { SectionHeading } from './ui';
 
 export default function ClassRoster({
   gameSlug,
@@ -12,9 +13,9 @@ export default function ClassRoster({
 }) {
   if (!classes.length) return null;
   return (
-    <section className="rounded-xl border border-gray-800 bg-gray-900/60 p-5">
-      <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-cyan-400">Classes</h2>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+    <section>
+      <SectionHeading>Classes</SectionHeading>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         {classes.map((cls) => (
           <ClassCard key={cls.slug} gameSlug={gameSlug} cls={cls} />
         ))}

@@ -73,6 +73,8 @@ function normalizeGame(g: GameRecord): KnowledgeEntity {
       release_date: g.releaseDate ?? null,
       franchise: g.franchise ?? null,
       cover_image_id: g.coverImageId ?? null,
+      screenshots: g.screenshots || [],
+      igdb_rating: g.igdbRating ?? null,
       aliases: g.aliases || [],
     }),
     description: g.description ?? null,
