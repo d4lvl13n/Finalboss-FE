@@ -12,7 +12,7 @@ export default function robots(): MetadataRoute.Robots {
     },
     sitemap: [
       `${baseUrl}/sitemap.xml`,
-      `${baseUrl}/games/sitemap.xml`,
+      `${baseUrl}/game/sitemap.xml`,
       `${baseUrl}/gaming-laptops/sitemap.xml`,
       `${baseUrl}/handhelds/sitemap.xml`,
     ],

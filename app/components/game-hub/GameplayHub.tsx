@@ -1,28 +1,19 @@
-// Game hub — provider-backed. Two layouts behind ONE contract:
-//   • local blueprint games (e.g. Crystal of Atlan) → structured gameplay hub,
-//     rendered in the SAME visual language as the IGDB /game/[slug] page
-//     (GameDetails): gradient bg, cover hero, yellow accents, bg-gray-800 cards.
-//   • api games (GPBot Knowledge API, e.g. GTA VI) → living-intelligence view,
-//     UNCHANGED from the original intelligence page.
+// The structured gameplay hub body, rendered inside /game/[slug] for local
+// blueprint games (e.g. Crystal of Atlan). Same visual language as GameDetails
+// (gradient bg, cover hero, yellow accents, bg-gray-800 cards) so it reads as a
+// native FinalBoss game page. Server component; the page fetches `readNext`.
 
-import { Metadata } from 'next';
-import { notFound, permanentRedirect } from 'next/navigation';
 import Image from 'next/image';
 
-import Header from '@/app/components/Header';
-import Footer from '@/app/components/Footer';
-import { buildPageMetadata } from '@/app/lib/seo';
 import { igdbImage } from '@/app/lib/knowledge/client';
-import { getGameHub, localGameSlugs } from '@/app/lib/game-hub/provider';
-import { fetchReadNextArticles, type HubArticle } from '@/app/lib/game-hub/related-articles';
 import type { GameHub } from '@/app/lib/game-hub/types';
+import type { HubArticle } from '@/app/lib/game-hub/related-articles';
 import { videoGameJsonLd, itemListJsonLd, breadcrumbJsonLd, graph } from '@/app/lib/jsonld';
 
 import TrackViewContent from '@/app/components/TrackViewContent';
-import ResponsiveArticleGrid from '@/app/components/ResponsiveArticleGrid';
+import ArticleGridMore from '@/app/components/game-hub/ArticleGridMore';
 import { SectionHeading, Panel, Pill, FieldLabel } from '@/app/components/game-hub/ui';
 
-// gameplay (local blueprint) sections — each self-heads with SectionHeading
 import ClassRoster from '@/app/components/game-hub/ClassRoster';
 import TierListView from '@/app/components/game-hub/TierListView';
 import CodesTracker from '@/app/components/game-hub/CodesTracker';
@@ -31,91 +22,7 @@ import SystemsGrid from '@/app/components/game-hub/SystemsGrid';
 import HubTimeline from '@/app/components/game-hub/HubTimeline';
 import HubNav from '@/app/components/game-hub/HubNav';
 
-// intelligence (api) layout — existing components
-import GameHero from '@/app/components/intelligence/GameHero';
-import IntelligenceSnapshot from '@/app/components/intelligence/IntelligenceSnapshot';
-import CoverageTrend from '@/app/components/intelligence/CoverageTrend';
-import TopicsPanel from '@/app/components/intelligence/TopicsPanel';
-import GameTimeline from '@/app/components/intelligence/GameTimeline';
-import LatestNews from '@/app/components/intelligence/LatestNews';
-
-export const revalidate = 3600;
-
-interface Props {
-  params: { slug: string };
-}
-
-export function generateStaticParams() {
-  return localGameSlugs().map((slug) => ({ slug }));
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const hub = await getGameHub(params.slug);
-  if (!hub) return { title: 'Game not found | FinalBoss.io' };
-  const e = hub.entity;
-  const indexable = hub.seo.indexabilityStatus === 'public_index';
-  const description = (
-    hub.seo.description ||
-    e.description ||
-    `Classes, tier list, codes and guides for ${e.canonicalName}.`
-  ).slice(0, 200);
-  const image = e.imageUrl || igdbImage(e.attributes?.cover_image_id) || undefined;
-  return buildPageMetadata({
-    title: hub.seo.title || `${e.canonicalName} — Coverage & Intelligence`,
-    description,
-    path: `/games/${hub.seo.canonicalSlug || params.slug}`,
-    image,
-    type: 'website',
-    robots: indexable ? undefined : { index: false, follow: true },
-  });
-}
-
-export default async function GameHubPage({ params }: Props) {
-  const hub = await getGameHub(params.slug);
-  if (!hub) notFound();
-
-  const canonical = hub.seo.canonicalSlug;
-  if (canonical && canonical !== params.slug) {
-    permanentRedirect(`/games/${canonical}`);
-  }
-
-  // --- Local blueprint hub: render as a FinalBoss game page (GameDetails look)
-  if (hub.gameplay) {
-    const readNext = await fetchReadNextArticles(hub.gameplay.articles);
-    return (
-      <>
-        <Header />
-        <GameplayHub hub={hub} slug={params.slug} readNext={readNext} />
-        <Footer />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(hub, params.slug)) }}
-        />
-      </>
-    );
-  }
-
-  // --- API intelligence hub: unchanged
-  return (
-    <>
-      <Header />
-      <main className="min-h-screen bg-gray-950 text-gray-100">
-        <div className="mx-auto max-w-4xl px-4 py-8">
-          <nav className="mb-6 text-sm text-gray-500">
-            <a href="/games" className="hover:text-gray-300">Games</a>
-            <span className="px-2">/</span>
-            <span className="text-gray-400">{hub.entity.canonicalName}</span>
-          </nav>
-          <IntelligenceHub hub={hub} />
-        </div>
-      </main>
-      <Footer />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(hub, params.slug)) }} />
-    </>
-  );
-}
-
-function GameplayHub({
+export default function GameplayHub({
   hub,
   slug,
   readNext,
@@ -137,7 +44,7 @@ function GameplayHub({
     .map((id) => igdbImage(id, 't_screenshot_big'))
     .filter((u): u is string => Boolean(u));
   const companies: string[] = [];
-  const tierArticle = gp.articles.find((a) => a.kind === 'tier_list')?.url;
+  const tierArticle = gp.articles.find((art) => art.kind === 'tier_list')?.url;
 
   const navItems = [
     gp.classes.length > 0 && { label: 'Tier List', href: '#tier-list' },
@@ -248,10 +155,7 @@ function GameplayHub({
           )}
           {gp.timeline.length > 0 && (
             <div id="updates" className="scroll-mt-28">
-              <HubTimeline
-                events={gp.timeline}
-                intro="Recent patches, new classes and collaborations — newest first."
-              />
+              <HubTimeline events={gp.timeline} intro="Recent patches, new classes and collaborations — newest first." />
             </div>
           )}
 
@@ -303,7 +207,7 @@ function GameplayHub({
           {readNext.length > 0 && (
             <section id="read-next" className="scroll-mt-28">
               <SectionHeading>Read next on FinalBoss</SectionHeading>
-              <ResponsiveArticleGrid articles={readNext} showFeatured={false} featuredCount={0} />
+              <ArticleGridMore articles={readNext} pageSize={6} />
             </section>
           )}
         </div>
@@ -312,25 +216,11 @@ function GameplayHub({
   );
 }
 
-function IntelligenceHub({ hub }: { hub: GameHub }) {
-  const intel = hub.intelligence;
-  if (!intel) return null;
-  return (
-    <div className="space-y-6">
-      <GameHero entity={hub.entity} />
-      <IntelligenceSnapshot coverage={intel.coverage} topic={intel.latestTopicSnapshot} lastBuiltAt={hub.entity.lastBuiltAt} />
-      <CoverageTrend coverage={intel.coverage} />
-      <TopicsPanel topic={intel.latestTopicSnapshot} />
-      <GameTimeline events={intel.timeline} />
-      <LatestNews content={intel.content} />
-    </div>
-  );
-}
-
-function buildJsonLd(hub: GameHub, slug: string) {
+/** JSON-LD for a local blueprint hub at /game/<slug>. */
+export function buildGameplayJsonLd(hub: GameHub, slug: string) {
   const e = hub.entity;
   const a = e.attributes || {};
-  const path = `/games/${hub.seo.canonicalSlug || slug}`;
+  const path = `/game/${slug}`;
   const image = e.imageUrl || igdbImage(a.cover_image_id) || undefined;
   const game = videoGameJsonLd({
     name: e.canonicalName,
@@ -343,15 +233,12 @@ function buildJsonLd(hub: GameHub, slug: string) {
     platforms: a.platforms,
     datePublished: a.release_date,
   });
-
-  if (!hub.gameplay) return game;
-
   const crumbs = breadcrumbJsonLd([
     { name: 'Games', path: '/games' },
     { name: e.canonicalName, path },
   ]);
   const nodes = [game, crumbs];
-  if (hub.gameplay.classes.length > 0) {
+  if (hub.gameplay && hub.gameplay.classes.length > 0) {
     nodes.push(
       itemListJsonLd({
         name: `${e.canonicalName} Classes`,

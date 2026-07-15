@@ -1,7 +1,7 @@
-// Gameplay entity detail (class / dungeon / system) for local blueprint games.
-// Blueprint-driven: the [type] segment is the entity type; only a blueprint's
-// `detailTypes` are generated. dynamicParams=false — api games (no local
-// sub-entities) 404 here rather than attempting a render.
+// Gameplay entity detail (class / dungeon / system) for local blueprint games,
+// nested under the canonical /game/[slug] surface. Blueprint-driven: the [type]
+// segment is the entity type; only a blueprint's `detailTypes` are generated.
+// dynamicParams=false — non-hub games 404 here rather than attempting a render.
 
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return buildPageMetadata({
     title: `${name} ${label} — ${game} | FinalBoss.io`,
     description: `${name} in ${game}: role, playstyle, tier rating, skills and synergies.`.slice(0, 200),
-    path: `/games/${params.slug}/${params.type}/${params.entity}`,
+    path: `/game/${params.slug}/${params.type}/${params.entity}`,
     type: 'website',
   });
 }
@@ -50,7 +50,7 @@ export default function EntityDetailPage({ params }: Props) {
   const detail = getLocalEntity(params.slug, params.type, params.entity);
   if (!detail) notFound();
 
-  const gamePath = `/games/${params.slug}`;
+  const gamePath = `/game/${params.slug}`;
   const crumbs = breadcrumbJsonLd([
     { name: 'Games', path: '/games' },
     { name: detail.game.canonicalName, path: gamePath },

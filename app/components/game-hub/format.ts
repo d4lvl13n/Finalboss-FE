@@ -13,5 +13,5 @@ export function tierTone(tier?: string): string {
 
 /** Canonical path for a gameplay entity detail page. */
 export function entityPath(gameSlug: string, type: GameplayEntityType, slug: string): string {
-  return `/games/${gameSlug}/${type}/${slug}`;
+  return `/game/${gameSlug}/${type}/${slug}`;
 }

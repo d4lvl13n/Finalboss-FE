@@ -10,6 +10,10 @@ import { absoluteUrl, buildPageMetadata } from '@/app/lib/seo';
 import { IGDBGame } from '@/app/types/igdb';
 import { fetchAllGameTags } from '@/app/lib/fetchAllGameTags';
 import siteConfig from '@/app/lib/siteConfig';
+import { getGameHub, localGameSlugs, getLocalGameData } from '@/app/lib/game-hub/provider';
+import GameplayHub, { buildGameplayJsonLd } from '@/app/components/game-hub/GameplayHub';
+import { fetchReadNextArticles, type HubArticle } from '@/app/lib/game-hub/related-articles';
+import { igdbImage } from '@/app/lib/knowledge/client';
 
 interface Props {
   params: {
@@ -24,7 +28,11 @@ const POSTS_PAGE_SIZE = 12;
 
 export async function generateStaticParams() {
   const gameTags = await fetchAllGameTags();
-  return gameTags.filter((tag) => tag.hasPosts).map((tag) => ({ slug: tag.slug }));
+  const tagSlugs = gameTags.filter((tag) => tag.hasPosts).map((tag) => tag.slug);
+  // Local blueprint hubs must prebuild even if nobody has searched them yet.
+  const all = [...localGameSlugs(), ...tagSlugs];
+  const seen = new Set<string>();
+  return all.filter((slug) => (seen.has(slug) ? false : (seen.add(slug), true))).map((slug) => ({ slug }));
 }
 
 function slugifyGameTitle(title: string): string {
@@ -445,6 +453,23 @@ async function createGameTagFromIgdb(game: IGDBGame): Promise<string | null> {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
+    // Local blueprint hub takes precedence (rich structured page).
+    if (getLocalGameData(params.slug)) {
+      const hub = await getGameHub(params.slug);
+      if (hub) {
+        const e = hub.entity;
+        const image = e.imageUrl || igdbImage(e.attributes?.cover_image_id) || undefined;
+        return buildPageMetadata({
+          title: `${e.canonicalName} — Classes, Tier List, Codes & Guides`,
+          description: (e.description || `Classes, tier list, codes and guides for ${e.canonicalName}.`).slice(0, 200),
+          path: `/game/${params.slug}`,
+          image,
+          type: 'website',
+          robots: { index: true, follow: true },
+        });
+      }
+    }
+
     const canonicalPath = `/game/${params.slug}`;
     const gameTag = await getGameTagBySlug(params.slug);
 
@@ -499,6 +524,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function GamePage({ params }: Props) {
   try {
+    // Local blueprint hub (e.g. Crystal of Atlan) renders the structured hub as
+    // the top of this page. Related articles use the original game-tag posts
+    // (6 shown + load more), falling back to the curated list when there's no tag.
+    if (getLocalGameData(params.slug)) {
+      const hub = await getGameHub(params.slug);
+      if (hub && hub.gameplay) {
+        const localTag = await getGameTagWithPosts(params.slug).catch(() => null);
+        const tagPosts = (localTag?.posts?.nodes as HubArticle[] | undefined) || [];
+        const readNext = tagPosts.length ? tagPosts : await fetchReadNextArticles(hub.gameplay.articles);
+        return (
+          <>
+            <Header />
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(buildGameplayJsonLd(hub, params.slug)) }}
+            />
+            <GameplayHub hub={hub} slug={params.slug} readNext={readNext} />
+            <Footer />
+          </>
+        );
+      }
+    }
+
     const canonicalUrl = `${baseUrl}/game/${params.slug}`;
     const gameTag = await getGameTagWithPosts(params.slug);
 
