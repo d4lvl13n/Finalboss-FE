@@ -113,5 +113,13 @@ export function validateGameData(data: GameData): GameData {
     requireSources(t.sources, `team "${t.name}"`);
   }
 
+  for (const col of data.collections || []) {
+    if (!col.key || !col.label) throw new GameDataError('a collection is missing its key/label');
+    for (const e of col.entries) {
+      if (!e.name) throw new GameDataError(`a "${col.label}" entry is missing its name`);
+      requireSources(e.sources, `${col.label} "${e.name}"`);
+    }
+  }
+
   return data;
 }

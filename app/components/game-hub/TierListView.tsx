@@ -28,8 +28,12 @@ export default function TierListView({
   unitType?: GameplayEntityType;
   heading?: string;
 }) {
-  const [axisKey, setAxisKey] = useState(axes[0]?.key);
-  const axis = axes.find((x) => x.key === axisKey) || axes[0];
+  const activeAxes = axes.filter((ax) =>
+    classes.some((c) => (((c.attributes as ClassAttributes)[ax.attr] as string | undefined) || '').trim())
+  );
+  const [axisKey, setAxisKey] = useState(activeAxes[0]?.key ?? axes[0]?.key);
+  const axis = activeAxes.find((x) => x.key === axisKey) || activeAxes[0];
+  if (!axis) return null;
 
   const tierOf = (cls: ClassEntity): string =>
     (((cls.attributes as ClassAttributes)[axis.attr] as string | undefined) || '').trim().toUpperCase();
@@ -45,7 +49,7 @@ export default function TierListView({
       {intro && <p className="mb-5 max-w-3xl text-gray-400 leading-relaxed">{intro}</p>}
       <Panel>
         <div className="mb-6 flex flex-wrap gap-2">
-          {axes.map((ax) => (
+          {activeAxes.map((ax) => (
             <button
               key={ax.key}
               type="button"

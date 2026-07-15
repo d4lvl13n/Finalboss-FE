@@ -8,7 +8,6 @@ import type {
   GameplayEntityType,
 } from '@/app/lib/game-hub/types';
 import type { EntityDetail } from './entity-detail';
-import { getBlueprint } from '@/app/lib/game-hub/blueprints';
 import { entityPath } from './format';
 import SourceList from './SourceList';
 import { Panel, Pill, FieldLabel, TierBadge } from './ui';
@@ -16,14 +15,14 @@ import { Panel, Pill, FieldLabel, TierBadge } from './ui';
 /** Best-effort map of an entity's type to a gameplay route segment. */
 function typeOf(entity: GameplayEntity): GameplayEntityType {
   const t = entity.entityType;
-  if (t === 'class' || t === 'character' || t === 'code' || t === 'dungeon' || t === 'system') return t;
+  if (t === 'class' || t === 'character' || t === 'weapon' || t === 'code' || t === 'dungeon' || t === 'system') return t;
   return 'class';
 }
 
 export default function ClassDetail({ detail }: { detail: EntityDetail }) {
   const { gameSlug, entity, related } = detail;
   const a = entity.attributes as ClassAttributes;
-  const axes = getBlueprint(detail.blueprint).tierAxes;
+  const axes = detail.tierAxes;
 
   return (
     <div className="space-y-8">

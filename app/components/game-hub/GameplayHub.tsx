@@ -18,6 +18,7 @@ import FaqSection from '@/app/components/game-hub/FaqSection';
 import TeamsSection from '@/app/components/game-hub/TeamsSection';
 import KGNews from '@/app/components/game-hub/KGNews';
 import Countdown from '@/app/components/game-hub/Countdown';
+import InfoGrid from '@/app/components/game-hub/InfoGrid';
 import { SectionHeading, Panel, Pill, FieldLabel } from '@/app/components/game-hub/ui';
 
 export interface HubNews {
@@ -64,7 +65,8 @@ export default function GameplayHub({
   const companies: string[] = [];
   const tierArticle = gp.articles.find((art) => art.kind === 'tier_list')?.url;
 
-  const hasTiers = bp.tierAxes.length > 0 && gp.units.length > 0;
+  const tierAxes = gp.tierAxes ?? bp.tierAxes;
+  const hasTiers = tierAxes.length > 0 && gp.units.length > 0;
   const hasCodes = bp.entityTypes.includes('code');
   const hasNews = !!(news && (news.coverage.length > 0 || news.content.length > 0));
   const releaseDate = a.release_date as string | null | undefined;
@@ -78,6 +80,7 @@ export default function GameplayHub({
     hasCodes && { label: 'Codes', href: '#codes' },
     gp.dungeons.length > 0 && { label: 'Dungeons', href: '#dungeons' },
     gp.systems.length > 0 && { label: systemsLabel, href: '#systems' },
+    ...gp.collections.map((c) => ({ label: c.label, href: `#collection-${c.key}` })),
     hasNews && { label: 'News', href: '#news' },
     gp.timeline.length > 0 && { label: 'Updates', href: '#updates' },
     gp.faq.length > 0 && { label: 'FAQ', href: '#faq' },
@@ -152,7 +155,7 @@ export default function GameplayHub({
               <TierListView
                 gameSlug={slug}
                 classes={gp.units}
-                axes={bp.tierAxes}
+                axes={tierAxes}
                 articleUrl={tierArticle}
                 unitType={unitType}
                 heading={labels.tierHeading}
@@ -168,7 +171,7 @@ export default function GameplayHub({
                 unitType={unitType}
                 label={labels.unitPlural}
                 intro={intros.units}
-                axes={bp.tierAxes}
+                axes={tierAxes}
               />
             </div>
           )}
@@ -197,6 +200,11 @@ export default function GameplayHub({
               <SystemsGrid gameSlug={slug} systems={gp.systems} intro={intros.systems} label={systemsLabel} />
             </div>
           )}
+          {gp.collections.map((c) => (
+            <div key={c.key} id={`collection-${c.key}`} className="scroll-mt-28">
+              <InfoGrid collection={c} />
+            </div>
+          ))}
           {hasNews && news && (
             <div id="news" className="scroll-mt-28">
               <KGNews

@@ -8,17 +8,9 @@
 // Grow this entity-type-by-entity-type as real games demand. Do not pre-build
 // genres nobody uses.
 
-import type { BlueprintId, GameplayEntityType } from './types';
+import type { BlueprintId, GameplayEntityType, TierAxis } from './types';
 
-/** A tier-list axis. `attr` is the unit attribute holding that axis's tier. A
- *  game can rank the same roster on several axes (e.g. gacha: Story / Boss Raid
- *  / Mirror War / Guild Raid). `short` is the compact label used on unit cards. */
-export interface TierAxis {
-  key: string;
-  label: string;
-  short?: string;
-  attr: 'pveTier' | 'pvpTier' | 'bossTier' | 'guildTier';
-}
+export type { TierAxis };
 
 export interface Blueprint {
   id: BlueprintId;
@@ -100,10 +92,31 @@ const OPEN_WORLD: Blueprint = {
   },
 };
 
+// Looter-shooter: weapons are the tiered "unit" (Overall + PvP axes); maps,
+// gear and enemies live in generic `collections`.
+const LOOTER_SHOOTER: Blueprint = {
+  id: 'looter_shooter',
+  label: 'Looter Shooter',
+  unitType: 'weapon',
+  labels: { unitPlural: 'Weapons', tierHeading: 'Weapon Tier List' },
+  tierAxes: [
+    { key: 'overall', label: 'Overall', attr: 'pveTier' },
+    { key: 'pvp', label: 'PvP', attr: 'pvpTier' },
+  ],
+  entityTypes: ['weapon', 'system'],
+  detailTypes: ['weapon', 'system'],
+  relationshipTypes: ['appears_in'],
+  profiles: {
+    weapon: 'gaming.weapon.v1',
+    system: 'gaming.system.v1',
+  },
+};
+
 const BLUEPRINTS: Record<BlueprintId, Blueprint> = {
   action_rpg: ACTION_RPG,
   gacha: GACHA,
   open_world: OPEN_WORLD,
+  looter_shooter: LOOTER_SHOOTER,
 };
 
 export function getBlueprint(id: BlueprintId): Blueprint {

@@ -11,6 +11,7 @@ import { LOCAL_GAMES } from './registry';
 import { getBlueprint } from './blueprints';
 import type {
   BlueprintId,
+  TierAxis,
   ClassEntity,
   ClassRecord,
   CodeEntity,
@@ -194,6 +195,7 @@ function buildLocalHub(data: GameData): GameHub {
       description: data.game.description ?? null,
     },
     gameplay: {
+      tierAxes: data.tierAxes ?? bp.tierAxes,
       units: normalizeClasses(data.units, data.game.slug, bp.unitType, profile(bp, bp.unitType)),
       codes: {
         lastVerified: data.codes.lastVerified,
@@ -208,6 +210,7 @@ function buildLocalHub(data: GameData): GameHub {
       beginner: data.beginner,
       faq: data.faq || [],
       teams: data.teams || [],
+      collections: data.collections || [],
     },
   };
 }
@@ -268,6 +271,7 @@ export interface EntityDetail {
   game: KnowledgeEntity;
   gameSlug: string;
   blueprint: BlueprintId;
+  tierAxes: TierAxis[];
   entity: GameplayEntity;
   related: Array<{ label: string; entity: GameplayEntity }>;
 }
@@ -299,5 +303,5 @@ export function getLocalEntity(gameSlug: string, type: string, entitySlug: strin
       related.push({ label: r.type.replace(/_/g, ' '), entity: target });
     }
   }
-  return { game, gameSlug, blueprint: data.blueprint, entity, related };
+  return { game, gameSlug, blueprint: data.blueprint, tierAxes: data.tierAxes ?? bp.tierAxes, entity, related };
 }

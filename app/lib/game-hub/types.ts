@@ -36,11 +36,23 @@ export type {
 // Blueprints
 // ---------------------------------------------------------------------------
 
-export type BlueprintId = 'action_rpg' | 'gacha' | 'open_world';
+export type BlueprintId = 'action_rpg' | 'gacha' | 'open_world' | 'looter_shooter';
 
 /** The gameplay entity types a blueprint can carry. A blueprint's "unit type"
- *  — the playable-unit entity — is 'class' for RPGs, 'character' for gacha. */
-export type GameplayEntityType = 'class' | 'character' | 'code' | 'dungeon' | 'system';
+ *  — the playable-unit entity — is 'class' (RPG), 'character' (gacha/open-world),
+ *  or 'weapon' (looter-shooter). */
+export type GameplayEntityType = 'class' | 'character' | 'weapon' | 'code' | 'dungeon' | 'system';
+
+/** A tier-list axis. `attr` is the unit attribute holding that axis's tier. A
+ *  game can rank the same roster on several axes; a blueprint provides sensible
+ *  defaults and a game can override them (GameData.tierAxes) when its content
+ *  modes differ (e.g. ZZZ's Shiyu Defense vs BD2's Mirror War). */
+export interface TierAxis {
+  key: string;
+  label: string;
+  short?: string;
+  attr: 'pveTier' | 'pvpTier' | 'bossTier' | 'guildTier';
+}
 
 // ---------------------------------------------------------------------------
 // Typed attribute profiles (the `attributes_profile` mechanism, locally)
@@ -204,6 +216,22 @@ export interface BeginnerGuide {
   picks: BeginnerPick[];
 }
 
+/** A lightweight, non-routed info card in a named collection (maps, gear,
+ *  enemies, vehicles…). Renders as a grid; no detail page. */
+export interface CollectionEntry {
+  name: string;
+  summary?: string;
+  sources: string[];
+}
+
+/** A named collection of info cards, rendered as its own section. Generic —
+ *  a game can declare any number (e.g. looter-shooter: Maps / Gear / Enemies). */
+export interface NamedCollection {
+  key: string;
+  label: string;
+  entries: CollectionEntry[];
+}
+
 /** A unit referenced in a team comp. `slug` (when set + in the roster) links to
  *  that unit's page; otherwise the name renders as plain text. */
 export interface TeamUnit {
@@ -226,6 +254,9 @@ export interface TeamComp {
 export interface GameData {
   game: GameRecord;
   blueprint: BlueprintId;
+  /** Override the blueprint's default tier axes when this game's content modes
+   *  differ (e.g. ZZZ ranks a single "Endgame" axis, not BD2's four). */
+  tierAxes?: TierAxis[];
   units: ClassRecord[];
   codes: {
     lastVerified: string; // ISO date
@@ -239,6 +270,7 @@ export interface GameData {
   beginner?: BeginnerGuide;
   faq?: FaqItem[];
   teams?: TeamComp[];
+  collections?: NamedCollection[];
 }
 
 // ---------------------------------------------------------------------------
@@ -257,6 +289,7 @@ export interface HubIntelligence {
 /** Gameplay surface (local blueprint games). `classes` are the playable units
  *  (classes or characters); `dungeons` may be empty for gacha. */
 export interface HubGameplay {
+  tierAxes?: TierAxis[];
   units: ClassEntity[];
   codes: { lastVerified: string; active: CodeEntity[]; expired: CodeEntity[] };
   dungeons: DungeonEntity[];
@@ -267,6 +300,7 @@ export interface HubGameplay {
   beginner?: BeginnerGuide;
   faq: FaqItem[];
   teams: TeamComp[];
+  collections: NamedCollection[];
 }
 
 export interface GameHub {
