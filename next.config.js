@@ -173,14 +173,6 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // Retire the day-old /games/[slug] hub namespace onto the canonical
-      // /game/[slug] surface it was merged into (keeps SEO equity on /game/*).
-      // :path+ (one or more segments) leaves the /games index listing intact.
-      {
-        source: '/games/:path+',
-        destination: '/game/:path+',
-        permanent: true,
-      },
       // Duplicate-content consolidations (2026-07-01): collapse near-identical
       // dupes onto the canonical keeper so ranking signals concentrate on one URL.
       {
