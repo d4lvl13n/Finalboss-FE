@@ -8,7 +8,7 @@ import { GAME } from './game';
 import { CHARACTERS } from './characters';
 import { CODES } from './codes';
 import { SYSTEMS } from './systems';
-import { FAQ, BEGINNER } from './guides';
+import { FAQ, BEGINNER, TEAMS } from './guides';
 
 const TIMELINE: HubTimelineEvent[] = [
   {
@@ -59,7 +59,10 @@ export const BROWN_DUST_2: GameData = validateGameData({
     systems:
       'The core systems that shape a roster: the costume-based gacha and reroll, plus the Story/PvE campaign and asynchronous Mirror War PvP.',
     updates: 'Recent launches, banners and anniversary events.',
+    teams:
+      'Sourced starter cores for each mode — buffer + healer + dealers. Tap any unit to open its page. These are community/tier-list-backed cores, not fixed 5-unit locks; swap dealers for what you own.',
   },
   beginner: BEGINNER,
   faq: FAQ,
+  teams: TEAMS,
 });

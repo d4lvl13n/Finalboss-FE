@@ -15,6 +15,7 @@ import TrackViewContent from '@/app/components/TrackViewContent';
 import ArticleGridMore from '@/app/components/game-hub/ArticleGridMore';
 import GettingStarted from '@/app/components/game-hub/GettingStarted';
 import FaqSection from '@/app/components/game-hub/FaqSection';
+import TeamsSection from '@/app/components/game-hub/TeamsSection';
 import { SectionHeading, Panel, Pill, FieldLabel } from '@/app/components/game-hub/ui';
 
 import ClassRoster from '@/app/components/game-hub/ClassRoster';
@@ -57,6 +58,7 @@ export default function GameplayHub({
     gp.beginner && { label: 'Getting Started', href: '#getting-started' },
     gp.classes.length > 0 && { label: 'Tier List', href: '#tier-list' },
     gp.classes.length > 0 && { label: labels.unitPlural, href: '#classes' },
+    gp.teams.length > 0 && { label: 'Teams', href: '#teams' },
     { label: 'Codes', href: '#codes' },
     gp.dungeons.length > 0 && { label: 'Dungeons', href: '#dungeons' },
     gp.systems.length > 0 && { label: 'Systems', href: '#systems' },
@@ -145,6 +147,11 @@ export default function GameplayHub({
                 intro={intros.units}
                 axes={bp.tierAxes}
               />
+            </div>
+          )}
+          {gp.teams.length > 0 && (
+            <div id="teams" className="scroll-mt-28">
+              <TeamsSection gameSlug={slug} teams={gp.teams} unitType={unitType} intro={intros.teams} />
             </div>
           )}
           <div id="codes" className="scroll-mt-28">

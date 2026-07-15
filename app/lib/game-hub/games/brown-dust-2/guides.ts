@@ -1,4 +1,9 @@
-import type { FaqItem, BeginnerGuide } from '@/app/lib/game-hub/types';
+import type { FaqItem, BeginnerGuide, TeamComp } from '@/app/lib/game-hub/types';
+
+const MEGA2 = 'https://reddit.com/r/BrownDust2Official/comments/1n5gr0e/monthly_megathread_faq_teambuilding_and_game_help/';
+const DOTGG_PVP = 'https://dotgg.gg/brown-dust-2/pvp-tier-list/';
+const DOTGG_PVE = 'https://dotgg.gg/brown-dust-2/pve-tier-list/';
+const VORTEX = 'https://vortexgaming.io/en/postdetail/616661';
 
 const PG_CODES = 'https://www.pocketgamer.com/brown-dust-2/codes/';
 const PT_CODES = 'https://www.pockettactics.com/brown-dust-2/codes';
@@ -87,3 +92,58 @@ export const BEGINNER: BeginnerGuide = {
     },
   ],
 };
+
+export const TEAMS: TeamComp[] = [
+  {
+    name: 'Story / PvE — Buffer Core',
+    context: 'Story',
+    units: [
+      { name: 'Teresse', slug: 'beachside-angel-teresse' },
+      { name: 'Liberta', slug: 'dark-saintess-liberta' },
+      { name: 'Loen', slug: 'loen' },
+      { name: 'Nebris', slug: 'nebris' },
+      { name: 'Eclipse', slug: 'eclipse' },
+    ],
+    note: "A real story/general-content comp from the official teambuilding megathread, built on the #1 general buffer Teresse (near-doubles team damage) fronting Liberta support plus Loen/Nebris/Eclipse dealers — the standard buffer + support + 2-3 DPS framing.",
+    sources: [MEGA2, MEGA],
+  },
+  {
+    name: 'Boss Raid (Fiend Hunt) — Buffer + Healer + Dealers',
+    context: 'Boss Raid',
+    units: [
+      { name: 'Teresse', slug: 'beachside-angel-teresse' },
+      { name: 'Earth Mother Believer Priestess', slug: 'earth-mother-believer-priestess' },
+      { name: 'Apostle Blade', slug: 'apostle-blade' },
+      { name: 'Bikini Agent Sylvia', slug: 'bikini-agent-sylvia' },
+      { name: 'Splash Queen Wilhelmina', slug: 'splash-queen-wilhelmina' },
+    ],
+    note: "A Fiend Hunt core following the buffer + healer + 2-3 DPS structure — Teresse's damage buff (credited with a first-day Fiend 10 clear on a mostly-free team) and a Light healer behind the top boss-tier (S) single-target dealers from the raid tier lists.",
+    sources: [MEGA, PG_TIER, DOTGG_PVE, VORTEX],
+  },
+  {
+    name: 'Mirror War (PvP) — Evasion + Debuff Burst',
+    context: 'Mirror War',
+    units: [
+      { name: 'Pool Party Justia', slug: 'pool-party-justia' },
+      { name: 'Shadowed Dream Sonya', slug: 'shadowed-dream-sonya' },
+      { name: 'Empress Rubia', slug: 'empress-rubia' },
+      { name: 'Iron Monarch Wilhelmina', slug: 'iron-monarch-wilhelmina' },
+      { name: 'Acting Archbishop Michaela', slug: 'acting-archbishop-michaela' },
+    ],
+    note: "A Mirror Wars core of PvP-tier (S) units: an evasion tank (Justia), Sonya's debuff/damage-amp, Iron Monarch's pre-battle Earth chip damage, and Rubia burst behind Michaela's debuff support.",
+    sources: [DOTGG_PVP, PG_TIER, MEGA],
+  },
+  {
+    name: 'Beginner / F2P — Raise-First Buffers',
+    context: 'Beginner',
+    units: [
+      { name: 'Lathel (buffer)', slug: null },
+      { name: 'Helena', slug: 'b-rank-helena' },
+      { name: 'Teresse', slug: 'beachside-angel-teresse' },
+      { name: 'Violent Student Kry', slug: 'violent-student-kry' },
+      { name: 'Earth Mother Believer Priestess', slug: 'earth-mother-believer-priestess' },
+    ],
+    note: "New-player starter on the most-upvoted early advice — raise Lathel (attack buff) and Helena (magic buff) to +5 first — plus the general buffer Teresse, the F2P-friendly dealer Violent Student Kry, and a healer. (The buffer 'Lathel' here is a different costume than the roster's Dark Knight Lathel, so it's left unlinked.)",
+    sources: [NEWPLAYER, MEGA, PT_TIER],
+  },
+];

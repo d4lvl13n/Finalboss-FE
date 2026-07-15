@@ -107,5 +107,11 @@ export function validateGameData(data: GameData): GameData {
     if (!f.question || !f.answer) throw new GameDataError(`an FAQ item is missing its question or answer`);
   }
 
+  for (const t of data.teams || []) {
+    if (!t.name) throw new GameDataError('a team comp is missing its name');
+    if (!Array.isArray(t.units) || t.units.length === 0) throw new GameDataError(`team "${t.name}" has no units`);
+    requireSources(t.sources, `team "${t.name}"`);
+  }
+
   return data;
 }

@@ -172,6 +172,7 @@ export interface HubTimelineEvent {
 export interface HubIntros {
   units?: string;
   tierList?: string;
+  teams?: string;
   codes?: string;
   dungeons?: string;
   systems?: string;
@@ -203,6 +204,22 @@ export interface BeginnerGuide {
   picks: BeginnerPick[];
 }
 
+/** A unit referenced in a team comp. `slug` (when set + in the roster) links to
+ *  that unit's page; otherwise the name renders as plain text. */
+export interface TeamUnit {
+  name: string;
+  slug?: string | null;
+}
+
+/** A recommended team composition for a content mode. */
+export interface TeamComp {
+  name: string;
+  context?: string; // e.g. Story / Boss Raid / Mirror War / Beginner
+  units: TeamUnit[];
+  note?: string;
+  sources: string[];
+}
+
 /** The full hand-authored bundle for one local game. `classes` is the playable
  *  unit list regardless of blueprint (the blueprint's unitType decides whether
  *  they render/route as "class" or "character"). */
@@ -221,6 +238,7 @@ export interface GameData {
   intros?: HubIntros;
   beginner?: BeginnerGuide;
   faq?: FaqItem[];
+  teams?: TeamComp[];
 }
 
 // ---------------------------------------------------------------------------
@@ -248,6 +266,7 @@ export interface HubGameplay {
   intros?: HubIntros;
   beginner?: BeginnerGuide;
   faq: FaqItem[];
+  teams: TeamComp[];
 }
 
 export interface GameHub {
