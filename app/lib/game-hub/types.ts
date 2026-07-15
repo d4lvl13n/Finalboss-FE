@@ -36,15 +36,17 @@ export type {
 // Blueprints
 // ---------------------------------------------------------------------------
 
-export type BlueprintId = 'action_rpg';
+export type BlueprintId = 'action_rpg' | 'gacha';
 
-/** The gameplay entity types a blueprint can carry. */
-export type GameplayEntityType = 'class' | 'code' | 'dungeon' | 'system';
+/** The gameplay entity types a blueprint can carry. A blueprint's "unit type"
+ *  — the playable-unit entity — is 'class' for RPGs, 'character' for gacha. */
+export type GameplayEntityType = 'class' | 'character' | 'code' | 'dungeon' | 'system';
 
 // ---------------------------------------------------------------------------
 // Typed attribute profiles (the `attributes_profile` mechanism, locally)
 // ---------------------------------------------------------------------------
 
+// The playable-unit attributes (a "class" in an RPG, a "character" in a gacha).
 export interface ClassAttributes {
   role?: string;
   weapon?: string;
@@ -54,6 +56,8 @@ export interface ClassAttributes {
   pvpTier?: string;
   skills?: string[];
   isNew?: boolean;
+  rarity?: string; // gacha: 5★ / 4★
+  element?: string; // gacha: Fire / Water / Wind / Light / Dark / Earth
 }
 
 export interface CodeAttributes {
@@ -123,7 +127,9 @@ export interface ClassRecord {
   pvpTier?: string;
   skills?: string[];
   isNew?: boolean;
-  /** slugs of classes this one is countered by / pairs well with */
+  rarity?: string; // gacha
+  element?: string; // gacha
+  /** slugs of units this one is countered by / pairs well with */
   counteredBy?: string[];
   pairsWith?: string[];
   sources: string[];
@@ -154,8 +160,18 @@ export interface SystemRecord {
 export interface HubTimelineEvent {
   date: string; // ISO
   title: string;
-  kind: 'collab' | 'update' | 'class_release' | 'event';
+  kind: 'collab' | 'update' | 'class_release' | 'event' | 'banner';
   sources: string[];
+}
+
+/** Per-game section intro copy (a short factual lead under each heading). */
+export interface HubIntros {
+  units?: string;
+  tierList?: string;
+  codes?: string;
+  dungeons?: string;
+  systems?: string;
+  updates?: string;
 }
 
 export interface ReadNext {
@@ -164,7 +180,9 @@ export interface ReadNext {
   kind?: 'review' | 'guide' | 'tier_list' | 'article';
 }
 
-/** The full hand-authored bundle for one local game. */
+/** The full hand-authored bundle for one local game. `classes` is the playable
+ *  unit list regardless of blueprint (the blueprint's unitType decides whether
+ *  they render/route as "class" or "character"). */
 export interface GameData {
   game: GameRecord;
   blueprint: BlueprintId;
@@ -173,10 +191,11 @@ export interface GameData {
     lastVerified: string; // ISO date
     entries: CodeRecord[];
   };
-  dungeons: DungeonRecord[];
+  dungeons?: DungeonRecord[]; // action_rpg only; omit for gacha
   systems: SystemRecord[];
   timeline: HubTimelineEvent[];
   articles: ReadNext[];
+  intros?: HubIntros;
 }
 
 // ---------------------------------------------------------------------------
@@ -192,7 +211,8 @@ export interface HubIntelligence {
   relationships: Relationship[];
 }
 
-/** Gameplay surface (local blueprint games, e.g. Crystal of Atlan). */
+/** Gameplay surface (local blueprint games). `classes` are the playable units
+ *  (classes or characters); `dungeons` may be empty for gacha. */
 export interface HubGameplay {
   classes: ClassEntity[];
   codes: { lastVerified: string; active: CodeEntity[]; expired: CodeEntity[] };
@@ -200,6 +220,7 @@ export interface HubGameplay {
   systems: SystemEntity[];
   timeline: HubTimelineEvent[];
   articles: ReadNext[];
+  intros?: HubIntros;
 }
 
 export interface GameHub {

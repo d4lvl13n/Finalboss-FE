@@ -96,7 +96,12 @@ function slugifyName(name: string): string {
 // and each advanced class is `advanced_class_of` its parent. This is what makes
 // class pages cross-link. counteredBy/pairsWith are also honored when a source
 // gives a genuine class-vs-class edge (none in CoA v1).
-function normalizeClasses(records: ClassRecord[], gameSlug: string, profile: string): ClassEntity[] {
+function normalizeClasses(
+  records: ClassRecord[],
+  gameSlug: string,
+  unitType: GameplayEntityType,
+  profile: string,
+): ClassEntity[] {
   const bySlug = new Set(records.map((r) => r.slug));
   const parentOf = new Map<string, string>();
   for (const r of records) {
@@ -109,14 +114,14 @@ function normalizeClasses(records: ClassRecord[], gameSlug: string, profile: str
     const relationships: Relationship[] = [rel(gameSlug, 'game', 'appears_in')];
     for (const advName of r.advancedClasses || []) {
       const advSlug = slugifyName(advName);
-      if (bySlug.has(advSlug)) relationships.push(rel(advSlug, 'class', 'unlocks'));
+      if (bySlug.has(advSlug)) relationships.push(rel(advSlug, unitType, 'unlocks'));
     }
     const parent = parentOf.get(r.slug);
-    if (parent) relationships.push(rel(parent, 'class', 'advanced_class_of'));
-    for (const t of r.counteredBy || []) if (bySlug.has(t)) relationships.push(rel(t, 'class', 'countered_by'));
-    for (const t of r.pairsWith || []) if (bySlug.has(t)) relationships.push(rel(t, 'class', 'pairs_with'));
+    if (parent) relationships.push(rel(parent, unitType, 'advanced_class_of'));
+    for (const t of r.counteredBy || []) if (bySlug.has(t)) relationships.push(rel(t, unitType, 'countered_by'));
+    for (const t of r.pairsWith || []) if (bySlug.has(t)) relationships.push(rel(t, unitType, 'pairs_with'));
     return {
-      ...baseEntity('class', r.slug, r.name, profile, {
+      ...baseEntity(unitType, r.slug, r.name, profile, {
         role: r.role,
         weapon: r.weapon,
         playstyle: r.playstyle,
@@ -125,12 +130,19 @@ function normalizeClasses(records: ClassRecord[], gameSlug: string, profile: str
         pvpTier: r.pvpTier,
         skills: r.skills || [],
         isNew: !!r.isNew,
+        rarity: r.rarity,
+        element: r.element,
         aliases: r.aliases || [],
       }),
       relationships,
       sources: r.sources,
     };
   });
+}
+
+/** Resolve the attribute profile for an entity type, with a sane default. */
+function profile(bp: ReturnType<typeof getBlueprint>, type: GameplayEntityType): string {
+  return bp.profiles[type] || `gaming.${type}.v1`;
 }
 
 function normalizeCode(c: CodeRecord): CodeEntity {
@@ -176,20 +188,21 @@ function buildLocalHub(data: GameData): GameHub {
     seo: {
       indexabilityStatus: 'public_index',
       canonicalSlug: data.game.slug,
-      title: `${data.game.name} — Classes, Tier List, Codes & Guides`,
+      title: `${data.game.name} — ${bp.labels.unitPlural}, Tier List, Codes & Guides`,
       description: data.game.description ?? null,
     },
     gameplay: {
-      classes: normalizeClasses(data.classes, data.game.slug, bp.profiles.class),
+      classes: normalizeClasses(data.classes, data.game.slug, bp.unitType, profile(bp, bp.unitType)),
       codes: {
         lastVerified: data.codes.lastVerified,
         active: codes.filter((c) => c.attributes.status === 'active'),
         expired: codes.filter((c) => c.attributes.status === 'expired'),
       },
-      dungeons: data.dungeons.map((d) => normalizeDungeon(d, bp.profiles.dungeon)),
-      systems: data.systems.map((s) => normalizeSystem(s, bp.profiles.system)),
+      dungeons: (data.dungeons || []).map((d) => normalizeDungeon(d, profile(bp, 'dungeon'))),
+      systems: data.systems.map((s) => normalizeSystem(s, profile(bp, 'system'))),
       timeline: data.timeline,
       articles: data.articles,
+      intros: data.intros,
     },
   };
 }
@@ -239,7 +252,7 @@ export function localEntityParams(): Array<{ slug: string; type: string; entity:
     const bp = getBlueprint(data.blueprint);
     for (const type of bp.detailTypes) {
       const list =
-        type === 'class' ? data.classes : type === 'dungeon' ? data.dungeons : type === 'system' ? data.systems : [];
+        type === bp.unitType ? data.classes : type === 'dungeon' ? data.dungeons || [] : type === 'system' ? data.systems : [];
       for (const e of list) out.push({ slug: gameSlug, type, entity: e.slug });
     }
   }
@@ -262,9 +275,9 @@ export function getLocalEntity(gameSlug: string, type: string, entitySlug: strin
   const game = normalizeGame(data.game);
 
   const all: Record<string, GameplayEntity[]> = {
-    class: normalizeClasses(data.classes, gameSlug, bp.profiles.class),
-    dungeon: data.dungeons.map((d) => normalizeDungeon(d, bp.profiles.dungeon)),
-    system: data.systems.map((s) => normalizeSystem(s, bp.profiles.system)),
+    [bp.unitType]: normalizeClasses(data.classes, gameSlug, bp.unitType, profile(bp, bp.unitType)),
+    dungeon: (data.dungeons || []).map((d) => normalizeDungeon(d, profile(bp, 'dungeon'))),
+    system: data.systems.map((s) => normalizeSystem(s, profile(bp, 'system'))),
   };
   const list = all[type];
   if (!list) return null;

@@ -1,15 +1,23 @@
 // Class card — warm FinalBoss game-page idiom (bg-gray-800 content card). Server component.
 
 import Link from 'next/link';
-import type { ClassEntity } from '@/app/lib/game-hub/types';
+import type { ClassEntity, GameplayEntityType } from '@/app/lib/game-hub/types';
 import { entityPath } from './format';
 import { TierBadge } from './ui';
 
-export default function ClassCard({ gameSlug, cls }: { gameSlug: string; cls: ClassEntity }) {
+export default function ClassCard({
+  gameSlug,
+  cls,
+  unitType = 'class',
+}: {
+  gameSlug: string;
+  cls: ClassEntity;
+  unitType?: GameplayEntityType;
+}) {
   const a = cls.attributes;
   return (
     <Link
-      href={entityPath(gameSlug, 'class', cls.slug)}
+      href={entityPath(gameSlug, unitType, cls.slug)}
       className="block bg-gray-800 rounded-lg p-4 shadow-lg transition hover:ring-1 hover:ring-yellow-400/40"
     >
       <div className="flex items-start justify-between gap-2">
@@ -23,6 +31,15 @@ export default function ClassCard({ gameSlug, cls }: { gameSlug: string; cls: Cl
           </span>
         ) : null}
       </div>
+
+      {(a.rarity || a.element) && (
+        <div className="mt-2 flex flex-wrap items-center gap-1.5 text-[11px]">
+          {a.rarity ? (
+            <span className="rounded-full bg-gray-700 px-2 py-0.5 font-semibold text-amber-300">{a.rarity}</span>
+          ) : null}
+          {a.element ? <span className="rounded-full bg-gray-700 px-2 py-0.5 text-gray-300">{a.element}</span> : null}
+        </div>
+      )}
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
         <TierBadge label="PvE" tier={a.pveTier} />

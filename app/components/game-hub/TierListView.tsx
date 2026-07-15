@@ -4,7 +4,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import type { ClassEntity } from '@/app/lib/game-hub/types';
+import type { ClassEntity, GameplayEntityType } from '@/app/lib/game-hub/types';
 import { entityPath } from './format';
 import { SectionHeading, Panel, tierPillClass, TIER_ORDER } from './ui';
 
@@ -15,11 +15,15 @@ export default function TierListView({
   classes,
   articleUrl,
   intro,
+  unitType = 'class',
+  heading = 'Class Tier List',
 }: {
   gameSlug: string;
   classes: ClassEntity[];
   articleUrl?: string;
   intro?: string;
+  unitType?: GameplayEntityType;
+  heading?: string;
 }) {
   const [mode, setMode] = useState<Mode>('pve');
 
@@ -33,7 +37,7 @@ export default function TierListView({
 
   return (
     <section>
-      <SectionHeading>Class Tier List</SectionHeading>
+      <SectionHeading>{heading}</SectionHeading>
       {intro && <p className="mb-5 max-w-3xl text-gray-400 leading-relaxed">{intro}</p>}
       <Panel>
         <div className="flex gap-2 mb-6">
@@ -65,7 +69,7 @@ export default function TierListView({
                 {members.map((cls) => (
                   <Link
                     key={cls.slug}
-                    href={entityPath(gameSlug, 'class', cls.slug)}
+                    href={entityPath(gameSlug, unitType, cls.slug)}
                     className="bg-gray-700 hover:bg-gray-600 text-gray-100 rounded-full px-3 py-1 text-sm transition"
                   >
                     {cls.canonicalName}

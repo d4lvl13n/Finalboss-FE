@@ -10,6 +10,7 @@ import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
 import { buildPageMetadata } from '@/app/lib/seo';
 import { getLocalEntity, localEntityParams } from '@/app/lib/game-hub/provider';
+import { getBlueprint } from '@/app/lib/game-hub/blueprints';
 import { breadcrumbJsonLd, graph } from '@/app/lib/jsonld';
 
 import ClassDetail from '@/app/components/game-hub/ClassDetail';
@@ -28,6 +29,7 @@ export function generateStaticParams() {
 
 const TYPE_LABEL: Record<string, string> = {
   class: 'Class',
+  character: 'Character',
   dungeon: 'Dungeon',
   system: 'System',
 };
@@ -70,7 +72,11 @@ export default function EntityDetailPage({ params }: Props) {
             <span className="text-gray-300">{detail.entity.canonicalName}</span>
           </nav>
 
-          {params.type === 'class' ? <ClassDetail detail={detail} /> : <EntityDetailGeneric detail={detail} />}
+          {params.type === getBlueprint(detail.blueprint).unitType ? (
+            <ClassDetail detail={detail} />
+          ) : (
+            <EntityDetailGeneric detail={detail} />
+          )}
         </div>
       </main>
       <Footer />

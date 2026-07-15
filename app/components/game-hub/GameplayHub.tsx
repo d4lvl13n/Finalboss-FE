@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { igdbImage } from '@/app/lib/knowledge/client';
 import type { GameHub } from '@/app/lib/game-hub/types';
 import type { HubArticle } from '@/app/lib/game-hub/related-articles';
+import { getBlueprint } from '@/app/lib/game-hub/blueprints';
 import { videoGameJsonLd, itemListJsonLd, breadcrumbJsonLd, graph } from '@/app/lib/jsonld';
 
 import TrackViewContent from '@/app/components/TrackViewContent';
@@ -32,6 +33,10 @@ export default function GameplayHub({
   readNext: HubArticle[];
 }) {
   const gp = hub.gameplay!;
+  const bp = getBlueprint(hub.blueprint || 'action_rpg');
+  const labels = bp.labels;
+  const unitType = bp.unitType;
+  const intros = gp.intros || {};
   const e = hub.entity;
   const a = e.attributes || {};
   const cover = e.imageUrl || igdbImage(a.cover_image_id) || null;
@@ -48,7 +53,7 @@ export default function GameplayHub({
 
   const navItems = [
     gp.classes.length > 0 && { label: 'Tier List', href: '#tier-list' },
-    gp.classes.length > 0 && { label: 'Classes', href: '#classes' },
+    gp.classes.length > 0 && { label: labels.unitPlural, href: '#classes' },
     { label: 'Codes', href: '#codes' },
     gp.dungeons.length > 0 && { label: 'Dungeons', href: '#dungeons' },
     gp.systems.length > 0 && { label: 'Systems', href: '#systems' },
@@ -114,7 +119,9 @@ export default function GameplayHub({
                 gameSlug={slug}
                 classes={gp.classes}
                 articleUrl={tierArticle}
-                intro="Where each advanced class currently sits in PvE and PvP. Flip between the two — these ratings track the live meta and shift with balance patches, so treat them as a starting point, not gospel."
+                unitType={unitType}
+                heading={labels.tierHeading}
+                intro={intros.tierList}
               />
             </div>
           )}
@@ -123,7 +130,9 @@ export default function GameplayHub({
               <ClassRoster
                 gameSlug={slug}
                 classes={gp.classes}
-                intro="You start on one of eight base classes, each branching into advanced specialisations at around level 15 — and that choice is permanent. Open any class for its role, weapon, playstyle and synergies."
+                unitType={unitType}
+                label={labels.unitPlural}
+                intro={intros.units}
               />
             </div>
           )}
@@ -132,30 +141,22 @@ export default function GameplayHub({
               lastVerified={gp.codes.lastVerified}
               active={gp.codes.active}
               expired={gp.codes.expired}
-              intro="Redeem these in-game for free rewards like Hunting Permits and Bound Gold. Codes are region-specific and expire over time, so check the verified date below."
+              intro={intros.codes}
             />
           </div>
           {gp.dungeons.length > 0 && (
             <div id="dungeons" className="scroll-mt-28">
-              <DungeonsGrid
-                gameSlug={slug}
-                dungeons={gp.dungeons}
-                intro="The group PvE that anchors the endgame — dungeons, raids and open-world bosses."
-              />
+              <DungeonsGrid gameSlug={slug} dungeons={gp.dungeons} intro={intros.dungeons} />
             </div>
           )}
           {gp.systems.length > 0 && (
             <div id="systems" className="scroll-mt-28">
-              <SystemsGrid
-                gameSlug={slug}
-                systems={gp.systems}
-                intro="The progression and live-service systems that shape a run, from the permanent advanced-class pick to housing and monetisation."
-              />
+              <SystemsGrid gameSlug={slug} systems={gp.systems} intro={intros.systems} />
             </div>
           )}
           {gp.timeline.length > 0 && (
             <div id="updates" className="scroll-mt-28">
-              <HubTimeline events={gp.timeline} intro="Recent patches, new classes and collaborations — newest first." />
+              <HubTimeline events={gp.timeline} intro={intros.updates} />
             </div>
           )}
 

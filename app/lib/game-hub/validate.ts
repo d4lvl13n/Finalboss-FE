@@ -68,7 +68,7 @@ export function validateGameData(data: GameData): GameData {
   }
 
   const dungeonSlugs = new Set<string>();
-  for (const d of data.dungeons) {
+  for (const d of data.dungeons || []) {
     const where = `dungeon "${d.slug || d.name}"`;
     if (!d.slug || !SLUG_RE.test(d.slug)) throw new GameDataError(`invalid slug on ${where}`);
     if (dungeonSlugs.has(d.slug)) throw new GameDataError(`duplicate dungeon slug "${d.slug}"`);

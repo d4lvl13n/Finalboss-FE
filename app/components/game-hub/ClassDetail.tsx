@@ -15,7 +15,7 @@ import { Panel, Pill, FieldLabel, TierBadge } from './ui';
 /** Best-effort map of an entity's type to a gameplay route segment. */
 function typeOf(entity: GameplayEntity): GameplayEntityType {
   const t = entity.entityType;
-  if (t === 'class' || t === 'code' || t === 'dungeon' || t === 'system') return t;
+  if (t === 'class' || t === 'character' || t === 'code' || t === 'dungeon' || t === 'system') return t;
   return 'class';
 }
 
@@ -36,22 +36,42 @@ export default function ClassDetail({ detail }: { detail: EntityDetail }) {
 
       <Panel>
         <div className="grid gap-6 md:grid-cols-2">
-          <div>
-            <FieldLabel>Role</FieldLabel>
-            <p className="text-gray-200">{a.role || '—'}</p>
-          </div>
-          <div>
-            <FieldLabel>Weapon</FieldLabel>
-            <p className="text-gray-200">{a.weapon || '—'}</p>
-          </div>
-          <div>
-            <FieldLabel>PvE Tier</FieldLabel>
-            {a.pveTier ? <TierBadge label="PvE" tier={a.pveTier} /> : <p className="text-gray-400">—</p>}
-          </div>
-          <div>
-            <FieldLabel>PvP Tier</FieldLabel>
-            {a.pvpTier ? <TierBadge label="PvP" tier={a.pvpTier} /> : <p className="text-gray-400">—</p>}
-          </div>
+          {a.role && (
+            <div>
+              <FieldLabel>Role</FieldLabel>
+              <p className="text-gray-200">{a.role}</p>
+            </div>
+          )}
+          {a.rarity && (
+            <div>
+              <FieldLabel>Rarity</FieldLabel>
+              <p className="font-semibold text-amber-300">{a.rarity}</p>
+            </div>
+          )}
+          {a.element && (
+            <div>
+              <FieldLabel>Element</FieldLabel>
+              <p className="text-gray-200">{a.element}</p>
+            </div>
+          )}
+          {a.weapon && (
+            <div>
+              <FieldLabel>Weapon</FieldLabel>
+              <p className="text-gray-200">{a.weapon}</p>
+            </div>
+          )}
+          {a.pveTier && (
+            <div>
+              <FieldLabel>PvE Tier</FieldLabel>
+              <TierBadge label="PvE" tier={a.pveTier} />
+            </div>
+          )}
+          {a.pvpTier && (
+            <div>
+              <FieldLabel>PvP Tier</FieldLabel>
+              <TierBadge label="PvP" tier={a.pvpTier} />
+            </div>
+          )}
         </div>
       </Panel>
 

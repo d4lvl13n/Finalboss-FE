@@ -6,8 +6,9 @@ import { SectionHeading, Panel, Pill } from './ui';
 const KIND_LABEL: Record<HubTimelineEvent['kind'], string> = {
   collab: 'Collab',
   update: 'Update',
-  class_release: 'New class',
+  class_release: 'New unit',
   event: 'Event',
+  banner: 'Banner',
 };
 
 function eventDate(iso: string): string {

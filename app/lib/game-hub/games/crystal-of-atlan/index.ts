@@ -68,4 +68,16 @@ export const CRYSTAL_OF_ATLAN: GameData = validateGameData({
       kind: 'tier_list',
     },
   ],
+  intros: {
+    tierList:
+      'Where each advanced class currently sits in PvE and PvP. Flip between the two — these ratings track the live meta and shift with balance patches, so treat them as a starting point, not gospel.',
+    units:
+      'You start on one of eight base classes, each branching into advanced specialisations at around level 15 — and that choice is permanent. Open any class for its role, weapon, playstyle and synergies.',
+    codes:
+      'Redeem these in-game for free rewards like Hunting Permits and Bound Gold. Codes are region-specific and expire over time, so check the verified date below.',
+    dungeons: 'The group PvE that anchors the endgame — dungeons, raids and open-world bosses.',
+    systems:
+      'The progression and live-service systems that shape a run, from the permanent advanced-class pick to housing and monetisation.',
+    updates: 'Recent patches, new classes and collaborations — newest first.',
+  },
 });
