@@ -44,7 +44,7 @@ const TIMELINE: HubTimelineEvent[] = [
 export const BROWN_DUST_2: GameData = validateGameData({
   game: GAME,
   blueprint: 'gacha',
-  classes: CHARACTERS,
+  units: CHARACTERS,
   codes: CODES,
   systems: SYSTEMS,
   timeline: TIMELINE,

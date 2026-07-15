@@ -226,7 +226,7 @@ export interface TeamComp {
 export interface GameData {
   game: GameRecord;
   blueprint: BlueprintId;
-  classes: ClassRecord[];
+  units: ClassRecord[];
   codes: {
     lastVerified: string; // ISO date
     entries: CodeRecord[];
@@ -257,7 +257,7 @@ export interface HubIntelligence {
 /** Gameplay surface (local blueprint games). `classes` are the playable units
  *  (classes or characters); `dungeons` may be empty for gacha. */
 export interface HubGameplay {
-  classes: ClassEntity[];
+  units: ClassEntity[];
   codes: { lastVerified: string; active: CodeEntity[]; expired: CodeEntity[] };
   dungeons: DungeonEntity[];
   systems: SystemEntity[];

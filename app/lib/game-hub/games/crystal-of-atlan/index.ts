@@ -13,7 +13,7 @@ import { DUNGEONS } from './dungeons';
 export const CRYSTAL_OF_ATLAN: GameData = validateGameData({
   game: GAME,
   blueprint: 'action_rpg',
-  classes: CLASSES,
+  units: CLASSES,
   codes: CODES,
   dungeons: DUNGEONS,
   systems: SYSTEMS,

@@ -56,8 +56,8 @@ export default function GameplayHub({
 
   const navItems = [
     gp.beginner && { label: 'Getting Started', href: '#getting-started' },
-    gp.classes.length > 0 && { label: 'Tier List', href: '#tier-list' },
-    gp.classes.length > 0 && { label: labels.unitPlural, href: '#classes' },
+    gp.units.length > 0 && { label: 'Tier List', href: '#tier-list' },
+    gp.units.length > 0 && { label: labels.unitPlural, href: '#classes' },
     gp.teams.length > 0 && { label: 'Teams', href: '#teams' },
     { label: 'Codes', href: '#codes' },
     gp.dungeons.length > 0 && { label: 'Dungeons', href: '#dungeons' },
@@ -124,11 +124,11 @@ export default function GameplayHub({
               <GettingStarted guide={gp.beginner} />
             </div>
           )}
-          {gp.classes.length > 0 && (
+          {gp.units.length > 0 && (
             <div id="tier-list" className="scroll-mt-28">
               <TierListView
                 gameSlug={slug}
-                classes={gp.classes}
+                classes={gp.units}
                 axes={bp.tierAxes}
                 articleUrl={tierArticle}
                 unitType={unitType}
@@ -137,11 +137,11 @@ export default function GameplayHub({
               />
             </div>
           )}
-          {gp.classes.length > 0 && (
+          {gp.units.length > 0 && (
             <div id="classes" className="scroll-mt-28">
               <ClassRoster
                 gameSlug={slug}
-                classes={gp.classes}
+                classes={gp.units}
                 unitType={unitType}
                 label={labels.unitPlural}
                 intro={intros.units}
@@ -263,11 +263,11 @@ export function buildGameplayJsonLd(hub: GameHub, slug: string) {
     { name: e.canonicalName, path },
   ]);
   const nodes = [game, crumbs];
-  if (hub.gameplay && hub.gameplay.classes.length > 0) {
+  if (hub.gameplay && hub.gameplay.units.length > 0) {
     nodes.push(
       itemListJsonLd({
         name: `${e.canonicalName} Classes`,
-        items: hub.gameplay.classes.map((c) => ({ name: c.canonicalName, path: `${path}/class/${c.slug}` })),
+        items: hub.gameplay.units.map((c) => ({ name: c.canonicalName, path: `${path}/class/${c.slug}` })),
       }),
     );
   }

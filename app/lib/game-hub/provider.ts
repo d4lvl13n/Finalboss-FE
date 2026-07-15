@@ -194,7 +194,7 @@ function buildLocalHub(data: GameData): GameHub {
       description: data.game.description ?? null,
     },
     gameplay: {
-      classes: normalizeClasses(data.classes, data.game.slug, bp.unitType, profile(bp, bp.unitType)),
+      units: normalizeClasses(data.units, data.game.slug, bp.unitType, profile(bp, bp.unitType)),
       codes: {
         lastVerified: data.codes.lastVerified,
         active: codes.filter((c) => c.attributes.status === 'active'),
@@ -257,7 +257,7 @@ export function localEntityParams(): Array<{ slug: string; type: string; entity:
     const bp = getBlueprint(data.blueprint);
     for (const type of bp.detailTypes) {
       const list =
-        type === bp.unitType ? data.classes : type === 'dungeon' ? data.dungeons || [] : type === 'system' ? data.systems : [];
+        type === bp.unitType ? data.units : type === 'dungeon' ? data.dungeons || [] : type === 'system' ? data.systems : [];
       for (const e of list) out.push({ slug: gameSlug, type, entity: e.slug });
     }
   }
@@ -280,7 +280,7 @@ export function getLocalEntity(gameSlug: string, type: string, entitySlug: strin
   const game = normalizeGame(data.game);
 
   const all: Record<string, GameplayEntity[]> = {
-    [bp.unitType]: normalizeClasses(data.classes, gameSlug, bp.unitType, profile(bp, bp.unitType)),
+    [bp.unitType]: normalizeClasses(data.units, gameSlug, bp.unitType, profile(bp, bp.unitType)),
     dungeon: (data.dungeons || []).map((d) => normalizeDungeon(d, profile(bp, 'dungeon'))),
     system: data.systems.map((s) => normalizeSystem(s, profile(bp, 'system'))),
   };

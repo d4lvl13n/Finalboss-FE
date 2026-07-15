@@ -35,7 +35,7 @@ export function validateGameData(data: GameData): GameData {
   requireSources(g.sources, `game ${g.slug}`);
 
   const classSlugs = new Set<string>();
-  for (const c of data.classes) {
+  for (const c of data.units) {
     const where = `class "${c.slug || c.name}"`;
     if (!c.slug || !SLUG_RE.test(c.slug)) throw new GameDataError(`invalid slug on ${where}`);
     if (classSlugs.has(c.slug)) throw new GameDataError(`duplicate class slug "${c.slug}"`);
@@ -44,7 +44,7 @@ export function validateGameData(data: GameData): GameData {
     requireSources(c.sources, where);
   }
   // relationship targets must resolve within the class set
-  for (const c of data.classes) {
+  for (const c of data.units) {
     for (const t of [...(c.counteredBy || []), ...(c.pairsWith || [])]) {
       if (!classSlugs.has(t)) {
         throw new GameDataError(`class "${c.slug}" references unknown class "${t}"`);
