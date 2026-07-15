@@ -98,5 +98,14 @@ export function validateGameData(data: GameData): GameData {
     }
   }
 
+  for (const p of data.beginner?.picks || []) {
+    if (!p.name) throw new GameDataError('a beginner pick is missing its name');
+    requireSources(p.sources, `beginner pick "${p.name}"`);
+  }
+
+  for (const f of data.faq || []) {
+    if (!f.question || !f.answer) throw new GameDataError(`an FAQ item is missing its question or answer`);
+  }
+
   return data;
 }

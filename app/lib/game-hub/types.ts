@@ -184,6 +184,25 @@ export interface ReadNext {
   kind?: 'review' | 'guide' | 'tier_list' | 'article';
 }
 
+/** FAQ item — rendered as a Q&A block and emitted as FAQPage JSON-LD. */
+export interface FaqItem {
+  question: string;
+  answer: string;
+  sources?: string[];
+}
+
+/** A "who to pull/prioritise first" pick in the beginner/reroll guide. */
+export interface BeginnerPick {
+  name: string;
+  note: string;
+  sources: string[];
+}
+
+export interface BeginnerGuide {
+  summary?: string;
+  picks: BeginnerPick[];
+}
+
 /** The full hand-authored bundle for one local game. `classes` is the playable
  *  unit list regardless of blueprint (the blueprint's unitType decides whether
  *  they render/route as "class" or "character"). */
@@ -200,6 +219,8 @@ export interface GameData {
   timeline: HubTimelineEvent[];
   articles: ReadNext[];
   intros?: HubIntros;
+  beginner?: BeginnerGuide;
+  faq?: FaqItem[];
 }
 
 // ---------------------------------------------------------------------------
@@ -225,6 +246,8 @@ export interface HubGameplay {
   timeline: HubTimelineEvent[];
   articles: ReadNext[];
   intros?: HubIntros;
+  beginner?: BeginnerGuide;
+  faq: FaqItem[];
 }
 
 export interface GameHub {

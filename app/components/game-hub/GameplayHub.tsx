@@ -9,10 +9,12 @@ import { igdbImage } from '@/app/lib/knowledge/client';
 import type { GameHub } from '@/app/lib/game-hub/types';
 import type { HubArticle } from '@/app/lib/game-hub/related-articles';
 import { getBlueprint } from '@/app/lib/game-hub/blueprints';
-import { videoGameJsonLd, itemListJsonLd, breadcrumbJsonLd, graph } from '@/app/lib/jsonld';
+import { videoGameJsonLd, itemListJsonLd, breadcrumbJsonLd, faqJsonLd, graph } from '@/app/lib/jsonld';
 
 import TrackViewContent from '@/app/components/TrackViewContent';
 import ArticleGridMore from '@/app/components/game-hub/ArticleGridMore';
+import GettingStarted from '@/app/components/game-hub/GettingStarted';
+import FaqSection from '@/app/components/game-hub/FaqSection';
 import { SectionHeading, Panel, Pill, FieldLabel } from '@/app/components/game-hub/ui';
 
 import ClassRoster from '@/app/components/game-hub/ClassRoster';
@@ -52,12 +54,14 @@ export default function GameplayHub({
   const tierArticle = gp.articles.find((art) => art.kind === 'tier_list')?.url;
 
   const navItems = [
+    gp.beginner && { label: 'Getting Started', href: '#getting-started' },
     gp.classes.length > 0 && { label: 'Tier List', href: '#tier-list' },
     gp.classes.length > 0 && { label: labels.unitPlural, href: '#classes' },
     { label: 'Codes', href: '#codes' },
     gp.dungeons.length > 0 && { label: 'Dungeons', href: '#dungeons' },
     gp.systems.length > 0 && { label: 'Systems', href: '#systems' },
     gp.timeline.length > 0 && { label: 'Updates', href: '#updates' },
+    gp.faq.length > 0 && { label: 'FAQ', href: '#faq' },
     screenshots.length > 0 && { label: 'Screenshots', href: '#screenshots' },
     readNext.length > 0 && { label: 'Articles', href: '#read-next' },
   ].filter(Boolean) as { label: string; href: string }[];
@@ -113,6 +117,11 @@ export default function GameplayHub({
         <HubNav items={navItems} />
 
         <div className="space-y-12">
+          {gp.beginner && (
+            <div id="getting-started" className="scroll-mt-28">
+              <GettingStarted guide={gp.beginner} />
+            </div>
+          )}
           {gp.classes.length > 0 && (
             <div id="tier-list" className="scroll-mt-28">
               <TierListView
@@ -159,6 +168,12 @@ export default function GameplayHub({
           {gp.timeline.length > 0 && (
             <div id="updates" className="scroll-mt-28">
               <HubTimeline events={gp.timeline} intro={intros.updates} />
+            </div>
+          )}
+
+          {gp.faq.length > 0 && (
+            <div id="faq" className="scroll-mt-28">
+              <FaqSection items={gp.faq} />
             </div>
           )}
 
@@ -248,6 +263,9 @@ export function buildGameplayJsonLd(hub: GameHub, slug: string) {
         items: hub.gameplay.classes.map((c) => ({ name: c.canonicalName, path: `${path}/class/${c.slug}` })),
       }),
     );
+  }
+  if (hub.gameplay?.faq?.length) {
+    nodes.push(faqJsonLd(hub.gameplay.faq.map((f) => ({ question: f.question, answer: f.answer }))));
   }
   return graph(nodes);
 }

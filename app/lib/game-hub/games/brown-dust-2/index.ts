@@ -8,6 +8,7 @@ import { GAME } from './game';
 import { CHARACTERS } from './characters';
 import { CODES } from './codes';
 import { SYSTEMS } from './systems';
+import { FAQ, BEGINNER } from './guides';
 
 const TIMELINE: HubTimelineEvent[] = [
   {
@@ -52,11 +53,13 @@ export const BROWN_DUST_2: GameData = validateGameData({
     units:
       'Brown Dust 2 is built around costumes — each character has several pullable costumes, and each costume is its own unit with a distinct kit, which is why tier lists rank costumes rather than base characters. Here are the meta-relevant units by rarity and role.',
     tierList:
-      "Where each unit lands in PvE (Story) and PvP (Mirror War). Flip between the two — Brown Dust 2 also runs separate Boss Raid and Guild Raid tier lists, so a top Story carry isn't automatically a PvP pick.",
+      "Where each unit lands across all four axes — Story, Boss Raid (Fiend), Mirror War (PvP) and Guild Raid. Switch tabs: a top Story carry isn't automatically a raid or PvP pick. The raid tabs cover the units a source explicitly ranks for that content.",
     codes:
       'Redeem codes for free Dia and resources. Brown Dust 2 codes are short-lived — they usually expire within about a month, and new ones drop around events via the official site and Discord.',
     systems:
       'The core systems that shape a roster: the costume-based gacha and reroll, plus the Story/PvE campaign and asynchronous Mirror War PvP.',
     updates: 'Recent launches, banners and anniversary events.',
   },
+  beginner: BEGINNER,
+  faq: FAQ,
 });

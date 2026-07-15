@@ -205,6 +205,8 @@ function buildLocalHub(data: GameData): GameHub {
       timeline: data.timeline,
       articles: data.articles,
       intros: data.intros,
+      beginner: data.beginner,
+      faq: data.faq || [],
     },
   };
 }
