@@ -254,6 +254,11 @@ export interface TeamComp {
 export interface GameData {
   game: GameRecord;
   blueprint: BlueprintId;
+  /** Knowledge-API entity key, when it differs from the URL slug. The URL slug
+   *  (game.slug) is chosen for SEO equity (e.g. `gta-6`, `diablo-4`); the KG
+   *  entity may be keyed on the IGDB-canonical name (`grand-theft-auto-vi`).
+   *  Falls back to game.slug when omitted. */
+  knowledgeSlug?: string;
   /** Override the blueprint's default tier axes when this game's content modes
    *  differ (e.g. ZZZ ranks a single "Endgame" axis, not BD2's four). */
   tierAxes?: TierAxis[];

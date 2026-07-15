@@ -527,12 +527,16 @@ export default async function GamePage({ params }: Props) {
     // Local blueprint hub (e.g. Crystal of Atlan) renders the structured hub as
     // the top of this page. Related articles use the original game-tag posts
     // (6 shown + load more), falling back to the curated list when there's no tag.
-    if (getLocalGameData(params.slug)) {
+    const localData = getLocalGameData(params.slug);
+    if (localData) {
       const hub = await getGameHub(params.slug);
       if (hub && hub.gameplay) {
+        // KG news is keyed on the Knowledge-API entity, which may differ from
+        // the SEO URL slug (e.g. /game/gta-6 → KG entity `grand-theft-auto-vi`).
+        const kgSlug = localData.knowledgeSlug ?? params.slug;
         const [localTag, kg] = await Promise.all([
           getGameTagWithPosts(params.slug).catch(() => null),
-          getGamePage(params.slug).catch(() => null),
+          getGamePage(kgSlug).catch(() => null),
         ]);
         const tagPosts = (localTag?.posts?.nodes as HubArticle[] | undefined) || [];
         const readNext = tagPosts.length ? tagPosts : await fetchReadNextArticles(hub.gameplay.articles);

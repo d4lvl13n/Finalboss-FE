@@ -4,7 +4,7 @@ import type { GameRecord } from '@/app/lib/game-hub/types';
 // the hero is deterministic and the build has no live-IGDB dependency. All
 // fields are Rockstar-confirmed only; the release date powers the countdown.
 export const GAME: GameRecord = {
-  slug: 'grand-theft-auto-vi',
+  slug: 'gta-6',
   name: 'Grand Theft Auto VI',
   aliases: ['GTA 6', 'GTA VI', 'GTA6'],
   igdbId: 52189,

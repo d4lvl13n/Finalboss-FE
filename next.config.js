@@ -175,6 +175,31 @@ const nextConfig = {
     return [
       // Duplicate-content consolidations (2026-07-01): collapse near-identical
       // dupes onto the canonical keeper so ranking signals concentrate on one URL.
+      //
+      // Game-hub slug consolidation (2026-07-15): the KG hubs must live on the
+      // slug Google already ranks (gta-6, diablo-4), not the IGDB-canonical name.
+      // Redirect the IGDB-name slug (also what the search bar auto-creates) and
+      // all its entity sub-pages onto the equity slug.
+      {
+        source: '/game/grand-theft-auto-vi',
+        destination: '/game/gta-6',
+        permanent: true,
+      },
+      {
+        source: '/game/grand-theft-auto-vi/:path*',
+        destination: '/game/gta-6/:path*',
+        permanent: true,
+      },
+      {
+        source: '/game/diablo-iv',
+        destination: '/game/diablo-4',
+        permanent: true,
+      },
+      {
+        source: '/game/diablo-iv/:path*',
+        destination: '/game/diablo-4/:path*',
+        permanent: true,
+      },
       {
         source: '/crimson-desert-how-to-get-the-baby-wyvern',
         destination: '/crimson-desert-how-to-get-the-baby-wyvern-2',

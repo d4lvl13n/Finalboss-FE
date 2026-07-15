@@ -14,6 +14,8 @@ import { FAQ, BEGINNER } from './guides';
 export const DIABLO_IV: GameData = validateGameData({
   game: GAME,
   blueprint: 'action_rpg',
+  // URL slug is `diablo-4` (SEO equity); the KG entity is keyed on the IGDB name.
+  knowledgeSlug: 'diablo-iv',
   units: CLASSES,
   codes: CODES,
   dungeons: DUNGEONS,

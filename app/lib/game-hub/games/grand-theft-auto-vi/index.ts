@@ -64,6 +64,8 @@ const TIMELINE: HubTimelineEvent[] = [
 export const GRAND_THEFT_AUTO_VI: GameData = validateGameData({
   game: GAME,
   blueprint: 'open_world',
+  // URL slug is `gta-6` (SEO equity); the KG entity is keyed on the IGDB name.
+  knowledgeSlug: 'grand-theft-auto-vi',
   units: CHARACTERS,
   codes: { lastVerified: '2026-07-15', entries: [] },
   systems: SYSTEMS,

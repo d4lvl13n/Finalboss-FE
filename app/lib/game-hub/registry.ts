@@ -18,9 +18,9 @@ import { ARC_RAIDERS } from './games/arc-raiders';
 export const LOCAL_GAMES: Record<string, () => GameData> = {
   'crystal-of-atlan': () => CRYSTAL_OF_ATLAN,
   'browndust2': () => BROWN_DUST_2,
-  'grand-theft-auto-vi': () => GRAND_THEFT_AUTO_VI,
+  'gta-6': () => GRAND_THEFT_AUTO_VI,
   'zenless-zone-zero': () => ZENLESS_ZONE_ZERO,
-  'diablo-iv': () => DIABLO_IV,
+  'diablo-4': () => DIABLO_IV,
   'fable': () => FABLE,
   'arc-raiders': () => ARC_RAIDERS,
 };

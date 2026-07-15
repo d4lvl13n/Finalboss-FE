@@ -5,7 +5,7 @@ import type { GameRecord } from '@/app/lib/game-hub/types';
 // baked from IGDB (125165) so the hero is deterministic with no live-IGDB
 // dependency. igdbRating is the floored IGDB aggregated (critic) rating (89.67).
 export const GAME: GameRecord = {
-  slug: 'diablo-iv',
+  slug: 'diablo-4',
   name: 'Diablo IV',
   aliases: ['Diablo 4', 'D4'],
   igdbId: 125165,
