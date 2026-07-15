@@ -63,6 +63,13 @@ export interface ClassAttributes {
   role?: string;
   weapon?: string;
   playstyle?: string;
+  overview?: string;
+  coreMechanic?: string;
+  builds?: BuildRef[];
+  keyItems?: KeyItem[];
+  strengths?: string[];
+  weaknesses?: string[];
+  tierRationale?: string;
   advancedClasses?: string[];
   pveTier?: string; // "Story" axis for gacha
   pvpTier?: string; // "Mirror War" axis for gacha
@@ -129,6 +136,20 @@ export interface GameRecord {
   sources: string[];
 }
 
+/** A recommended build/loadout. We link OUT to the full guide rather than
+ *  replicate a per-patch build sheet — the hub indexes, it doesn't theorycraft. */
+export interface BuildRef {
+  name: string;
+  focus?: string; // one-line what-it-does
+  url?: string; // link to the full external/internal guide
+}
+
+/** A key item (aspect, unique, gear, attachment) worth calling out. */
+export interface KeyItem {
+  name: string;
+  note?: string;
+}
+
 export interface ClassRecord {
   slug: string;
   name: string;
@@ -136,6 +157,18 @@ export interface ClassRecord {
   role?: string;
   weapon?: string;
   playstyle?: string;
+  /** 2–3 sentence overview: fantasy + current standing. */
+  overview?: string;
+  /** the class-defining system (e.g. Barbarian = Arsenal + Shouts + Fury). */
+  coreMechanic?: string;
+  /** the season's meta builds — named, one-liner, link to the full guide. */
+  builds?: BuildRef[];
+  /** best aspects / uniques / gear to chase. */
+  keyItems?: KeyItem[];
+  strengths?: string[];
+  weaknesses?: string[];
+  /** why this unit sits at its current tier — ties the badge to a reason. */
+  tierRationale?: string;
   advancedClasses?: string[];
   pveTier?: string;
   pvpTier?: string;

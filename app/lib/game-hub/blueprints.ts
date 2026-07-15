@@ -19,7 +19,7 @@ export interface Blueprint {
    *  also the URL segment for unit detail pages: /game/<slug>/<unitType>/<slug>. */
   unitType: GameplayEntityType;
   /** Display labels driven by the blueprint (the data field is always `units`). */
-  labels: { unitPlural: string; tierHeading: string; systemsHeading?: string };
+  labels: { unitPlural: string; tierHeading: string; systemsHeading?: string; keyItemsHeading?: string };
   /** Tier-list axes this blueprint ranks units on. */
   tierAxes: TierAxis[];
   /** Gameplay entity types this blueprint carries. */
@@ -36,7 +36,7 @@ const ACTION_RPG: Blueprint = {
   id: 'action_rpg',
   label: 'Action RPG',
   unitType: 'class',
-  labels: { unitPlural: 'Classes', tierHeading: 'Class Tier List' },
+  labels: { unitPlural: 'Classes', tierHeading: 'Class Tier List', keyItemsHeading: 'Key Aspects & Uniques' },
   tierAxes: [
     { key: 'pve', label: 'PvE', attr: 'pveTier' },
     { key: 'pvp', label: 'PvP', attr: 'pvpTier' },
@@ -56,7 +56,7 @@ const GACHA: Blueprint = {
   id: 'gacha',
   label: 'Gacha RPG',
   unitType: 'character',
-  labels: { unitPlural: 'Characters', tierHeading: 'Character Tier List' },
+  labels: { unitPlural: 'Characters', tierHeading: 'Character Tier List', keyItemsHeading: 'Best Gear' },
   tierAxes: [
     { key: 'story', label: 'Story', attr: 'pveTier' },
     { key: 'boss', label: 'Boss Raid', short: 'Boss', attr: 'bossTier' },
@@ -98,7 +98,7 @@ const LOOTER_SHOOTER: Blueprint = {
   id: 'looter_shooter',
   label: 'Looter Shooter',
   unitType: 'weapon',
-  labels: { unitPlural: 'Weapons', tierHeading: 'Weapon Tier List' },
+  labels: { unitPlural: 'Weapons', tierHeading: 'Weapon Tier List', keyItemsHeading: 'Best Attachments' },
   tierAxes: [
     { key: 'overall', label: 'Overall', attr: 'pveTier' },
     { key: 'pvp', label: 'PvP', attr: 'pvpTier' },

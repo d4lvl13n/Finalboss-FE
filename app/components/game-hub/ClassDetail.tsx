@@ -7,10 +7,11 @@ import type {
   GameplayEntity,
   GameplayEntityType,
 } from '@/app/lib/game-hub/types';
+import { getBlueprint } from '@/app/lib/game-hub/blueprints';
 import type { EntityDetail } from './entity-detail';
 import { entityPath } from './format';
 import SourceList from './SourceList';
-import { Panel, Pill, FieldLabel, TierBadge } from './ui';
+import { Panel, Pill, FieldLabel, TierBadge, SectionHeading } from './ui';
 
 /** Best-effort map of an entity's type to a gameplay route segment. */
 function typeOf(entity: GameplayEntity): GameplayEntityType {
@@ -23,6 +24,12 @@ export default function ClassDetail({ detail }: { detail: EntityDetail }) {
   const { gameSlug, entity, related } = detail;
   const a = entity.attributes as ClassAttributes;
   const axes = detail.tierAxes;
+  const keyItemsHeading = getBlueprint(detail.blueprint).labels.keyItemsHeading || 'Key Items';
+
+  const hasBuilds = !!a.builds && a.builds.length > 0;
+  const hasKeyItems = !!a.keyItems && a.keyItems.length > 0;
+  const hasStrengths = !!a.strengths && a.strengths.length > 0;
+  const hasWeaknesses = !!a.weaknesses && a.weaknesses.length > 0;
 
   return (
     <div className="space-y-8">
@@ -35,12 +42,22 @@ export default function ClassDetail({ detail }: { detail: EntityDetail }) {
         ) : null}
       </header>
 
+      {a.overview && (
+        <p className="max-w-3xl text-lg text-gray-300 leading-relaxed">{a.overview}</p>
+      )}
+
       <Panel>
         <div className="grid gap-6 md:grid-cols-2">
           {a.role && (
             <div>
               <FieldLabel>Role</FieldLabel>
               <p className="text-gray-200">{a.role}</p>
+            </div>
+          )}
+          {a.coreMechanic && (
+            <div>
+              <FieldLabel>Core Mechanic</FieldLabel>
+              <p className="text-gray-200">{a.coreMechanic}</p>
             </div>
           )}
           {a.rarity && (
@@ -76,6 +93,84 @@ export default function ClassDetail({ detail }: { detail: EntityDetail }) {
         <Panel>
           <FieldLabel>Playstyle</FieldLabel>
           <p className="text-gray-300 leading-relaxed">{a.playstyle}</p>
+        </Panel>
+      )}
+
+      {hasBuilds && (
+        <section>
+          <SectionHeading>Recommended Builds</SectionHeading>
+          <div className="grid gap-3 md:grid-cols-2">
+            {a.builds!.map((b) => (
+              <Panel key={b.name}>
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="font-semibold text-white">{b.name}</h3>
+                  {b.url && (
+                    <a
+                      href={b.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-shrink-0 text-sm text-yellow-300 hover:text-yellow-200"
+                    >
+                      Full guide →
+                    </a>
+                  )}
+                </div>
+                {b.focus && <p className="mt-1 text-sm text-gray-400 leading-relaxed">{b.focus}</p>}
+              </Panel>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {hasKeyItems && (
+        <Panel>
+          <FieldLabel>{keyItemsHeading}</FieldLabel>
+          <ul className="mt-1 space-y-2">
+            {a.keyItems!.map((it) => (
+              <li key={it.name} className="text-gray-300">
+                <span className="font-semibold text-gray-100">{it.name}</span>
+                {it.note && <span className="text-gray-400"> — {it.note}</span>}
+              </li>
+            ))}
+          </ul>
+        </Panel>
+      )}
+
+      {(hasStrengths || hasWeaknesses) && (
+        <div className="grid gap-4 md:grid-cols-2">
+          {hasStrengths && (
+            <Panel>
+              <FieldLabel>Strengths</FieldLabel>
+              <ul className="mt-1 space-y-1.5">
+                {a.strengths!.map((s) => (
+                  <li key={s} className="flex gap-2 text-gray-300">
+                    <span className="text-green-400">+</span>
+                    <span>{s}</span>
+                  </li>
+                ))}
+              </ul>
+            </Panel>
+          )}
+          {hasWeaknesses && (
+            <Panel>
+              <FieldLabel>Weaknesses</FieldLabel>
+              <ul className="mt-1 space-y-1.5">
+                {a.weaknesses!.map((w) => (
+                  <li key={w} className="flex gap-2 text-gray-300">
+                    <span className="text-red-400">−</span>
+                    <span>{w}</span>
+                  </li>
+                ))}
+              </ul>
+            </Panel>
+          )}
+        </div>
+      )}
+
+      {a.tierRationale && (
+        <Panel>
+          <FieldLabel>Why This Tier</FieldLabel>
+          <p className="text-gray-300 leading-relaxed">{a.tierRationale}</p>
         </Panel>
       )}
 
