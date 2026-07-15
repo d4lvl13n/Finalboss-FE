@@ -5,6 +5,13 @@
 //
 // To flip a curated game onto the automated GPBot store later, delete its line
 // here (and back its entity in k_*). Templates never change.
+//
+// ⚠️ SLUG POLICY (see CLAUDE.md "Game Hub Slug Policy"): one game = ONE /game/*
+// URL. Before adding a line, check Search Console for an EXISTING indexed slug
+// for this game (IGDB auto-creates slugs on search). Use the equity slug as the
+// key + game.slug; if the KG entity is keyed differently set GameData.knowledgeSlug;
+// and 301 any old slug in next.config.js. Do NOT mint a new slug that duplicates
+// a ranked page — that splits SEO equity (the gta-6 / diablo-4 fix, commit 21421f7).
 
 import type { GameData } from './types';
 import { CRYSTAL_OF_ATLAN } from './games/crystal-of-atlan';

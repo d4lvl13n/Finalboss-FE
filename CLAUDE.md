@@ -108,6 +108,28 @@ NEXT_PUBLIC_BASE_URL=https://finalboss.io
 - `/reviews` - Reviews section
 - `/{slug}` - Individual article pages
 
+## Game Hub Slug Policy (one game = one `/game/*` URL)
+
+**Hard rule when adding a local game hub to `app/lib/game-hub/registry.ts`.** A game
+must have exactly ONE indexable `/game/{slug}` URL. Never mint a new slug for a game
+that already has a page — that splits SEO equity across duplicate URLs (this bit us
+with GTA VI `grand-theft-auto-vi` vs the ranked `gta-6`, and Diablo IV `diablo-iv` vs
+`diablo-4`; both fixed in `21421f7`).
+
+Before choosing a slug:
+1. **Check Search Console** for existing `/game/*` pages for that game — IGDB
+   auto-creates a slug whenever someone searches it in the site's game bar, so a page
+   may already exist and rank. Query GSC by page-regex on the game's name.
+2. **Use the slug that already holds equity** (clicks/impressions) as the URL slug —
+   set both `game.slug` and the `registry.ts` key to it. Do NOT default to the
+   IGDB-canonical name just because it's "correct."
+3. **If the Knowledge-API entity is keyed on a different slug**, set
+   `GameData.knowledgeSlug` to the KG key. URL identity (SEO) is decoupled from
+   Knowledge-API identity — never bend the URL to match the KG.
+4. **When superseding an old slug**, add a permanent redirect in `next.config.js` for
+   both `/game/<old>` and `/game/<old>/:path*` → the canonical. This also intercepts
+   the IGDB search-bar auto-create path so the duplicate can't respawn.
+
 ## Caching Strategy
 
 - ISR (Incremental Static Regeneration): 1-hour revalidate
