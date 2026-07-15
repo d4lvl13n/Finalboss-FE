@@ -9,8 +9,10 @@
 import type { GameData } from './types';
 import { CRYSTAL_OF_ATLAN } from './games/crystal-of-atlan';
 import { BROWN_DUST_2 } from './games/brown-dust-2';
+import { GRAND_THEFT_AUTO_VI } from './games/grand-theft-auto-vi';
 
 export const LOCAL_GAMES: Record<string, () => GameData> = {
   'crystal-of-atlan': () => CRYSTAL_OF_ATLAN,
   'browndust2': () => BROWN_DUST_2,
+  'grand-theft-auto-vi': () => GRAND_THEFT_AUTO_VI,
 };

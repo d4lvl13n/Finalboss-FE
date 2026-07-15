@@ -26,8 +26,8 @@ export interface Blueprint {
   /** The playable-unit entity type — 'class' (RPG) or 'character' (gacha). It's
    *  also the URL segment for unit detail pages: /game/<slug>/<unitType>/<slug>. */
   unitType: GameplayEntityType;
-  /** Display labels driven by the blueprint (the data field is always `classes`). */
-  labels: { unitPlural: string; tierHeading: string };
+  /** Display labels driven by the blueprint (the data field is always `units`). */
+  labels: { unitPlural: string; tierHeading: string; systemsHeading?: string };
   /** Tier-list axes this blueprint ranks units on. */
   tierAxes: TierAxis[];
   /** Gameplay entity types this blueprint carries. */
@@ -81,9 +81,29 @@ const GACHA: Blueprint = {
   },
 };
 
+// News-led blueprint for big open-world titles — pre-launch there's no meta to
+// tier, so it carries confirmed characters + details + a live news/coverage
+// module + reveal timeline + FAQ. No tier axes, no codes. At launch it can grow
+// tier axes and gameplay entities.
+const OPEN_WORLD: Blueprint = {
+  id: 'open_world',
+  label: 'Open World',
+  unitType: 'character',
+  labels: { unitPlural: 'Characters', tierHeading: 'Characters', systemsHeading: 'What We Know' },
+  tierAxes: [],
+  entityTypes: ['character', 'system'],
+  detailTypes: ['character', 'system'],
+  relationshipTypes: ['appears_in'],
+  profiles: {
+    character: 'gaming.character.v1',
+    system: 'gaming.system.v1',
+  },
+};
+
 const BLUEPRINTS: Record<BlueprintId, Blueprint> = {
   action_rpg: ACTION_RPG,
   gacha: GACHA,
+  open_world: OPEN_WORLD,
 };
 
 export function getBlueprint(id: BlueprintId): Blueprint {

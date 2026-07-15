@@ -13,7 +13,7 @@ import siteConfig from '@/app/lib/siteConfig';
 import { getGameHub, localGameSlugs, getLocalGameData } from '@/app/lib/game-hub/provider';
 import GameplayHub, { buildGameplayJsonLd } from '@/app/components/game-hub/GameplayHub';
 import { fetchReadNextArticles, type HubArticle } from '@/app/lib/game-hub/related-articles';
-import { igdbImage } from '@/app/lib/knowledge/client';
+import { igdbImage, getGamePage } from '@/app/lib/knowledge/client';
 
 interface Props {
   params: {
@@ -530,9 +530,15 @@ export default async function GamePage({ params }: Props) {
     if (getLocalGameData(params.slug)) {
       const hub = await getGameHub(params.slug);
       if (hub && hub.gameplay) {
-        const localTag = await getGameTagWithPosts(params.slug).catch(() => null);
+        const [localTag, kg] = await Promise.all([
+          getGameTagWithPosts(params.slug).catch(() => null),
+          getGamePage(params.slug).catch(() => null),
+        ]);
         const tagPosts = (localTag?.posts?.nodes as HubArticle[] | undefined) || [];
         const readNext = tagPosts.length ? tagPosts : await fetchReadNextArticles(hub.gameplay.articles);
+        const news = kg
+          ? { coverage: kg.coverage, latestTopicSnapshot: kg.latestTopicSnapshot, content: kg.content }
+          : null;
         return (
           <>
             <Header />
@@ -540,7 +546,7 @@ export default async function GamePage({ params }: Props) {
               type="application/ld+json"
               dangerouslySetInnerHTML={{ __html: JSON.stringify(buildGameplayJsonLd(hub, params.slug)) }}
             />
-            <GameplayHub hub={hub} slug={params.slug} readNext={readNext} />
+            <GameplayHub hub={hub} slug={params.slug} readNext={readNext} news={news} />
             <Footer />
           </>
         );

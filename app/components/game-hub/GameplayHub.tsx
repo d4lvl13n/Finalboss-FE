@@ -6,7 +6,7 @@
 import Image from 'next/image';
 
 import { igdbImage } from '@/app/lib/knowledge/client';
-import type { GameHub } from '@/app/lib/game-hub/types';
+import type { GameHub, CoveragePoint, TopicSnapshot, ContentItem } from '@/app/lib/game-hub/types';
 import type { HubArticle } from '@/app/lib/game-hub/related-articles';
 import { getBlueprint } from '@/app/lib/game-hub/blueprints';
 import { videoGameJsonLd, itemListJsonLd, breadcrumbJsonLd, faqJsonLd, graph } from '@/app/lib/jsonld';
@@ -16,7 +16,15 @@ import ArticleGridMore from '@/app/components/game-hub/ArticleGridMore';
 import GettingStarted from '@/app/components/game-hub/GettingStarted';
 import FaqSection from '@/app/components/game-hub/FaqSection';
 import TeamsSection from '@/app/components/game-hub/TeamsSection';
+import KGNews from '@/app/components/game-hub/KGNews';
+import Countdown from '@/app/components/game-hub/Countdown';
 import { SectionHeading, Panel, Pill, FieldLabel } from '@/app/components/game-hub/ui';
+
+export interface HubNews {
+  coverage: CoveragePoint[];
+  latestTopicSnapshot: TopicSnapshot | null;
+  content: ContentItem[];
+}
 
 import ClassRoster from '@/app/components/game-hub/ClassRoster';
 import TierListView from '@/app/components/game-hub/TierListView';
@@ -30,10 +38,12 @@ export default function GameplayHub({
   hub,
   slug,
   readNext,
+  news,
 }: {
   hub: GameHub;
   slug: string;
   readNext: HubArticle[];
+  news?: HubNews | null;
 }) {
   const gp = hub.gameplay!;
   const bp = getBlueprint(hub.blueprint || 'action_rpg');
@@ -54,14 +64,21 @@ export default function GameplayHub({
   const companies: string[] = [];
   const tierArticle = gp.articles.find((art) => art.kind === 'tier_list')?.url;
 
+  const hasTiers = bp.tierAxes.length > 0 && gp.units.length > 0;
+  const hasCodes = bp.entityTypes.includes('code');
+  const hasNews = !!(news && (news.coverage.length > 0 || news.content.length > 0));
+  const releaseDate = a.release_date as string | null | undefined;
+  const systemsLabel = labels.systemsHeading || 'Systems';
+
   const navItems = [
     gp.beginner && { label: 'Getting Started', href: '#getting-started' },
-    gp.units.length > 0 && { label: 'Tier List', href: '#tier-list' },
+    hasTiers && { label: 'Tier List', href: '#tier-list' },
     gp.units.length > 0 && { label: labels.unitPlural, href: '#classes' },
     gp.teams.length > 0 && { label: 'Teams', href: '#teams' },
-    { label: 'Codes', href: '#codes' },
+    hasCodes && { label: 'Codes', href: '#codes' },
     gp.dungeons.length > 0 && { label: 'Dungeons', href: '#dungeons' },
-    gp.systems.length > 0 && { label: 'Systems', href: '#systems' },
+    gp.systems.length > 0 && { label: systemsLabel, href: '#systems' },
+    hasNews && { label: 'News', href: '#news' },
     gp.timeline.length > 0 && { label: 'Updates', href: '#updates' },
     gp.faq.length > 0 && { label: 'FAQ', href: '#faq' },
     screenshots.length > 0 && { label: 'Screenshots', href: '#screenshots' },
@@ -110,6 +127,12 @@ export default function GameplayHub({
           </div>
         </header>
 
+        {releaseDate && new Date(releaseDate).getTime() > Date.now() && (
+          <div className="mb-8">
+            <Countdown target={releaseDate} />
+          </div>
+        )}
+
         {description && (
           <Panel className="mb-8">
             <p className="leading-relaxed text-gray-300">{description}</p>
@@ -124,7 +147,7 @@ export default function GameplayHub({
               <GettingStarted guide={gp.beginner} />
             </div>
           )}
-          {gp.units.length > 0 && (
+          {hasTiers && (
             <div id="tier-list" className="scroll-mt-28">
               <TierListView
                 gameSlug={slug}
@@ -154,14 +177,16 @@ export default function GameplayHub({
               <TeamsSection gameSlug={slug} teams={gp.teams} unitType={unitType} intro={intros.teams} />
             </div>
           )}
-          <div id="codes" className="scroll-mt-28">
-            <CodesTracker
-              lastVerified={gp.codes.lastVerified}
-              active={gp.codes.active}
-              expired={gp.codes.expired}
-              intro={intros.codes}
-            />
-          </div>
+          {hasCodes && (
+            <div id="codes" className="scroll-mt-28">
+              <CodesTracker
+                lastVerified={gp.codes.lastVerified}
+                active={gp.codes.active}
+                expired={gp.codes.expired}
+                intro={intros.codes}
+              />
+            </div>
+          )}
           {gp.dungeons.length > 0 && (
             <div id="dungeons" className="scroll-mt-28">
               <DungeonsGrid gameSlug={slug} dungeons={gp.dungeons} intro={intros.dungeons} />
@@ -169,7 +194,17 @@ export default function GameplayHub({
           )}
           {gp.systems.length > 0 && (
             <div id="systems" className="scroll-mt-28">
-              <SystemsGrid gameSlug={slug} systems={gp.systems} intro={intros.systems} />
+              <SystemsGrid gameSlug={slug} systems={gp.systems} intro={intros.systems} label={systemsLabel} />
+            </div>
+          )}
+          {hasNews && news && (
+            <div id="news" className="scroll-mt-28">
+              <KGNews
+                coverage={news.coverage}
+                topic={news.latestTopicSnapshot}
+                content={news.content}
+                keywords={[e.canonicalName, ...((a.aliases as string[] | undefined) || [])]}
+              />
             </div>
           )}
           {gp.timeline.length > 0 && (

@@ -36,7 +36,7 @@ export type {
 // Blueprints
 // ---------------------------------------------------------------------------
 
-export type BlueprintId = 'action_rpg' | 'gacha';
+export type BlueprintId = 'action_rpg' | 'gacha' | 'open_world';
 
 /** The gameplay entity types a blueprint can carry. A blueprint's "unit type"
  *  — the playable-unit entity — is 'class' for RPGs, 'character' for gacha. */
