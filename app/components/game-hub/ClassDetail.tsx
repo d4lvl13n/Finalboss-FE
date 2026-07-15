@@ -11,6 +11,7 @@ import { getBlueprint } from '@/app/lib/game-hub/blueprints';
 import type { EntityDetail } from './entity-detail';
 import { entityPath } from './format';
 import SourceList from './SourceList';
+import SiblingNav from './SiblingNav';
 import { Panel, Pill, FieldLabel, TierBadge, SectionHeading } from './ui';
 
 /** Best-effort map of an entity's type to a gameplay route segment. */
@@ -24,7 +25,8 @@ export default function ClassDetail({ detail }: { detail: EntityDetail }) {
   const { gameSlug, entity, related } = detail;
   const a = entity.attributes as ClassAttributes;
   const axes = detail.tierAxes;
-  const keyItemsHeading = getBlueprint(detail.blueprint).labels.keyItemsHeading || 'Key Items';
+  const bp = getBlueprint(detail.blueprint);
+  const keyItemsHeading = bp.labels.keyItemsHeading || 'Key Items';
 
   const hasBuilds = !!a.builds && a.builds.length > 0;
   const hasKeyItems = !!a.keyItems && a.keyItems.length > 0;
@@ -220,6 +222,12 @@ export default function ClassDetail({ detail }: { detail: EntityDetail }) {
           </div>
         </div>
       )}
+
+      <SiblingNav
+        gameSlug={gameSlug}
+        heading={`Explore other ${bp.labels.unitPlural}`}
+        siblings={detail.siblings}
+      />
 
       <SourceList sources={entity.sources} />
     </div>

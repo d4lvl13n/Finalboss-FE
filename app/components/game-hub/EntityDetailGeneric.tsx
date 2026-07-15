@@ -6,7 +6,13 @@ import type { GameplayEntity, GameplayEntityType } from '@/app/lib/game-hub/type
 import type { EntityDetail } from './entity-detail';
 import { entityPath } from './format';
 import SourceList from './SourceList';
+import SiblingNav from './SiblingNav';
 import { Panel } from './ui';
+
+const TYPE_PLURAL: Partial<Record<GameplayEntityType, string>> = {
+  dungeon: 'Dungeons',
+  system: 'Systems',
+};
 
 /** Best-effort map of an entity's type to a gameplay route segment. */
 function typeOf(entity: GameplayEntity): GameplayEntityType {
@@ -16,8 +22,9 @@ function typeOf(entity: GameplayEntity): GameplayEntityType {
 }
 
 export default function EntityDetailGeneric({ detail }: { detail: EntityDetail }) {
-  const { gameSlug, entity, related } = detail;
+  const { gameSlug, entity, related, siblings } = detail;
   const attrs = entity.attributes as { kind?: 'dungeon' | 'world_boss'; summary?: string };
+  const siblingHeading = `Explore other ${TYPE_PLURAL[siblings[0]?.type as GameplayEntityType] || 'entries'}`;
 
   return (
     <div className="space-y-8">
@@ -61,6 +68,8 @@ export default function EntityDetailGeneric({ detail }: { detail: EntityDetail }
           </div>
         </div>
       )}
+
+      <SiblingNav gameSlug={gameSlug} heading={siblingHeading} siblings={siblings} />
 
       <SourceList sources={entity.sources} />
     </div>

@@ -22,6 +22,7 @@ import type {
   GameHub,
   GameplayEntity,
   GameplayEntityType,
+  ClassAttributes,
   GameRecord,
   KnowledgeEntity,
   Relationship,
@@ -281,6 +282,8 @@ export interface EntityDetail {
   tierAxes: TierAxis[];
   entity: GameplayEntity;
   related: Array<{ label: string; entity: GameplayEntity }>;
+  /** The rest of this entity's roster (same type), for always-on interlinking. */
+  siblings: Array<{ slug: string; name: string; type: GameplayEntityType; tier?: string; isNew?: boolean }>;
 }
 
 /** One gameplay entity + its resolved relationships (for the detail page). */
@@ -310,5 +313,21 @@ export function getLocalEntity(gameSlug: string, type: string, entitySlug: strin
       related.push({ label: r.type.replace(/_/g, ' '), entity: target });
     }
   }
-  return { game, gameSlug, blueprint: data.blueprint, tierAxes: data.tierAxes ?? bp.tierAxes, entity, related };
+  // Always-on roster interlinking: every other entity of the same type, with a
+  // primary-tier badge so the nav doubles as a quick tier glance.
+  const primaryAxis = (data.tierAxes ?? bp.tierAxes)[0];
+  const siblings = list
+    .filter((e) => e.uid !== entity.uid)
+    .map((e) => {
+      const at = e.attributes as ClassAttributes;
+      return {
+        slug: e.slug,
+        name: e.canonicalName,
+        type: type as GameplayEntityType,
+        tier: primaryAxis ? (at[primaryAxis.attr] as string | undefined) : undefined,
+        isNew: !!at.isNew,
+      };
+    });
+
+  return { game, gameSlug, blueprint: data.blueprint, tierAxes: data.tierAxes ?? bp.tierAxes, entity, related, siblings };
 }
