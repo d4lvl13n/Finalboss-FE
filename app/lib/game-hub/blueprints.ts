@@ -10,6 +10,16 @@
 
 import type { BlueprintId, GameplayEntityType } from './types';
 
+/** A tier-list axis. `attr` is the unit attribute holding that axis's tier. A
+ *  game can rank the same roster on several axes (e.g. gacha: Story / Boss Raid
+ *  / Mirror War / Guild Raid). `short` is the compact label used on unit cards. */
+export interface TierAxis {
+  key: string;
+  label: string;
+  short?: string;
+  attr: 'pveTier' | 'pvpTier' | 'bossTier' | 'guildTier';
+}
+
 export interface Blueprint {
   id: BlueprintId;
   label: string;
@@ -18,6 +28,8 @@ export interface Blueprint {
   unitType: GameplayEntityType;
   /** Display labels driven by the blueprint (the data field is always `classes`). */
   labels: { unitPlural: string; tierHeading: string };
+  /** Tier-list axes this blueprint ranks units on. */
+  tierAxes: TierAxis[];
   /** Gameplay entity types this blueprint carries. */
   entityTypes: GameplayEntityType[];
   /** Entity types that get their own /game/<slug>/<type>/<entity> detail page. */
@@ -33,6 +45,10 @@ const ACTION_RPG: Blueprint = {
   label: 'Action RPG',
   unitType: 'class',
   labels: { unitPlural: 'Classes', tierHeading: 'Class Tier List' },
+  tierAxes: [
+    { key: 'pve', label: 'PvE', attr: 'pveTier' },
+    { key: 'pvp', label: 'PvP', attr: 'pvpTier' },
+  ],
   entityTypes: ['class', 'code', 'dungeon', 'system'],
   detailTypes: ['class', 'dungeon', 'system'], // codes render as a list on the hub
   relationshipTypes: ['appears_in', 'advanced_class_of', 'countered_by', 'pairs_with', 'unlocks'],
@@ -49,6 +65,12 @@ const GACHA: Blueprint = {
   label: 'Gacha RPG',
   unitType: 'character',
   labels: { unitPlural: 'Characters', tierHeading: 'Character Tier List' },
+  tierAxes: [
+    { key: 'story', label: 'Story', attr: 'pveTier' },
+    { key: 'boss', label: 'Boss Raid', short: 'Boss', attr: 'bossTier' },
+    { key: 'pvp', label: 'Mirror War', short: 'PvP', attr: 'pvpTier' },
+    { key: 'guild', label: 'Guild Raid', short: 'Guild', attr: 'guildTier' },
+  ],
   entityTypes: ['character', 'code', 'system'],
   detailTypes: ['character', 'system'],
   relationshipTypes: ['appears_in', 'similar_to'],

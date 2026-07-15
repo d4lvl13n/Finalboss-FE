@@ -52,8 +52,10 @@ export interface ClassAttributes {
   weapon?: string;
   playstyle?: string;
   advancedClasses?: string[];
-  pveTier?: string;
-  pvpTier?: string;
+  pveTier?: string; // "Story" axis for gacha
+  pvpTier?: string; // "Mirror War" axis for gacha
+  bossTier?: string; // gacha: Boss Raid (Fiend)
+  guildTier?: string; // gacha: Guild Raid
   skills?: string[];
   isNew?: boolean;
   rarity?: string; // gacha: 5★ / 4★
@@ -125,6 +127,8 @@ export interface ClassRecord {
   advancedClasses?: string[];
   pveTier?: string;
   pvpTier?: string;
+  bossTier?: string;
+  guildTier?: string;
   skills?: string[];
   isNew?: boolean;
   rarity?: string; // gacha

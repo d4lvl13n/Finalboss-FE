@@ -118,6 +118,7 @@ export default function GameplayHub({
               <TierListView
                 gameSlug={slug}
                 classes={gp.classes}
+                axes={bp.tierAxes}
                 articleUrl={tierArticle}
                 unitType={unitType}
                 heading={labels.tierHeading}
@@ -133,6 +134,7 @@ export default function GameplayHub({
                 unitType={unitType}
                 label={labels.unitPlural}
                 intro={intros.units}
+                axes={bp.tierAxes}
               />
             </div>
           )}

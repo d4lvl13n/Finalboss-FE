@@ -11,16 +11,32 @@ import { SYSTEMS } from './systems';
 
 const TIMELINE: HubTimelineEvent[] = [
   {
-    date: '2023-06-22',
-    title: 'Brown Dust 2 global launch (Android, iOS, PC)',
+    date: '2026-07-02',
+    title: "'The Soul-Wager' — Content Pack #10 (new PvE combat mode) released",
     kind: 'update',
-    sources: ['https://www.igdb.com/games/brown-dust-ii'],
+    sources: ['https://browndust2.miraheze.org/wiki/The_Soul-Wager'],
   },
   {
     date: '2026-03-16',
     title: 'Brown Dust 2 ~1000-day anniversary coverage',
     kind: 'event',
     sources: ['https://4gamer.net/games/665/G066579/20260310036'],
+  },
+  {
+    date: '2026-01-12',
+    title:
+      'Steam-alignment censorship of outfits and cutscenes announced, then reversed after community backlash',
+    kind: 'update',
+    sources: [
+      'https://www.escapistmagazine.com/news-brown-dust-2-fans-got-so-irate-over-gooning-censorship-the-developers-have-walked-it-back/',
+      'https://dotesports.com/general/news/browndust2-censorship-backlash',
+    ],
+  },
+  {
+    date: '2023-06-22',
+    title: 'Brown Dust 2 global launch (Android, iOS, PC)',
+    kind: 'update',
+    sources: ['https://www.igdb.com/games/brown-dust-ii'],
   },
 ];
 

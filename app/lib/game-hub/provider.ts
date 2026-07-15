@@ -128,6 +128,8 @@ function normalizeClasses(
         advancedClasses: r.advancedClasses || [],
         pveTier: r.pveTier,
         pvpTier: r.pvpTier,
+        bossTier: r.bossTier,
+        guildTier: r.guildTier,
         skills: r.skills || [],
         isNew: !!r.isNew,
         rarity: r.rarity,

@@ -12,10 +12,13 @@ export const CHARACTERS: ClassRecord[] = [
     rarity: '5★',
     element: 'Water',
     pveTier: 'S',
+    bossTier: 'S',
+    guildTier: 'A',
     sources: [
       'https://www.pocketgamer.com/brown-dust-2/tier-list/',
       'https://www.pockettactics.com/brown-dust-2/tier-list',
       'https://dotgg.gg/brown-dust-2/pve-tier-list/',
+      'https://www.propelrc.com/ultimate-brown-dust-2-tier-list/',
     ],
   },
   {
@@ -25,6 +28,8 @@ export const CHARACTERS: ClassRecord[] = [
     rarity: '5★',
     element: 'Dark',
     pveTier: 'S',
+    bossTier: 'S',
+    guildTier: 'S',
     sources: [
       'https://www.pocketgamer.com/brown-dust-2/tier-list/',
       'https://www.pockettactics.com/brown-dust-2/tier-list',
@@ -49,9 +54,12 @@ export const CHARACTERS: ClassRecord[] = [
     rarity: '5★',
     element: 'Wind',
     pveTier: 'S',
+    bossTier: 'A',
+    guildTier: 'A',
     sources: [
       'https://www.pockettactics.com/brown-dust-2/tier-list',
       'https://dotgg.gg/brown-dust-2/pve-tier-list/',
+      'https://www.pocketgamer.com/brown-dust-2/tier-list/',
     ],
   },
   {
@@ -61,9 +69,12 @@ export const CHARACTERS: ClassRecord[] = [
     rarity: '5★',
     element: 'Water',
     pveTier: 'S',
+    bossTier: 'S',
+    guildTier: 'S',
     sources: [
       'https://www.pockettactics.com/brown-dust-2/tier-list',
       'https://dotgg.gg/brown-dust-2/pve-tier-list/',
+      'https://www.pocketgamer.com/brown-dust-2/tier-list/',
     ],
   },
   {
@@ -104,7 +115,12 @@ export const CHARACTERS: ClassRecord[] = [
     name: 'Venaka',
     rarity: '5★',
     pveTier: 'S',
-    sources: ['https://www.pockettactics.com/brown-dust-2/tier-list'],
+    bossTier: 'A',
+    guildTier: 'A',
+    sources: [
+      'https://www.pockettactics.com/brown-dust-2/tier-list',
+      'https://vortexgaming.io/en/postdetail/616661',
+    ],
   },
   {
     slug: 'liatris',
@@ -119,7 +135,12 @@ export const CHARACTERS: ClassRecord[] = [
     name: 'Levia',
     rarity: '5★',
     pveTier: 'S',
-    sources: ['https://www.pockettactics.com/brown-dust-2/tier-list'],
+    bossTier: 'A',
+    guildTier: 'A',
+    sources: [
+      'https://www.pockettactics.com/brown-dust-2/tier-list',
+      'https://vortexgaming.io/en/postdetail/616661',
+    ],
   },
   {
     slug: 'loen',
@@ -162,7 +183,12 @@ export const CHARACTERS: ClassRecord[] = [
     name: 'Luvencia',
     rarity: '5★',
     pveTier: 'S',
-    sources: ['https://www.pockettactics.com/brown-dust-2/tier-list'],
+    bossTier: 'A',
+    guildTier: 'A',
+    sources: [
+      'https://www.pockettactics.com/brown-dust-2/tier-list',
+      'https://vortexgaming.io/en/postdetail/616661',
+    ],
   },
   {
     slug: 'beachside-angel-teresse',
@@ -221,6 +247,8 @@ export const CHARACTERS: ClassRecord[] = [
     rarity: '5★',
     element: 'Dark',
     pveTier: 'S',
+    bossTier: 'S',
+    guildTier: 'S',
     sources: ['https://www.pocketgamer.com/brown-dust-2/tier-list/'],
   },
   {
@@ -231,10 +259,13 @@ export const CHARACTERS: ClassRecord[] = [
     element: 'Dark',
     pveTier: 'S',
     pvpTier: 'S',
+    bossTier: 'A',
+    guildTier: 'A',
     sources: [
       'https://www.pocketgamer.com/brown-dust-2/tier-list/',
       'https://www.pockettactics.com/brown-dust-2/tier-list',
       'https://dotgg.gg/brown-dust-2/pvp-tier-list/',
+      'https://vortexgaming.io/en/postdetail/616661',
     ],
   },
   {
@@ -255,9 +286,11 @@ export const CHARACTERS: ClassRecord[] = [
     rarity: '5★',
     pveTier: 'S',
     pvpTier: 'S',
+    bossTier: 'S',
     sources: [
       'https://www.pockettactics.com/brown-dust-2/tier-list',
       'https://dotgg.gg/brown-dust-2/pvp-tier-list/',
+      'https://www.pocketgamer.com/brown-dust-2/tier-list/',
     ],
   },
   {
@@ -316,9 +349,12 @@ export const CHARACTERS: ClassRecord[] = [
     element: 'Earth',
     pveTier: 'A',
     pvpTier: 'S',
+    bossTier: 'A',
+    guildTier: 'S',
     sources: [
       'https://www.pocketgamer.com/brown-dust-2/tier-list/',
       'https://dotgg.gg/brown-dust-2/pvp-tier-list/',
+      'https://vortexgaming.io/en/postdetail/616661',
     ],
   },
   {
@@ -342,6 +378,7 @@ export const CHARACTERS: ClassRecord[] = [
     name: 'Onsen Practitioner Ventana',
     rarity: '5★',
     pveTier: 'A',
+    bossTier: 'A',
     sources: [
       'https://www.pocketgamer.com/brown-dust-2/tier-list/',
       'https://www.pockettactics.com/brown-dust-2/tier-list',
@@ -362,14 +399,24 @@ export const CHARACTERS: ClassRecord[] = [
     name: 'Scheherazade (Schera)',
     rarity: '5★',
     pveTier: 'A',
-    sources: ['https://www.pockettactics.com/brown-dust-2/tier-list'],
+    bossTier: 'A',
+    guildTier: 'A',
+    sources: [
+      'https://www.pockettactics.com/brown-dust-2/tier-list',
+      'https://vortexgaming.io/en/postdetail/616661',
+    ],
   },
   {
     slug: 'rafina',
     name: 'Rafina',
     rarity: '5★',
     pveTier: 'A',
-    sources: ['https://www.pockettactics.com/brown-dust-2/tier-list'],
+    bossTier: 'A',
+    guildTier: 'A',
+    sources: [
+      'https://www.pockettactics.com/brown-dust-2/tier-list',
+      'https://vortexgaming.io/en/postdetail/616661',
+    ],
   },
   {
     slug: 'rou',
@@ -378,5 +425,75 @@ export const CHARACTERS: ClassRecord[] = [
     element: 'Dark',
     pveTier: 'A',
     sources: ['https://www.pockettactics.com/brown-dust-2/tier-list'],
+  },
+  {
+    slug: 'darian',
+    name: 'Darian',
+    role: 'Attacker (sustained DoT DPS)',
+    rarity: '5★',
+    element: 'Fire',
+    pveTier: 'S',
+    bossTier: 'S',
+    guildTier: 'S',
+    sources: [
+      'https://www.propelrc.com/ultimate-brown-dust-2-tier-list/',
+      'https://dotgg.gg/brown-dust-2/pve-tier-list/',
+      'https://vortexgaming.io/en/postdetail/616661',
+    ],
+  },
+  {
+    slug: 'mamonir',
+    name: 'Mamonir (Mammonir of the Night of Death)',
+    role: 'Attacker (magic DPS, crit / HP-scaling)',
+    rarity: '5★',
+    element: 'Wind',
+    bossTier: 'A',
+    guildTier: 'A',
+    sources: [
+      'https://www.propelrc.com/ultimate-brown-dust-2-tier-list/',
+      'https://vortexgaming.io/en/postdetail/616661',
+    ],
+  },
+  {
+    slug: 'tyr',
+    name: 'Tyr',
+    role: 'Attacker (dealer)',
+    rarity: '5★',
+    pveTier: 'S',
+    bossTier: 'A',
+    guildTier: 'A',
+    sources: [
+      'https://vortexgaming.io/en/postdetail/616661',
+      'https://dotgg.gg/brown-dust-2/pve-tier-list/',
+    ],
+  },
+  {
+    slug: 'celia',
+    name: 'Celia',
+    role: 'Attacker (raid chain dealer)',
+    rarity: '5★',
+    bossTier: 'A',
+    guildTier: 'A',
+    sources: [
+      'https://vortexgaming.io/en/postdetail/616661',
+      'https://dotgg.gg/brown-dust-2/pve-tier-list/',
+    ],
+  },
+  {
+    slug: 'zenith',
+    name: 'Zenith',
+    role: 'Attacker (raid chain dealer)',
+    rarity: '5★',
+    bossTier: 'A',
+    guildTier: 'A',
+    sources: ['https://vortexgaming.io/en/postdetail/616661'],
+  },
+  {
+    slug: 'splash-queen-wilhelmina',
+    name: 'Splash Queen Wilhelmina',
+    role: 'Attacker (single-target boss DPS)',
+    rarity: '5★',
+    bossTier: 'S',
+    sources: ['https://www.pocketgamer.com/brown-dust-2/tier-list/'],
   },
 ];

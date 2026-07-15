@@ -8,6 +8,7 @@ import type {
   GameplayEntityType,
 } from '@/app/lib/game-hub/types';
 import type { EntityDetail } from './entity-detail';
+import { getBlueprint } from '@/app/lib/game-hub/blueprints';
 import { entityPath } from './format';
 import SourceList from './SourceList';
 import { Panel, Pill, FieldLabel, TierBadge } from './ui';
@@ -22,6 +23,7 @@ function typeOf(entity: GameplayEntity): GameplayEntityType {
 export default function ClassDetail({ detail }: { detail: EntityDetail }) {
   const { gameSlug, entity, related } = detail;
   const a = entity.attributes as ClassAttributes;
+  const axes = getBlueprint(detail.blueprint).tierAxes;
 
   return (
     <div className="space-y-8">
@@ -60,17 +62,13 @@ export default function ClassDetail({ detail }: { detail: EntityDetail }) {
               <p className="text-gray-200">{a.weapon}</p>
             </div>
           )}
-          {a.pveTier && (
-            <div>
-              <FieldLabel>PvE Tier</FieldLabel>
-              <TierBadge label="PvE" tier={a.pveTier} />
-            </div>
-          )}
-          {a.pvpTier && (
-            <div>
-              <FieldLabel>PvP Tier</FieldLabel>
-              <TierBadge label="PvP" tier={a.pvpTier} />
-            </div>
+          {axes.map((ax) =>
+            a[ax.attr] ? (
+              <div key={ax.key}>
+                <FieldLabel>{ax.label} Tier</FieldLabel>
+                <TierBadge label={ax.short || ax.label} tier={a[ax.attr]} />
+              </div>
+            ) : null
           )}
         </div>
       </Panel>

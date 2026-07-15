@@ -2,17 +2,25 @@
 
 import Link from 'next/link';
 import type { ClassEntity, GameplayEntityType } from '@/app/lib/game-hub/types';
+import type { TierAxis } from '@/app/lib/game-hub/blueprints';
 import { entityPath } from './format';
 import { TierBadge } from './ui';
+
+const DEFAULT_AXES: TierAxis[] = [
+  { key: 'pve', label: 'PvE', attr: 'pveTier' },
+  { key: 'pvp', label: 'PvP', attr: 'pvpTier' },
+];
 
 export default function ClassCard({
   gameSlug,
   cls,
   unitType = 'class',
+  axes = DEFAULT_AXES,
 }: {
   gameSlug: string;
   cls: ClassEntity;
   unitType?: GameplayEntityType;
+  axes?: TierAxis[];
 }) {
   const a = cls.attributes;
   return (
@@ -42,8 +50,9 @@ export default function ClassCard({
       )}
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
-        <TierBadge label="PvE" tier={a.pveTier} />
-        <TierBadge label="PvP" tier={a.pvpTier} />
+        {axes.map((ax) => (
+          <TierBadge key={ax.key} label={ax.short || ax.label} tier={a[ax.attr]} />
+        ))}
       </div>
     </Link>
   );

@@ -1,18 +1,20 @@
 'use client';
 
-// Interactive PvE ⇄ PvP tier list. Warm FinalBoss idiom, no chart libs. Client component.
+// Interactive tier list, one toggle per blueprint tier axis (PvE/PvP for RPGs;
+// Story / Boss Raid / Mirror War / Guild Raid for gacha). Warm FinalBoss idiom,
+// no chart libs. Client component.
 
 import { useState } from 'react';
 import Link from 'next/link';
-import type { ClassEntity, GameplayEntityType } from '@/app/lib/game-hub/types';
+import type { ClassAttributes, ClassEntity, GameplayEntityType } from '@/app/lib/game-hub/types';
+import type { TierAxis } from '@/app/lib/game-hub/blueprints';
 import { entityPath } from './format';
 import { SectionHeading, Panel, tierPillClass, TIER_ORDER } from './ui';
-
-type Mode = 'pve' | 'pvp';
 
 export default function TierListView({
   gameSlug,
   classes,
+  axes,
   articleUrl,
   intro,
   unitType = 'class',
@@ -20,15 +22,17 @@ export default function TierListView({
 }: {
   gameSlug: string;
   classes: ClassEntity[];
+  axes: TierAxis[];
   articleUrl?: string;
   intro?: string;
   unitType?: GameplayEntityType;
   heading?: string;
 }) {
-  const [mode, setMode] = useState<Mode>('pve');
+  const [axisKey, setAxisKey] = useState(axes[0]?.key);
+  const axis = axes.find((x) => x.key === axisKey) || axes[0];
 
   const tierOf = (cls: ClassEntity): string =>
-    ((mode === 'pve' ? cls.attributes.pveTier : cls.attributes.pvpTier) || '').trim().toUpperCase();
+    (((cls.attributes as ClassAttributes)[axis.attr] as string | undefined) || '').trim().toUpperCase();
 
   const rows = TIER_ORDER.map((tier) => ({
     tier,
@@ -40,17 +44,17 @@ export default function TierListView({
       <SectionHeading>{heading}</SectionHeading>
       {intro && <p className="mb-5 max-w-3xl text-gray-400 leading-relaxed">{intro}</p>}
       <Panel>
-        <div className="flex gap-2 mb-6">
-          {(['pve', 'pvp'] as Mode[]).map((m) => (
+        <div className="mb-6 flex flex-wrap gap-2">
+          {axes.map((ax) => (
             <button
-              key={m}
+              key={ax.key}
               type="button"
-              onClick={() => setMode(m)}
+              onClick={() => setAxisKey(ax.key)}
               className={`rounded-full px-4 py-1 text-sm font-semibold uppercase tracking-wide transition ${
-                mode === m ? 'bg-yellow-400 text-gray-900' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                axis.key === ax.key ? 'bg-yellow-400 text-gray-900' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
               }`}
             >
-              {m}
+              {ax.label}
             </button>
           ))}
         </div>
@@ -78,6 +82,9 @@ export default function TierListView({
               </div>
             </div>
           ))}
+          {rows.length === 0 && (
+            <p className="text-sm text-gray-500">No {axis.label} tiers ranked yet — check back after the next patch.</p>
+          )}
         </div>
 
         {articleUrl && (
