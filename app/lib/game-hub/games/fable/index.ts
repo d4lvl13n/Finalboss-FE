@@ -81,6 +81,8 @@ const TIMELINE: HubTimelineEvent[] = [
 export const FABLE: GameData = validateGameData({
   game: GAME,
   blueprint: 'open_world',
+  // URL slug is `fable`; the GPBot Knowledge entity is keyed `fable-1`.
+  knowledgeSlug: 'fable-1',
   units: CHARACTERS,
   codes: { lastVerified: '2026-07-15', entries: [] },
   systems: SYSTEMS,
