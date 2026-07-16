@@ -21,6 +21,7 @@ import { ZENLESS_ZONE_ZERO } from './games/zenless-zone-zero';
 import { DIABLO_IV } from './games/diablo-iv';
 import { FABLE } from './games/fable';
 import { ARC_RAIDERS } from './games/arc-raiders';
+import { STARFIELD } from './games/starfield';
 
 export const LOCAL_GAMES: Record<string, () => GameData> = {
   'crystal-of-atlan': () => CRYSTAL_OF_ATLAN,
@@ -30,4 +31,5 @@ export const LOCAL_GAMES: Record<string, () => GameData> = {
   'diablo-4': () => DIABLO_IV,
   'fable': () => FABLE,
   'arc-raiders': () => ARC_RAIDERS,
+  'starfield': () => STARFIELD,
 };
