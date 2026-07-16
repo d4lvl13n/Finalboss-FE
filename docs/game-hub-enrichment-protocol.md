@@ -7,12 +7,16 @@ game so it can be lifted into a skill. Proven on Diablo IV (commits `0ffe00a`,
 
 ## Doctrine (non-negotiable)
 
-1. **Three research lanes, divided by what each is good at.** Never one source.
-   | Lane | Tool | Good for | Never use for |
-   |---|---|---|---|
-   | **Authority** | Maxroll / Icy-Veins / Prydwen / game8 / official (WebFetch) | Hard facts: build/tier/item/skill names | — |
-   | **Synthesis** | Perplexity API, model **`sonar-pro`** (never `sonar`) | Cited breadth + a cross-check | Sole source for a fact |
-   | **Sentiment** | Reddit (WebSearch `site:reddit.com`) | Honest strengths/weaknesses, overview flavor | ANY factual build/tier/item claim |
+1. **Research lanes, IN THIS ORDER. GPBot first, Perplexity last (complement).** Never one source.
+   | # | Lane | Tool (exact) | Good for | Never |
+   |---|---|---|---|---|
+   | 1 | **GPBot pool** (first-party) | `gpbot pool entities/items/trends` CLI | Real dated, cited headlines & sources our own system holds — the current-state layer (patch versions, dates) | skipping it for Perplexity |
+   | 2 | **Reddit** (sentiment) | `~/codolie-video-studio/scripts/reddit/reddit-search-term.mjs` (real OAuth API) | Honest strengths/weaknesses + overview flavor | a model `site:reddit.com` WebSearch; a build/tier/item FACT |
+   | 3 | **Perplexity** (complement) | `pplx_run.py`, model **`sonar-pro`** (never `sonar`) | Filling gaps + a cross-check | the sole source for a fact |
+   | — | **Authority** (verify) | game8 / IGN / Prydwen / Maxroll / official (WebFetch) | Confirming hard facts before they ship | — |
+
+   Also: check the KG entity (`.../v1/gaming/entities`) and set `GameData.knowledgeSlug`
+   so the hub's News & Buzz panel lights up (dark otherwise).
 
 2. **Cite-or-drop, build-enforced.** Every record needs ≥1 real authoritative
    URL in `sources[]`. `validate.ts` throws at build time on an unsourced record,
@@ -43,7 +47,7 @@ game so it can be lifted into a skill. Proven on Diablo IV (commits `0ffe00a`,
 
 - **P0 Recon** — blueprint, unitType, roster list, LIVE vs PRE-LAUNCH, current data state.
 - **P1 Research** — run `pplx_research.py` (sonar-pro) with per-game queries → `<slug>_pplx.json`.
-- **P2 Synthesis** — one Opus agent per game: reconcile Perplexity JSON + authority WebFetch + Reddit into the unit data file(s), per the field matrix, cite-or-drop.
+- **P2 Synthesis** — one Opus agent per game: reconcile all three lane outputs (GPBot pool JSON for current-state facts + Reddit txt for sentiment + Perplexity JSON to fill gaps) with authority WebFetch, per the field matrix, cite-or-drop.
 - **P3 Gate** — `npm run build` must exit 0 (validates all sources); field-coverage grep; spot-check 2-3 pages return 200 and render new sections + sibling nav.
 - **P4 Commit** — one commit per game (or per wave), never sweeping unrelated files.
 
@@ -68,6 +72,9 @@ game so it can be lifted into a skill. Proven on Diablo IV (commits `0ffe00a`,
 
 ## Anti-patterns (the YOLO list)
 
+- Leading with Perplexity / skipping the GPBot pool (it holds the real current-state facts).
+- A model `site:reddit.com` WebSearch instead of the `reddit-search-term.mjs` script.
+- Not checking the KG entity / not wiring `knowledgeSlug` (leaves the News & Buzz panel dark).
 - Using `sonar` instead of `sonar-pro`.
 - Sourcing a build/tier/item from a Reddit comment.
 - Forcing builds/tiers onto a pre-launch open-world roster.
