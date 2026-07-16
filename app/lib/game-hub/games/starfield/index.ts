@@ -14,25 +14,25 @@ import { FAQ, BEGINNER } from './guides';
 
 const IGDB = 'https://www.igdb.com/games/starfield';
 const UESP = 'https://en.uesp.net/wiki/Starfield';
+// Launch-window authority, surfaced from the GPBot first-party trend pool
+// (entity 1614) and verified: PS5 shipped April 7 (not April 13), with the free
+// Free Lanes update + paid Terran Armada DLC landing on patch v1.16.236.
+const PS_BLOG = 'https://blog.playstation.com/2026/03/17/starfield-is-coming-to-playstation-5-on-april-7';
+const EUROGAMER_PS5 = 'https://eurogamer.net/starfield-finally-lands-ps5-release-date-along-with-new-story-dlc-and-free-lanes-update-which-among-other-things-adds-a-milliewhale-pet';
+const GAMESRADAR_FL = 'https://gamesradar.com/games/rpg/starfield-free-lanes-update';
 
 const TIMELINE: HubTimelineEvent[] = [
   {
-    date: '2026-04-13',
-    title: 'Starfield launches on PlayStation 5 — a rocky port that Bethesda follows with hotfixes',
+    date: '2026-04-08',
+    title: 'Patch v1.16.236 goes live — the Free Lanes free-flight travel and Terran Armada content ship, reshaping the weapon and ship meta',
     kind: 'update',
-    sources: ['https://finalboss.io/starfield-best-ps5-settings-guide-graphics-hdr-controls'],
+    sources: [GAMESRADAR_FL, 'https://finalboss.io/starfield-best-ships-in-2026-after-free-lanes'],
   },
   {
-    date: '2026-04-12',
-    title: 'Terran Armada ("Expansion 2") revealed — new endgame content, ship parts and builds',
+    date: '2026-04-07',
+    title: 'Starfield launches on PlayStation 5 alongside the free Free Lanes update and paid Terran Armada story DLC — PS5 Pro modes (4K/30 & 60fps) and DualSense adaptive triggers',
     kind: 'event',
-    sources: ['https://finalboss.io/starfield-terran-armada-dlc-complete-overview-whats-new'],
-  },
-  {
-    date: '2026-04-11',
-    title: 'Free Lanes update reshapes space travel (cruise mode) and the weapon/ship meta',
-    kind: 'update',
-    sources: ['https://finalboss.io/starfield-best-ships-in-2026-after-free-lanes'],
+    sources: [PS_BLOG, EUROGAMER_PS5],
   },
   {
     date: '2024-09-30',

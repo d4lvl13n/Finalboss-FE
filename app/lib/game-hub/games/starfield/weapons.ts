@@ -14,13 +14,19 @@ import type { ClassRecord } from '@/app/lib/game-hub/types';
 // the 2023 base game). The Free Lanes update added two new quality bands —
 // Superior and Exceptional — and the X-Tech reroll system (Tier 4 legendary mods
 // Bloodthirsty / Reckless / Kismet; the pearlescent 4-mod "Exotic" banner), which
-// reshaped the weapon meta. Reconciled from three lanes:
-//   1. Perplexity cited-synthesis (breadth of the 2026 meta).
+// reshaped the weapon meta. Reconciled from the ordered research lanes
+// (GPBot pool first, Perplexity last):
+//   1. GPBot first-party trend pool (entity 1614) — the current-state layer:
+//      confirmed the Free Lanes + Terran Armada launch on patch v1.16.236 and the
+//      April 7 PS5 date that anchor this "current meta" framing (see index.ts
+//      timeline). The pool carries news/patch facts, not per-weapon tier data.
 //   2. Authority verification — base-game weapon names/types/damage from Game8
 //      individual + tier-list pages, exputer, PCGamesN, GameSkinny, INARA and the
 //      Starfield Fandom wiki; the 2026 Free Lanes / X-Tech / Superior-Exceptional
 //      layer from FinalBoss's own current articles (first-party authority, cited).
-//   3. Reddit sentiment (flavour only, never sourced for a fact).
+//   3. Reddit sentiment via the real OAuth script (flavour only, never a fact).
+//   (Perplexity sonar-pro is the complement lane; its API quota was exhausted on
+//    this pass, so the authority lane carried the cross-check it normally adds.)
 // Every weapon, effect and mod name is real. UESP and the Fandom weapons index
 // were unreachable at authoring time (403/402), so base facts are cited to Game8/
 // exputer/PCGamesN/INARA/Fandom-per-weapon instead. Cite-or-drop throughout —
