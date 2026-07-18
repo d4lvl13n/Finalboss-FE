@@ -182,13 +182,17 @@ const TechCard = ({ article, index }: { article: Article; index: number }) => {
   );
 };
 
-const TechnologySection = () => {
+const TechnologySection = ({ initialArticles = [] }: { initialArticles?: Article[] }) => {
+  // Server-provided data renders in the initial HTML; the client query only runs
+  // as a fallback when the server fetch came back empty.
+  const hasInitialData = initialArticles.length > 0;
   const { data, loading, error } = useQuery(GET_TECH_ARTICLES, {
     variables: { first: 8 },
     client,
+    skip: hasInitialData,
   });
-  
-  const [articles, setArticles] = useState<Article[]>([]);
+
+  const [articles, setArticles] = useState<Article[]>(initialArticles);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -227,7 +231,7 @@ const TechnologySection = () => {
   };
 
   // Fixed height skeleton to prevent CLS
-  if (loading) {
+  if (loading && articles.length === 0) {
     return (
       <section className="py-10 md:py-16 bg-gray-900 overflow-hidden relative" style={{ minHeight: '480px' }}>
         <div className="container mx-auto px-4">

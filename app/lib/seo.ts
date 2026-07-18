@@ -42,6 +42,12 @@ export function buildPageMetadata({
   if (imageUrl.startsWith('https://')) ogImage.secureUrl = imageUrl;
   if (imageWidth) ogImage.width = imageWidth;
   if (imageHeight) ogImage.height = imageHeight;
+  // The default OG image has known dimensions — always declare them so
+  // Discover/social scrapers get an explicit large-image signal.
+  if (!imageWidth && !imageHeight && imageUrl === DEFAULT_OG_IMAGE) {
+    ogImage.width = 1792;
+    ogImage.height = 1024;
+  }
   return {
     title,
     description,
@@ -63,6 +69,7 @@ export function buildPageMetadata({
     },
     twitter: {
       card: 'summary_large_image',
+      site: siteConfig.twitterHandle,
       title,
       description,
       images: [imageUrl],

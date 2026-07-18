@@ -17,6 +17,7 @@ export interface GamingAttributes {
   release_date?: string | null;
   franchise?: string | null;
   cover_image_id?: string | null;
+  screenshots?: string[]; // IGDB screenshot image ids
 }
 
 export interface KnowledgeEntity {

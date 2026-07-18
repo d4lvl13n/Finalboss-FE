@@ -97,12 +97,12 @@ export default function GameplayHub({
         {cover ? (
           <>
             <div className="absolute inset-0 overflow-hidden">
-              <Image src={cover} alt="" fill className="object-cover blur-xl opacity-30" priority unoptimized />
+              <Image src={cover} alt="" fill sizes="100vw" className="object-cover blur-xl opacity-30" priority />
               <div className="absolute inset-0 bg-gradient-to-b from-gray-900/40 to-gray-900" />
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative h-[360px] w-[270px] overflow-hidden rounded-lg shadow-2xl">
-                <Image src={cover} alt={e.canonicalName} fill className="object-cover" priority unoptimized />
+                <Image src={cover} alt={e.canonicalName} fill sizes="270px" className="object-cover" priority />
               </div>
             </div>
           </>

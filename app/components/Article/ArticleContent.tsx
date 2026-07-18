@@ -23,7 +23,6 @@ import { contextualizeKinguinLinks } from '../../lib/kinguin';
 import siteConfig from '../../lib/siteConfig';
 import { normalizeWordPressImageSrc } from '../../lib/imageUrl';
 import ReviewSummary, { ReviewConfig } from '../Review/ReviewSummary';
-import ReviewJsonLd from '../Seo/ReviewJsonLd';
 import Breadcrumbs from '../Breadcrumbs';
 import TableOfContents from './TableOfContents';
 import ArticleBodyWithAds from './ArticleBodyWithAds';
@@ -418,10 +417,12 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 { label: article.title }
               ]}
             />
+            {/* Transform-only animation: the H1 must stay visible in server HTML
+                (it is often the LCP text element and crawlers snapshot pre-JS) */}
             <motion.h1
               className="text-3xl sm:text-4xl md:text-5xl font-bold mt-3 mb-3 text-white drop-shadow-lg"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ y: 20 }}
+              animate={{ y: 0 }}
               transition={{ duration: 0.5 }}
             >
               {article.title}
@@ -498,23 +499,14 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               <InlineRelatedLinks articles={articlesToShow.slice(0, 3)} />
             )}
 
-            {/* Conditional Review summary block at end of content */}
+            {/* Conditional Review summary block at end of content.
+                Review JSON-LD is emitted once, server-side, in app/[slug]/page.tsx. */}
             {isReview && reviewConfig && (
-              <>
-                <ReviewSummary
-                  articleTitle={article.title}
-                  fallbackImage={featuredImageSrc}
-                  config={reviewConfig}
-                />
-                <ReviewJsonLd
-                  articleUrl={`${siteConfig.url}/${(article as unknown as { slug?: string }).slug || ''}`}
-                  articleTitle={article.title}
-                  authorName={article.author?.node?.name}
-                  rating={typeof reviewConfig.score === 'number' ? reviewConfig.score : undefined}
-                  reviewBody={reviewConfig.conclusion}
-                  imageUrl={reviewConfig.backgroundImage || featuredImageSrc}
-                />
-              </>
+              <ReviewSummary
+                articleTitle={article.title}
+                fallbackImage={featuredImageSrc}
+                config={reviewConfig}
+              />
             )}
 
             {/* Compact author byline at end of article */}

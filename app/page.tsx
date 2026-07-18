@@ -8,6 +8,13 @@ import UpcomingGamesCalendar from './components/UpcomingGamesCalendar';
 import { buildPageMetadata } from './lib/seo';
 import siteConfig from './lib/siteConfig';
 import { t } from './lib/i18n';
+import client from './lib/apolloClient';
+import { GET_LATEST_POSTS } from './lib/queries/getLatestPosts';
+import { GET_REVIEWS } from './lib/queries/getReviews';
+import { GET_LATEST_GUIDES } from './lib/queries/getLatestGuides';
+import { GET_TECH_ARTICLES } from './lib/queries/getTechArticles';
+import { youtubeService } from './lib/youtube/service';
+import type { YouTubeVideo } from './lib/youtube/config';
 
 // Skeleton components with exact dimensions to prevent CLS
 const LatestArticlesSkeleton = () => (
@@ -104,13 +111,13 @@ const ReviewsSliderSkeleton = () => (
   </section>
 );
 
-// Import critical components with loading priority - SSR for LCP
+// Section data is fetched server-side in HomePage and passed as initial* props so
+// content and internal links are present in the initial HTML for crawlers.
 const LatestArticles = dynamic(() => import('./components/LatestArticles'), {
   loading: () => <LatestArticlesSkeleton />,
   ssr: true
 });
 
-// SSR enabled so review links appear in initial HTML for crawlers
 const ReviewsSlider = dynamic(() => import('./components/ReviewsSlider'), {
   loading: () => <ReviewsSliderSkeleton />,
   ssr: true
@@ -178,7 +185,7 @@ const ContentSections = dynamic(
         </section>
       </div>
     ),
-    ssr: false
+    ssr: true
   }
 );
 
@@ -214,7 +221,47 @@ export async function generateMetadata() {
   };
 }
 
+async function getHomePageData() {
+  const [latest, reviews, guides, tech, videos] = await Promise.allSettled([
+    client.query({ query: GET_LATEST_POSTS, variables: { first: 20 }, fetchPolicy: 'no-cache' }),
+    client.query({ query: GET_REVIEWS, variables: { first: 10 }, fetchPolicy: 'no-cache' }),
+    client.query({ query: GET_LATEST_GUIDES, variables: { first: 8 }, fetchPolicy: 'no-cache' }),
+    client.query({ query: GET_TECH_ARTICLES, variables: { first: 8 }, fetchPolicy: 'no-cache' }),
+    youtubeService.getChannelUploads(6),
+  ]);
+
+  const nodes = (result: typeof latest) =>
+    result.status === 'fulfilled' ? result.value?.data?.posts?.nodes ?? [] : [];
+
+  let initialVideos: YouTubeVideo[] = [];
+  if (videos.status === 'fulfilled') {
+    initialVideos = videos.value?.items ?? [];
+  }
+
+  return {
+    latestArticles: nodes(latest),
+    reviews: nodes(reviews),
+    guides: nodes(guides),
+    techArticles: nodes(tech),
+    videos: initialVideos,
+  };
+}
+
 export default async function HomePage() {
+  let data = {
+    latestArticles: [] as any[],
+    reviews: [] as any[],
+    guides: [] as any[],
+    techArticles: [] as any[],
+    videos: [] as YouTubeVideo[],
+  };
+  try {
+    data = await getHomePageData();
+  } catch (error) {
+    console.error('Error fetching homepage data:', error);
+    // Sections fall back to client-side fetching when initial data is empty
+  }
+
   try {
     return (
       <>
@@ -224,16 +271,20 @@ export default async function HomePage() {
           <div className="h-16 md:h-20" />
 
           <Suspense fallback={<LatestArticlesSkeleton />}>
-            <LatestArticles />
+            <LatestArticles initialArticles={data.latestArticles} />
           </Suspense>
 
           {/* Non-critical content with deferred loading */}
           <Suspense fallback={<ReviewsSliderSkeleton />}>
-            <ReviewsSlider />
+            <ReviewsSlider initialReviews={data.reviews} />
           </Suspense>
 
           {/* Group similar sections for better performance */}
-          <ContentSections />
+          <ContentSections
+            initialVideos={data.videos}
+            initialTechArticles={data.techArticles}
+            initialGuides={data.guides}
+          />
 
           {/* Game Database Section */}
           <Suspense

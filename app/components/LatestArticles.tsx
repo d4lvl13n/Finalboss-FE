@@ -149,13 +149,17 @@ const CompactArticle = ({ article }: { article: Article }) => {
   );
 };
 
-const LatestArticles = () => {
+const LatestArticles = ({ initialArticles = [] }: { initialArticles?: Article[] }) => {
+  // Server-provided data renders in the initial HTML; the client query only runs
+  // as a fallback when the server fetch came back empty.
+  const hasInitialData = initialArticles.length > 0;
   const { loading, error, data } = useQuery(GET_LATEST_POSTS, {
     variables: { first: 20 }, // Load more articles for fuller sidebar
     client,
+    skip: hasInitialData,
   });
-  
-  const [articles, setArticles] = useState<Article[]>([]);
+
+  const [articles, setArticles] = useState<Article[]>(initialArticles);
 
   useEffect(() => {
     if (data) {
@@ -164,7 +168,7 @@ const LatestArticles = () => {
   }, [data]);
 
   // Fixed dimensions skeleton matching exact final layout to prevent CLS
-  if (loading) {
+  if (loading && articles.length === 0) {
     return (
       <section className="py-10 md:py-16 bg-gray-900">
         <div className="container mx-auto px-3 md:px-4">

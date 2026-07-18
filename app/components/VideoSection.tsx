@@ -6,11 +6,12 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useYouTubeVideos } from '../hooks/useYouTubeVideos';
 import { YouTubeService } from '../lib/youtube/service';
+import type { YouTubeVideo } from '../lib/youtube/config';
 import { FaArrowRight, FaPlay, FaClock, FaEye, FaChevronLeft, FaChevronRight, FaYoutube } from 'react-icons/fa';
 import { formatDateCompact, formatNumber } from '../utils/formatDate';
 
-const VideoSection = () => {
-  const { videos, loading, error } = useYouTubeVideos(6);
+const VideoSection = ({ initialVideos }: { initialVideos?: YouTubeVideo[] }) => {
+  const { videos, loading, error } = useYouTubeVideos(6, initialVideos);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);

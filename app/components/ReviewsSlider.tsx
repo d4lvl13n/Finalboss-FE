@@ -216,12 +216,16 @@ const CompactReviewCard = ({ review, index }: { review: ReviewNode; index: numbe
   );
 };
 
-const ReviewsSlider = () => {
+const ReviewsSlider = ({ initialReviews = [] }: { initialReviews?: ReviewNode[] }) => {
+  // Server-provided data renders in the initial HTML; the client query only runs
+  // as a fallback when the server fetch came back empty.
+  const hasInitialData = initialReviews.length > 0;
   const { data, loading, error } = useQuery(GET_REVIEWS, {
     variables: { first: 10 },
     client,
+    skip: hasInitialData,
   });
-  const [reviews, setReviews] = useState<ReviewNode[]>([]);
+  const [reviews, setReviews] = useState<ReviewNode[]>(initialReviews);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -260,7 +264,7 @@ const ReviewsSlider = () => {
   };
 
   // Fixed height skeleton to prevent CLS - matches exact final layout dimensions
-  if (loading) {
+  if (loading && reviews.length === 0) {
     return (
       <section className="py-10 md:py-16 bg-gray-900" style={{ minHeight: '700px' }}>
         <div className="container mx-auto px-4">

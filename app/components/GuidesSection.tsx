@@ -161,12 +161,16 @@ const GuideCard = ({ guide, index }: { guide: GuideArticle; index: number }) => 
   );
 };
 
-const GuidesSection = () => {
+const GuidesSection = ({ initialGuides = [] }: { initialGuides?: GuideArticle[] }) => {
+  // Server-provided data renders in the initial HTML; the client query only runs
+  // as a fallback when the server fetch came back empty.
+  const hasInitialData = initialGuides.length > 0;
   const { data, loading, error } = useQuery(GET_LATEST_GUIDES, {
     variables: { first: 8 },
     client,
+    skip: hasInitialData,
   });
-  const [guides, setGuides] = useState<GuideArticle[]>([]);
+  const [guides, setGuides] = useState<GuideArticle[]>(initialGuides);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -205,7 +209,7 @@ const GuidesSection = () => {
   };
 
   // Fixed height skeleton to prevent CLS
-  if (loading) {
+  if (loading && guides.length === 0) {
     return (
       <section className="py-10 md:py-16 bg-gray-900 overflow-hidden" style={{ minHeight: '550px' }}>
         <div className="container mx-auto px-4">

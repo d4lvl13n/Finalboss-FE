@@ -52,6 +52,9 @@ const organizationStructuredData = {
   logo: `${siteConfig.url}${siteConfig.logoPath}`,
   sameAs: [
     siteConfig.socialLinks.twitter,
+    siteConfig.socialLinks.facebook,
+    siteConfig.socialLinks.instagram,
+    siteConfig.socialLinks.youtube,
   ],
 };
 

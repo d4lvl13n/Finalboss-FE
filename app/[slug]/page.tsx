@@ -175,7 +175,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       images: [imageUrl],
     },
     alternates: {
-      canonical: `${baseUrl}/${article.slug}`,
+      // An editor-set Yoast canonical (syndicated/duplicate content) wins over
+      // the default self-referencing canonical.
+      canonical: article.seo?.canonical?.trim() || `${baseUrl}/${article.slug}`,
     },
     other: {
       'article:content_tier': 'free',

@@ -24,6 +24,11 @@ interface AuthorNode {
   slug: string
 }
 
+// Game slugs that 301 to a canonical hub (see redirects() in next.config.js).
+// WP auto-creates tags for these via the IGDB search bar, so without this filter
+// the sitemap would list URLs that redirect. Keep in sync with next.config.js.
+const REDIRECTED_GAME_SLUGS = new Set(['grand-theft-auto-vi', 'diablo-iv'])
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url
   const ARTICLE_PAGE_SIZE = 24
@@ -54,12 +59,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
   const uniquePosts = Array.from(uniquePostsBySlug.values())
 
+  // Homepage lastmod: the newest post's date, not the sitemap regeneration time —
+  // a synthetic daily-churning lastmod is a false freshness signal.
+  const newestPostDate = uniquePosts.reduce<string | undefined>((newest, post) => {
+    const candidate = post.modified || post.date
+    if (!candidate) return newest
+    return !newest || candidate > newest ? candidate : newest
+  }, undefined)
+
   // Gather all URLs
   const urls: MetadataRoute.Sitemap = [
     // Static pages
     {
       url: `${baseUrl}/`,
-      lastModified: new Date().toISOString(),
+      ...(newestPostDate ? { lastModified: new Date(newestPostDate).toISOString() } : {}),
       changeFrequency: 'daily' as const,
       priority: 1.0,
     },
@@ -144,16 +157,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })) || []),
-    // Dynamic posts (deduplicated)
-    ...uniquePosts.map((post: WordPressPost) => ({
-      url: `${baseUrl}/${post.slug}`,
-      lastModified:
-        (post.modified && new Date(post.modified).toISOString()) ||
-        (post.date && new Date(post.date).toISOString()) ||
-        new Date().toISOString(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    })),
+    // Dynamic posts (deduplicated). Posts with no date at all get no lastmod
+    // rather than a synthetic "now".
+    ...uniquePosts.map((post: WordPressPost) => {
+      const postDate = post.modified || post.date
+      return {
+        url: `${baseUrl}/${post.slug}`,
+        ...(postDate ? { lastModified: new Date(postDate).toISOString() } : {}),
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+      }
+    }),
     // Paginated articles
     ...(() => {
       const total = totalPosts || uniquePosts.length
@@ -171,8 +185,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
-    // Game hub pages: only include hubs that have at least one related article.
-    ...gameTags.filter((tag) => tag.hasPosts).map((tag) => ({
+    // Game hub pages: only include hubs that have at least one related article,
+    // and never slugs that 301 to a canonical hub.
+    ...gameTags.filter((tag) => tag.hasPosts && !REDIRECTED_GAME_SLUGS.has(tag.slug)).map((tag) => ({
       url: `${baseUrl}/game/${tag.slug}`,
       changeFrequency: 'weekly' as const,
       priority: 0.6,

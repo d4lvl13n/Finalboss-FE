@@ -458,12 +458,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       const hub = await getGameHub(params.slug);
       if (hub) {
         const e = hub.entity;
-        const image = e.imageUrl || igdbImage(e.attributes?.cover_image_id) || undefined;
+        // Prefer a 1920x1080 screenshot for og:image — Discover and social cards
+        // need >=1200px; the t_cover_big cover (264x374) is far too small.
+        const screenshotId = e.attributes?.screenshots?.[0];
+        const screenshotImage = screenshotId ? igdbImage(screenshotId, 't_1080p') : null;
+        const image = screenshotImage || e.imageUrl || igdbImage(e.attributes?.cover_image_id) || undefined;
         return buildPageMetadata({
           title: `${e.canonicalName} — Classes, Tier List, Codes & Guides`,
           description: (e.description || `Classes, tier list, codes and guides for ${e.canonicalName}.`).slice(0, 200),
           path: `/game/${params.slug}`,
           image,
+          ...(screenshotImage ? { imageWidth: 1920, imageHeight: 1080 } : {}),
           type: 'website',
           robots: { index: true, follow: true },
         });
@@ -504,8 +509,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         path: resolvedPath,
         image: gameData.screenshots?.[0] || gameData.cover_url || undefined,
         type: 'website',
+        // Numeric-ID URLs always redirect to the slug URL or 404 — never index.
         robots: {
-          index: true,
+          index: false,
           follow: true,
         },
       });
@@ -610,17 +616,9 @@ export default async function GamePage({ params }: Props) {
         permanentRedirect(`/game/${createdSlug}`);
       }
 
-      return (
-        <>
-          <Header />
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(buildVideoGameJsonLd(igdbGame, canonicalUrl)) }}
-          />
-          <GameDetails game={igdbGame} />
-          <Footer />
-        </>
-      );
+      // Tag creation failed: 404 rather than serving an indexable 200 at the
+      // numeric URL whose canonical points at the (nonexistent) slug URL.
+      return notFound();
     }
 
     return notFound();

@@ -1,5 +1,7 @@
 import { notFound } from 'next/navigation';
 import { youtubeService } from '../../lib/youtube/service';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import VideoContent from '../../components/VideoContent';
 import { Metadata } from 'next';
 import { buildPageMetadata } from '../../lib/seo';
@@ -67,6 +69,7 @@ export default async function VideoPage({ params }: VideoPageProps) {
     
     return (
       <>
+        <Header />
         <VideoStructuredData video={video} baseUrl={baseUrl} />
         <VideoContent
           title={video.title}
@@ -77,6 +80,7 @@ export default async function VideoPage({ params }: VideoPageProps) {
           viewCount={formatNumber(parseInt(video.viewCount))}
           thumbnail={video.thumbnail}
         />
+        <Footer />
       </>
     );
   } catch (error) {
