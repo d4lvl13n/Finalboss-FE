@@ -173,6 +173,15 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Mediavine (Journey) hosted ads.txt — 301 so it stays auto-updated as
+      // exchanges change. Redirects run before /public, superseding the old
+      // static AdSense ads.txt (removed).
+      {
+        source: '/ads.txt',
+        destination:
+          'https://adstxt.journeymv.com/sites/1fed7165-e8a7-4e1b-903f-79a0bbece5f6/ads.txt',
+        permanent: true,
+      },
       // Duplicate-content consolidations (2026-07-01): collapse near-identical
       // dupes onto the canonical keeper so ranking signals concentrate on one URL.
       //
