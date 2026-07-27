@@ -95,6 +95,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
         <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="preconnect" href="https://scripts.scriptwrapper.com" crossOrigin="anonymous" />
         <link rel="alternate" type="application/rss+xml" title={`${siteConfig.name} Articles`} href={`${siteConfig.url}/feeds/articles`} />
         <link rel="alternate" type="application/rss+xml" title={`${siteConfig.name} Reviews`} href={`${siteConfig.url}/feeds/reviews`} />
         <script
@@ -105,6 +106,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationStructuredData) }}
         />
+        {/* Mediavine script wrapper — must stay a plain async <script> in <head>,
+            verbatim per Mediavine install instructions (incl. data-noptimize/data-cfasync). */}
+        <script
+          type="text/javascript"
+          async
+          data-noptimize="1"
+          data-cfasync="false"
+          src="https://scripts.scriptwrapper.com/tags/1fed7165-e8a7-4e1b-903f-79a0bbece5f6.js"
+        />
+
         {siteConfig.siteVerification && (
           <meta name="google-site-verification" content={siteConfig.siteVerification} />
         )}
