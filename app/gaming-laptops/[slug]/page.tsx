@@ -598,10 +598,14 @@ function JsonLd({ family, faqs }: { family: LaptopFamily; faqs: Faq[] }) {
     };
   }
   if (price != null) {
+    const prices = family.configurations
+      .map((c) => c.priceUsd)
+      .filter((p): p is number => typeof p === 'number');
     product.offers = {
       '@type': 'AggregateOffer',
       priceCurrency: 'USD',
       lowPrice: price,
+      highPrice: Math.max(...prices),
       offerCount: family.configurations.length,
       availability: 'https://schema.org/InStock',
       priceValidUntil: addDays(family.lastVerified, 30),
@@ -619,7 +623,10 @@ function JsonLd({ family, faqs }: { family: LaptopFamily; faqs: Faq[] }) {
     ],
   };
 
-  const graph: Record<string, unknown>[] = [product, breadcrumb];
+  // Google requires Product to carry offers, review, or aggregateRating —
+  // unpriced (unreleased/price-unknown) laptops would fail rich-results
+  // validation, so they ship without the Product node.
+  const graph: Record<string, unknown>[] = price != null ? [product, breadcrumb] : [breadcrumb];
   if (faqs.length >= 2) {
     graph.push({
       '@context': 'https://schema.org',

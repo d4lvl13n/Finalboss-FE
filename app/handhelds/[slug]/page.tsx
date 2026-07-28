@@ -563,10 +563,14 @@ function JsonLd({ handheld, faqs }: { handheld: Handheld; faqs: Faq[] }) {
     };
   }
   if (price != null) {
+    const prices = handheld.configurations
+      .map((c) => c.priceUsd)
+      .filter((p): p is number => typeof p === 'number');
     product.offers = {
       '@type': 'AggregateOffer',
       priceCurrency: 'USD',
       lowPrice: price,
+      highPrice: Math.max(...prices),
       offerCount: handheld.configurations.length,
       availability: 'https://schema.org/InStock',
       priceValidUntil: addDays(handheld.lastVerified, 30),
@@ -582,7 +586,10 @@ function JsonLd({ handheld, faqs }: { handheld: Handheld; faqs: Faq[] }) {
       { '@type': 'ListItem', position: 3, name: handheld.name, item: url },
     ],
   };
-  const graph: Record<string, unknown>[] = [product, breadcrumb];
+  // Google requires Product to carry offers, review, or aggregateRating —
+  // unpriced (unreleased/price-unknown) devices would fail rich-results
+  // validation, so they ship without the Product node.
+  const graph: Record<string, unknown>[] = price != null ? [product, breadcrumb] : [breadcrumb];
   if (faqs.length >= 2) {
     graph.push({
       '@context': 'https://schema.org',

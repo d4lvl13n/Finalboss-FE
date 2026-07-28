@@ -240,10 +240,17 @@ function SpecTableRow({ row }: { row: SpecRow }) {
   );
 }
 
-function productNode(h: Handheld, url: string) {
+// Returns null for unpriced (unreleased) devices: Google requires Product to
+// carry offers, review, or aggregateRating, and an offerless Product node
+// fails rich-results validation.
+function productNode(h: Handheld, url: string): Record<string, unknown> | null {
   const price = startingPrice(h);
+  if (price == null) return null;
+  const prices = h.configurations
+    .map((c) => c.priceUsd)
+    .filter((p): p is number => typeof p === 'number');
   const img = getHandheldImage(h.slug);
-  const node: Record<string, unknown> = {
+  return {
     '@type': 'Product',
     name: h.name,
     category: 'Handheld Gaming PC',
@@ -251,18 +258,16 @@ function productNode(h: Handheld, url: string) {
     url,
     ...(img ? { image: absoluteUrl(img.url) } : {}),
     ...(h.summary ? { description: h.summary } : {}),
-  };
-  if (price != null) {
-    node.offers = {
+    offers: {
       '@type': 'AggregateOffer',
       priceCurrency: 'USD',
       lowPrice: price,
+      highPrice: Math.max(...prices),
       offerCount: h.configurations.length,
       availability: 'https://schema.org/InStock',
       url,
-    };
-  }
-  return node;
+    },
+  };
 }
 
 function JsonLd({ comparison }: { comparison: ResolvedComparison }) {
@@ -277,10 +282,13 @@ function JsonLd({ comparison }: { comparison: ResolvedComparison }) {
       { '@type': 'ListItem', position: 3, name: `${handheldA.name} vs ${handheldB.name}`, item: url },
     ],
   };
+  const products = [
+    productNode(handheldA, absoluteUrl(`/handhelds/${handheldA.slug}`)),
+    productNode(handheldB, absoluteUrl(`/handhelds/${handheldB.slug}`)),
+  ].filter((n): n is Record<string, unknown> => n != null);
   const graph: Record<string, unknown>[] = [
     breadcrumb,
-    { '@context': 'https://schema.org', ...productNode(handheldA, absoluteUrl(`/handhelds/${handheldA.slug}`)) },
-    { '@context': 'https://schema.org', ...productNode(handheldB, absoluteUrl(`/handhelds/${handheldB.slug}`)) },
+    ...products.map((n) => ({ '@context': 'https://schema.org', ...n })),
   ];
   return (
     <>
