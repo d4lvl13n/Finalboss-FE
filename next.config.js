@@ -49,7 +49,6 @@ const legacyExternalImageHosts = [
   'ws-na.amazon-adsystem.com',
   'ws-eu.amazon-adsystem.com',
 ];
-const legacyExternalImageCspSources = legacyExternalImageHosts.map((hostname) => `https://${hostname}`);
 
 const nextConfig = {
   reactStrictMode: true,
@@ -146,16 +145,20 @@ const nextConfig = {
           {
             key: 'Content-Security-Policy',
             value: [
+              // Mediavine header bidding loads scripts/frames/beacons from dozens
+              // of rotating partner domains — an allowlist silently drops bidders
+              // (and blocked scriptwrapper.com entirely, so no ads served). With
+              // 'unsafe-inline'/'unsafe-eval' already required, the allowlist adds
+              // little; open ad-facing directives to https: and keep the rest.
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://*.google.com https://*.googleapis.com https://*.googlesyndication.com https://*.googleadservices.com https://*.google-analytics.com https://*.doubleclick.net https://*.adtrafficquality.google https://adtrafficquality.google https://connect.facebook.net *.cloudflareinsights.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com data:",
-              `img-src 'self' data: blob: https://${imagesHostname} https://${wpHostname} https://${baseHostname} i.ytimg.com https://images.igdb.com https://raw.githubusercontent.com ${legacyExternalImageCspSources.join(' ')} https://*.google.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google https://www.facebook.com *.cloudflareinsights.com`,
-              `connect-src 'self' https://www.googletagmanager.com https://*.google.com https://*.googleapis.com https://*.google-analytics.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google https://adtrafficquality.google https://www.facebook.com https://connect.facebook.net localhost:3000 ${wpHostname} https://${wpHostname} https://www.googleapis.com *.cloudflareinsights.com`,
-              "media-src 'self'",
-              // www.google.com is in Google's official AdSense CSP guidance —
-              // ad-verification (adtrafficquality) and some formats frame it.
-              "frame-src 'self' https://www.youtube.com https://www.google.com https://www.googletagmanager.com https://*.googlesyndication.com https://*.googleadservices.com https://*.doubleclick.net https://*.adtrafficquality.google",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob:",
+              "style-src 'self' 'unsafe-inline' https:",
+              "font-src 'self' https: data:",
+              "img-src 'self' data: blob: https:",
+              "connect-src 'self' https: wss: localhost:3000",
+              "media-src 'self' blob: https:",
+              "worker-src 'self' blob:",
+              "frame-src 'self' https:",
               "frame-ancestors 'none'",
             ].join('; '),
           },
