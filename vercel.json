@@ -5,5 +5,16 @@
       "src": "/skull-and-bones-guide/(.*)",
       "dest": "/skull-and-bones-guide/index.html"
     }
+  ],
+  "functions": {
+    "app/**": {
+      "memory": 1024
+    }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/revalidate-recent",
+      "schedule": "*/5 * * * *"
+    }
   ]
 }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import {
   fetchArticleForNotification,
   sendArticlePushToMobileSubscribers,
@@ -34,12 +35,28 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'slug is required' }, { status: 400 });
     }
 
+    // Purge the ISR cache for this article (and the listings that surface it)
+    // BEFORE the push work, so readers following the notification never land on
+    // a stale render — and so a push failure can't skip the purge. This is what
+    // lets the article route sit at revalidate=3600 instead of 60.
+    let revalidated: string[] = [];
+    try {
+      const paths = [`/${slug}`, '/', '/articles'];
+      paths.forEach((path) => revalidatePath(path));
+      revalidated = paths;
+    } catch (error) {
+      // Never fail the webhook on a purge error — the time-based window still
+      // catches it within the hour.
+      console.error('[notifications/article-published] revalidate failed', error);
+    }
+
     const article = await fetchArticleForNotification(slug);
     const result = await sendArticlePushToMobileSubscribers(article);
 
     return NextResponse.json({
       success: true,
       slug,
+      revalidated,
       ...result,
     });
   } catch (error) {

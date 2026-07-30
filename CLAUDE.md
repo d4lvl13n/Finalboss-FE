@@ -132,10 +132,32 @@ Before choosing a slug:
 
 ## Caching Strategy
 
-- ISR (Incremental Static Regeneration): 1-hour revalidate
-- GraphQL: cache-first policy
+- ISR (Incremental Static Regeneration): 1-hour revalidate on **all** content
+  routes, including `/[slug]`. Do not lower this — the article route carries ~94%
+  of site traffic across 6k+ posts, and at `revalidate = 60` it alone accounted
+  for the majority of the project's Vercel function-duration bill.
+- Freshness comes from **on-demand revalidation**, not a short window. Two paths,
+  both calling `revalidatePath()`:
+  1. `GET /api/cron/revalidate-recent` — Vercel Cron, every 5 min. Polls WP for
+     posts `modified_after` the last 15 min and purges them plus `/` and
+     `/articles`. This is the **primary** mechanism: it needs nothing from
+     WordPress, and the overlapping lookback window means a failed run
+     self-corrects. Widen temporarily with `REVALIDATE_LOOKBACK_MINUTES` to
+     backfill after an incident.
+  2. `POST /api/notifications/article-published` — optional push from WordPress
+     for instant purges. Currently inert: `MOBILE_NOTIFICATIONS_WEBHOOK_SECRET`
+     is not set in production, so it 401s. The cron covers this case.
+- **Caching a route also caches its 404s.** If a URL is requested before its
+  article is live, the 404 sticks until purged — which is exactly why the cron
+  above is not optional. Do not enable route caching here without it.
+- GraphQL: cache-first client-side, `no-cache` server-side (ISR is the server
+  cache layer). Article + gameTags are fetched in ONE combined query
+  (`GET_POST_BY_SLUG_WITH_TAGS`), with an automatic fallback to two queries on
+  backends whose schema lacks `post.gameTags`.
 - IGDB responses: 1-hour server-side cache
-- Images: 24-hour minimum cache TTL
+- Images: 30-day minimum cache TTL, WebP only (no AVIF)
+- Functions: 1024 MB (`vercel.json`) — these are I/O-bound on WordPress, not
+  CPU-bound
 
 ## Code Patterns
 

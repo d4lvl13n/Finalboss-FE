@@ -1,4 +1,4 @@
-import { GET_POST_BY_SLUG } from '../lib/queries/getPostBySlug';
+import { GET_POST_BY_SLUG, GET_POST_BY_SLUG_WITH_TAGS } from '../lib/queries/getPostBySlug';
 import { gql } from '@apollo/client';
 import client from '../lib/apolloClient';
 import ArticleContent from '../components/Article/ArticleContent';
@@ -11,7 +11,8 @@ import { normalizeWordPressImageSrc } from '../lib/imageUrl';
 import siteConfig, { intlLocale } from '../lib/siteConfig';
 import { cache } from 'react';
 
-// Separate query for gameTags — may not exist on all WordPress backends
+// Fallback-only query for gameTags — used when the backend's schema doesn't
+// expose the taxonomy on `post` and the combined query is therefore rejected.
 const GET_POST_GAME_TAGS = gql`
   query GetPostGameTags($id: ID!) {
     post(id: $id, idType: SLUG) {
@@ -26,6 +27,21 @@ const GET_POST_GAME_TAGS = gql`
     }
   }
 `;
+
+// Whether this backend's schema accepts `gameTags` on `post`. Starts optimistic:
+// we try the single combined query, and only if the backend rejects the FIELD
+// itself do we latch to false and use the two-query path for the rest of this
+// lambda instance. So a supporting backend never pays the probe more than once,
+// and a non-supporting one degrades to exactly the previous behaviour.
+let backendSupportsGameTags = true;
+
+// A GraphQL *validation* error about the gameTags field means "this schema
+// doesn't have it" — permanent, so latch. Any other error (network, timeout,
+// backend hiccup) is transient and must NOT disable the fast path.
+function isGameTagsSchemaError(errors?: readonly { message: string }[]): boolean {
+  if (!errors?.length) return false;
+  return errors.some((e) => /gameTags/i.test(e.message) && /Cannot query field|Unknown field|not exist/i.test(e.message));
+}
 
 // Reject if a promise doesn't settle within `ms`. We deliberately DON'T use an
 // AbortController signal in the fetch: passing a signal marks the underlying
@@ -50,11 +66,26 @@ function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise
 // triggers notFound() (HTTP 404). Swallowing failures into null was soft-404'ing
 // valid articles whenever the backend hiccuped.
 const getPost = cache(async (slug: string) => {
-  const { data, errors } = await withTimeout(
-    client.query({ query: GET_POST_BY_SLUG, variables: { id: slug } }),
+  let { data, errors } = await withTimeout(
+    client.query({
+      query: backendSupportsGameTags ? GET_POST_BY_SLUG_WITH_TAGS : GET_POST_BY_SLUG,
+      variables: { id: slug },
+    }),
     10000,
     `[getPost] "${slug}"`,
   );
+
+  // Backend schema has no gameTags on post: latch it off and retry the base
+  // query once, so this request still succeeds rather than 500-ing.
+  if (backendSupportsGameTags && !data?.post && isGameTagsSchemaError(errors)) {
+    backendSupportsGameTags = false;
+    console.warn(`[getPost] backend has no post.gameTags — falling back to two-query path`);
+    ({ data, errors } = await withTimeout(
+      client.query({ query: GET_POST_BY_SLUG, variables: { id: slug } }),
+      10000,
+      `[getPost:fallback] "${slug}"`,
+    ));
+  }
 
   if (!data?.post) {
     if (errors && errors.length) {
@@ -73,6 +104,10 @@ const getPost = cache(async (slug: string) => {
 
 // gameTags is supplementary (the taxonomy may not exist on all backends), so a
 // failure here degrades gracefully to null and must NEVER fail the page.
+//
+// Only reached on backends where the combined query isn't supported — when it
+// is, the tags already came back on the post and this second round trip is
+// skipped entirely.
 const getPostGameTags = cache(async (slug: string) => {
   try {
     const { data } = await withTimeout(
@@ -86,7 +121,21 @@ const getPostGameTags = cache(async (slug: string) => {
   }
 });
 
-export const revalidate = 60; // Revalidate article pages every 60 seconds
+// Articles are effectively immutable after publish, and WordPress pushes an
+// on-demand revalidation on publish/update (app/api/notifications/article-published),
+// so freshness no longer depends on a short window. Matches the 3600 used by
+// every other content route. At 60s this route was regenerating 6k+ articles
+// once a minute against an uncached backend and dominated function duration.
+export const revalidate = 3600;
+
+// REQUIRED for the revalidate above to do anything. Apollo's HttpLink issues a
+// POST, which Next's Data Cache never caches; an uncached fetch opts the whole
+// route out of the Full Route Cache, so Next was emitting
+// `Cache-Control: private, no-cache, no-store` and every request — including
+// every crawler hit across 6k+ articles — ran the function. `force-static` puts
+// the route back under the Full Route Cache so ISR actually applies.
+// `dynamicParams` stays true (the default): unknown slugs still render on demand.
+export const dynamic = 'force-static';
 
 interface PageProps {
   params: { slug: string };
@@ -186,18 +235,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ArticlePage({ params }: PageProps) {
-  // Fetch post (deduplicated with generateMetadata via React cache) and gameTags in parallel
-  const [article, gameTags] = await Promise.all([
-    getPost(params.slug),
-    getPostGameTags(params.slug),
-  ]);
+  // Deduplicated with generateMetadata via React cache. On backends that support
+  // it, gameTags arrived with the post — no second round trip.
+  const article = await getPost(params.slug);
 
   if (!article) {
     notFound();
   }
 
-  if (gameTags) {
-    article.gameTags = gameTags;
+  if (!article.gameTags) {
+    const gameTags = await getPostGameTags(params.slug);
+    if (gameTags) {
+      article.gameTags = gameTags;
+    }
   }
 
   // Category-aware structured data: Review (with a real rating) for reviews,

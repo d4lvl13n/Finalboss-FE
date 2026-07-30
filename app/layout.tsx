@@ -5,7 +5,6 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import RouteLoader from './components/RouteLoader';
 import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SearchProvider } from './components/Search/SearchContext';
 import SearchOverlay from './components/Search/SearchOverlay';
 import LeadCaptureManager from './components/LeadCapture/LeadCaptureManager';
@@ -159,7 +158,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {siteConfig.analyticsId && <GAPageviews gaId={siteConfig.analyticsId} />}
         {siteConfig.metaPixelId && <MetaPixel pixelId={siteConfig.metaPixelId} />}
         <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );
