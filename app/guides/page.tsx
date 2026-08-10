@@ -19,7 +19,11 @@ export async function generateMetadata() {
 export default async function GuidesPage() {
   const { data } = await client.query({
     query: GET_GUIDE_CATEGORIES_AND_POSTS,
-    variables: { first: 100 }, // Adjust this number as needed
+    // Ceiling is the WordPress backend, not taste: combined with the category
+    // tree above, this query 502s (PHP crash) at first:100 and works at 80 —
+    // the guide count crossed the backend's memory limit in mid-2026. Keep
+    // headroom; raise only after the backend's PHP memory_limit is raised.
+    variables: { first: 60 },
   });
 
   const subcategories = data.categories.nodes[0].children.nodes;
