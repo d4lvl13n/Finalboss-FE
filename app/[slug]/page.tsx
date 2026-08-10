@@ -126,7 +126,7 @@ const getPostGameTags = cache(async (slug: string) => {
 // so freshness no longer depends on a short window. Matches the 3600 used by
 // every other content route. At 60s this route was regenerating 6k+ articles
 // once a minute against an uncached backend and dominated function duration.
-export const revalidate = 3600;
+export const revalidate = 86400; // 24h — freshness comes from the 5-min revalidate-recent cron purge, not this TTL; the long window mainly spares the WP backend from long-tail regeneration load
 
 // REQUIRED for the revalidate above to do anything. Apollo's HttpLink issues a
 // POST, which Next's Data Cache never caches; an uncached fetch opts the whole

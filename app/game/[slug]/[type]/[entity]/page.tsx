@@ -16,7 +16,7 @@ import { breadcrumbJsonLd, graph } from '@/app/lib/jsonld';
 import ClassDetail from '@/app/components/game-hub/ClassDetail';
 import EntityDetailGeneric from '@/app/components/game-hub/EntityDetailGeneric';
 
-export const revalidate = 3600;
+export const revalidate = 86400; // 24h — hub data is registry (refreshed on deploy) + Knowledge API; a day of staleness is fine and spares the WP backend long-tail regeneration load
 export const dynamicParams = false;
 
 interface Props {

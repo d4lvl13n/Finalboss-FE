@@ -57,3 +57,8 @@ validation_invalid_html_elements_in_head.csv
 # app-store and mobile build artifacts
 Iossubmission/
 mobile-app/finalboss.aab
+
+# Cloudflare / OpenNext
+.open-next/
+.dev.vars*
+.wrangler/

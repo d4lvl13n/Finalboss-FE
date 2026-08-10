@@ -39,6 +39,9 @@
   ],
   "exclude": [
     "node_modules",
+    "worker.ts",
+    "open-next.config.ts",
+    "cloudflare-env.d.ts",
     "mobile-app",
     "chrome-extension",
     "Iossubmission",

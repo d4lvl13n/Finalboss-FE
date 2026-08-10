@@ -1,0 +1,16 @@
+# Copy to .dev.vars for local `npm run preview`.
+# In production set these with: npx wrangler secret put <NAME>
+# (values live in the Vercel project settings today)
+
+# Postgres for /api/reactions* and notifications (Vercel/Neon Postgres today).
+# Consider fronting with Hyperdrive later for connection pooling.
+POSTGRES_URL=
+
+# Auth for /api/cron/revalidate-recent (the worker cron sends this as a Bearer token)
+CRON_SECRET=
+
+# Optional: widen the revalidation sweep after an incident (default 15)
+# REVALIDATE_LOOKBACK_MINUTES=15
+
+# Optional: WordPress publish webhook (currently inert on Vercel too)
+# MOBILE_NOTIFICATIONS_WEBHOOK_SECRET=

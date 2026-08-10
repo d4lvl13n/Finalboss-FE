@@ -118,6 +118,10 @@ const nextConfig = {
   },
   experimental: {
     scrollRestoration: true,
+    // SSG worker count. The default (one per core) fans ~10 parallel streams
+    // of GraphQL queries at the WordPress backend during `next build`. Keep
+    // this modest so builds don't stress the CMS.
+    cpus: 3,
   },
   eslint: {
     ignoreDuringBuilds: true,
@@ -180,6 +184,14 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // www → apex. Historically served by Vercel; on Cloudflare Workers the
+      // www custom domain hits this app directly, so the app must own the 301.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: `www.${baseHostname}` }],
+        destination: `${baseUrl}/:path*`,
+        permanent: true,
+      },
       // Mediavine (Journey) hosted ads.txt — 301 so it stays auto-updated as
       // exchanges change. Redirects run before /public, superseding the old
       // static AdSense ads.txt (removed).

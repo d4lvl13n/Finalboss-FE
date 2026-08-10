@@ -1,0 +1,65 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "finalboss",
+  // Custom entry: wraps the OpenNext-generated worker and adds the scheduled()
+  // handler that replaces the Vercel cron (see worker.ts).
+  "main": "./worker.ts",
+  "compatibility_date": "2026-06-05",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  // Production domains (zone is on this account). www serves the worker too;
+  // the app 301s it to the apex (next.config.js host-based redirect) so the
+  // redirect no longer depends on the old Vercel project.
+  "routes": [
+    { "pattern": "finalboss.io", "custom_domain": true },
+    { "pattern": "www.finalboss.io", "custom_domain": true }
+  ],
+  // The workers.dev URL was for pre-cutover testing; keep it off in production
+  // so search engines never see a duplicate of the site.
+  "workers_dev": false,
+  // revalidatePath()/revalidateTag() require the worker to call itself.
+  "services": [
+    { "binding": "WORKER_SELF_REFERENCE", "service": "finalboss" }
+  ],
+  // ISR incremental cache (replaces Vercel's data cache). Create with:
+  //   npx wrangler r2 bucket create finalboss-next-cache
+  "r2_buckets": [
+    {
+      "binding": "NEXT_INC_CACHE_R2_BUCKET",
+      "bucket_name": "finalboss-next-cache"
+    }
+  ],
+  // DO-backed revalidation queue + sharded tag cache (auto-provisioned on
+  // first deploy, no manual creation needed).
+  "durable_objects": {
+    "bindings": [
+      { "name": "NEXT_CACHE_DO_QUEUE", "class_name": "DOQueueHandler" },
+      { "name": "NEXT_TAG_CACHE_DO_SHARDED", "class_name": "DOShardedTagCache" }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["DOQueueHandler", "DOShardedTagCache"]
+    }
+  ],
+  // next/image optimization via Cloudflare Images (replaces Vercel image
+  // optimization; the adapter picks this binding up automatically).
+  "images": {
+    "binding": "IMAGES"
+  },
+  // Replaces the Vercel cron for /api/cron/revalidate-recent (vercel.json).
+  "triggers": {
+    "crons": ["*/5 * * * *"]
+  },
+  "vars": {
+    "NEXT_PUBLIC_WORDPRESS_URL": "https://backend.finalboss.io",
+    "NEXT_PUBLIC_BASE_URL": "https://finalboss.io"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

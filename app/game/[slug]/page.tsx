@@ -23,7 +23,7 @@ interface Props {
 
 const baseUrl = siteConfig.url;
 
-export const revalidate = 3600;
+export const revalidate = 86400; // 24h — hub data is registry (refreshed on deploy) + Knowledge API; a day of staleness is fine and spares the WP backend long-tail regeneration load
 const POSTS_PAGE_SIZE = 12;
 
 export async function generateStaticParams() {
