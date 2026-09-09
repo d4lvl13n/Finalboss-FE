@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaTwitter, FaFacebookF, FaInstagram, FaYoutube, FaGamepad, FaNewspaper, FaStar, FaBookOpen, FaVideo, FaCog, FaCheck } from 'react-icons/fa';
-import GooglePreferredSource from './GooglePreferredSource';
 import siteConfig from '../lib/siteConfig';
 import { t } from '../lib/i18n';
 
@@ -187,10 +186,6 @@ const Footer = () => {
                       </a>
                     ))}
                   </div>
-                </div>
-
-                <div className="mb-6">
-                  <GooglePreferredSource />
                 </div>
 
                 {/* Contact Info */}
