@@ -11,7 +11,7 @@ import '../../styles/ads.css';
 import { PLACEHOLDER_BASE64 } from '../../utils/placeholder';
 import { formatDate } from '../../utils/formatDate';
 // ProcessedContent now used via ArticleBodyWithAds
-import PreferredSource from '../PreferredSource';
+import GooglePreferredSource from '../GooglePreferredSource';
 import RelatedArticles from './RelatedArticles';
 import { ResponsiveAd, VerticalAd } from '../AdSense/AdBanner';
 // InlineContentUpgrade now rendered via ArticleBodyWithAds
@@ -428,7 +428,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             >
               {article.title}
             </motion.h1>
-            <PreferredSource domain="finalboss.io" lang="en" placement="article-header" dark />
+            <div className="mt-5"><GooglePreferredSource /></div>
             {/* Compact author line */}
             <div className="flex items-center gap-3 text-sm text-gray-300">
               {article.author?.node?.name && (
@@ -593,7 +593,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         <ResponsiveAd adSlot="9184820874" />
       </div>
       )}
-      <div className="mx-auto max-w-4xl px-4"><PreferredSource domain="finalboss.io" lang="en" placement="article-end" dark /></div>
+      <div className="mx-auto max-w-4xl px-4"><GooglePreferredSource /></div>
       {/* Enhanced Related Articles Section */}
       <RelatedArticles 
         articles={articlesToShow}
