@@ -308,12 +308,17 @@ export const fr = {
   notFound: {
     title: '« Flashbacks de Shenmue... »',
     subtitle: '404 - Vous semblez perdu à Yokosuka...',
-    timerExpired: 'Temps écoulé !',
-    scoreLabel: 'Score : ',
     returnButton: 'Retourner dans la rue Dobuita',
-    gameOverTitle: 'Game Over',
-    finalScore: 'Score final : ',
-    tryAgain: 'Réessayer',
+    movedOrGone: "Cet article a été déplacé ou n'existe plus.",
+    suggestionsTitle: 'Vous cherchiez peut-être :',
+    searchingSuggestions: "Recherche d'articles liés...",
+    searchPlaceholder: 'Rechercher sur FinalBoss...',
+    searchButton: 'Rechercher',
+    browseTitle: 'Ou explorez une section',
+    browseGuides: 'Guides de jeux',
+    browseGaming: 'Actu gaming',
+    browseReviews: 'Tests',
+    browseGames: 'Base de jeux',
   },
 
   // ─── Page: Home ───

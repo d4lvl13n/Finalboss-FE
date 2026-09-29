@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import TableOfContents from './TableOfContents';
 import { Element, htmlToDOM, type DOMNode } from 'html-react-parser';
 import { render } from 'dom-serializer';
 import ProcessedContent from '../ProcessedContent';
@@ -33,7 +34,10 @@ export default function ArticleBodyWithAds({
   articleTitle,
   categoryName,
 }: ArticleBodyWithAdsProps) {
-  const sections = splitAtTopLevelH2(content);
+  const sections = splitAtTopLevelH2(moveAffiliateBlockToEnd(content));
+  const firstElement = htmlToDOM(content).find(node => node instanceof Element);
+  const hasIntro = firstElement instanceof Element && firstElement.name !== 'h2';
+  const contents = <TableOfContents content={content} minHeadings={4} />;
   const totalSections = sections.length;
   // Place email CTA roughly in the middle
   const ctaIndex = Math.max(1, Math.floor(totalSections / 2));
@@ -68,8 +72,41 @@ export default function ArticleBodyWithAds({
     </div>
   );
 
+  // Mediavine mode (manual AdSense slots off): render the whole article as ONE
+  // contiguous prose container whose direct children are the paragraphs and
+  // headings. Mediavine's in-content insertion picks a single content wrapper
+  // and places ads between its top-level children — the per-section wrapper
+  // divs of the manual-ads layout starve it of insertion points (symptom:
+  // almost no in-content ads, especially on mobile).
+  if (!SHOW_MANUAL_ADS) {
+    return (
+      // Keep the live Journey selector (.flex-1.min-w-0.max-w-3xl) on
+      // the prose itself until the dashboard can target #article-body.
+      <div id="article-body" className={`${proseClass} flex-1 min-w-0`} suppressHydrationWarning>
+        {!hasIntro && contents}
+        {sections.map((sectionHtml, i) => (
+          <React.Fragment key={i}>
+            <ProcessedContent content={sectionHtml} bare />
+            {i === 0 && hasIntro && contents}
+            {i === totalSections - 1 && totalSections >= 4 && (
+              <div className="my-8 not-prose">
+                <InlineContentUpgrade
+                  title={t('article.contentUpgrade.title')}
+                  description={t('article.contentUpgrade.description')}
+                  bonusContent={t('article.contentUpgrade.bonus', { category: categoryName })}
+                  articleTopic={articleTitle}
+                />
+              </div>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div>
+      {!hasIntro && contents}
       {sections.map((sectionHtml, i) => {
         // Section 0 is the intro (everything before the first H2). Inject the
         // first ad after its 1st–2nd paragraph: the reader is past the hook and
@@ -81,6 +118,7 @@ export default function ArticleBodyWithAds({
               <div className={proseClass}>
                 <ProcessedContent content={head} />
               </div>
+              {hasIntro && contents}
               {adUnit}
               {tail && (
                 <div className={proseClass}>
@@ -184,4 +222,19 @@ function sanitizeContentForSectioning(content: string): string {
       /\[pokemon:([a-zA-Z0-9-]+)\]/gi,
       '<div class="fb-pokemon" data-name="$1"></div>'
     );
+}
+
+/** Only move our explicitly identified top-level affiliate widget; leave WP wrappers intact. */
+function moveAffiliateBlockToEnd(content: string): string {
+  const nodes = htmlToDOM(content);
+  const widgets: DOMNode[] = [];
+  const body = nodes.filter(node => {
+    if (node instanceof Element && node.attribs['data-fb-aff'] &&
+        (node.attribs.class || '').split(/\s+/).includes('fbx-wrap')) {
+      widgets.push(node);
+      return false;
+    }
+    return true;
+  });
+  return widgets.length ? render([...body, ...widgets]) : content;
 }

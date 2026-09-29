@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { useQuery } from '@apollo/client';
 import { Source_Sans_3 } from 'next/font/google';
 import '../../styles/article.css';
@@ -16,11 +15,10 @@ import { ResponsiveAd, VerticalAd } from '../AdSense/AdBanner';
 // InlineContentUpgrade now rendered via ArticleBodyWithAds
 import InlineRelatedLinks from './InlineRelatedLinks';
 import { GET_RELATED_POSTS, GET_SEQUENTIAL_POSTS, GET_AUTHOR_POSTS } from '../../lib/queries/getRelatedPosts';
-import { GET_LATEST_POSTS } from '../../lib/queries/getLatestPosts';
+import { GET_GAME_TAG_WITH_POSTS } from '../../lib/queries/gameQueries';
 import client from '../../lib/apolloClient';
 import { SHOW_MANUAL_ADS } from '../../lib/adsConfig';
 import { contextualizeKinguinLinks } from '../../lib/kinguin';
-import siteConfig from '../../lib/siteConfig';
 import { normalizeWordPressImageSrc } from '../../lib/imageUrl';
 import ReviewSummary, { ReviewConfig } from '../Review/ReviewSummary';
 import Breadcrumbs from '../Breadcrumbs';
@@ -28,6 +26,7 @@ import TableOfContents from './TableOfContents';
 import ArticleBodyWithAds from './ArticleBodyWithAds';
 import ArticleReactions, { type ContentType } from './ArticleReactions';
 import TrackViewContent from '../TrackViewContent';
+import GooglePreferredSource from '../GooglePreferredSource';
 
 /** Map the article's categories to a content type so reaction copy fits
  *  (a review never says "guide"). "Gaming" is the news/opinion catch-all. */
@@ -47,7 +46,6 @@ function detectContentType(
   return 'news';
 }
 import ReadingProgressBar from '../ReadingProgressBar';
-import LatestSidebar from '../LatestSidebar';
 import GameMetaCard from '../GameMetaCard';
 import { t } from '../../lib/i18n';
 
@@ -80,6 +78,7 @@ interface ArticleData {
     nodes?: {
       id: string;
       name: string;
+      slug?: string;
     }[];
   };
   gameTags?: {
@@ -98,20 +97,17 @@ interface ArticleContentProps {
 
 export default function ArticleContent({ article }: ArticleContentProps) {
   const [featuredImageError, setFeaturedImageError] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsDesktop(window.innerWidth >= 1280); // Corresponds to xl breakpoint
-    };
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
-
   // Get the primary category for related posts
   const primaryCategory = article.categories?.nodes?.[0];
   const primaryGameTag = article.gameTags?.nodes?.[0];
+
+  const { data: gameRelatedData } = useQuery(GET_GAME_TAG_WITH_POSTS, {
+    variables: { slug: primaryGameTag?.slug || '', first: 5 },
+    skip: !primaryGameTag?.slug,
+    client,
+    fetchPolicy: 'cache-first',
+    errorPolicy: 'ignore',
+  });
 
   // Fetch related articles by category with error handling
   const { data: relatedData, loading: relatedLoading, error: relatedError } = useQuery(GET_RELATED_POSTS, {
@@ -150,14 +146,6 @@ export default function ArticleContent({ article }: ArticleContentProps) {
     errorPolicy: 'ignore',
   });
 
-  // Fetch latest posts for sidebar and fallback recommendations
-  const { data: latestData, loading: latestLoading } = useQuery(GET_LATEST_POSTS, {
-    variables: { first: 12 },
-    client,
-    fetchPolicy: 'cache-first',
-  });
-
-
   // Debug logging
   useEffect(() => {
     if (relatedError) console.log('Related posts error:', relatedError);
@@ -167,11 +155,14 @@ export default function ArticleContent({ article }: ArticleContentProps) {
 
   // Determine what articles to show (filter out current article)
   const currentSlug = (article as unknown as { slug?: string }).slug;
-  const rawArticles = relatedData?.posts?.nodes || latestData?.posts?.nodes || [];
+  const gameArticles = (gameRelatedData?.gameTag?.posts?.nodes || []).filter(
+    (a: { id?: string; slug?: string }) => a.id !== article.id && a.slug !== currentSlug
+  );
+  const rawArticles = gameArticles.length ? gameArticles : relatedData?.posts?.nodes || [];
   const articlesToShow = rawArticles.filter(
     (a: { id?: string; slug?: string }) => a.id !== article.id && a.slug !== currentSlug
   );
-  const isLoading = relatedLoading || sequentialLoading || authorLoading || latestLoading;
+  const isLoading = relatedLoading || sequentialLoading || authorLoading;
   const publishedDate = formatDate(article.date);
   const updatedDate = article.modified ? formatDate(article.modified) : null;
   const showUpdatedTimestamp =
@@ -383,107 +374,64 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       {/* Reading Progress Bar */}
       <ReadingProgressBar />
 
-      {/* Hero Image with Title Overlay. Mobile height reduced (38vh) so guide
-          readers reach the TOC + first answer with far less scroll; desktop
-          keeps the full cinematic hero. */}
-      <div className="relative h-[38vh] sm:h-[55vh] md:h-[60vh] overflow-hidden">
-        {featuredImageSrc && !featuredImageError ? (
-          <motion.div className="absolute inset-0" >
-            <Image
-              src={featuredImageSrc}
-              alt={article.title}
-              fill
-              sizes="100vw"
-              style={{ objectFit: 'cover' }}
-              priority
-              placeholder="blur"
-              blurDataURL={PLACEHOLDER_BASE64}
-              onError={() => setFeaturedImageError(true)}
-            />
-          </motion.div>
-        ) : (
-          <motion.div className="absolute inset-0 bg-gray-800" />
-        )}
-        {/* Stronger gradient for text legibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-900" />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent" style={{ top: '40%' }} />
-
-        {/* Title + meta overlay */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 px-4 pb-6 sm:pb-8">
-          <div className="max-w-4xl mx-auto">
-            <Breadcrumbs
-              items={[
-                ...(primaryCategory ? [{ label: primaryCategory.name, href: `/${primaryCategory.name.toLowerCase()}` }] : []),
-                { label: article.title }
-              ]}
-            />
-            {/* Transform-only animation: the H1 must stay visible in server HTML
-                (it is often the LCP text element and crawlers snapshot pre-JS) */}
-            <motion.h1
-              className="text-3xl sm:text-4xl md:text-5xl font-bold mt-3 mb-3 text-white drop-shadow-lg"
-              initial={{ y: 20 }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              {article.title}
-            </motion.h1>
-            {/* Compact author line */}
-            <div className="flex items-center gap-3 text-sm text-gray-300">
+      <div className="mx-auto max-w-[1170px] px-5 pt-24 sm:px-6 sm:pt-28">
+        <Breadcrumbs items={[
+          ...(primaryCategory ? [{ label: primaryCategory.name, href: `/${primaryCategory.slug || (primaryCategory.name.toLowerCase() === 'tech' ? 'technology' : primaryCategory.name.toLowerCase())}` }] : []),
+          { label: article.title }
+        ]} />
+        <div className="article-heading-grid border-b border-gray-700/70 pb-6 pt-4 sm:pb-8">
+          <div>
+            <h1 className="mb-5 text-[30px] leading-[1.16] text-white sm:text-4xl lg:text-[44px]">{article.title}</h1>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-gray-400">
               {article.author?.node?.name && (
-                <Link
-                  href={`/author/${article.author?.node?.slug || ''}`}
-                  className="text-yellow-400 font-medium hover:text-yellow-300 transition-colors"
-                >
+                <Link href={`/author/${article.author.node.slug || ''}`} className="text-yellow-400 hover:text-yellow-300">
                   {article.author.node.name}
                 </Link>
               )}
-              <span className="text-gray-500">·</span>
-              <span>{publishedDate}</span>
-              <span className="text-gray-500">·</span>
-              <span>{Math.ceil(article.content.split(' ').length / 200)} {t('article.minRead')}</span>
-              {article.categories?.nodes && article.categories.nodes.length > 0 && (
-                <>
-                  <span className="text-gray-500 hidden sm:inline">·</span>
-                  <div className="hidden sm:flex gap-2">
-                    {article.categories.nodes.slice(0, 2).map((category) => (
-                      <span key={category.id} className="bg-yellow-400/20 text-yellow-400 text-xs px-2 py-0.5 rounded-full">
-                        {category.name}
-                      </span>
-                    ))}
-                  </div>
-                </>
-              )}
+              <span>{Math.ceil(article.content.replace(/<[^>]*>/g, ' ').split(/\s+/).length / 200)} {t('article.minRead')}</span>
+              <span className="basis-full text-gray-300 sm:basis-auto">
+                <time dateTime={showUpdatedTimestamp ? article.modified : article.date}>
+                  {showUpdatedTimestamp && updatedDate ? t('article.updatedOn', { date: updatedDate }) : t('article.publishedOn', { date: publishedDate })}
+                </time>
+              </span>
+            </div>
+            <div className="mt-5">
+              <GooglePreferredSource />
             </div>
           </div>
+          {featuredImageSrc && !featuredImageError && (
+            <div className="relative hidden h-[200px] overflow-hidden rounded sm:block">
+              <Image src={featuredImageSrc} alt={article.title} fill sizes="(min-width: 1024px) 290px, 230px"
+                style={{ objectFit: 'cover' }} priority placeholder="blur" blurDataURL={PLACEHOLDER_BASE64}
+                onError={() => setFeaturedImageError(true)} />
+            </div>
+          )}
         </div>
       </div>
 
       {/* Article Content */}
-      <div className="relative z-10 px-4 -mt-2">
-        <div className="flex justify-center max-w-[1600px] mx-auto">
+      <div className="relative z-10 px-5 sm:px-6">
+        <div className="flex justify-center max-w-[1122px] mx-auto gap-12">
           {/* Left sidebar removed — in-article ads provide better viewability */}
 
           {/* Main Content - Centered with wider sidebar */}
           {/* min-w-0 is critical in flex layouts: wide ad/embed children otherwise force the whole
               article column wider than the viewport on mobile. Keep clipping on the inner padding
               wrapper so the column can shrink without breaking responsive ad iframes. */}
-          <div className="flex-1 min-w-0 max-w-3xl xl:max-w-[780px] bg-gray-900 rounded-lg shadow-2xl">
-          <div className="p-4 sm:p-6 md:p-8 overflow-x-hidden">
-            {primaryGameTag && <GameMetaCard gameTag={primaryGameTag} />}
-
-            {/* Table of Contents for long articles */}
-            <TableOfContents content={contentCleaned} minHeadings={4} />
-
-              {/* AD PLACEMENT 1 moved INTO the body: now injected after the
-                  1st–2nd intro paragraph by ArticleBodyWithAds (higher CTR than
-                  a banner sitting above all content). */}
-
+          <div className="grow basis-0 min-w-0 max-w-3xl xl:max-w-[740px] bg-gray-900">
+          <div className="py-6 sm:py-7">
             <ArticleBodyWithAds
               content={contentFinal}
               sourceSansClassName={sourceSans.className}
               articleTitle={article.title}
               categoryName={primaryCategory?.name || 'Gaming'}
             />
+
+            <div className="mt-8 mb-6 border-t border-gray-700/50 pt-6">
+              <GooglePreferredSource />
+            </div>
+
+            {primaryGameTag && <GameMetaCard gameTag={primaryGameTag} />}
 
             {/* "Was this helpful?" reactions + email/feedback capture */}
             {currentSlug && (
@@ -537,50 +485,20 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             </div>
           </div>
 
-          {/* Right Sidebar - Desktop Only */}
-          {isDesktop && (
-            <div className="hidden xl:block w-[420px] flex-shrink-0 ml-6">
-              {/* Latest articles scrolls away normally; only the ad stack below is
-                  sticky (the full stack is taller than the viewport — pinning it all
-                  would leave the ads cut off below the fold). The sticky div must be
-                  a DIRECT child of this column: position:sticky only travels within
-                  its parent's height, and the column stretches to the article height
-                  while any intermediate wrapper would not. */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-                className="bg-gray-800/30 rounded-xl p-5 border border-gray-700/30 mb-6"
-              >
-                <LatestSidebar
-                  articles={latestData?.posts?.nodes || []}
-                  title={t('common.latest')}
-                  showAllLink="/gaming"
-                  showAllText={t('article.viewAll')}
-                  maxItems={10}
-                  accentColor="yellow"
-                  maxHeight="420px"
-                />
-              </motion.div>
-
-              <div className="sticky top-24 space-y-6">
-                {SHOW_MANUAL_ADS && (
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 0.9 }}
-                    className="bg-gray-800/20 rounded-xl p-4 border border-gray-700/20"
-                  >
-                    <div className="ad-label text-xs mb-3">{t('article.adLabel')}</div>
-                    <div className="flex justify-center">
-                      <VerticalAd adSlot="1258229391" />
-                    </div>
-                  </motion.div>
-                )}
-
-              </div>
+          <aside className="hidden xl:block w-[290px] flex-shrink-0 pt-7">
+            <div className="sticky top-24 space-y-8">
+              <TableOfContents content={contentCleaned} minHeadings={4} variant="sidebar" />
+              {primaryGameTag && gameArticles.length > 0 && (
+                <section className="border-t-2 border-yellow-400 pt-4">
+                  <h2 className="mb-3 text-lg">{primaryGameTag.name}</h2>
+                  {gameArticles.slice(0, 3).map((post: { id: string; slug: string; title: string }) => (
+                    <Link key={post.id} href={`/${post.slug}`} className="block border-b border-gray-700 py-3 text-sm leading-relaxed text-gray-300 hover:text-yellow-400">{post.title}</Link>
+                  ))}
+                </section>
+              )}
+              {SHOW_MANUAL_ADS && <div><div className="ad-label text-xs mb-3">{t('article.adLabel')}</div><VerticalAd adSlot="1258229391" /></div>}
             </div>
-          )}
+          </aside>
         </div>
       </div>
 
@@ -601,7 +519,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         } : undefined}
         authorPosts={authorData?.posts?.nodes || []}
         sectionTitle={
-          relatedData?.posts?.nodes?.length > 0 && primaryCategory
+          gameArticles.length && primaryGameTag ? t('article.relatedCategoryTitle', { category: primaryGameTag.name }) : relatedData?.posts?.nodes?.length > 0 && primaryCategory
             ? t('article.relatedCategoryTitle', { category: primaryCategory.name })
             : articlesToShow?.length > 0
               ? t('article.youMightLike')

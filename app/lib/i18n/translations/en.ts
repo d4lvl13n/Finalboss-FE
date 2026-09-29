@@ -306,12 +306,17 @@ export const en = {
   notFound: {
     title: '"Shenmue Flashbacks..."',
     subtitle: '404 - You seem to be lost in Yokosuka...',
-    timerExpired: "Time's up!",
-    scoreLabel: 'Score: ',
     returnButton: 'Return to Dobuita Street',
-    gameOverTitle: 'Game Over',
-    finalScore: 'Final Score: ',
-    tryAgain: 'Try Again',
+    movedOrGone: 'This article has moved or no longer exists.',
+    suggestionsTitle: 'Were you looking for one of these?',
+    searchingSuggestions: 'Looking for related articles...',
+    searchPlaceholder: 'Search FinalBoss.io...',
+    searchButton: 'Search',
+    browseTitle: 'Or jump straight to a section',
+    browseGuides: 'Game Guides',
+    browseGaming: 'Gaming News',
+    browseReviews: 'Reviews',
+    browseGames: 'Games Database',
   },
 
   // ─── Page: Home ───

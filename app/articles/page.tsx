@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import Link from 'next/link';
 import { GET_ALL_POSTS } from '../lib/queries/getAllPosts';
 import client from '../lib/apolloClient';
+import { fetchTotalPosts } from '../lib/pagination';
 import { buildPageMetadata } from '../lib/seo';
 import siteConfig from '../lib/siteConfig';
 import AllArticlesPageContent from '../components/AllArticles/AllArticlesPageContent';
@@ -51,7 +52,9 @@ export default async function AllArticlesPage() {
       articles = data.posts.nodes;
       hasNextPage = data.posts.pageInfo?.hasNextPage || false;
       endCursor = data.posts.pageInfo?.endCursor || null;
-      totalCount = data.posts.pageInfo?.offsetPagination?.total ?? articles.length;
+      // Total comes from the REST headers — GraphQL only exposes it via the
+      // offset-pagination plugin, which is no longer active on the backend.
+      totalCount = (await fetchTotalPosts().catch(() => 0)) || articles.length;
     }
   } catch (error) {
     console.error('Error fetching articles:', error);

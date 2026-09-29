@@ -238,6 +238,50 @@ const nextConfig = {
         destination: '/diablo-4-how-to-build-frost-juggernaut-paladin',
         permanent: true,
       },
+      // 404 cleanup (2026-08-12, see ANALYTICS/404_DIAGNOSTIC): a truncated
+      // link, a wrong-case link, and doubled-URL links circulate with real
+      // traffic — send each to its live page instead of a 404.
+      {
+        source: '/cell-survivor-best-weapon-builds-by-spawn-satelli',
+        destination: '/cell-survivor-best-weapon-builds-by-spawn-satellite',
+        permanent: true,
+      },
+      {
+        source: '/Skull-and-bones-guide',
+        destination: '/skull-and-bones-review',
+        permanent: true,
+      },
+      {
+        source: '/https\\:/finalboss.io/:path*',
+        destination: '/:path*',
+        permanent: true,
+      },
+      // Onimusha cluster consolidation 2026-09-15 (duplicates merged into winners)
+      {
+        source: '/onimusha-way-of-the-sword-boss-order-rematch-route-guide',
+        destination: '/onimusha-way-of-the-sword-all-bosses-in-story-order',
+        permanent: true,
+      },
+      {
+        source: '/onimusha-way-of-the-sword-on-switch-2-which-mode-should-you-use',
+        destination: '/onimusha-way-of-the-sword-switch-2-tech-guide-30fps-vs-unlocked-mode',
+        permanent: true,
+      },
+      {
+        source: '/onimusha-way-of-the-sword-on-switch-2-best-settings-and-performance',
+        destination: '/onimusha-way-of-the-sword-switch-2-tech-guide-30fps-vs-unlocked-mode',
+        permanent: true,
+      },
+      {
+        source: '/onimusha-way-of-the-sword-how-to-beat-sasaki-ganryu-and-gioh-form',
+        destination: '/onimusha-way-of-the-sword-how-to-beat-sasaki-ganryu-and-gioh',
+        permanent: true,
+      },
+      {
+        source: '/onimusha-way-of-the-sword\\:-defense,-blaze,-and-issen-guide',
+        destination: '/onimusha-way-of-the-sword-defense-blaze-and-issen-guide',
+        permanent: true,
+      },
       {
         source: '/articles/:slug',
         destination: '/:slug',

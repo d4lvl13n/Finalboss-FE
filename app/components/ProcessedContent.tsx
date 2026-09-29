@@ -1,4 +1,5 @@
 "use client";
+import { headingId } from '../lib/articleHeadings';
    // components/ProcessedContent.tsx
    import React, { useEffect, useMemo, useState } from 'react';
    import Image from 'next/image';
@@ -11,7 +12,19 @@
    import { stripDocumentTagsFromHtml } from '../lib/wpContent';
    import PokemonStatsCard from './Pokemon/PokemonStatsCard';
 
-   export default function ProcessedContent({ content }: { content: string }) {
+   export default function ProcessedContent({
+  content,
+  bare = false,
+}: {
+  content: string;
+  /**
+   * Render without the wrapper div, so the parsed nodes become direct children
+   * of the caller's container. Mediavine's in-content ad insertion needs one
+   * contiguous content wrapper whose children are the paragraphs/headings —
+   * per-section wrapper divs starve it of insertion points.
+   */
+  bare?: boolean;
+}) {
      const frontendBase = siteConfig.url;
      const wpGraphql = `${siteConfig.wordpressUrl}/graphql`;
 
@@ -82,12 +95,8 @@
         // indices TableOfContents computes — that broke every jump-link after the
         // first H2. A pure text slug is stable across both. (See TableOfContents.tsx.)
         if (domNode instanceof Element && ['h2', 'h3', 'h4'].includes(domNode.name)) {
-          const text = domToReact(domNode.children as unknown as DOMNode[]);
-          const textContent = typeof text === 'string' ? text :
-            (Array.isArray(text) ? text.map(t => typeof t === 'string' ? t : '').join('') : '');
-          const id = domNode.attribs?.id ||
-            textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-          
+          const id = headingId(domNode);
+
           const HeadingTag = domNode.name as 'h2' | 'h3' | 'h4';
           return (
             <HeadingTag id={id} className={domNode.attribs?.class}>
@@ -247,6 +256,10 @@
          /\[pokemon:([a-zA-Z0-9-]+)\]/gi,
          '<div class="fb-pokemon" data-name="$1"></div>'
        );
+
+     if (bare) {
+       return <>{parse(sanitized, options)}</>;
+     }
 
      return (
        <div className="prose prose-invert max-w-none" suppressHydrationWarning>

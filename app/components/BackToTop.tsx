@@ -34,7 +34,7 @@ export default function BackToTop() {
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
           transition={{ duration: 0.2 }}
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 p-3 bg-yellow-400 text-gray-900 rounded-full shadow-lg hover:bg-yellow-300 hover:shadow-xl transition-all duration-300 group"
+          className="hidden lg:block [@media(pointer:coarse)]:hidden fixed bottom-6 right-6 z-50 p-3 bg-yellow-400 text-gray-900 rounded-full shadow-lg hover:bg-yellow-300 hover:shadow-xl transition-all duration-300 group"
           aria-label={t('a11y.backToTop')}
         >
           <motion.div

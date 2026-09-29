@@ -281,3 +281,20 @@
     font-size: 1.25rem;
   }
 }
+
+/* WordPress-compatible article layout. Only explicitly marked answers are styled;
+   ordinary GPBot introductions stay ordinary paragraphs. */
+.article-heading-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:2rem; align-items:center; }
+@media (min-width:640px) { .article-heading-grid { grid-template-columns:minmax(0,1fr) 230px; } }
+@media (min-width:1024px) { .article-heading-grid { grid-template-columns:minmax(0,1fr) 290px; gap:3rem; } }
+#article-body :is(h2,h3,h4) { scroll-margin-top:100px; }
+#article-body .fb-quick-answer { border-left:3px solid #fbbf24; background:#182233; padding:20px 24px; margin:0 0 24px; }
+#article-body .fb-quick-answer > :last-child { margin-bottom:0; }
+#article-body figure { max-width:100%; }
+#article-body .wp-block-table { overflow-x:auto; }
+#article-body table { width:100%; }
+#article-body .article-toc a { color:#d1d5db; text-decoration:none; font-size:14px; }
+#article-body .article-toc ul { list-style:none; padding:0; margin:0; }
+#article-body .article-toc li { margin:0; }
+.article-toc a:focus-visible, .article-toc summary:focus-visible { outline:2px solid #fbbf24; outline-offset:3px; }
+#article-body p { hyphens:none; }

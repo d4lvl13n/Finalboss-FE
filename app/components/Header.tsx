@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -49,6 +50,9 @@ const Header: React.FC = () => {
   const [isHeaderHidden, setHeaderHidden] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
+  // Portal target only exists client-side; render the overlay after mount.
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => setIsMounted(true), []);
   const { openSearch } = useSearch();
   const menuRef = useRef<HTMLDivElement>(null);
   const lastScrollY = useRef(0);
@@ -161,7 +165,13 @@ const Header: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay.
+          Rendered through a portal to <body>: the header always carries a
+          translate-y transform (hide-on-scroll), and a transformed ancestor
+          becomes the containing block for position:fixed — inside the header,
+          the panel's h-full resolved to the header bar's ~70px height, which
+          is the long-standing "menu opens inside the header" mobile bug. */}
+      {isMounted && createPortal(
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -171,7 +181,7 @@ const Header: React.FC = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] md:hidden"
+              className="fixed inset-0 bg-black/60 z-[9998] md:hidden"
               onClick={closeMobileMenu}
             />
             
@@ -181,7 +191,7 @@ const Header: React.FC = () => {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="fixed top-0 left-0 h-full w-[280px] bg-gray-900/98 backdrop-blur-lg z-[9999] md:hidden overflow-y-auto"
+              className="fixed top-0 left-0 h-full w-[280px] bg-gray-900 z-[9999] md:hidden overflow-y-auto"
             >
               <div className="flex flex-col h-full">
                 {/* Mobile Menu Header */}
@@ -197,17 +207,15 @@ const Header: React.FC = () => {
                 
                 {/* Mobile Menu Navigation */}
                 <nav className="flex-1 py-4">
-                  {navItems.map((item, index) => (
-                    <motion.div
-                      key={item.name}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                    >
-                      <MenuItem href={item.href} onClick={closeMobileMenu}>
-                        {item.name}
-                      </MenuItem>
-                    </motion.div>
+                  {/* No per-item opacity animation: iOS Safari's compositor can
+                      stall animations inside a transform-animated fixed panel,
+                      leaving items stuck invisible (the long-standing "empty
+                      mobile menu" bug — same reason the panel itself must not
+                      combine backdrop-blur with the slide-in transform). */}
+                  {navItems.map((item) => (
+                    <MenuItem key={item.name} href={item.href} onClick={closeMobileMenu}>
+                      {item.name}
+                    </MenuItem>
                   ))}
                 </nav>
                 
@@ -240,7 +248,8 @@ const Header: React.FC = () => {
             </motion.div>
           </>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body)}
 
       <AnimatePresence>
         {isMegaMenuOpen && (

@@ -20,9 +20,6 @@ export const GET_ALL_POSTS = gql`
       pageInfo {
         hasNextPage
         endCursor
-        offsetPagination {
-          total
-        }
       }
     }
   }

@@ -1,12 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ExitIntentModal from './ExitIntentModal';
 import SlideInCTA from './SlideInCTA';
 import { useLeadTrigger } from './useLeadTrigger';
 
-const LeadCaptureManager: React.FC = () => {
+const DesktopLeadCapture: React.FC = () => {
   const { triggered, dismiss } = useLeadTrigger({
     minTimeOnPage: 5,
     scrollThreshold: 0.45,
@@ -26,4 +26,16 @@ const LeadCaptureManager: React.FC = () => {
   );
 };
 
-export default LeadCaptureManager;
+// Mount the trigger only for a wide, fine-pointer device. Hiding its markup
+// with CSS would still start timers and consume the signup cooldown on phones.
+export default function LeadCaptureManager() {
+  const [enabled, setEnabled] = useState(false);
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)');
+    const sync = () => setEnabled(desktop.matches);
+    sync();
+    desktop.addEventListener('change', sync);
+    return () => desktop.removeEventListener('change', sync);
+  }, []);
+  return enabled ? <DesktopLeadCapture /> : null;
+}
