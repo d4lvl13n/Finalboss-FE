@@ -43,3 +43,15 @@ Validation: ten focused tests pass (`node --test tests/cloudflare/image-cache.te
 ## Remaining major work
 
 Remaining tag-cache overhead is not eliminated by these patches. A further option is the D1 tag cache recommended by OpenNext for smaller sites. Switching tag stores requires an explicit cache-state migration; simply reducing the shard count would change tag locations and risk losing invalidations. Do not promise near-zero billing from these local changes.
+
+## Production release — 2026-09-29 08:57 UTC
+
+The local-only status above describes the initial audit. The user subsequently authorized commit, push and production deployment.
+
+- Cost fix commit: `22c5900`; deployed application commit: `2a5f4f7` (pushed to `origin/main`). Remote history was merged without force-pushing. Existing application edits were preserved in a separate commit because previous release evidence and public HTML showed that uncommitted article layout, Journey integration and Preferred Source features were already live. Unrelated research/design documents and environment files were excluded.
+- Complete OpenNext production build passed, including TypeScript and 1,619 generated pages. Ten focused image tests and the workerd/R2/Images integration test passed. Deployment populated 4,239 cache objects using Wrangler's throttled API upload.
+- Active Worker version: `b6c8c260-f713-45ab-98ae-a301ff063d7a`, on `finalboss.io`, `www.finalboss.io`, with the five-minute cron. Previous version: `06210ba3-af62-41cd-9f16-3b4b291f5ed5`.
+- Public checks: home and Dawnwalker article HTTP 200; article body, Journey and Preferred Source markers retained; browser navigation from home to `/gaming` succeeded; www redirects to apex with HTTP 301.
+- A dated WordPress WebP was served twice as a valid 320 x 180 WebP (3,424 bytes), with a one-day cache header; HEAD returned 200. Both public bodies had SHA-256 `d19e6eacb3935631d169203501c4dba42d7fe4769db73f021646f7ac43f9452b`.
+- Read back the source manifest and derivative directly from production R2. The stored derivative hash exactly matched the public response. This confirms persistence in production, not merely a successful image response from the fallback optimizer.
+- Monthly bill reduction remains unmeasured. This release does not eliminate charges for new variants, unsupported image sources, or all Durable Object activity.
