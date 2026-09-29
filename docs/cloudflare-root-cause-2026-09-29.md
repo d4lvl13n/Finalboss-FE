@@ -55,6 +55,26 @@ Validation: 5 SQLite queue regression tests, 3 collector-filter tests, actual wo
 - Homepage and `/articles` returned **200** after deployment.
 - Queue cleanup is proven by the adapter/SQLite regression and actual workerd integration tests. Post-deployment monthly savings and reduction in production queue metrics have not yet been measured. The bot filter is not an identity guarantee or a block on direct access to WordPress originals.
 
+## First production comparison after all deployed corrections
+
+Rechecked the active deployment on 29 September at approximately 10:34 UTC: version `25ae675d-285f-497d-8c29-3c420749cd10` receives 100% of production traffic. Repeated public probes again returned 403 for ImageBot/img2dataset and 200 for browser/Googlebot-Image/Bingbot, homepage and articles.
+
+Authenticated GraphQL comparison: 08:00–08:30 UTC (before these releases) versus 09:45–10:15 UTC (after both releases) on 29 September. These are two equal, short observational windows, not a controlled experiment or a monthly forecast. Adaptive estimates and traffic mix can differ.
+
+| Metric | Before, 30 min | After, 30 min | Change |
+|---|---:|---:|---:|
+| Worker invocations | 2,331 | 1,846 | -20.8% |
+| Queue retry alarms | 1,797 | 2 | -99.9% |
+| Queue RPCs | 2,211 | 123 | -94.4% |
+| Tag-cache RPCs | 37,369 | 2,378 | -93.6% |
+| Total measured DO duration (GB-seconds) | 1,145.26 | 103.20 | -91.0% |
+| R2 PutObject | 4,189 | 1,393 | -66.7% |
+| R2 GetObject | 13,533 | 2,807 | -79.3% |
+
+The DO duration reduction is approximately 88.6% even when normalized by Worker invocation count (0.491 to 0.056 GB-seconds per invocation). The simultaneous traffic reduction alone is therefore insufficient to explain the observed improvement, although invocation mix and deployment cache resets prevent isolating each individual fix's contribution. Initial image-derivative population and deployment cache activity may affect R2 writes.
+
+The image binding was invoked 257 versus 205 times; this is an invocation measure, **not** the number of new, unique monthly billed transformations. It does not yet establish the image-bill saving. Historical charges are unaffected. Costs remaining in later windows must be measured rather than extrapolating this short observation to a zero-dollar bill.
+
 ## Sources
 
 - https://developers.cloudflare.com/changelog/post/2026-07-01-binding-unique-transformations/
