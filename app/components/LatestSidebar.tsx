@@ -110,7 +110,7 @@ const SidebarArticle = ({
     animate={{ opacity: 1, x: 0 }}
     transition={{ duration: 0.3, delay: index * 0.03 }}
   >
-    <Link 
+    <Link prefetch={false}
       href={`/${article.slug}`}
       className="group flex gap-3 py-3 border-b border-gray-800 hover:bg-gray-800/30 transition-colors -mx-2 px-2 rounded"
     >
@@ -181,7 +181,7 @@ export default function LatestSidebar({
       
       {/* Show all link - Fixed at bottom */}
       {showAllLink && (
-        <Link 
+        <Link prefetch={false}
           href={showAllLink}
           className={`flex items-center justify-center gap-2 mt-4 py-3 text-sm font-semibold ${colors.button} transition-colors border rounded-lg flex-shrink-0`}
         >

@@ -43,7 +43,7 @@ const FeaturedArticle = ({ article }: { article: Article }) => {
   const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
 
   return (
-  <Link href={`/${article.slug}`} className="group block">
+  <Link prefetch={false} href={`/${article.slug}`} className="group block">
     {/* Fixed height container to prevent CLS */}
     <div className="relative h-[220px] sm:h-[280px] md:h-[380px] lg:h-[420px] rounded-xl overflow-hidden bg-gray-800">
       <Image
@@ -92,7 +92,7 @@ const SecondaryArticle = ({ article }: { article: Article; index: number }) => {
   const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
 
   return (
-  <Link href={`/${article.slug}`} className="group block h-[180px] md:h-[200px]">
+  <Link prefetch={false} href={`/${article.slug}`} className="group block h-[180px] md:h-[200px]">
     <div className="relative h-[120px] md:h-[130px] rounded-lg overflow-hidden mb-2 bg-gray-800">
       <Image
         src={imageUrl}
@@ -123,7 +123,7 @@ const CompactArticle = ({ article }: { article: Article }) => {
   const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
 
   return (
-  <Link 
+  <Link prefetch={false}
     href={`/${article.slug}`}
     className="flex gap-3 p-2 rounded-lg bg-gray-800/30 hover:bg-gray-800/50 transition-colors h-[88px]"
   >
@@ -248,7 +248,7 @@ const LatestArticles = ({ initialArticles = [] }: { initialArticles?: Article[] 
         <div className="flex items-center mb-6 md:mb-8">
           <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-yellow-400 mr-3 md:mr-4">{t('common.latestArticles')}</h2>
           <div className="flex-grow h-0.5 md:h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full"></div>
-          <Link
+          <Link prefetch={false}
             href="/gaming"
             className="ml-3 md:ml-4 bg-yellow-400 text-black p-1.5 md:p-2 rounded-full hover:bg-yellow-300 transition-colors"
             aria-label={t('a11y.browseAll')}

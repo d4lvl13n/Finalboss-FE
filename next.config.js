@@ -108,9 +108,9 @@ const nextConfig = {
     // Optimized for mobile-first performance
     deviceSizes: [320, 420, 640, 750, 828, 1080, 1200],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
-    // WordPress media is immutable once uploaded (a replaced image gets a new
-    // URL), so a 24h TTL was re-transforming the same files every single day.
-    // This TTL — not the format list — is where the image savings come from.
+    // Used by the native Next optimizer only. OpenNext ignores minimumCacheTTL;
+    // cloudflare/image-cache.ts persists WordPress derivatives by source digest
+    // and checks the original daily for changes.
     minimumCacheTTL: 2592000, // 30 days
     // AVIF stays: the featured image is the LCP element on article pages, and
     // dropping it costs ~20-30% on that image for a marginal billing win.

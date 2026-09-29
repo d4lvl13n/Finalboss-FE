@@ -120,7 +120,7 @@ const Footer = () => {
                     { href: '/terms-of-service', label: t('pages.terms.heading') }
                   ].map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href}>
+                      <Link prefetch={false} href={link.href}>
                                                  <span className="text-gray-300 hover:text-yellow-400 transition-all duration-200 text-sm flex items-center group-hover:translate-x-1">
                           <span className="w-1 h-1 bg-yellow-400/60 rounded-full mr-2 group-hover:bg-yellow-400 transition-colors"></span>
                           {link.label}
@@ -147,7 +147,7 @@ const Footer = () => {
                     { href: '/technology', label: t('nav.technology'), icon: FaCog }
                   ].map((item) => (
                     <li key={item.href}>
-                      <Link href={item.href}>
+                      <Link prefetch={false} href={item.href}>
                                                  <span className="text-gray-300 hover:text-purple-400 transition-all duration-200 text-sm flex items-center group-hover:translate-x-1">
                           <item.icon className="w-3 h-3 mr-2 opacity-60" />
                           {item.label}

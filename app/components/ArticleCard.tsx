@@ -45,7 +45,7 @@ function CompactCard({ article, basePath = '' }: ArticleCardProps) {
   const imageUrl = imageSrcWithFallback(article.featuredImage?.node?.sourceUrl);
   
   return (
-    <Link href={href} className="flex gap-3 p-2 bg-gray-800/30 rounded-lg hover:bg-gray-800/50 transition-colors group">
+    <Link prefetch={false} href={href} className="flex gap-3 p-2 bg-gray-800/30 rounded-lg hover:bg-gray-800/50 transition-colors group">
       {/* Thumbnail */}
       <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-700">
         <Image
@@ -90,7 +90,7 @@ function FeaturedCard({ article, index = 0, basePath = '' }: ArticleCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <Link href={href} className="block group">
+      <Link prefetch={false} href={href} className="block group">
         <div className="relative aspect-[16/9] md:aspect-[16/10] rounded-xl overflow-hidden bg-gray-800">
           <Image
             src={imageUrl}
@@ -148,7 +148,7 @@ function DefaultCard({ article, index = 0, basePath = '' }: ArticleCardProps) {
       transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.3) }}
       className="group"
     >
-      <Link href={href} className="block">
+      <Link prefetch={false} href={href} className="block">
         <div className="relative aspect-[16/10] rounded-xl overflow-hidden bg-gray-800">
           <Image
             src={imageUrl}

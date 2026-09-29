@@ -21,7 +21,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ href, children, onClick }) => (
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.98 }}
   >
-    <Link href={href} onClick={onClick}>
+    <Link prefetch={false} href={href} onClick={onClick}>
       <span className="block text-white text-xl font-medium hover:text-yellow-400 transition-colors py-3 px-4 rounded-lg hover:bg-white/5 active:bg-white/10">
         {children}
       </span>
@@ -130,14 +130,14 @@ const Header: React.FC = () => {
             {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </motion.button>
           
-          <Link href="/">
+          <Link prefetch={false} href="/">
             <Image src={siteConfig.logoPath} width={120} height={40} alt={siteConfig.name} />
           </Link>
           
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1 ml-8">
             {navItems.map((item) => (
-              <Link 
+              <Link prefetch={false}
                 key={item.name} 
                 href={item.href}
                 className="px-3 py-2 text-sm font-medium text-gray-300 hover:text-yellow-400 transition-colors rounded-lg hover:bg-white/5"
@@ -213,14 +213,14 @@ const Header: React.FC = () => {
                 
                 {/* Mobile Menu Footer */}
                 <div className="p-4 border-t border-gray-800 space-y-3">
-                  <Link
+                  <Link prefetch={false}
                     href="/write-for-us"
                     onClick={closeMobileMenu}
                     className="block text-sm text-gray-400 hover:text-yellow-400 transition-colors py-2"
                   >
                     {t('nav.writeForUs')}
                   </Link>
-                  <Link
+                  <Link prefetch={false}
                     href="/contact"
                     onClick={closeMobileMenu}
                     className="block text-sm text-gray-400 hover:text-yellow-400 transition-colors py-2"
@@ -298,7 +298,7 @@ const Header: React.FC = () => {
                   />
                   <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-futuristic-blue" size={18} />
                 </div>
-                <Link href="/login">
+                <Link prefetch={false} href="/login">
                   <motion.button
                     className="w-full bg-futuristic-blue text-black px-4 py-3 rounded-full font-semibold hover:bg-white hover:text-black transition-colors"
                     whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(0, 191, 255, 0.5)' }}
@@ -315,7 +315,7 @@ const Header: React.FC = () => {
                   { name: t('nav.aboutUs'), href: '/about' },
                   { name: t('nav.contact'), href: '/contact' }
                 ].map((item) => (
-                  <Link key={item.name} href={item.href}>
+                  <Link prefetch={false} key={item.name} href={item.href}>
                     <motion.span 
                       className="text-gray-400 hover:text-futuristic-blue transition-colors p-2 rounded-lg hover:bg-gray-800 active:bg-gray-700"
                       whileHover={{ scale: 1.1 }}

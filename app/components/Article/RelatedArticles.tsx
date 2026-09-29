@@ -83,7 +83,7 @@ export default function RelatedArticles({
         size === 'small' ? 'h-32' : 'h-64'
       }`}
     >
-      <Link href={`/${article.slug}`} className="block h-full">
+      <Link prefetch={false} href={`/${article.slug}`} className="block h-full">
         {imageUrl ? (
           <div className="relative h-full">
             <Image
@@ -149,7 +149,7 @@ export default function RelatedArticles({
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {prevPost && (
-            <Link href={`/${prevPost.slug}`} className="group">
+            <Link prefetch={false} href={`/${prevPost.slug}`} className="group">
               <div className="flex items-center gap-4 p-4 bg-gray-800 rounded-lg hover:bg-gray-750 transition-colors">
                 <FaArrowLeft className="text-yellow-400 group-hover:transform group-hover:-translate-x-1 transition-transform" />
                 <div className="flex-1">
@@ -163,7 +163,7 @@ export default function RelatedArticles({
           )}
           
           {nextPost && (
-            <Link href={`/${nextPost.slug}`} className="group">
+            <Link prefetch={false} href={`/${nextPost.slug}`} className="group">
               <div className="flex items-center gap-4 p-4 bg-gray-800 rounded-lg hover:bg-gray-750 transition-colors">
                 <div className="flex-1 text-right">
                   <p className="text-sm text-gray-400 mb-1">{t('article.nextArticle')}</p>
@@ -225,7 +225,7 @@ export default function RelatedArticles({
             <FaTags className="text-yellow-400 text-4xl mx-auto mb-4" />
             <h3 className="text-xl text-white mb-2">{t('article.noRelated')}</h3>
             <p className="text-gray-400 mb-6">{t('article.noRelatedTip')}</p>
-            <Link href="/articles" className="inline-block bg-yellow-400 text-black font-bold py-3 px-6 rounded-full hover:bg-yellow-300 transition-colors">
+            <Link prefetch={false} href="/articles" className="inline-block bg-yellow-400 text-black font-bold py-3 px-6 rounded-full hover:bg-yellow-300 transition-colors">
               {t('article.browseAll')}
             </Link>
           </div>

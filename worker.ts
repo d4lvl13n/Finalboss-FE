@@ -1,3 +1,5 @@
+import { persistentImageResponse, type ImageCacheEnv } from './cloudflare/image-cache';
+
 // Custom worker entry: serves the OpenNext-built Next.js app and adds the
 // cron handler that replaces the Vercel cron (vercel.json `crons`).
 //
@@ -13,11 +15,17 @@ export default {
   // www → apex 301. Done here (not next.config redirects) because OpenNext's
   // cache interception can serve a cached page before Next's host-based
   // redirect rules are evaluated.
-  fetch(request: Request, env: unknown, ctx: unknown) {
+  async fetch(request: Request, env: unknown, ctx: unknown) {
     const url = new URL(request.url);
     if (url.hostname === 'www.finalboss.io') {
       url.hostname = 'finalboss.io';
       return Response.redirect(url.toString(), 301);
+    }
+    if (url.pathname === '/_next/image') {
+      const cachedImage = await persistentImageResponse(request, env as ImageCacheEnv, {
+        fetch: globalThis.fetch, now: Date.now, cache: caches.default,
+      });
+      if (cachedImage) return cachedImage;
     }
     return handler.fetch(request, env, ctx);
   },

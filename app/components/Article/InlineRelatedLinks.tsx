@@ -29,7 +29,7 @@ export default function InlineRelatedLinks({ articles }: { articles: InlineArtic
             const imageUrl = normalizeWordPressImageSrc(article.featuredImage?.node?.sourceUrl);
 
             return (
-              <Link
+              <Link prefetch={false}
                 key={article.id}
                 href={`/${article.slug}`}
                 className="group flex items-center gap-4 rounded-xl bg-white/5 p-3 hover:bg-yellow-400/10 transition-colors"

@@ -22,8 +22,9 @@ interface ArticleListItem {
   };
 }
 
-// Force revalidation every 60 seconds
-export const revalidate = 60;
+// The publish/update cron invalidates this listing every five minutes when needed.
+// An hourly fallback avoids rebuilding it every minute just because it is visited.
+export const revalidate = 3600;
 
 export async function generateMetadata() {
   return buildPageMetadata({
