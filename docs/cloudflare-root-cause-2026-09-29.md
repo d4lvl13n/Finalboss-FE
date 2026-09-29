@@ -38,13 +38,22 @@ Reproduction using the actual installed adapter and SQLite: failure -> success l
 
 The default four-shard tag cache also performs multiple RPCs per cache lookup. The earlier regional-cache change deliberately kept these checks for immediate invalidation, so it does not remove this expense. A further reviewed change can bypass tag checks for the regional cache's 60-second lifetime (with explicitly bounded additional staleness), or move the tag cache to D1 with an invalidation-state migration.
 
-## Prepared corrections
+## Corrections deployed
 
 1. `cloudflare/revalidation-queue.ts` wraps the generated OpenNext DO class and deletes a retry's SQL row when the upstream implementation has finished/abandoned it. Pending retries remain durable. Build IDs and preview tokens remain those of the generated class; no namespace or schema migration is needed.
 2. `cloudflare/image-access.ts` rejects identified ImageBot/img2dataset requests to the paid optimizer before source fetches, R2 or Images binding calls. It does not reject Googlebot-Image, Bingbot, GPBot health checks or generic browser user agents. Blocking this self-declared collector is limited protection: user agents are spoofable and WordPress originals remain public. A broader defence needs rate limiting at the edge or a media pipeline serving pre-generated WordPress sizes rather than exposing arbitrary paid transformations.
 3. Already deployed: persistent WordPress derivatives, fewer Next route prefetches, short-lived regional reads and queue submission deduplication. These address additional amplification but do not repair persistent retry resurrection or stop a crawler requesting new variants.
 
 Validation: 5 SQLite queue regression tests, 3 collector-filter tests, actual workerd + SQLite integration, targeted lint, and Wrangler dry-run all pass. The fixed queue performs only 2 calls through the same failure/success/10-restart scenario, preserves pending work, and does not resurrect terminal/exhausted tasks.
+
+## Deployment and live verification
+
+- Implementation commit: `cdd2765`, pushed to `origin/main`.
+- Cloudflare Worker version: `25ae675d-285f-497d-8c29-3c420749cd10`, deployed on 29 September 2026 to both production domains. Existing Next.js assets, bindings, cron and DO namespaces were retained.
+- The normal Wrangler command delegated to OpenNext and began an unnecessary R2 cache repopulation. That local command was stopped before Worker deployment. The final wrapper-only release used `OPEN_NEXT_DEPLOY=true npx wrangler deploy` against the already deployed build, with no changed static assets.
+- Live checks of the same known WordPress image: ImageBot and img2dataset received **403**; a browser, Googlebot-Image and Bingbot each received **200 image/webp**, 3,424 bytes.
+- Homepage and `/articles` returned **200** after deployment.
+- Queue cleanup is proven by the adapter/SQLite regression and actual workerd integration tests. Post-deployment monthly savings and reduction in production queue metrics have not yet been measured. The bot filter is not an identity guarantee or a block on direct access to WordPress originals.
 
 ## Sources
 
