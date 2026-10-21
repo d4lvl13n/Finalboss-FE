@@ -247,6 +247,17 @@ const nextConfig = {
         destination: '/onimusha-way-of-the-sword-defense-blaze-and-issen-guide',
         permanent: true,
       },
+      // Content audit consolidation 2026-10-21 (duplicates retired into keepers)
+      {
+        source: '/gears-of-war-e-day-review-great-shooting-too-much-downtime',
+        destination: '/gears-of-war-e-day-review-buy-for-the-gunplay-and-horde-siege',
+        permanent: true,
+      },
+      {
+        source: '/warframe-the-old-peace-choose-atlas-wukong-or-ivara-by-mission',
+        destination: '/warframe-how-to-pick-atlas-wukong-or-ivara-for-each-mission',
+        permanent: true,
+      },
       {
         source: '/articles/:slug',
         destination: '/:slug',
