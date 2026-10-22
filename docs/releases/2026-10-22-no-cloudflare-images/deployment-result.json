@@ -1,0 +1,61 @@
+{
+  "result": {
+    "created_on": "2026-08-07T17:58:14.944535Z",
+    "modified_on": "2026-10-22T13:31:37.613078Z",
+    "id": "finalboss",
+    "tag": "f5eb21100e6f4ab4ac1f682b72951265",
+    "entry_point": "main.js",
+    "tags": [],
+    "deployment_id": "5a1f69208c0d44f3a02ff8edde7cc3d7",
+    "tail_consumers": [],
+    "logpush": false,
+    "observability": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "redact_query_string": false,
+      "logs": {
+        "enabled": true,
+        "head_sampling_rate": 1,
+        "persist": true,
+        "invocation_logs": true
+      },
+      "traces": {
+        "enabled": false,
+        "persist": true,
+        "head_sampling_rate": 1
+      }
+    },
+    "has_assets": true,
+    "has_modules": true,
+    "etag": "41cb17516ea186be59021ed0705487c0acfe2a1d1c61e9e829161f8e0fd89698",
+    "handlers": [
+      "fetch",
+      "scheduled"
+    ],
+    "named_handlers": [
+      {
+        "name": "DOQueueHandler",
+        "handlers": [
+          "class"
+        ]
+      },
+      {
+        "name": "DOShardedTagCache",
+        "handlers": [
+          "class"
+        ]
+      }
+    ],
+    "last_deployed_from": "api",
+    "migration_tag": "v1",
+    "compatibility_date": "2026-06-05",
+    "compatibility_flags": [
+      "nodejs_compat"
+    ],
+    "usage_model": "standard",
+    "startup_time_ms": 18
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

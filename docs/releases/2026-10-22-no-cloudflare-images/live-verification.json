@@ -1,0 +1,194 @@
+[
+  {
+    "label": "home",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 496817
+  },
+  {
+    "label": "article",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 113937
+  },
+  {
+    "label": "robots",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 874
+  },
+  {
+    "label": "blocked-meta",
+    "status": 403,
+    "expected": 403,
+    "ok": true,
+    "location": null,
+    "bytes": 43
+  },
+  {
+    "label": "blocked-images",
+    "status": 403,
+    "expected": 403,
+    "ok": true,
+    "location": null,
+    "bytes": 43
+  },
+  {
+    "label": "legacy-redirect",
+    "status": 308,
+    "expected": 308,
+    "ok": true,
+    "location": "https://finalboss.io/guides",
+    "bytes": 0
+  },
+  {
+    "label": "article-Googlebot/2.1",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 113937
+  },
+  {
+    "label": "article-bingbot/2.0",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 113937
+  },
+  {
+    "label": "article-GPTBot/1.4",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 113937
+  },
+  {
+    "label": "article-OAI-SearchBot/1.4",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 113937
+  },
+  {
+    "label": "article-ChatGPT-User/1.0",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 113937
+  },
+  {
+    "label": "article-PerplexityBot/1.0",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 113937
+  },
+  {
+    "label": "article-Perplexity-User/1.0",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 113937
+  },
+  {
+    "label": "article-meta-webindexer/1.1",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 113937
+  },
+  {
+    "label": "article-facebookexternalhit/1.1",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 113937
+  },
+  {
+    "label": "cold-Mozilla/5.0",
+    "status": 403,
+    "expected": 302,
+    "ok": false,
+    "location": null,
+    "bytes": 7
+  },
+  {
+    "label": "cold-Googlebot-Image/1.0",
+    "status": 403,
+    "expected": 302,
+    "ok": false,
+    "location": null,
+    "bytes": 7
+  },
+  {
+    "label": "cold-OAI-SearchBot/1.4",
+    "status": 403,
+    "expected": 302,
+    "ok": false,
+    "location": null,
+    "bytes": 7
+  },
+  {
+    "label": "cold-PerplexityBot/1.0",
+    "status": 403,
+    "expected": 302,
+    "ok": false,
+    "location": null,
+    "bytes": 7
+  },
+  {
+    "label": "existing-image-0",
+    "status": 302,
+    "expected": 302,
+    "ok": true,
+    "location": "https://finalboss.io/finalboss.png",
+    "bytes": 0
+  },
+  {
+    "label": "existing-image-1",
+    "status": 403,
+    "expected": 302,
+    "ok": false,
+    "location": null,
+    "bytes": 7
+  },
+  {
+    "label": "existing-image-2",
+    "status": 403,
+    "expected": 302,
+    "ok": false,
+    "location": null,
+    "bytes": 7
+  },
+  {
+    "label": "static-script-0",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 172835
+  },
+  {
+    "label": "static-script-1",
+    "status": 200,
+    "expected": 200,
+    "ok": true,
+    "location": null,
+    "bytes": 124158
+  }
+]

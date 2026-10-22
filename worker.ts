@@ -1,6 +1,6 @@
-import { rejectImageCollector } from './cloudflare/image-access';
 import { withPersistentRetryCleanup } from './cloudflare/revalidation-queue';
-import { persistentImageResponse, type ImageCacheEnv } from './cloudflare/image-cache';
+import { originalImageResponse } from './cloudflare/original-images';
+import { collectorResponse, robotsText } from './cloudflare/bot-policy';
 
 // Custom worker entry: serves the OpenNext-built Next.js app and adds the
 // cron handler that replaces the Vercel cron (vercel.json `crons`).
@@ -23,15 +23,18 @@ export default {
       url.hostname = 'finalboss.io';
       return Response.redirect(url.toString(), 301);
     }
-    const rejectedImageRequest = rejectImageCollector(request);
-    if (rejectedImageRequest) return rejectedImageRequest;
-    if (url.pathname === '/_next/image') {
-      const cachedImage = await persistentImageResponse(request, env as ImageCacheEnv, {
-        fetch: globalThis.fetch, now: Date.now, cache: caches.default,
-      });
-      if (cachedImage) return cachedImage;
-    }
-    return handler.fetch(request, env, ctx);
+    if (url.pathname === '/robots.txt') return new Response(request.method === 'HEAD' ? null : robotsText(url.origin), {
+      headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=300' },
+    });
+    const blockedCollector = collectorResponse(request);
+    if (blockedCollector) return blockedCollector;
+    const originalImage = originalImageResponse(request, env as CloudflareEnv);
+    if (originalImage) return originalImage;
+    if (/^\/cdn-cgi\/image(?:\/|$)/i.test(url.pathname)) return new Response('Image transformations are disabled.', { status: 410 });
+    // Also deny the adapter the capability if a binding is accidentally restored.
+    const safeEnv = { ...(env as Record<string, unknown>) };
+    delete safeEnv.IMAGES;
+    return handler.fetch(request, safeEnv, ctx);
   },
 
   async scheduled(_controller, env, ctx) {

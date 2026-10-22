@@ -46,11 +46,7 @@
       "new_sqlite_classes": ["DOQueueHandler", "DOShardedTagCache"]
     }
   ],
-  // next/image optimization via Cloudflare Images (replaces Vercel image
-  // optimization; the adapter picks this binding up automatically).
-  "images": {
-    "binding": "IMAGES"
-  },
+  // No Images binding: this Worker must never be able to transform images.
   // Replaces the Vercel cron for /api/cron/revalidate-recent (vercel.json).
   "triggers": {
     "crons": ["*/5 * * * *"]

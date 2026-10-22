@@ -1,0 +1,62 @@
+[
+  {
+    "name": "ASSETS",
+    "type": "assets"
+  },
+  {
+    "name": "CRON_SECRET",
+    "type": "secret_text"
+  },
+  {
+    "name": "DATABASE_URL",
+    "type": "secret_text"
+  },
+  {
+    "name": "KIT_API_KEY",
+    "type": "secret_text"
+  },
+  {
+    "name": "KNOWLEDGE_API_KEY",
+    "type": "secret_text"
+  },
+  {
+    "name": "KNOWLEDGE_API_URL",
+    "type": "secret_text"
+  },
+  {
+    "name": "NEXT_CACHE_DO_QUEUE",
+    "type": "durable_object_namespace"
+  },
+  {
+    "name": "NEXT_INC_CACHE_R2_BUCKET",
+    "type": "r2_bucket"
+  },
+  {
+    "name": "NEXT_PUBLIC_BASE_URL",
+    "type": "plain_text"
+  },
+  {
+    "name": "NEXT_PUBLIC_WORDPRESS_URL",
+    "type": "plain_text"
+  },
+  {
+    "name": "NEXT_TAG_CACHE_DO_SHARDED",
+    "type": "durable_object_namespace"
+  },
+  {
+    "name": "POSTGRES_URL",
+    "type": "secret_text"
+  },
+  {
+    "name": "TWITCH_CLIENT_ID",
+    "type": "secret_text"
+  },
+  {
+    "name": "TWITCH_CLIENT_SECRET",
+    "type": "secret_text"
+  },
+  {
+    "name": "WORKER_SELF_REFERENCE",
+    "type": "service"
+  }
+]

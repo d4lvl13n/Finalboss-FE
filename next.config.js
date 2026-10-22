@@ -10,49 +10,13 @@ const wpUrl = process.env.NEXT_PUBLIC_WORDPRESS_URL || 'https://backend.finalbos
 const baseHostname = new URL(baseUrl).hostname;
 const wpHostname = new URL(wpUrl).hostname;
 const imagesHostname = `images.${baseHostname}`;
-const legacyExternalImageHosts = [
-  'm.media-amazon.com',
-  'images-na.ssl-images-amazon.com',
-  'lh3.googleusercontent.com',
-  'lh4.googleusercontent.com',
-  'lh5.googleusercontent.com',
-  'lh6.googleusercontent.com',
-  'twohonestguys.files.wordpress.com',
-  'staticdelivery.nexusmods.com',
-  'gaming-cdn.com',
-  'eldenring.wiki.fextralife.com',
-  'vignette.wikia.nocookie.net',
-  'cdn11.bigcommerce.com',
-  'game.capcom.com',
-  'media2.ledevoir.com',
-  'www.canadashistory.ca',
-  'fs-prod-cdn.nintendo-europe.com',
-  'media.giphy.com',
-  'i.pinimg.com',
-  'i0.wp.com',
-  'i2.wp.com',
-  'snworksceo.imgix.net',
-  'cnet3.cbsistatic.com',
-  'media.glamour.com',
-  'www.maxgaming.se',
-  'www.vsgamers.es',
-  'media.us.lg.com',
-  'assets.nintendo.com',
-  'www.alanwake.com',
-  'store-images.s-microsoft.com',
-  'miro.medium.com',
-  'hothardware.com',
-  'images.crutchfieldonline.com',
-  'gmedia.playstation.com',
-  'ir-na.amazon-adsystem.com',
-  'ir-uk.amazon-adsystem.com',
-  'ws-na.amazon-adsystem.com',
-  'ws-eu.amazon-adsystem.com',
-];
+const legacyExternalImageHosts = require('./cloudflare/image-hosts.json');
 
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    // Never invoke a runtime image optimizer, including Cloudflare Images.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -108,13 +72,7 @@ const nextConfig = {
     // Optimized for mobile-first performance
     deviceSizes: [320, 420, 640, 750, 828, 1080, 1200],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
-    // Used by the native Next optimizer only. OpenNext ignores minimumCacheTTL;
-    // cloudflare/image-cache.ts persists WordPress derivatives by source digest
-    // and checks the original daily for changes.
-    minimumCacheTTL: 2592000, // 30 days
-    // AVIF stays: the featured image is the LCP element on article pages, and
-    // dropping it costs ~20-30% on that image for a marginal billing win.
-    formats: ['image/avif', 'image/webp'],
+
   },
   experimental: {
     scrollRestoration: true,

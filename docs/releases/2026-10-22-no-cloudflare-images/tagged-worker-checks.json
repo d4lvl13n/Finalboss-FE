@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://finalboss.io/_next/image?url=https%3A%2F%2Fbackend.finalboss.io%2Fwp-content%2Fuploads%2F2026%2F10%2Fprobe.jpg&w=320&q=75",
+    "status": 302,
+    "version": "5a1f6920-8c0d-44f3-a02f-f8edde7cc3d7",
+    "exceptions": []
+  },
+  {
+    "url": "https://finalboss.io/_next/image?url=%2Ffinalboss.png&w=320&q=75",
+    "status": 302,
+    "version": "5a1f6920-8c0d-44f3-a02f-f8edde7cc3d7",
+    "exceptions": []
+  }
+]
