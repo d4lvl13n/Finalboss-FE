@@ -264,6 +264,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/world-of-warcraft-forever-class-guide-druid-warlock-and-priest',
+        destination: '/world-of-warcraft-forever-priest-warrior-build-prep-guide',
+        permanent: true,
+      },
+      {
         source: '/articles/:slug',
         destination: '/:slug',
         permanent: true,
