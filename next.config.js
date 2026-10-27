@@ -259,6 +259,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/the-blood-of-dawnwalker-how-to-find-sword-shards-and-solve-blasphemy',
+        destination: '/the-blood-of-dawnwalker-how-to-find-forge-it-anew-sword-shards',
+        permanent: true,
+      },
+      {
         source: '/articles/:slug',
         destination: '/:slug',
         permanent: true,
