@@ -269,6 +269,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/the-blood-of-dawnwalker-arbiter-set-route-and-ravenous-bear-guide',
+        destination: '/the-blood-of-dawnwalker-how-to-get-the-legendary-arbiter-set',
+        permanent: true,
+      },
+      {
         source: '/articles/:slug',
         destination: '/:slug',
         permanent: true,
