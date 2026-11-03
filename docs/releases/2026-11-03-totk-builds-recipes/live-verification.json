@@ -1,0 +1,204 @@
+{
+  "pages": [
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds",
+      "status": 200,
+      "title": "Zelda TOTK Builds: 600 Autobuild QR Codes | FinalBoss.io",
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/builds",
+      "h1": [
+        "Zelda TOTK Builds & QR Codes"
+      ]
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds/category/flying",
+      "status": 200,
+      "title": "Zelda TOTK Flying Builds & Hoverbike QR Codes | FinalBoss.io",
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/builds/category/flying",
+      "h1": [
+        "Zelda TOTK Flying Builds & Hoverbike QR Codes"
+      ]
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds/category/flying/page/2",
+      "status": 200,
+      "title": "Zelda TOTK Flying Builds & Hoverbike QR Codes \u2014 Page 2 | FinalBoss.io",
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/builds/category/flying/page/2",
+      "h1": [
+        "Zelda TOTK Flying Builds & Hoverbike QR Codes"
+      ]
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds/perfect-hoverbike-air-bike-1312",
+      "status": 200,
+      "title": "Perfect Hoverbike(Air Bike) QR Code \u2014 Zelda TOTK | FinalBoss.io",
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/builds/perfect-hoverbike-air-bike-1312",
+      "h1": [
+        "Perfect Hoverbike(Air Bike)"
+      ]
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes",
+      "status": 200,
+      "title": "Zelda TOTK Recipes: All 228 Dishes & Elixirs | FinalBoss.io",
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/recipes",
+      "h1": [
+        "Zelda TOTK recipes ."
+      ]
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/page/10",
+      "status": 200,
+      "title": "Zelda TOTK Recipes: All 228 Dishes & Elixirs \u2014 Page 10 | FinalBoss.io",
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/page/10",
+      "h1": [
+        "Zelda TOTK recipes ."
+      ]
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/effect/attack-up",
+      "status": 200,
+      "title": "Zelda TOTK Attack up Recipes | FinalBoss.io",
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/effect/attack-up",
+      "h1": [
+        "Attack up recipes ."
+      ]
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/effect/flame-guard",
+      "status": 200,
+      "title": "Zelda TOTK Flame guard Recipes | FinalBoss.io",
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/effect/flame-guard",
+      "h1": [
+        "Flame guard recipes ."
+      ]
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/apple-pie",
+      "status": 200,
+      "title": "Apple Pie Recipe \u2014 Zelda TOTK #131 | FinalBoss.io",
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/apple-pie",
+      "h1": [
+        "Apple Pie"
+      ]
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/icy-gourmet-meat",
+      "status": 200,
+      "title": "Icy Gourmet Meat Recipe \u2014 Zelda TOTK #201 | FinalBoss.io",
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/icy-gourmet-meat",
+      "h1": [
+        "Icy Gourmet Meat"
+      ]
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/cooking-simulator",
+      "status": 200,
+      "title": "Zelda TOTK Cooking Simulator & Recipe Calculator | FinalBoss.io",
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/cooking-simulator",
+      "h1": [
+        "Zelda TOTK cooking simulator ."
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds/page/1",
+      "status": 308,
+      "location": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds"
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds/category/flying/page/1",
+      "status": 308,
+      "location": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds/category/flying"
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/page/1",
+      "status": 308,
+      "location": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes"
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/effect/attack-up/page/1",
+      "status": 308,
+      "location": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/effect/attack-up"
+    }
+  ],
+  "facets": [
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds?q=hoverbike",
+      "status": 200,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds/category/flying?budget=30",
+      "status": 200,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes?q=apple",
+      "status": 200,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes?method=freeze",
+      "status": 200,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/cooking-simulator?ingredients=Item_Fruit_A",
+      "status": 200,
+      "robots": "noindex, follow"
+    }
+  ],
+  "sectionSitemapUrls": 974,
+  "images": [
+    {
+      "path": "/totk-builds/1312-ff6da3c151c9.webp",
+      "status": 200,
+      "sha256": "ff6da3c151c9fbba319905f7935e3df96fd15149a72f592fd70df3cb4f5041bd",
+      "bytes": 135702
+    },
+    {
+      "path": "/totk-builds/1312-ff6da3c151c9-preview.webp",
+      "status": 200,
+      "sha256": "0bb64a85e9af814a9cde08f9f5239dd1096dfd51a76c812f72eddc2615219d30",
+      "bytes": 24792
+    },
+    {
+      "path": "/totk-builds/943-f65954135145.jpg",
+      "status": 200,
+      "sha256": "f65954135145da3a6cadf614625cd341fa970169093281eac0ab02a47ee69d24",
+      "bytes": 75697
+    },
+    {
+      "path": "/totk-recipes/zelda-totk-apple-pie-131.webp",
+      "status": 200,
+      "sha256": "9025326807b61abbd7c5762c5d4a1a9bec2c5b04e7802ae99d671ecda9af9035",
+      "bytes": 8930
+    },
+    {
+      "path": "/totk-recipes/zelda-totk-mighty-elixir-221.webp",
+      "status": 200,
+      "sha256": "8bef72f59ea92e2de7386c0d58284e5300e7bfd6790946283c2ed619d47aa94a",
+      "bytes": 5820
+    },
+    {
+      "path": "/totk-recipes/zelda-totk-ingredient-apple.webp",
+      "status": 200,
+      "sha256": "0e286e5fe42a9d73b3defba915f665ab915cb6c80f58ec2d67b8e81ea2d67a7e",
+      "bytes": 3100
+    }
+  ],
+  "homepageStatus": 200,
+  "invalidPageStatus": 404,
+  "activeVersion": "316b2c9b-70fd-4bbc-b624-08742438cfe0",
+  "runtimeCommit": "8ccb6a3",
+  "previousVersion": "ba15a5c9-37c4-41bd-8c20-f38935d1e007",
+  "activatedAt": "2026-11-03T21:53:26.775301Z",
+  "nonAssetBindingsPreserved": true,
+  "imagesBindingAbsent": true,
+  "searchConsole": {
+    "sitemap": "https://finalboss.io/game/sitemap.xml",
+    "alreadyRegistered": true,
+    "resubmission": "permission_denied"
+  }
+}
