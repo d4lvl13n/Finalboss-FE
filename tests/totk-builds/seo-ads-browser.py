@@ -15,7 +15,7 @@ SHOTS = Path('/tmp/finalboss-totk-screenshots')
 
 
 def local_only(route):
-    if urlparse(route.request.url).hostname in ['127.0.0.1', 'localhost'] or route.request.url.startswith(('data:', 'blob:')):
+    if urlparse(route.request.url).hostname in ['127.0.0.1', 'localhost', urlparse(BASE).hostname] or route.request.url.startswith(('data:', 'blob:')):
         route.continue_()
     else:
         route.abort()
