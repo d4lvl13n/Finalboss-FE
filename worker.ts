@@ -1,6 +1,7 @@
 import { withPersistentRetryCleanup } from './cloudflare/revalidation-queue';
 import { originalImageResponse } from './cloudflare/original-images';
 import { collectorResponse, robotsText } from './cloudflare/bot-policy';
+import { withTotkRobots } from './cloudflare/totk-robots';
 
 // Custom worker entry: serves the OpenNext-built Next.js app and adds the
 // cron handler that replaces the Vercel cron (vercel.json `crons`).
@@ -34,7 +35,7 @@ export default {
     // Also deny the adapter the capability if a binding is accidentally restored.
     const safeEnv = { ...(env as Record<string, unknown>) };
     delete safeEnv.IMAGES;
-    return handler.fetch(request, safeEnv, ctx);
+    return withTotkRobots(request, await handler.fetch(request, safeEnv, ctx));
   },
 
   async scheduled(_controller, env, ctx) {
