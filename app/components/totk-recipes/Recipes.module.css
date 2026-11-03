@@ -1,0 +1,49 @@
+.card {
+  transition:
+    border-color 0.18s,
+    transform 0.18s;
+}
+.card:hover {
+  transform: translateY(-3px);
+}
+.plate {
+  background-image: radial-gradient(
+    circle at center,
+    rgba(250, 204, 21, 0.065),
+    transparent 67%
+  );
+}
+.card img {
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.3));
+  transition: transform 0.25s;
+}
+.card:hover img {
+  transform: scale(1.08) rotate(-3deg);
+}
+.grid > [data-recipe-ad-after] {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+.grid > [data-recipe-ad-after]:empty {
+  display: none;
+}
+.grid [data-recipe-ad-after] > div:empty {
+  min-height: 0;
+}
+.slot {
+  background-image: radial-gradient(
+    circle,
+    rgba(250, 204, 21, 0.06),
+    transparent 70%
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card img {
+    transition: none;
+  }
+  .card:hover,
+  .card:hover img {
+    transform: none;
+  }
+}

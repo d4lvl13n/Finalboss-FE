@@ -8,6 +8,8 @@ import { buildPageMetadata } from '../lib/seo';
 import siteConfig from '../lib/siteConfig';
 import client from '../lib/apolloClient';
 import { GET_GAME_TAGS_FOR_INDEX } from '../lib/queries/gameQueries';
+import TotkBuildsBanner from '../components/totk-builds/TotkBuildsBanner';
+import TotkRecipesBanner from '../components/totk-recipes/TotkRecipesBanner';
 
 const GAME_INDEX_LIMIT = 60;
 
@@ -71,6 +73,8 @@ export default async function GamesPage() {
               description="An editorial-style release board built from IGDB, ordered by the next upcoming ship date so major launches are easy to scan."
             />
           </Suspense>
+
+          <div className="my-12 space-y-5"><TotkBuildsBanner /><TotkRecipesBanner /></div>
 
           <GamesIndexClient
             initialTags={gameTags}

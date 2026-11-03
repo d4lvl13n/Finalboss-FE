@@ -1,0 +1,16 @@
+.grid > :not(article) {
+  grid-column: 1 / -1;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Journey owns ad markup and lazy loading. Empty targets stay empty: no fake
+   banner, large reserved blank space, second loader or AdSense fallback. */
+.grid :global(.mv_slot_target) {
+  min-height: 0;
+}
+
+.grid > [data-build-ad-after]:has(iframe) {
+  margin-block: 1rem;
+  justify-self: stretch;
+}

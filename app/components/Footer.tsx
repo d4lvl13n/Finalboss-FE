@@ -7,6 +7,8 @@ import { FaTwitter, FaFacebookF, FaInstagram, FaYoutube, FaGamepad, FaNewspaper,
 import siteConfig from '../lib/siteConfig';
 import { t } from '../lib/i18n';
 import GooglePreferredSource from './GooglePreferredSource';
+import { TOTK_BUILDS_PATH } from '../lib/totk-builds/types';
+import { RECIPES_PATH } from '../lib/totk-recipes/types';
 
 const Footer = () => {
   const [footerEmail, setFooterEmail] = useState('');
@@ -144,6 +146,8 @@ const Footer = () => {
                     { href: '/reviews', label: t('nav.reviews'), icon: FaStar },
                     { href: '/guides', label: t('nav.guides'), icon: FaBookOpen },
                     { href: '/games', label: t('nav.games'), icon: FaGamepad },
+                    { href: TOTK_BUILDS_PATH, label: t('nav.totkBuilds'), icon: FaGamepad },
+                    { href: RECIPES_PATH, label: t('nav.totkRecipes'), icon: FaBookOpen },
                     { href: '/videos', label: t('nav.videos'), icon: FaVideo },
                     { href: '/technology', label: t('nav.technology'), icon: FaCog }
                   ].map((item) => (

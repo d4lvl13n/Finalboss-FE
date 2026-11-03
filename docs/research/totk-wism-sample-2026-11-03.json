@@ -1,0 +1,89 @@
+{
+  "observedOn": "2026-11-03",
+  "scope": "Three detail-page metadata samples; external counters are a snapshot",
+  "builds": [
+    {
+      "sourceId": 1312,
+      "sourceUrl": "https://totk.wism.fr/show-1312.html",
+      "sitemapLastmod": "2026-10-08",
+      "title": "Perfect Hoverbike(Air Bike)",
+      "type": "Hoverbike",
+      "zonaiteCost": 9,
+      "tags": [
+        "Flying",
+        "Bike",
+        "bike"
+      ],
+      "creator": null,
+      "qrImageUrl": "https://totk.wism.fr/images/user/qr/qr_6ac7ab4bc1f913.52331306.webp",
+      "displayImageUrl": "https://totk.wism.fr/images/user/qr/img.php?f=qr_6ac7ab4bc1f913.52331306.webp&v=56",
+      "externalScore": 102,
+      "externalViews": 2582,
+      "externalTestStatus": "Tested OK",
+      "externalTestSummary": "100% OK · tested by 5 players",
+      "publishedMonthAsShown": "October 2026",
+      "updatedMonthAsShown": "October 2026",
+      "descriptionPresent": true,
+      "descriptionOmittedFromThisSample": true,
+      "reuseStatus": "not-established",
+      "inGameVerification": "not-performed"
+    },
+    {
+      "sourceId": 1340,
+      "sourceUrl": "https://totk.wism.fr/show-1340.html",
+      "sitemapLastmod": "2026-10-23",
+      "title": "Hover Ship w/ 8 Pulse Lasers",
+      "type": "Combat vehicle",
+      "zonaiteCost": null,
+      "tags": [
+        "hover",
+        "laser",
+        "ship",
+        "combat"
+      ],
+      "creator": {
+        "name": "General-Touch-2611",
+        "profileUrl": "https://www.reddit.com/u/General-Touch-2611"
+      },
+      "qrImageUrl": "https://totk.wism.fr/images/user/qr/qr_6adbbc7a8b47e4.77602756.jpeg",
+      "displayImageUrl": "https://totk.wism.fr/images/user/qr/img.php?f=qr_6adbbc7a8b47e4.77602756.jpeg&v=56",
+      "externalScore": 2,
+      "externalViews": 209,
+      "externalTestStatus": "Not tested yet · Tried it? Tell us",
+      "externalTestSummary": "Not tested enough yet. Be one of the first!",
+      "publishedMonthAsShown": "October 2026",
+      "updatedMonthAsShown": null,
+      "descriptionPresent": true,
+      "descriptionOmittedFromThisSample": true,
+      "reuseStatus": "not-established",
+      "inGameVerification": "not-performed"
+    },
+    {
+      "sourceId": 1363,
+      "sourceUrl": "https://totk.wism.fr/show-1363.html",
+      "sitemapLastmod": "2026-11-01",
+      "title": "AST Phantom Mk1E-C2X11",
+      "type": "Flying machine",
+      "zonaiteCost": 63,
+      "tags": [
+        "flying",
+        "pulse",
+        "weapon",
+        "vehicle"
+      ],
+      "creator": null,
+      "qrImageUrl": "https://totk.wism.fr/images/user/qr/qr_6ae7b1ef7fb5e0.52281213.webp",
+      "displayImageUrl": "https://totk.wism.fr/images/user/qr/img.php?f=qr_6ae7b1ef7fb5e0.52281213.webp&v=56",
+      "externalScore": 2,
+      "externalViews": 77,
+      "externalTestStatus": "Not tested yet · Tried it? Tell us",
+      "externalTestSummary": "Not tested enough yet. Be one of the first!",
+      "publishedMonthAsShown": "November 2026",
+      "updatedMonthAsShown": null,
+      "descriptionPresent": true,
+      "descriptionOmittedFromThisSample": true,
+      "reuseStatus": "not-established",
+      "inGameVerification": "not-performed"
+    }
+  ]
+}

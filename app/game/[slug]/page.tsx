@@ -14,6 +14,9 @@ import { getGameHub, localGameSlugs, getLocalGameData } from '@/app/lib/game-hub
 import GameplayHub, { buildGameplayJsonLd } from '@/app/components/game-hub/GameplayHub';
 import { fetchReadNextArticles, type HubArticle } from '@/app/lib/game-hub/related-articles';
 import { igdbImage, getGamePage } from '@/app/lib/knowledge/client';
+import TotkBuildsBanner from '@/app/components/totk-builds/TotkBuildsBanner';
+import TotkRecipesBanner from '@/app/components/totk-recipes/TotkRecipesBanner';
+import { TOTK_GAME_SLUG } from '@/app/lib/totk-builds/types';
 
 interface Props {
   params: {
@@ -594,7 +597,11 @@ export default async function GamePage({ params }: Props) {
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(buildVideoGameJsonLd(gameData, canonicalUrl)) }}
           />
-          <GameDetails game={gameData} relatedArticles={relatedArticles} />
+          <GameDetails
+            game={gameData}
+            relatedArticles={relatedArticles}
+            featuredContent={params.slug === TOTK_GAME_SLUG ? <div className="space-y-5"><TotkBuildsBanner /><TotkRecipesBanner /></div> : undefined}
+          />
           <Footer />
         </>
       );

@@ -9,6 +9,8 @@ export const fr = {
     technology: 'Technologie',
     videos: 'Vidéos',
     games: 'Jeux',
+    totkBuilds: 'Constructions Zelda TOTK',
+    totkRecipes: 'Recettes Zelda TOTK',
     laptops: 'PC Portables',
     handhelds: 'Consoles Portables',
     handheldCompare: 'Comparatifs Consoles Portables',

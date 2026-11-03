@@ -1,0 +1,1379 @@
+{
+  "source": "https://github.com/Echocolat/TOTK-Cooking-Calculator",
+  "commit": "b89bc5004d724a674a4596c9cfa1c7205cecced8",
+  "cases": [
+    {
+      "ingredients": [
+        "Item_Mushroom_E"
+      ],
+      "expected": {
+        "recipeNumber": 1,
+        "hearts": 4.0,
+        "effectType": null,
+        "effectLevel": 1.0,
+        "duration": 0,
+        "price": 3,
+        "criticalRate": 5.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Mushroom_A",
+        "Item_Meat_11"
+      ],
+      "expected": {
+        "recipeNumber": 2,
+        "hearts": 28.0,
+        "effectType": "StaminaRecover",
+        "effectLevel": 1,
+        "duration": 0,
+        "price": 51,
+        "criticalRate": 10.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Mushroom_E",
+        "Item_FishGet_A",
+        "IceFruit"
+      ],
+      "expected": {
+        "recipeNumber": 3,
+        "hearts": 14.0,
+        "effectType": "AttackUpCold",
+        "effectLevel": 1,
+        "duration": 120,
+        "price": 16,
+        "criticalRate": 15.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_FishGet_I"
+      ],
+      "expected": {
+        "recipeNumber": 5,
+        "hearts": 32.0,
+        "effectType": "LifeMaxUp",
+        "effectLevel": 16,
+        "duration": 0,
+        "price": 24,
+        "criticalRate": 5.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_01",
+        "Item_Meat_06",
+        "Item_Meat_07",
+        "Item_Meat_02",
+        "Item_Fruit_E"
+      ],
+      "expected": {
+        "recipeNumber": 7,
+        "hearts": 44.0,
+        "effectType": "AllSpeed",
+        "effectLevel": 1,
+        "duration": 180,
+        "price": 91,
+        "criticalRate": 25.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_PlantGet_A",
+        "IceFruit"
+      ],
+      "expected": {
+        "recipeNumber": 9,
+        "hearts": 10.0,
+        "effectType": "AttackUpCold",
+        "effectLevel": 1,
+        "duration": 90,
+        "price": 7,
+        "criticalRate": 10.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_PlantGet_R",
+        "Item_Fruit_M"
+      ],
+      "expected": {
+        "recipeNumber": 10,
+        "hearts": 8.0,
+        "effectType": "LifeRepair",
+        "effectLevel": 12,
+        "duration": 0,
+        "price": 15,
+        "criticalRate": 10.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_PlantGet_A",
+        "Item_Mushroom_E",
+        "WaterFruit"
+      ],
+      "expected": {
+        "recipeNumber": 11,
+        "hearts": 14.0,
+        "effectType": "SwimSpeedUp",
+        "effectLevel": 1,
+        "duration": 180,
+        "price": 11,
+        "criticalRate": 15.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_PlantGet_A",
+        "Item_Meat_01",
+        "Item_Material_11"
+      ],
+      "expected": {
+        "recipeNumber": 12,
+        "hearts": 16.0,
+        "effectType": "MiasmaGuard",
+        "effectLevel": 1,
+        "duration": 210,
+        "price": 22,
+        "criticalRate": 15.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_PlantGet_E"
+      ],
+      "expected": {
+        "recipeNumber": 16,
+        "hearts": 0.0,
+        "effectType": "ResistHot",
+        "effectLevel": 1,
+        "duration": 150,
+        "price": 3,
+        "criticalRate": 5.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_01",
+        "Item_Material_02"
+      ],
+      "expected": {
+        "recipeNumber": 21,
+        "hearts": 8.0,
+        "effectType": null,
+        "effectLevel": 1.0,
+        "duration": 60,
+        "price": 15,
+        "criticalRate": 20.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_02",
+        "Item_Material_02",
+        "Item_FishGet_M"
+      ],
+      "expected": {
+        "recipeNumber": 22,
+        "hearts": 20.0,
+        "effectType": "QuietnessUp",
+        "effectLevel": 1,
+        "duration": 240,
+        "price": 34,
+        "criticalRate": 25.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_11",
+        "Item_Material_02",
+        "Item_FishGet_C"
+      ],
+      "expected": {
+        "recipeNumber": 23,
+        "hearts": 32.0,
+        "effectType": "ResistHot",
+        "effectLevel": 1,
+        "duration": 270,
+        "price": 62,
+        "criticalRate": 25.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_01",
+        "Item_InsectGet_K"
+      ],
+      "expected": {
+        "recipeNumber": 25,
+        "hearts": 16.0,
+        "effectType": "AttackUp",
+        "effectLevel": 1,
+        "duration": 80,
+        "price": 20,
+        "criticalRate": 10.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_07",
+        "Item_FishGet_A",
+        "IceFruit"
+      ],
+      "expected": {
+        "recipeNumber": 26,
+        "hearts": 22.0,
+        "effectType": "AttackUpCold",
+        "effectLevel": 1,
+        "duration": 120,
+        "price": 33,
+        "criticalRate": 15.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_PlantGet_E",
+        "Item_Ore_H"
+      ],
+      "expected": {
+        "recipeNumber": 28,
+        "hearts": 0.0,
+        "effectType": "ResistHot",
+        "effectLevel": 1,
+        "duration": 210,
+        "price": 6,
+        "criticalRate": 10.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Mushroom_C",
+        "Item_Ore_H"
+      ],
+      "expected": {
+        "recipeNumber": 29,
+        "hearts": 4.0,
+        "effectType": "ResistCold",
+        "effectLevel": 1,
+        "duration": 210,
+        "price": 7,
+        "criticalRate": 10.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_01",
+        "Item_Ore_H",
+        "Item_Fruit_E"
+      ],
+      "expected": {
+        "recipeNumber": 30,
+        "hearts": 12.0,
+        "effectType": "AllSpeed",
+        "effectLevel": 1,
+        "duration": 150,
+        "price": 20,
+        "criticalRate": 15.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_07",
+        "Item_Ore_H",
+        "FireFruit"
+      ],
+      "expected": {
+        "recipeNumber": 31,
+        "hearts": 14.0,
+        "effectType": "AttackUpHot",
+        "effectLevel": 1,
+        "duration": 150,
+        "price": 27,
+        "criticalRate": 15.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_FishGet_A",
+        "Item_Ore_H"
+      ],
+      "expected": {
+        "recipeNumber": 33,
+        "hearts": 8.0,
+        "effectType": null,
+        "effectLevel": 1.0,
+        "duration": 30,
+        "price": 10,
+        "criticalRate": 10.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_PlantGet_A",
+        "Item_Material_02"
+      ],
+      "expected": {
+        "recipeNumber": 35,
+        "hearts": 8.0,
+        "effectType": null,
+        "effectLevel": 1.0,
+        "duration": 60,
+        "price": 9,
+        "criticalRate": 20.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Mushroom_B",
+        "Item_Material_02"
+      ],
+      "expected": {
+        "recipeNumber": 36,
+        "hearts": 4.0,
+        "effectType": "ResistHot",
+        "effectLevel": 1,
+        "duration": 240,
+        "price": 10,
+        "criticalRate": 20.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_06",
+        "Item_Material_09",
+        "Item_InsectGet_O"
+      ],
+      "expected": {
+        "recipeNumber": 40,
+        "hearts": 16.0,
+        "effectType": "DefenseUp",
+        "effectLevel": 1,
+        "duration": 160,
+        "price": 26,
+        "criticalRate": 25.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_07",
+        "Item_Material_09",
+        "Item_FishGet_D"
+      ],
+      "expected": {
+        "recipeNumber": 41,
+        "hearts": 20.0,
+        "effectType": "ResistElectric",
+        "effectLevel": 1,
+        "duration": 260,
+        "price": 33,
+        "criticalRate": 25.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_12",
+        "Item_Material_09",
+        "Item_Fruit_E"
+      ],
+      "expected": {
+        "recipeNumber": 42,
+        "hearts": 28.0,
+        "effectType": "AllSpeed",
+        "effectLevel": 1,
+        "duration": 170,
+        "price": 60,
+        "criticalRate": 25.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_FishGet_A",
+        "Item_Material_06",
+        "Item_Material_07",
+        "FireFruit"
+      ],
+      "expected": {
+        "recipeNumber": 43,
+        "hearts": 18.0,
+        "effectType": "AttackUpHot",
+        "effectLevel": 1,
+        "duration": 230,
+        "price": 24,
+        "criticalRate": 30.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Mushroom_A",
+        "Item_Fruit_P"
+      ],
+      "expected": {
+        "recipeNumber": 46,
+        "hearts": 16.0,
+        "effectType": "StaminaRecover",
+        "effectLevel": 1,
+        "duration": 20,
+        "price": 16,
+        "criticalRate": 100
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Fruit_A",
+        "Item_Fruit_M",
+        "Item_Fruit_P",
+        "Item_Fruit_C"
+      ],
+      "expected": {
+        "recipeNumber": 48,
+        "hearts": 28.0,
+        "effectType": "ResistElectric",
+        "effectLevel": 1,
+        "duration": 260,
+        "price": 30,
+        "criticalRate": 100
+      }
+    },
+    {
+      "ingredients": [
+        "Item_MushroomGet_D",
+        "Item_Fruit_M"
+      ],
+      "expected": {
+        "recipeNumber": 51,
+        "hearts": 12.0,
+        "effectType": "AllSpeed",
+        "effectLevel": 1,
+        "duration": 90,
+        "price": 9,
+        "criticalRate": 10.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_FishGet_L",
+        "Item_Fruit_M"
+      ],
+      "expected": {
+        "recipeNumber": 52,
+        "hearts": 16.0,
+        "effectType": "StaminaRecover",
+        "effectLevel": 5,
+        "duration": 0,
+        "price": 28,
+        "criticalRate": 10.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_PlantGet_A",
+        "Item_Ore_H",
+        "Item_Material_05",
+        "ElectricalFruit"
+      ],
+      "expected": {
+        "recipeNumber": 53,
+        "hearts": 14.0,
+        "effectType": "AttackUpThunderstorm",
+        "effectLevel": 1,
+        "duration": 230,
+        "price": 17,
+        "criticalRate": 20.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Mushroom_E",
+        "Item_PlantGet_A",
+        "Item_Ore_H",
+        "Item_Material_05",
+        "WaterFruit"
+      ],
+      "expected": {
+        "recipeNumber": 55,
+        "hearts": 18.0,
+        "effectType": "SwimSpeedUp",
+        "effectLevel": 1,
+        "duration": 320,
+        "price": 23,
+        "criticalRate": 25.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_FishGet_A",
+        "Item_PlantGet_A",
+        "Item_Ore_H",
+        "Item_Material_05"
+      ],
+      "expected": {
+        "recipeNumber": 57,
+        "hearts": 20.0,
+        "effectType": null,
+        "effectLevel": 1.0,
+        "duration": 80,
+        "price": 22,
+        "criticalRate": 20.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_MushroomGet_D",
+        "BeeHome"
+      ],
+      "expected": {
+        "recipeNumber": 61,
+        "hearts": 20.0,
+        "effectType": null,
+        "effectLevel": 1.0,
+        "duration": 90,
+        "price": 16,
+        "criticalRate": 10.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_01",
+        "Item_Material_03",
+        "Item_Material_02"
+      ],
+      "expected": {
+        "recipeNumber": 66,
+        "hearts": 16.0,
+        "effectType": null,
+        "effectLevel": 1.0,
+        "duration": 90,
+        "price": 20,
+        "criticalRate": 25.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_02",
+        "Item_Material_03",
+        "Item_Material_02",
+        "Item_FishGet_AC"
+      ],
+      "expected": {
+        "recipeNumber": 67,
+        "hearts": 28.0,
+        "effectType": "LightEmission",
+        "effectLevel": 1,
+        "duration": 300,
+        "price": 44,
+        "criticalRate": 30.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_11",
+        "Item_Material_03",
+        "Item_Material_02",
+        "Item_Fruit_E"
+      ],
+      "expected": {
+        "recipeNumber": 68,
+        "hearts": 36.0,
+        "effectType": "AllSpeed",
+        "effectLevel": 1,
+        "duration": 240,
+        "price": 75,
+        "criticalRate": 30.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_06",
+        "Item_Material_03",
+        "Item_Material_02",
+        "Item_PlantGet_Q"
+      ],
+      "expected": {
+        "recipeNumber": 69,
+        "hearts": 32.0,
+        "effectType": "ExStaminaMaxUp",
+        "effectLevel": 2,
+        "duration": 90,
+        "price": 56,
+        "criticalRate": 30.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_12",
+        "Item_Material_03",
+        "Item_Material_02",
+        "Item_InsectGet_K"
+      ],
+      "expected": {
+        "recipeNumber": 71,
+        "hearts": 40.0,
+        "effectType": "AttackUp",
+        "effectLevel": 1,
+        "duration": 230,
+        "price": 80,
+        "criticalRate": 30.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_03",
+        "Item_Material_10",
+        "Item_Material_02",
+        "Item_Fruit_C"
+      ],
+      "expected": {
+        "recipeNumber": 73,
+        "hearts": 20.0,
+        "effectType": "ResistElectric",
+        "effectLevel": 1,
+        "duration": 380,
+        "price": 25,
+        "criticalRate": 30.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_01",
+        "Item_Material_07",
+        "Item_Material_05",
+        "Item_Material_06",
+        "Item_FishGet_AC"
+      ],
+      "expected": {
+        "recipeNumber": 76,
+        "hearts": 28.0,
+        "effectType": "LightEmission",
+        "effectLevel": 1,
+        "duration": 370,
+        "price": 41,
+        "criticalRate": 35.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_07",
+        "Item_Material_07",
+        "Item_Material_05",
+        "Item_Material_06",
+        "Item_PlantGet_C"
+      ],
+      "expected": {
+        "recipeNumber": 77,
+        "hearts": 56.0,
+        "effectType": "LifeMaxUp",
+        "effectLevel": 20,
+        "duration": 130,
+        "price": 88,
+        "criticalRate": 35.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_11",
+        "Item_Material_07",
+        "Item_Material_05",
+        "Item_Material_06",
+        "FireFruit"
+      ],
+      "expected": {
+        "recipeNumber": 78,
+        "hearts": 38.0,
+        "effectType": "AttackUpHot",
+        "effectLevel": 1,
+        "duration": 310,
+        "price": 84,
+        "criticalRate": 35.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Mushroom_N",
+        "Item_Material_03",
+        "Item_Ore_H",
+        "Item_Material_06"
+      ],
+      "expected": {
+        "recipeNumber": 81,
+        "hearts": 32.0,
+        "effectType": "LifeMaxUp",
+        "effectLevel": 16,
+        "duration": 110,
+        "price": 52,
+        "criticalRate": 30.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Fruit_N",
+        "Item_Material_10",
+        "Item_Material_03",
+        "Item_Ore_H"
+      ],
+      "expected": {
+        "recipeNumber": 84,
+        "hearts": 20.0,
+        "effectType": "LifeRepair",
+        "effectLevel": 4,
+        "duration": 110,
+        "price": 24,
+        "criticalRate": 30.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_06",
+        "Item_Material_04",
+        "Item_Material_03",
+        "Item_Material_06",
+        "Item_PlantGet_Q"
+      ],
+      "expected": {
+        "recipeNumber": 85,
+        "hearts": 40.0,
+        "effectType": "ExStaminaMaxUp",
+        "effectLevel": 2,
+        "duration": 140,
+        "price": 66,
+        "criticalRate": 35.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_12",
+        "Item_Material_04",
+        "Item_Material_03",
+        "Item_Material_06",
+        "Item_FishGet_L"
+      ],
+      "expected": {
+        "recipeNumber": 87,
+        "hearts": 48.0,
+        "effectType": "StaminaRecover",
+        "effectLevel": 5,
+        "duration": 140,
+        "price": 111,
+        "criticalRate": 35.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_02",
+        "Item_Material_03",
+        "Item_Material_06",
+        "Item_InsectGet_O"
+      ],
+      "expected": {
+        "recipeNumber": 89,
+        "hearts": 16.0,
+        "effectType": "DefenseUp",
+        "effectLevel": 1,
+        "duration": 280,
+        "price": 28,
+        "criticalRate": 30.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_03",
+        "Item_Material_04",
+        "Item_FishGet_J"
+      ],
+      "expected": {
+        "recipeNumber": 90,
+        "hearts": 24.0,
+        "effectType": "ResistCold",
+        "effectLevel": 1,
+        "duration": 300,
+        "price": 16,
+        "criticalRate": 25.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_01",
+        "Item_Material_09",
+        "Item_Material_03",
+        "Item_Material_04",
+        "WaterFruit"
+      ],
+      "expected": {
+        "recipeNumber": 91,
+        "hearts": 26.0,
+        "effectType": "SwimSpeedUp",
+        "effectLevel": 1,
+        "duration": 380,
+        "price": 34,
+        "criticalRate": 35.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_01",
+        "Item_Material_03",
+        "Item_Ore_H",
+        "Item_FishGet_C"
+      ],
+      "expected": {
+        "recipeNumber": 94,
+        "hearts": 24.0,
+        "effectType": "ResistHot",
+        "effectLevel": 1,
+        "duration": 300,
+        "price": 30,
+        "criticalRate": 20.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_02",
+        "Item_Material_03",
+        "Item_Ore_H",
+        "IceFruit"
+      ],
+      "expected": {
+        "recipeNumber": 95,
+        "hearts": 22.0,
+        "effectType": "AttackUpCold",
+        "effectLevel": 1,
+        "duration": 210,
+        "price": 36,
+        "criticalRate": 20.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_01",
+        "Item_Material_03",
+        "Item_Material_10",
+        "Item_Ore_H",
+        "Item_Fruit_E"
+      ],
+      "expected": {
+        "recipeNumber": 97,
+        "hearts": 28.0,
+        "effectType": "AllSpeed",
+        "effectLevel": 1,
+        "duration": 290,
+        "price": 41,
+        "criticalRate": 35.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_11",
+        "Item_Material_03",
+        "Item_Material_10",
+        "Item_Ore_H",
+        "Item_Fruit_E"
+      ],
+      "expected": {
+        "recipeNumber": 99,
+        "hearts": 44.0,
+        "effectType": "AllSpeed",
+        "effectLevel": 1,
+        "duration": 290,
+        "price": 89,
+        "criticalRate": 35.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_PlantGet_A",
+        "Item_Material_03",
+        "WaterFruit"
+      ],
+      "expected": {
+        "recipeNumber": 100,
+        "hearts": 18.0,
+        "effectType": "SwimSpeedUp",
+        "effectLevel": 1,
+        "duration": 210,
+        "price": 11,
+        "criticalRate": 15.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Mushroom_E",
+        "Item_Material_03",
+        "Item_Material_11"
+      ],
+      "expected": {
+        "recipeNumber": 101,
+        "hearts": 12.0,
+        "effectType": "MiasmaGuard",
+        "effectLevel": 1,
+        "duration": 240,
+        "price": 15,
+        "criticalRate": 15.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_FishGet_D",
+        "Item_Material_03"
+      ],
+      "expected": {
+        "recipeNumber": 103,
+        "hearts": 16.0,
+        "effectType": "ResistElectric",
+        "effectLevel": 1,
+        "duration": 210,
+        "price": 11,
+        "criticalRate": 10.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Fruit_J",
+        "Item_Material_03",
+        "Item_Material_05"
+      ],
+      "expected": {
+        "recipeNumber": 104,
+        "hearts": 16.0,
+        "effectType": "DefenseUp",
+        "effectLevel": 1,
+        "duration": 190,
+        "price": 15,
+        "criticalRate": 15.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_07",
+        "Item_Ore_H",
+        "Item_MushroomGet_K"
+      ],
+      "expected": {
+        "recipeNumber": 105,
+        "hearts": 12.0,
+        "effectType": "LightEmission",
+        "effectLevel": 1,
+        "duration": 240,
+        "price": 12,
+        "criticalRate": 15.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_07",
+        "Item_Material_10",
+        "Item_PlantGet_Q"
+      ],
+      "expected": {
+        "recipeNumber": 106,
+        "hearts": 32.0,
+        "effectType": "ExStaminaMaxUp",
+        "effectLevel": 2,
+        "duration": 80,
+        "price": 39,
+        "criticalRate": 25.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_01",
+        "Item_Material_07",
+        "Item_Material_06",
+        "Item_Ore_H",
+        "Item_FishGet_J"
+      ],
+      "expected": {
+        "recipeNumber": 108,
+        "hearts": 24.0,
+        "effectType": "ResistCold",
+        "effectLevel": 1,
+        "duration": 380,
+        "price": 39,
+        "criticalRate": 35.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_FishGet_A",
+        "Item_Material_07",
+        "Item_Material_06",
+        "Item_Ore_H",
+        "WaterFruit"
+      ],
+      "expected": {
+        "recipeNumber": 109,
+        "hearts": 18.0,
+        "effectType": "SwimSpeedUp",
+        "effectLevel": 1,
+        "duration": 350,
+        "price": 28,
+        "criticalRate": 35.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_FishGet_D",
+        "Item_Material_10"
+      ],
+      "expected": {
+        "recipeNumber": 111,
+        "hearts": 16.0,
+        "effectType": "ResistElectric",
+        "effectLevel": 1,
+        "duration": 230,
+        "price": 14,
+        "criticalRate": 20.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_04",
+        "ElectricalFruit"
+      ],
+      "expected": {
+        "recipeNumber": 112,
+        "hearts": 10.0,
+        "effectType": "AttackUpThunderstorm",
+        "effectLevel": 1,
+        "duration": 150,
+        "price": 7,
+        "criticalRate": 20.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_PlantGet_C",
+        "Item_Material_04",
+        "Item_Material_06",
+        "Item_Ore_H"
+      ],
+      "expected": {
+        "recipeNumber": 113,
+        "hearts": 40.0,
+        "effectType": "LifeMaxUp",
+        "effectLevel": 20,
+        "duration": 140,
+        "price": 52,
+        "criticalRate": 30.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Mushroom_E",
+        "Item_Material_04",
+        "Item_Ore_H",
+        "Item_Material_06",
+        "FireFruit"
+      ],
+      "expected": {
+        "recipeNumber": 114,
+        "hearts": 14.0,
+        "effectType": "AttackUpHot",
+        "effectLevel": 1,
+        "duration": 320,
+        "price": 25,
+        "criticalRate": 35.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Fruit_A",
+        "Item_Material_06",
+        "Item_FishGet_L"
+      ],
+      "expected": {
+        "recipeNumber": 116,
+        "hearts": 16.0,
+        "effectType": "StaminaRecover",
+        "effectLevel": 5,
+        "duration": 50,
+        "price": 33,
+        "criticalRate": 25.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Fruit_H",
+        "Item_Material_07",
+        "Item_Material_01",
+        "WaterFruit"
+      ],
+      "expected": {
+        "recipeNumber": 120,
+        "hearts": 14.0,
+        "effectType": null,
+        "effectLevel": 1.0,
+        "duration": 290,
+        "price": 20,
+        "criticalRate": 50.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_07",
+        "Item_Material_05",
+        "Item_Material_04",
+        "Item_Material_01",
+        "Item_InsectGet_O"
+      ],
+      "expected": {
+        "recipeNumber": 122,
+        "hearts": 28.0,
+        "effectType": "DefenseUp",
+        "effectLevel": 1,
+        "duration": 360,
+        "price": 35,
+        "criticalRate": 55.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_07",
+        "Item_Material_06",
+        "Item_Material_01",
+        "Item_Fruit_K",
+        "Item_FishGet_M"
+      ],
+      "expected": {
+        "recipeNumber": 125,
+        "hearts": 20.0,
+        "effectType": "QuietnessUp",
+        "effectLevel": 1,
+        "duration": 390,
+        "price": 30,
+        "criticalRate": 55.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Fruit_A",
+        "Item_Fruit_B",
+        "Item_Material_07",
+        "Item_Material_01",
+        "Item_PlantGet_C"
+      ],
+      "expected": {
+        "recipeNumber": 126,
+        "hearts": 52.0,
+        "effectType": "LifeMaxUp",
+        "effectLevel": 20,
+        "duration": 80,
+        "price": 66,
+        "criticalRate": 55.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_10",
+        "Item_Material_07",
+        "Item_Material_01",
+        "Item_FishGet_J"
+      ],
+      "expected": {
+        "recipeNumber": 129,
+        "hearts": 24.0,
+        "effectType": "ResistCold",
+        "effectLevel": 1,
+        "duration": 370,
+        "price": 27,
+        "criticalRate": 50.0
+      }
+    },
+    {
+      "ingredients": [
+        "LightBall_Small",
+        "Item_Material_07",
+        "Item_Material_06",
+        "Item_Material_01",
+        "Item_InsectGet_K"
+      ],
+      "expected": {
+        "recipeNumber": 130,
+        "hearts": 16.0,
+        "effectType": "AttackUp",
+        "effectLevel": 1,
+        "duration": 300,
+        "price": 34,
+        "criticalRate": 55.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Fruit_A",
+        "Item_Material_07",
+        "Item_Material_06",
+        "Item_Material_01",
+        "Item_PlantGet_R"
+      ],
+      "expected": {
+        "recipeNumber": 131,
+        "hearts": 12.0,
+        "effectType": "LifeRepair",
+        "effectLevel": 12,
+        "duration": 130,
+        "price": 35,
+        "criticalRate": 55.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_05",
+        "Item_Fruit_I"
+      ],
+      "expected": {
+        "recipeNumber": 133,
+        "hearts": 8.0,
+        "effectType": "ResistCold",
+        "effectLevel": 1,
+        "duration": 230,
+        "price": 7,
+        "criticalRate": 10.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Meat_11",
+        "Item_InsectGet_O",
+        "Item_Material_08"
+      ],
+      "expected": {
+        "recipeNumber": 135,
+        "hearts": 32.0,
+        "effectType": "DefenseUp",
+        "effectLevel": 1,
+        "duration": 110,
+        "price": 76,
+        "criticalRate": 0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_07",
+        "Item_Material_06",
+        "Item_Material_05",
+        "Item_Material_08",
+        "ElectricalFruit"
+      ],
+      "expected": {
+        "recipeNumber": 136,
+        "hearts": 14.0,
+        "effectType": "AttackUpThunderstorm",
+        "effectLevel": 1,
+        "duration": 310,
+        "price": 43,
+        "criticalRate": 0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_03",
+        "Item_Ore_H",
+        "Item_Material_08"
+      ],
+      "expected": {
+        "recipeNumber": 138,
+        "hearts": 8.0,
+        "effectType": null,
+        "effectLevel": 0,
+        "duration": 60,
+        "price": 23,
+        "criticalRate": 0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_07",
+        "Item_Material_01",
+        "Item_Material_08",
+        "Item_Material_06",
+        "Item_FishGet_AC"
+      ],
+      "expected": {
+        "recipeNumber": 139,
+        "hearts": 16.0,
+        "effectType": "LightEmission",
+        "effectLevel": 1,
+        "duration": 370,
+        "price": 48,
+        "criticalRate": 0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Weapon_01"
+      ],
+      "expected": {
+        "recipeNumber": 145,
+        "hearts": 4.0,
+        "effectType": null,
+        "effectLevel": 0,
+        "duration": 0,
+        "price": 2,
+        "criticalRate": 0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Fruit_A"
+      ],
+      "expected": {
+        "recipeNumber": 47,
+        "hearts": 4.0,
+        "effectType": null,
+        "effectLevel": 1.0,
+        "duration": 0,
+        "price": 3,
+        "criticalRate": 5.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Fruit_H",
+        "Item_Fruit_H",
+        "Item_Fruit_H",
+        "Item_Fruit_H",
+        "Item_Fruit_H"
+      ],
+      "expected": {
+        "recipeNumber": 47,
+        "hearts": 20.0,
+        "effectType": "AttackUp",
+        "effectLevel": 3,
+        "duration": 250,
+        "price": 44,
+        "criticalRate": 5.0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Material_08",
+        "Item_Fruit_A"
+      ],
+      "expected": {
+        "recipeNumber": 47,
+        "hearts": 4.0,
+        "effectType": null,
+        "effectLevel": 0,
+        "duration": 0,
+        "price": 19,
+        "criticalRate": 0
+      }
+    },
+    {
+      "ingredients": [
+        "Item_Enemy_69",
+        "Item_Fruit_A"
+      ],
+      "expected": {
+        "recipeNumber": 145,
+        "hearts": 4.0,
+        "effectType": null,
+        "effectLevel": 0,
+        "duration": 0,
+        "price": 2,
+        "criticalRate": 0
+      }
+    }
+  ]
+}

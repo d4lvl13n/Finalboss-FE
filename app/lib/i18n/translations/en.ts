@@ -7,6 +7,8 @@ export const en = {
     technology: 'Technology',
     videos: 'Videos',
     games: 'Games',
+    totkBuilds: 'Zelda TOTK Builds',
+    totkRecipes: 'Zelda TOTK Recipes',
     laptops: 'Laptops',
     handhelds: 'Handhelds',
     handheldCompare: 'Handheld Comparisons',

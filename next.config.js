@@ -89,6 +89,17 @@ const nextConfig = {
   },
   async headers() {
     return [
+      ...['q', 'method', 'ingredient', 'ingredients', 'effect'].map((key) => ({
+        source: '/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/:path*',
+        has: [{ type: 'query', key }],
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, follow' }],
+      })),
+      // Internal search and facets have indexable category/page alternatives.
+      ...['q', 'tag', 'budget', 'tested', 'sort', 'category', 'page'].map((key) => ({
+        source: '/game/the-legend-of-zelda-tears-of-the-kingdom/builds/:path*',
+        has: [{ type: 'query', key }],
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, follow' }],
+      })),
       {
         source: '/:path*',
         headers: [
@@ -142,6 +153,20 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      { source: '/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/page/1', destination: '/game/the-legend-of-zelda-tears-of-the-kingdom/recipes', permanent: true },
+      { source: '/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/effect/:effect/page/1', destination: '/game/the-legend-of-zelda-tears-of-the-kingdom/recipes/effect/:effect', permanent: true },
+      // Emit a real HTTP Location header for the first listing page. Static
+      // App Router redirect pages alone can lose that header in Next 14 output.
+      {
+        source: '/game/the-legend-of-zelda-tears-of-the-kingdom/builds/page/1',
+        destination: '/game/the-legend-of-zelda-tears-of-the-kingdom/builds',
+        permanent: true,
+      },
+      {
+        source: '/game/the-legend-of-zelda-tears-of-the-kingdom/builds/category/:category/page/1',
+        destination: '/game/the-legend-of-zelda-tears-of-the-kingdom/builds/category/:category',
+        permanent: true,
+      },
       // www → apex. Historically served by Vercel; on Cloudflare Workers the
       // www custom domain hits this app directly, so the app must own the 301.
       // Skipped on Vercel (VERCEL is set at build time): its domain settings own

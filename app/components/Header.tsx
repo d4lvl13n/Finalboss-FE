@@ -10,6 +10,8 @@ import { FaSearch, FaTimes, FaBars } from 'react-icons/fa';
 import { useSearch } from './Search/SearchContext';
 import siteConfig from '../lib/siteConfig';
 import { t } from '../lib/i18n';
+import { TOTK_BUILDS_PATH } from '../lib/totk-builds/types';
+import { RECIPES_PATH } from '../lib/totk-recipes/types';
 
 interface MenuItemProps {
   href: string;
@@ -221,6 +223,12 @@ const Header: React.FC = () => {
                 
                 {/* Mobile Menu Footer */}
                 <div className="p-4 border-t border-gray-800 space-y-3">
+                  <Link prefetch={false} href={TOTK_BUILDS_PATH} onClick={closeMobileMenu} className="block py-2 text-sm text-yellow-400 hover:text-yellow-300">
+                    {t('nav.totkBuilds')}
+                  </Link>
+                  <Link prefetch={false} href={RECIPES_PATH} onClick={closeMobileMenu} className="block py-2 text-sm text-yellow-400 hover:text-yellow-300">
+                    {t('nav.totkRecipes')}
+                  </Link>
                   <Link prefetch={false}
                     href="/write-for-us"
                     onClick={closeMobileMenu}
@@ -290,6 +298,12 @@ const Header: React.FC = () => {
                     {t(item.key)}
                   </MenuItem>
                 ))}
+                <MenuItem href={TOTK_BUILDS_PATH}>
+                  {t('nav.totkBuilds')}
+                </MenuItem>
+                <MenuItem href={RECIPES_PATH}>
+                  {t('nav.totkRecipes')}
+                </MenuItem>
                 <MenuItem href="/articles">
                   {t('nav.allArticles')}
                 </MenuItem>
