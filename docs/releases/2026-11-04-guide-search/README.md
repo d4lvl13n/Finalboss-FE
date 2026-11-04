@@ -1,6 +1,6 @@
 # TOTK hub guide search and filters
 
-The game hub searches the complete published TOTK guide collection before displaying the first 12 results. Six combinable guide types use saved WordPress tags. Text search combines with one selected type; reset, result counts, empty state and incremental display work without another network request. Existing FinalBoss gray/yellow styles and article cards are retained.
+The game hub searches the complete published TOTK guide collection before displaying the first 12 results. Six guide types use saved WordPress tags. Text search combines with one selected type; reset, result counts, empty state and incremental display work without another network request. Existing FinalBoss gray/yellow styles and article cards are retained.
 
 ## WordPress classification
 
@@ -26,10 +26,24 @@ The server walks all game-post cursor pages with progress/limit checks; it never
 - Regression flows: `tests/guide-discovery/browser.py` checks general/category archives, permanent redirects and hub navigation.
 - Production build: OpenNext Cloudflare, followed by the checked Next 14 manifest compatibility patch. No Cloudflare image transformations enabled.
 
-Deployment and live verification are recorded below after completion.
+Source commit: `2332000`. Build ID: `kcEAWo0wlJydR_5a7b-zO`. The production build generated 2,622 routes; 5,264 cache objects are seeded before the Worker is switched. The direct Wrangler dry run passes with the existing cache/queue bindings and no Images binding. Live verification is recorded below after deployment.
 
 ## Equipment sources for the next editorial batch
 
 No scans are required. Use [Zelda Dungeon's TOTK armor table](https://www.zeldadungeon.net/wiki/Tears_of_the_Kingdom_Armor) for armor pieces, defense tiers and upgrade materials, then cross-check the specific item pages on [Zelda Wiki](https://zeldawiki.wiki/wiki/Barbarian_Armor). For weapons, start with [Zelda Wiki's TOTK weapons list](https://zeldawiki.wiki/wiki/Weapons_in_Tears_of_the_Kingdom) and cross-check item pages such as [Royal Broadsword on Zelda Dungeon](https://www.zeldadungeon.net/wiki/Royal_Broadsword).
 
 Keep BOTW and TOTK sections separate. Distinguish decayed/pristine base weapons, durability, Fuse contributions and conditional bonuses rather than presenting one ambiguous attack value. Draft original English FinalBoss explanations from verified gameplay facts. Do not copy wiki prose or assume permission for their screenshots. This feature release does not create or publish another equipment-article batch.
+
+Detailed equipment coverage and source handoff: [equipment-sources.md](equipment-sources.md).
+
+## Production verification
+
+Production version: `72a0ae05-a950-4043-bde0-77665c243023`, deployed to finalboss.io and www.finalboss.io after all 5,264 cache objects for the exact build ID above were seeded. The scheduled refresh and existing Worker bindings remain active.
+
+- Live desktop/mobile browser checks pass for all six type filters against the saved WordPress classification, including every result through pagination.
+- Search reaches the Skyview Towers guide outside the initial twelve cards. Combined query/type filtering, Hylian Shield and Lynel searches, empty state, clear controls and all ninety guides through Show more pass.
+- General guides, the real Zelda archive and the game hub still expose all ninety published guides. Existing permanent guide/article redirects, builds/recipes links, mobile navigation, no horizontal overflow and no JavaScript errors pass.
+- Public HTTP checks return 200 and the expected canonicals for home, guides, the Zelda archive, hub, builds and recipes. All six filters and the total of ninety guides are present in the initial hub response. Warm legacy redirects retain Location.
+- The authenticated publication refresh checked 98 posts and revalidated 104 paths, including the hub and guide archives, with zero failed invalidations.
+
+Evidence: `verification.json`, `wordpress-guide-types.json`, `browser-live.txt`, `discovery-regression-live.txt`, `http-live.json`, `publication-refresh.json`, and the final desktop/mobile screenshots. Third-party advertising/tracking requests were blocked in browser QA; ad fill was not evaluated.

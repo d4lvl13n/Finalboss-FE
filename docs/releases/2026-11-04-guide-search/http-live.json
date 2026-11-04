@@ -1,0 +1,47 @@
+{
+  "all_pass": true,
+  "rows": [
+    {
+      "path": "/",
+      "status": 200,
+      "canonical": "https://finalboss.io",
+      "cache_control": "s-maxage=3600, stale-while-revalidate=2592000"
+    },
+    {
+      "path": "/guides",
+      "status": 200,
+      "canonical": "https://finalboss.io/guides",
+      "cache_control": "s-maxage=3600, stale-while-revalidate=2592000"
+    },
+    {
+      "path": "/guides/zelda-tears-of-the-kingdom-guide",
+      "status": 200,
+      "canonical": "https://finalboss.io/guides/zelda-tears-of-the-kingdom-guide",
+      "cache_control": "s-maxage=3600, stale-while-revalidate=2592000"
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom",
+      "status": 200,
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom",
+      "cache_control": "s-maxage=86400, stale-while-revalidate=2592000"
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds",
+      "status": 200,
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/builds",
+      "cache_control": "s-maxage=85425, stale-while-revalidate=2592000"
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes",
+      "status": 200,
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/recipes",
+      "cache_control": "s-maxage=85425, stale-while-revalidate=2592000"
+    },
+    {
+      "path": "/guides/zelda-totk-how-to-get-the-master-sword",
+      "status": 308,
+      "location": "https://finalboss.io/zelda-totk-how-to-get-the-master-sword",
+      "warm_redirect_verified": true
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+Publication refresh: 98 posts; 104 paths; no failed invalidations.
+Live HTTP: hub, archives, builds, recipes, canonicals, all six SSR filters and warm permanent redirects pass.

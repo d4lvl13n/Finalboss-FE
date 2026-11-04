@@ -29,7 +29,8 @@ with sync_playwright() as p:
     page.set_default_timeout(120000)
     errors = []
     page.on('pageerror', lambda error: errors.append(str(error)))
-    assert page.goto(BASE + HUB, wait_until='domcontentloaded', timeout=120000).status == 200
+    assert page.goto(BASE + HUB, wait_until='load', timeout=120000).status == 200
+    assert not errors, errors
     explorer = page.locator('[data-totk-guide-explorer]')
     expect(explorer).to_have_attribute('data-total-guides', '90')
     assert page.locator('h1').count() == 1
@@ -91,6 +92,7 @@ with sync_playwright() as p:
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
     explorer.scroll_into_view_if_needed()
     page.wait_for_function("[...document.querySelectorAll('[data-totk-guide-results] img')].filter(el => el.getBoundingClientRect().width > 0).every(el => el.complete && el.naturalWidth > 0)")
+    page.evaluate("window.scrollTo(0, scrollY + document.querySelector('[data-totk-guide-explorer]').getBoundingClientRect().top - 80)")
     page.screenshot(path=str(OUT / 'mobile-search.png'), animations='disabled')
     page.get_by_role('link', name='All guides →', exact=True).click()
     page.wait_for_url(BASE + '/guides/zelda-tears-of-the-kingdom-guide')

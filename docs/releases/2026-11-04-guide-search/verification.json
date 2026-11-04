@@ -1,0 +1,27 @@
+{
+  "source_commit": "2332000d5e3ae333006b67cd915cac8bb41d71f2",
+  "next_build_id": "kcEAWo0wlJydR_5a7b-zO",
+  "static_routes": 2622,
+  "cache_assets": 5264,
+  "published_guides": 90,
+  "unit_tests": {
+    "passed": 24,
+    "failed": 0
+  },
+  "lint": "pass",
+  "local_browser": "desktop and mobile pass",
+  "worker_dry_run": "pass",
+  "previous_production_version": "e3bbe64c-e4f0-49b2-a204-22cd53050809",
+  "wordpress_classification_readbacks": "90/90 preserved copy and publication",
+  "production_version": "72a0ae05-a950-4043-bde0-77665c243023",
+  "cache_seed_complete": true,
+  "live_browser": "desktop and mobile pass; all six filters and all 90 guides",
+  "live_discovery_regression": "general guides, Zelda archive, hub, mobile navigation and permanent redirects pass",
+  "http_live": "all pass",
+  "publication_refresh": {
+    "posts_checked": 98,
+    "paths_revalidated": 104,
+    "failed": 0
+  },
+  "all_pass": true
+}
