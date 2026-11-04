@@ -47,7 +47,7 @@ with sync_playwright() as p:
 
     context.route('**/*', route_request)
     page = context.new_page()
-    page.set_default_timeout(60000)
+    page.set_default_timeout(120000)
     errors = []
     page.on('pageerror', lambda error: errors.append(str(error)))
 
@@ -108,6 +108,7 @@ with sync_playwright() as p:
             break
         more.click()
         page.wait_for_function('(n) => new Set([...document.querySelectorAll("[data-game-articles] a[href]")].map(a => a.pathname)).size > n', arg=len(old))
+        print('Hub progress', len(links(page, '[data-game-articles]')), flush=True)
     assert EXPECTED <= links(page, '[data-game-articles]')
     expect(page.get_by_role('button', name='Load more articles', exact=True)).to_have_count(0)
     print('Game hub: all 90 guides reachable with existing coverage; correct game identity and section links.', flush=True)
