@@ -1,0 +1,15 @@
+{
+  "id": 7339,
+  "name": "The Legend of Zelda: Tears of the Kingdom",
+  "slug": "the-legend-of-zelda-tears-of-the-kingdom",
+  "count": 96,
+  "meta": {
+    "igdb_id": "237289",
+    "igdb_data": "{\"id\": 237289, \"name\": \"The Legend of Zelda: Tears of the Kingdom - Collector's Edition\", \"slug\": \"the-legend-of-zelda-tears-of-the-kingdom-collectors-edition\", \"cover\": {\"id\": 286665, \"image_id\": \"co656x\"}, \"genres\": [{\"id\": 12, \"name\": \"Role-playing (RPG)\"}, {\"id\": 31, \"name\": \"Adventure\"}], \"themes\": [{\"id\": 1, \"name\": \"Action\"}, {\"id\": 17, \"name\": \"Fantasy\"}, {\"id\": 38, \"name\": \"Open world\"}], \"summary\": \"The Legend of Zelda: Tears of the Kingdom is the sequel to The Legend of Zelda: Breath of the Wild. The setting for Link\u2019s adventure has been expanded to include the skies above the vast lands of Hyrule.\\n\\nThe collector's edition includes the following:\\n- The Legend of Zelda: Tears of the Kingdom (physical version)\\n- Artbook\\n- SteelBook case\\n- Steel Poster\\n- A set of four pin badges.\", \"websites\": [{\"id\": 529606, \"url\": \"https://www.zelda.com/tears-of-the-kingdom\"}, {\"id\": 575036, \"url\": \"https://zeldawiki.wiki/wiki/The_Legend_of_Zelda:_Tears_of_the_Kingdom_Collector%27s_Edition\"}], \"platforms\": [{\"id\": 130, \"name\": \"Nintendo Switch\", \"abbreviation\": \"Switch\"}], \"franchises\": [{\"id\": 596, \"name\": \"The Legend of Zelda\"}], \"game_modes\": [{\"id\": 1, \"name\": \"Single player\"}], \"release_dates\": [{\"y\": 2023, \"id\": 493601, \"date\": 1683849600, \"platform\": {\"id\": 130, \"abbreviation\": \"Switch\"}}], \"first_release_date\": 1683849600, \"involved_companies\": [{\"id\": 203314, \"company\": {\"id\": 45209, \"name\": \"Nintendo EPD Production Group No. 3\"}, \"developer\": true, \"publisher\": false, \"supporting\": false}, {\"id\": 203315, \"company\": {\"id\": 1119, \"name\": \"Monolith Soft\"}, \"developer\": false, \"publisher\": false, \"supporting\": true}, {\"id\": 214838, \"company\": {\"id\": 70, \"name\": \"Nintendo\"}, \"developer\": true, \"publisher\": true, \"supporting\": false}], \"player_perspectives\": [{\"id\": 2, \"name\": \"Third person\"}]}",
+    "igdb_release_year": "",
+    "igdb_platforms": "",
+    "igdb_genres": "",
+    "igdb_rating": "",
+    "igdb_aggregated_rating": ""
+  }
+}

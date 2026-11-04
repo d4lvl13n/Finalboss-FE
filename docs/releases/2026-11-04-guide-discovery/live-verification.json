@@ -1,0 +1,87 @@
+{
+  "all_pass": true,
+  "rows": [
+    {
+      "path": "/",
+      "status": 200,
+      "canonical": "https://finalboss.io",
+      "h1": [],
+      "cache_control": "s-maxage=3138, stale-while-revalidate=2592000",
+      "location": null,
+      "has_guide_archive": false
+    },
+    {
+      "path": "/guides",
+      "status": 200,
+      "canonical": "https://finalboss.io/guides",
+      "h1": [
+        "Game Guides"
+      ],
+      "cache_control": "s-maxage=3140, stale-while-revalidate=2592000",
+      "location": null,
+      "has_guide_archive": true
+    },
+    {
+      "path": "/guides/zelda-tears-of-the-kingdom-guide",
+      "status": 200,
+      "canonical": "https://finalboss.io/guides/zelda-tears-of-the-kingdom-guide",
+      "h1": [
+        "Zelda Tears Of the Kingdom Guides"
+      ],
+      "cache_control": "s-maxage=3149, stale-while-revalidate=2592000",
+      "location": null,
+      "has_guide_archive": false
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom",
+      "status": 200,
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom",
+      "h1": [
+        "The Legend of Zelda: Tears of the Kingdom"
+      ],
+      "cache_control": "s-maxage=85950, stale-while-revalidate=2592000",
+      "location": null,
+      "has_guide_archive": true
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds",
+      "status": 200,
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/builds",
+      "h1": [
+        "Zelda TOTK Builds & QR Codes"
+      ],
+      "cache_control": "s-maxage=84808, stale-while-revalidate=2592000",
+      "location": null,
+      "has_guide_archive": false
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes",
+      "status": 200,
+      "canonical": "https://finalboss.io/game/the-legend-of-zelda-tears-of-the-kingdom/recipes",
+      "h1": [
+        "Zelda TOTK recipes ."
+      ],
+      "cache_control": "s-maxage=84808, stale-while-revalidate=2592000",
+      "location": null,
+      "has_guide_archive": false
+    },
+    {
+      "path": "/guides/zelda-totk-how-to-get-the-master-sword",
+      "status": 308,
+      "canonical": null,
+      "h1": [],
+      "cache_control": "s-maxage=3070, stale-while-revalidate=2592000",
+      "location": "https://finalboss.io/zelda-totk-how-to-get-the-master-sword",
+      "has_guide_archive": false
+    },
+    {
+      "path": "/guide-discovery-nonexistent-check-20261104",
+      "status": 404,
+      "canonical": null,
+      "h1": [],
+      "cache_control": "s-maxage=85950, stale-while-revalidate=2592000",
+      "location": null,
+      "has_guide_archive": false
+    }
+  ]
+}

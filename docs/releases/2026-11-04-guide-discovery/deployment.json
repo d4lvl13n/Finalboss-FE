@@ -1,0 +1,12 @@
+{
+  "version_id": "e3bbe64c-e4f0-49b2-a204-22cd53050809",
+  "source_commits": [
+    "82bf82c",
+    "f1648b8"
+  ],
+  "previous_version_id": "316b2c9b-70fd-4bbc-b624-08742438cfe0",
+  "build_id": "n_kAXrjrT6ybODsh64y4y",
+  "cache_assets_seeded": 5290,
+  "live_browser_pass": true,
+  "published_guides_reachable": 90
+}

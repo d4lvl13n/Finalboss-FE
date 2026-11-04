@@ -1,0 +1,12 @@
+General guides: all 90 published guides discoverable; SSR cursor, retry and rapid clicks pass.
+Category progress 48 [{'categorySlug': 'zelda-tears-of-the-kingdom-guide', 'first': 24, 'after': 'YXJyYXljb25uZWN0aW9uOjEyNTQ3OQ=='}]
+Category progress 72 [{'categorySlug': 'zelda-tears-of-the-kingdom-guide', 'first': 24, 'after': 'YXJyYXljb25uZWN0aW9uOjEyNTM3Nw=='}]
+Category progress 90 [{'categorySlug': 'zelda-tears-of-the-kingdom-guide', 'first': 24, 'after': 'YXJyYXljb25uZWN0aW9uOjEyNTMwMA=='}]
+TOTK guide archive: complete collection reachable and pagination terminates.
+Legacy /guides/article URLs retain their permanent HTTP redirect.
+Hub progress 36
+Hub progress 60
+Hub progress 84
+Hub progress 96
+Game hub: all 90 guides reachable with existing coverage; correct game identity and section links.
+Mobile: no horizontal overflow; pagination and hub-to-guides navigation pass.
