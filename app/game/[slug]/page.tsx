@@ -18,6 +18,8 @@ import TotkBuildsBanner from '@/app/components/totk-builds/TotkBuildsBanner';
 import TotkRecipesBanner from '@/app/components/totk-recipes/TotkRecipesBanner';
 import { TOTK_GAME_SLUG } from '@/app/lib/totk-builds/types';
 import TotkGuideExplorer from '@/app/components/totk-guides/TotkGuideExplorer';
+import OotGuideExplorer from '@/app/components/oot-guides/OotGuideExplorer';
+import { OOT_GAME_SLUG, OOT_GUIDE_CATEGORY } from '@/app/lib/oot-guides/types';
 import { TOTK_GUIDE_CATEGORY } from '@/app/lib/totk-guides/types';
 import type { GameArticle } from '@/app/components/GameArticles';
 
@@ -413,16 +415,22 @@ async function getGameTagBySlug(slug: string) {
   }
 }
 
+function gameGuideCategory(slug: string): string | undefined {
+  if (slug === TOTK_GAME_SLUG) return TOTK_GUIDE_CATEGORY;
+  if (slug === OOT_GAME_SLUG) return OOT_GUIDE_CATEGORY;
+  return undefined;
+}
+
 async function getGameTagWithPosts(slug: string) {
   try {
     const { data, errors } = await client.query({
       query: GET_GAME_TAG_WITH_POSTS,
-      variables: { slug, first: slug === TOTK_GAME_SLUG ? 40 : POSTS_PAGE_SIZE, after: null },
+      variables: { slug, first: gameGuideCategory(slug) ? 40 : POSTS_PAGE_SIZE, after: null },
       fetchPolicy: 'no-cache',
     });
     if (errors?.length) throw new Error('Game articles query failed');
     const tag = data?.gameTag;
-    if (!tag || slug !== TOTK_GAME_SLUG) return tag || null;
+    if (!tag || !gameGuideCategory(slug)) return tag || null;
     const nodes: GameArticle[] = [...(tag.posts?.nodes || [])];
     let pageInfo = tag.posts?.pageInfo;
     const cursors = new Set<string>();
@@ -438,7 +446,7 @@ async function getGameTagWithPosts(slug: string) {
     return { ...tag, posts: { nodes: nodes.filter((post) => !seen.has(post.id) && Boolean(seen.add(post.id))), pageInfo: { hasNextPage: false, endCursor: pageInfo?.endCursor || null } } };
   } catch (error) {
     console.error('Error fetching game tag posts:', error);
-    if (slug === TOTK_GAME_SLUG) throw error;
+    if (gameGuideCategory(slug)) throw error;
     return null;
   }
 }
@@ -592,8 +600,10 @@ export default async function GamePage({ params }: Props) {
       let gameData = buildGameFromTag(gameTag);
       const allArticles: GameArticle[] = gameTag.posts?.nodes || [];
       const isTotk = params.slug === TOTK_GAME_SLUG;
-      const guideArticles = isTotk ? allArticles.filter((article) => article.categories?.nodes?.some((category) => category.slug === TOTK_GUIDE_CATEGORY)) : [];
-      const relatedArticles = isTotk ? allArticles.filter((article) => !article.categories?.nodes?.some((category) => category.slug === 'gaming-guide' || category.slug === TOTK_GUIDE_CATEGORY)) : allArticles;
+      const isOot = params.slug === OOT_GAME_SLUG;
+      const guideCategory = gameGuideCategory(params.slug);
+      const guideArticles = guideCategory ? allArticles.filter((article) => article.categories?.nodes?.some((category) => category.slug === guideCategory)) : [];
+      const relatedArticles = guideCategory ? allArticles.filter((article) => !article.categories?.nodes?.some((category) => category.slug === 'gaming-guide' || category.slug === guideCategory)) : allArticles;
 
       const needsIgdbRefresh =
         (!gameData.screenshots || gameData.screenshots.length === 0) ||
@@ -624,7 +634,7 @@ export default async function GamePage({ params }: Props) {
             relatedArticles={relatedArticles}
             gameSlug={params.slug}
             articlesPageInfo={gameTag.posts?.pageInfo}
-            guidesContent={isTotk ? <TotkGuideExplorer guides={guideArticles} /> : undefined}
+            guidesContent={isTotk ? <TotkGuideExplorer guides={guideArticles} /> : isOot ? <OotGuideExplorer guides={guideArticles} /> : undefined}
             featuredContent={isTotk ? <div className="space-y-5">
               <TotkBuildsBanner /><TotkRecipesBanner />
             </div> : undefined}
@@ -658,7 +668,7 @@ export default async function GamePage({ params }: Props) {
     return notFound();
   } catch (error) {
     console.error('Error loading game details:', error);
-    if (params.slug === TOTK_GAME_SLUG) throw error;
+    if (gameGuideCategory(params.slug)) throw error;
     return notFound();
   }
 } 
