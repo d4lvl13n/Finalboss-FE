@@ -1,0 +1,21 @@
+{
+  "editorial": {
+    "all_pass": true,
+    "articles": 62,
+    "new_drafts": 61,
+    "public_refreshes": 1,
+    "words": 43197,
+    "planned_contextual_links": 335,
+    "targets_with_incoming_links": 62,
+    "images": 7,
+    "publication_hold": "61 new drafts retain explicit Switch 2 verification holds."
+  },
+  "wordpress": {
+    "all_pass": true,
+    "posts_checked": 62,
+    "drafts": 61,
+    "public_refreshes": 1,
+    "media_checked": 7,
+    "last_validated_utc": "2026-11-04T18:36:16.063741+00:00"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "all_pass": true,
+  "fetch_cache_removed": true,
+  "compiler_cache_preserved": true,
+  "build_id_preserved": true,
+  "missing_cache_is_safe": true
+}

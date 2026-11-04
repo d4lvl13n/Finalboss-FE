@@ -1,0 +1,35 @@
+{
+  "all_pass": true,
+  "scope": "Local-only preview of the actual component with 62 editorial records; drafts are not exposed publicly.",
+  "guides": 62,
+  "filters": {
+    "dungeons": {
+      "count": 12,
+      "all_pass": true
+    },
+    "bosses": {
+      "count": 12,
+      "all_pass": true
+    },
+    "quests": {
+      "count": 20,
+      "all_pass": true
+    },
+    "equipment": {
+      "count": 18,
+      "all_pass": true
+    },
+    "collectibles": {
+      "count": 12,
+      "all_pass": true
+    },
+    "exploration": {
+      "count": 13,
+      "all_pass": true
+    }
+  },
+  "full_collection_search_pass": true,
+  "empty_state_reset_pass": true,
+  "mobile_pass": true,
+  "javascript_errors": []
+}

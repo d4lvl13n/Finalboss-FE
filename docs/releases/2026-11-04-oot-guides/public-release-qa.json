@@ -1,0 +1,50 @@
+{
+  "all_pass": true,
+  "public_hub_guides": 1,
+  "new_wordpress_drafts": 61,
+  "edition_routing_pass": true,
+  "draft_privacy_pass": true,
+  "totk_guides": 121,
+  "rows": [
+    {
+      "path": "/game/the-legend-of-zelda-ocarina-of-time-switch-2",
+      "http_status": 200,
+      "canonical_pass": true
+    },
+    {
+      "path": "/guides/zelda-ocarina-of-time-switch-2-guide",
+      "http_status": 200,
+      "canonical_pass": true
+    },
+    {
+      "path": "/the-legend-of-zelda-ocarina-of-time-switch-2-remake-vs-n64",
+      "http_status": 200,
+      "canonical_pass": true
+    },
+    {
+      "path": "/game/the-legend-of-zelda-ocarina-of-time",
+      "http_status": 200,
+      "canonical_pass": true
+    },
+    {
+      "path": "/guides",
+      "http_status": 200,
+      "canonical_pass": true
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom",
+      "http_status": 200,
+      "canonical_pass": true
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/builds",
+      "http_status": 200,
+      "canonical_pass": true
+    },
+    {
+      "path": "/game/the-legend-of-zelda-tears-of-the-kingdom/recipes",
+      "http_status": 200,
+      "canonical_pass": true
+    }
+  ]
+}

@@ -11,7 +11,7 @@
     "preview": "opennextjs-cloudflare build && node scripts/patch-cloudflare-next14.mjs && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && node scripts/patch-cloudflare-next14.mjs && opennextjs-cloudflare deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
-    "prebuild": "node scripts/assert-no-cloudflare-images.mjs",
+    "prebuild": "node scripts/assert-no-cloudflare-images.mjs && node scripts/clear-cms-build-cache.mjs",
     "predeploy": "node scripts/assert-no-cloudflare-images.mjs",
     "prepreview": "node scripts/assert-no-cloudflare-images.mjs"
   },
