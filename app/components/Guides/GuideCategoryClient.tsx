@@ -1,13 +1,12 @@
 'use client';
 
-import { useState } from 'react';
-import { useQuery } from '@apollo/client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import client from '@/app/lib/apolloClient';
 import { GET_SUBCATEGORY_ARTICLES } from '@/app/lib/queries/getSubcategoryArticles';
 import { imageSrcWithFallback } from '@/app/lib/imageUrl';
+import { useCursorPosts } from '@/app/lib/useCursorPosts';
 
 interface GuideArticle {
   id: string;
@@ -33,6 +32,7 @@ interface SubcategoryQueryData {
 
 interface GuideCategoryClientProps {
   slug: string;
+  title: string;
   initialArticles: GuideArticle[];
   initialHasNextPage: boolean;
   initialEndCursor?: string | null;
@@ -40,67 +40,32 @@ interface GuideCategoryClientProps {
 
 export default function GuideCategoryClient({
   slug,
+  title,
   initialArticles,
   initialHasNextPage,
   initialEndCursor = null,
 }: GuideCategoryClientProps) {
-  const [articles, setArticles] = useState<GuideArticle[]>(initialArticles);
-  const [hasNextPage, setHasNextPage] = useState(initialHasNextPage);
-  const [endCursor, setEndCursor] = useState<string | null>(initialEndCursor);
-
-  const shouldSkipInitialFetch = initialArticles.length > 0;
-
-  const { loading, error, fetchMore } = useQuery<SubcategoryQueryData>(GET_SUBCATEGORY_ARTICLES, {
-    variables: { categorySlug: slug, first: 24, after: null },
-    client,
-    skip: shouldSkipInitialFetch,
-    onCompleted: (result) => {
-      setArticles(result.posts.nodes);
-      setHasNextPage(result.posts.pageInfo.hasNextPage);
-      setEndCursor(result.posts.pageInfo.endCursor);
+  const { posts: articles, hasNextPage, loading, error, loadMore } = useCursorPosts<GuideArticle>(
+    { nodes: initialArticles, pageInfo: { hasNextPage: initialHasNextPage, endCursor: initialEndCursor } },
+    async (after) => {
+      const result = await client.query<SubcategoryQueryData>({
+        query: GET_SUBCATEGORY_ARTICLES,
+        variables: { categorySlug: slug, first: 24, after },
+        fetchPolicy: 'network-only',
+      });
+      if (result.errors?.length || !result.data?.posts) throw new Error('Guide category query failed');
+      return result.data.posts;
     },
-  });
-
-  if (loading && articles.length === 0) {
-    return (
-      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-        <h1 className="text-3xl font-bold">Loading Guides...</h1>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-        <h1 className="text-3xl font-bold">Failed to Load Guides</h1>
-      </div>
-    );
-  }
-
-  const handleLoadMore = () => {
-    if (!hasNextPage || !endCursor) {
-      return;
-    }
-
-    fetchMore({
-      variables: {
-        after: endCursor,
-      },
-    }).then((fetchMoreResult) => {
-      setArticles((prevArticles) => [...prevArticles, ...fetchMoreResult.data.posts.nodes]);
-      setHasNextPage(fetchMoreResult.data.posts.pageInfo.hasNextPage);
-      setEndCursor(fetchMoreResult.data.posts.pageInfo.endCursor);
-    });
-  };
+  );
 
   return (
     <section className="py-16 bg-gray-900 text-white">
       <div className="container mx-auto px-4">
         <div className="flex items-center mb-12">
-          <h2 className="text-4xl font-bold text-yellow-400 mr-4">{slug.replace(/-/g, ' ')} Guides</h2>
+          <h1 className="text-4xl font-bold text-yellow-400 mr-4">{title} Guides</h1>
           <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div data-guide-articles className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article) => (
             <motion.div
               key={article.id}
@@ -122,7 +87,7 @@ export default function GuideCategoryClient({
                 </div>
                 <div className="absolute inset-0 bg-black bg-opacity-80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center p-6">
                   <h3 className="text-xl font-semibold text-white mb-2">{article.title}</h3>
-                  <p className="text-gray-300 text-sm mb-4" dangerouslySetInnerHTML={{ __html: article.excerpt }} />
+                  <div className="text-gray-300 text-sm mb-4" dangerouslySetInnerHTML={{ __html: article.excerpt }} />
                   <span className="inline-block bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded hover:bg-yellow-300 transition-colors">
                     Read Guide
                   </span>
@@ -131,13 +96,17 @@ export default function GuideCategoryClient({
             </motion.div>
           ))}
         </div>
+        {articles.length === 0 && <p className="text-gray-300">No guides have been published in this category yet.</p>}
+        {error && <p role="alert" className="mt-6 text-center text-red-300">{error}</p>}
         {hasNextPage && (
           <div className="text-center mt-12">
             <button
-              onClick={handleLoadMore}
-              className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors"
+              onClick={loadMore}
+              disabled={loading}
+              aria-busy={loading}
+              className="inline-block bg-yellow-400 text-black font-bold py-3 px-8 rounded-full hover:bg-yellow-300 transition-colors disabled:opacity-50"
             >
-              Load More Guides
+              {loading ? 'Loading…' : 'Load More Guides'}
             </button>
           </div>
         )}

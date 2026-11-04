@@ -16,3 +16,14 @@ test('an adapter shape change fails instead of silently leaving the broken loade
   assert.throws(() => patchManifestLoader('class Server {}'), /exactly one/);
   assert.throws(() => patchManifestLoader('getMiddlewareManifest(){return this.minimalMode?null:require(this.middlewareManifestPath)}'.repeat(2)), /exactly one/);
 });
+
+test('the upstream safe middleware loader is accepted unchanged', () => {
+  const upstream = 'class Server { getMiddlewareManifest(){return null} }';
+  assert.equal(patchManifestLoader(upstream), upstream);
+  assert.equal(vm.runInNewContext(`${upstream}; new Server().getMiddlewareManifest()`), null);
+});
+
+test('an upstream safe loader does not hide an additional broken loader', () => {
+  const mixed = 'getMiddlewareManifest(){return null} require(this.middlewareManifestPath)';
+  assert.throws(() => patchManifestLoader(mixed), /exactly one/);
+});

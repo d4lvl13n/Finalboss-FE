@@ -10,6 +10,10 @@ export function patchManifestLoader(source) {
   const pattern = 'getMiddlewareManifest(){return this.minimalMode?null:require(this.middlewareManifestPath)}';
   const fixed = 'getMiddlewareManifest(){return null/* OpenNext handles middleware outside NextServer */}';
   if (source.includes(fixed)) return source;
+  // With the lockfile's matching SWC, the upstream adapter can already apply
+  // its own patch. Accept that exact safe shape, while rejecting mixed output.
+  const upstreamFixed = 'getMiddlewareManifest(){return null}';
+  if (source.split(upstreamFixed).length - 1 === 1 && !source.includes('require(this.middlewareManifestPath)')) return source;
   assert.equal(source.split(pattern).length - 1, 1, 'Expected exactly one Next 14 dynamic middleware-manifest loader; inspect adapter output before deploying.');
   return source.replace(pattern, fixed);
 }

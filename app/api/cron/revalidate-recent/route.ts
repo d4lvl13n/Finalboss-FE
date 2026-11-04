@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import siteConfig from '@/app/lib/siteConfig';
+import { discoverPublicationPaths } from '@/app/lib/publication-cache';
 
 // Self-healing ISR refresh.
 //
@@ -29,7 +30,6 @@ export const maxDuration = 30;
 // single failed or skipped run cannot leave an article permanently stale.
 // Overridable so the sweep can be widened to backfill after an incident.
 const LOOKBACK_MINUTES = Number(process.env.REVALIDATE_LOOKBACK_MINUTES) || 15;
-const MAX_POSTS = 50;
 
 function isAuthorized(request: NextRequest): boolean {
   const secret = process.env.CRON_SECRET;
@@ -45,64 +45,49 @@ function isAuthorized(request: NextRequest): boolean {
   return request.headers.get('x-vercel-cron') !== null;
 }
 
-interface WpPost {
-  slug: string;
-  modified: string;
-}
-
 export async function GET(request: NextRequest) {
   if (!isAuthorized(request)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const since = new Date(Date.now() - LOOKBACK_MINUTES * 60_000)
+  // Authenticated operators can backfill after a bulk import or an outage.
+  const requestedLookback = Number(request.nextUrl.searchParams.get('lookbackMinutes'));
+  const lookback = Math.min(7 * 24 * 60, Math.max(1, requestedLookback || LOOKBACK_MINUTES));
+  const since = new Date(Date.now() - lookback * 60_000)
     .toISOString()
     .replace(/\.\d{3}Z$/, '');
 
-  const url =
-    `${siteConfig.wordpressUrl}/wp-json/wp/v2/posts` +
-    `?modified_after=${since}&per_page=${MAX_POSTS}` +
-    `&orderby=modified&order=desc&_fields=slug,modified&status=publish`;
-
   try {
-    const response = await fetch(url, {
-      cache: 'no-store',
-      signal: AbortSignal.timeout(15_000),
-    });
-
-    if (!response.ok) {
-      throw new Error(`WordPress responded ${response.status}`);
-    }
-
-    const posts: WpPost[] = await response.json();
-    const slugs = posts.map((p) => p.slug).filter(Boolean);
+    const { paths, postsChecked } = await discoverPublicationPaths(siteConfig.wordpressUrl, since, fetch, AbortSignal.timeout(25_000));
 
     // Nothing changed — skip the listing purges so a quiet period doesn't
     // needlessly evict the homepage every five minutes.
-    if (slugs.length === 0) {
+    if (paths.length === 0) {
       return NextResponse.json({ ok: true, since, revalidated: 0, paths: [] });
     }
 
-    const paths = [...slugs.map((slug) => `/${slug}`), '/', '/articles'];
-
+    const failed: string[] = [];
     for (const path of paths) {
       try {
         revalidatePath(path);
       } catch (error) {
         // One bad path must not abort the rest of the batch.
         console.error(`[cron/revalidate-recent] failed to revalidate ${path}`, error);
+        failed.push(path);
       }
     }
 
     console.log(
-      `[cron/revalidate-recent] purged ${paths.length} paths (${slugs.length} articles) since ${since}`,
+      `[cron/revalidate-recent] purged ${paths.length - failed.length} paths (${postsChecked} articles) since ${since}`,
     );
 
     return NextResponse.json({
-      ok: true,
+      ok: failed.length === 0,
       since,
-      revalidated: paths.length,
+      postsChecked,
+      revalidated: paths.length - failed.length,
       paths,
+      failed,
     });
   } catch (error) {
     console.error('[cron/revalidate-recent] failed', error);

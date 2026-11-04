@@ -17,6 +17,7 @@ import { igdbImage, getGamePage } from '@/app/lib/knowledge/client';
 import TotkBuildsBanner from '@/app/components/totk-builds/TotkBuildsBanner';
 import TotkRecipesBanner from '@/app/components/totk-recipes/TotkRecipesBanner';
 import { TOTK_GAME_SLUG } from '@/app/lib/totk-builds/types';
+import Link from 'next/link';
 
 interface Props {
   params: {
@@ -600,7 +601,20 @@ export default async function GamePage({ params }: Props) {
           <GameDetails
             game={gameData}
             relatedArticles={relatedArticles}
-            featuredContent={params.slug === TOTK_GAME_SLUG ? <div className="space-y-5"><TotkBuildsBanner /><TotkRecipesBanner /></div> : undefined}
+            gameSlug={params.slug}
+            articlesPageInfo={gameTag.posts?.pageInfo}
+            featuredContent={params.slug === TOTK_GAME_SLUG ? <div className="space-y-5">
+              <div className="rounded-2xl border border-gray-700 bg-gray-900 p-6 md:p-8">
+                <p className="text-xs font-semibold uppercase tracking-widest text-yellow-400">FinalBoss guides</p>
+                <h2 className="mt-2 text-2xl font-bold text-white">Your Tears of the Kingdom walkthroughs.</h2>
+                <p className="mt-3 max-w-2xl text-gray-300">Temples, bosses, armor, quests, caves and wells. Find your next objective and follow the complete route.</p>
+                <div className="mt-5 flex flex-wrap gap-4">
+                  <Link prefetch={false} href="/guides/zelda-tears-of-the-kingdom-guide" className="rounded-full bg-yellow-400 px-5 py-2.5 font-semibold text-gray-900 hover:bg-yellow-300">Browse all TOTK guides</Link>
+                  <Link prefetch={false} href="/zelda-totk-guides-temples-bosses-armor-quests" className="px-2 py-2.5 font-semibold text-yellow-400 hover:text-yellow-300">Open the guide index →</Link>
+                </div>
+              </div>
+              <TotkBuildsBanner /><TotkRecipesBanner />
+            </div> : undefined}
           />
           <Footer />
         </>

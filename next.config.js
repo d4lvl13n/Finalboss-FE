@@ -308,11 +308,9 @@ const nextConfig = {
         destination: '/:slug',
         permanent: true,
       },
-      {
-        source: '/guides/:slug',
-        destination: '/:slug',
-        permanent: true,
-      },
+      // /guides/[slug] resolves real guide categories. Its server-side category
+      // lookup redirects legacy article URLs; a blanket rule swallowed every
+      // game archive before Next could render it.
       {
         source: '/reviews/:slug',
         destination: '/:slug',

@@ -1,14 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { useQuery } from '@apollo/client';
-import { GET_GUIDE_CATEGORIES_AND_POSTS } from '../../lib/queries/getGuideCategories';
+import { GET_GUIDE_POSTS } from '../../lib/queries/getGuideCategories';
 import client from '../../lib/apolloClient';
-import Header from '../Header';
-import Footer from '../Footer';
+import { useCursorPosts, type PostPage } from '../../lib/useCursorPosts';
 import PageHeader from '../PageHeader';
 import { FaArrowRight, FaBookOpen, FaGamepad } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
@@ -344,37 +342,28 @@ interface GuidesPageContentProps {
   initialSubcategories: Category[];
   initialGuides: Guide[];
   initialHasNextPage: boolean;
+  initialEndCursor: string | null;
 }
 
-export default function GuidesPageContent({ initialSubcategories, initialGuides, initialHasNextPage }: GuidesPageContentProps) {
-  const [guides, setGuides] = useState<Guide[]>(initialGuides);
-  const [hasNextPage, setHasNextPage] = useState(initialHasNextPage);
-  const [afterCursor, setAfterCursor] = useState<string | null>(null);
-
-  const { fetchMore } = useQuery(GET_GUIDE_CATEGORIES_AND_POSTS, {
-    variables: { first: 24, after: afterCursor },
-    client,
-    skip: true,
-  });
-
-  const handleLoadMore = () => {
-    if (hasNextPage) {
-      fetchMore({
-        variables: { after: afterCursor },
-      }).then((fetchMoreResult) => {
-        setGuides([...guides, ...fetchMoreResult.data.posts.nodes]);
-        setHasNextPage(fetchMoreResult.data.posts.pageInfo.hasNextPage);
-        setAfterCursor(fetchMoreResult.data.posts.pageInfo.endCursor);
+export default function GuidesPageContent({ initialSubcategories, initialGuides, initialHasNextPage, initialEndCursor }: GuidesPageContentProps) {
+  const { posts: guides, hasNextPage, loading, error, loadMore } = useCursorPosts<Guide>(
+    { nodes: initialGuides, pageInfo: { hasNextPage: initialHasNextPage, endCursor: initialEndCursor } },
+    async (after) => {
+      const result = await client.query<{ posts: PostPage<Guide> }>({
+        query: GET_GUIDE_POSTS,
+        variables: { first: 24, after },
+        fetchPolicy: 'network-only',
       });
-    }
-  };
+      if (result.errors?.length || !result.data?.posts) throw new Error('Guide query failed');
+      return result.data.posts;
+    },
+  );
 
   const featuredGuide = guides[0];
   const remainingGuides = guides.slice(1);
 
   return (
     <>
-      <Header />
       <PageHeader 
         title={t('guide.title')}
         description={t('guide.description')}
@@ -408,7 +397,7 @@ export default function GuidesPageContent({ initialSubcategories, initialGuides,
           )}
 
         {/* All Guides Section */}
-          <div>
+          <div data-guide-articles>
             <div className="flex items-center gap-3 mb-4 md:mb-6">
               <div className="hidden md:flex w-10 h-10 items-center justify-center bg-gradient-to-br from-violet-500 to-purple-600 rounded-lg">
                 <FaBookOpen className="w-5 h-5 text-white" />
@@ -437,15 +426,18 @@ export default function GuidesPageContent({ initialSubcategories, initialGuides,
               ))}
         </div>
             
+          {error && <p role="alert" className="mt-6 text-center text-red-300">{error}</p>}
           {hasNextPage && (
               <div className="text-center mt-8 md:mt-12">
                 <motion.button
-                onClick={handleLoadMore}
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-full font-semibold text-sm hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
+                onClick={loadMore}
+                disabled={loading}
+                aria-busy={loading}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-500 to-purple-600 text-white rounded-full font-semibold text-sm hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 disabled:opacity-50"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
               >
-                  <span>{t('guide.loadMore')}</span>
+                  <span>{loading ? 'Loading…' : t('guide.loadMore')}</span>
                   <FaArrowRight className="w-3 h-3" />
                 </motion.button>
             </div>
@@ -453,7 +445,6 @@ export default function GuidesPageContent({ initialSubcategories, initialGuides,
         </div>
       </div>
     </section>
-      <Footer />
     </>
   );
 }

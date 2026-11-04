@@ -5,6 +5,8 @@ import client from '../../lib/apolloClient';
 import { GET_SUBCATEGORY_ARTICLES } from '../../lib/queries/getSubcategoryArticles';
 import { buildPageMetadata } from '../../lib/seo';
 import siteConfig from '../../lib/siteConfig';
+import { cache } from 'react';
+import { permanentRedirect } from 'next/navigation';
 
 interface GuideCategoryProps {
   params: { slug: string };
@@ -22,15 +24,22 @@ interface GuideArticle {
   };
 }
 
-function formatSlug(slug: string) {
-  return slug
-    .split('-')
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(' ');
-}
+const getCategory = cache(async (slug: string) => {
+  const { data, errors } = await client.query({
+    query: GET_SUBCATEGORY_ARTICLES,
+    variables: { categorySlug: slug, first: 24, after: null },
+    fetchPolicy: 'no-cache',
+  });
+  if (errors?.length || !data?.posts || !data?.categories) throw new Error('Failed to fetch guide category');
+  const category = data.categories.nodes[0];
+  // Resolve the category before streaming metadata. Old /guides/article-slug
+  // addresses still receive an HTTP redirect to their canonical article URL.
+  if (!category || category.parent?.node?.slug !== 'gaming-guide') permanentRedirect(`/${slug}`);
+  return { title: category.name.replace(/\s+guide$/i, ''), posts: data.posts };
+});
 
 export async function generateMetadata({ params }: GuideCategoryProps) {
-  const titleFragment = formatSlug(params.slug);
+  const { title: titleFragment } = await getCategory(params.slug);
   return buildPageMetadata({
     title: `${titleFragment} Guides`,
     description: `Explore walkthroughs, tips, and strategies for ${titleFragment}.`,
@@ -43,28 +52,14 @@ export async function generateMetadata({ params }: GuideCategoryProps) {
 }
 
 export const revalidate = 3600;
+export const dynamic = 'force-static';
 
 export default async function GuideCategoryPage({ params }: GuideCategoryProps) {
   const baseUrl = siteConfig.url;
-  const titleFragment = formatSlug(params.slug);
-
-  let initialArticles: GuideArticle[] = [];
-  let initialHasNextPage = false;
-  let initialEndCursor: string | null = null;
-
-  try {
-    const { data } = await client.query({
-      query: GET_SUBCATEGORY_ARTICLES,
-      variables: { categorySlug: params.slug, first: 24, after: null },
-      fetchPolicy: 'no-cache',
-    });
-
-    initialArticles = data?.posts?.nodes || [];
-    initialHasNextPage = data?.posts?.pageInfo?.hasNextPage || false;
-    initialEndCursor = data?.posts?.pageInfo?.endCursor || null;
-  } catch (error) {
-    console.error('Error fetching guide category:', error);
-  }
+  const { title: titleFragment, posts } = await getCategory(params.slug);
+  const initialArticles: GuideArticle[] = posts.nodes;
+  const initialHasNextPage = posts.pageInfo.hasNextPage;
+  const initialEndCursor = posts.pageInfo.endCursor;
 
   const collectionStructuredData = {
     '@context': 'https://schema.org',
@@ -106,6 +101,7 @@ export default async function GuideCategoryPage({ params }: GuideCategoryProps) 
       />
       <GuideCategoryClient
         slug={params.slug}
+        title={titleFragment}
         initialArticles={initialArticles}
         initialHasNextPage={initialHasNextPage}
         initialEndCursor={initialEndCursor}

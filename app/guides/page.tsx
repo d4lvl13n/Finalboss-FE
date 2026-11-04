@@ -8,6 +8,9 @@ import GuidesStructuredData from '../components/Guides/GuidesStructuredData';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
+export const revalidate = 3600;
+export const dynamic = 'force-static';
+
 export async function generateMetadata() {
   return buildPageMetadata({
     title: 'Game Guides & Walkthroughs',
@@ -23,7 +26,7 @@ export default async function GuidesPage() {
     // tree above, this query 502s (PHP crash) at first:100 and works at 80 —
     // the guide count crossed the backend's memory limit in mid-2026. Keep
     // headroom; raise only after the backend's PHP memory_limit is raised.
-    variables: { first: 60 },
+    variables: { first: 24, after: null },
   });
 
   const subcategories = data.categories.nodes[0].children.nodes;
@@ -48,7 +51,7 @@ export default async function GuidesPage() {
         }
       >
         <GuidesStructuredData categories={subcategories} guides={guides} />
-        <GuidesPageContent initialSubcategories={subcategories} initialGuides={guides} initialHasNextPage={hasNextPage} />
+        <GuidesPageContent initialSubcategories={subcategories} initialGuides={guides} initialHasNextPage={hasNextPage} initialEndCursor={data.posts.pageInfo.endCursor} />
       </Suspense>
       <Footer />
     </>

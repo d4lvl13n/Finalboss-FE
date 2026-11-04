@@ -8,6 +8,7 @@ import ResponsiveArticleGrid from './ResponsiveArticleGrid';
 import { t } from '../lib/i18n';
 import { formatDateLong } from '../utils/formatDate';
 import TrackViewContent from './TrackViewContent';
+import GameArticles from './GameArticles';
 
 interface RelatedArticle {
   id: string;
@@ -40,10 +41,14 @@ export function GameDetails({
   game,
   relatedArticles = [],
   featuredContent,
+  gameSlug,
+  articlesPageInfo,
 }: {
   game: IGDBGame;
   relatedArticles?: RelatedArticle[];
   featuredContent?: React.ReactNode;
+  gameSlug?: string;
+  articlesPageInfo?: { hasNextPage: boolean; endCursor: string | null };
 }) {
   return (
       <main className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
@@ -84,7 +89,10 @@ export function GameDetails({
 
         {featuredContent && <div className="container mx-auto px-4 py-8">{featuredContent}</div>}
 
-        {relatedArticles.length > 0 && (
+        {gameSlug && articlesPageInfo ? (
+          <GameArticles key={gameSlug} slug={gameSlug} title={t('game.coverage', { name: game.name })}
+            initial={{ nodes: relatedArticles, pageInfo: articlesPageInfo }} />
+        ) : relatedArticles.length > 0 && (
           <section className="bg-gray-900/80 text-white py-10">
             <div className="container mx-auto px-4">
               <div className="flex items-center mb-6">

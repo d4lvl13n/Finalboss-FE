@@ -36,7 +36,7 @@ export const GET_GAME_TAG_WITH_POSTS = gql`
       description
       igdbId
       igdbData
-      posts(first: $first, after: $after) {
+      posts(first: $first, after: $after, where: { orderby: { field: DATE, order: DESC } }) {
         nodes {
           id
           title
