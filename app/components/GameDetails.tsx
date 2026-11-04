@@ -43,12 +43,14 @@ export function GameDetails({
   featuredContent,
   gameSlug,
   articlesPageInfo,
+  guidesContent,
 }: {
   game: IGDBGame;
   relatedArticles?: RelatedArticle[];
   featuredContent?: React.ReactNode;
   gameSlug?: string;
   articlesPageInfo?: { hasNextPage: boolean; endCursor: string | null };
+  guidesContent?: React.ReactNode;
 }) {
   return (
       <main className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800">
@@ -87,6 +89,7 @@ export function GameDetails({
           )}
         </div>
 
+        {guidesContent}
         {featuredContent && <div className="container mx-auto px-4 py-8">{featuredContent}</div>}
 
         {gameSlug && articlesPageInfo ? (

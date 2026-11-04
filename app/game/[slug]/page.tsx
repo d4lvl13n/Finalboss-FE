@@ -17,7 +17,9 @@ import { igdbImage, getGamePage } from '@/app/lib/knowledge/client';
 import TotkBuildsBanner from '@/app/components/totk-builds/TotkBuildsBanner';
 import TotkRecipesBanner from '@/app/components/totk-recipes/TotkRecipesBanner';
 import { TOTK_GAME_SLUG } from '@/app/lib/totk-builds/types';
-import Link from 'next/link';
+import TotkGuideExplorer from '@/app/components/totk-guides/TotkGuideExplorer';
+import { TOTK_GUIDE_CATEGORY } from '@/app/lib/totk-guides/types';
+import type { GameArticle } from '@/app/components/GameArticles';
 
 interface Props {
   params: {
@@ -413,14 +415,30 @@ async function getGameTagBySlug(slug: string) {
 
 async function getGameTagWithPosts(slug: string) {
   try {
-    const { data } = await client.query({
+    const { data, errors } = await client.query({
       query: GET_GAME_TAG_WITH_POSTS,
-      variables: { slug, first: POSTS_PAGE_SIZE, after: null },
+      variables: { slug, first: slug === TOTK_GAME_SLUG ? 40 : POSTS_PAGE_SIZE, after: null },
       fetchPolicy: 'no-cache',
     });
-    return data?.gameTag || null;
+    if (errors?.length) throw new Error('Game articles query failed');
+    const tag = data?.gameTag;
+    if (!tag || slug !== TOTK_GAME_SLUG) return tag || null;
+    const nodes: GameArticle[] = [...(tag.posts?.nodes || [])];
+    let pageInfo = tag.posts?.pageInfo;
+    const cursors = new Set<string>();
+    while (pageInfo?.hasNextPage) {
+      if (!pageInfo.endCursor || cursors.has(pageInfo.endCursor) || cursors.size >= 20) throw new Error('Game articles pagination did not complete');
+      cursors.add(pageInfo.endCursor);
+      const result = await client.query({ query: GET_GAME_TAG_WITH_POSTS, variables: { slug, first: 40, after: pageInfo.endCursor }, fetchPolicy: 'no-cache' });
+      if (result.errors?.length || !result.data?.gameTag?.posts) throw new Error('Game articles page failed');
+      nodes.push(...result.data.gameTag.posts.nodes);
+      pageInfo = result.data.gameTag.posts.pageInfo;
+    }
+    const seen = new Set<string>();
+    return { ...tag, posts: { nodes: nodes.filter((post) => !seen.has(post.id) && Boolean(seen.add(post.id))), pageInfo: { hasNextPage: false, endCursor: pageInfo?.endCursor || null } } };
   } catch (error) {
     console.error('Error fetching game tag posts:', error);
+    if (slug === TOTK_GAME_SLUG) throw error;
     return null;
   }
 }
@@ -572,7 +590,10 @@ export default async function GamePage({ params }: Props) {
 
     if (gameTag) {
       let gameData = buildGameFromTag(gameTag);
-      const relatedArticles = gameTag.posts?.nodes || [];
+      const allArticles: GameArticle[] = gameTag.posts?.nodes || [];
+      const isTotk = params.slug === TOTK_GAME_SLUG;
+      const guideArticles = isTotk ? allArticles.filter((article) => article.categories?.nodes?.some((category) => category.slug === TOTK_GUIDE_CATEGORY)) : [];
+      const relatedArticles = isTotk ? allArticles.filter((article) => !article.categories?.nodes?.some((category) => category.slug === 'gaming-guide' || category.slug === TOTK_GUIDE_CATEGORY)) : allArticles;
 
       const needsIgdbRefresh =
         (!gameData.screenshots || gameData.screenshots.length === 0) ||
@@ -603,16 +624,8 @@ export default async function GamePage({ params }: Props) {
             relatedArticles={relatedArticles}
             gameSlug={params.slug}
             articlesPageInfo={gameTag.posts?.pageInfo}
-            featuredContent={params.slug === TOTK_GAME_SLUG ? <div className="space-y-5">
-              <div className="rounded-2xl border border-gray-700 bg-gray-900 p-6 md:p-8">
-                <p className="text-xs font-semibold uppercase tracking-widest text-yellow-400">FinalBoss guides</p>
-                <h2 className="mt-2 text-2xl font-bold text-white">Your Tears of the Kingdom walkthroughs.</h2>
-                <p className="mt-3 max-w-2xl text-gray-300">Temples, bosses, armor, quests, caves and wells. Find your next objective and follow the complete route.</p>
-                <div className="mt-5 flex flex-wrap gap-4">
-                  <Link prefetch={false} href="/guides/zelda-tears-of-the-kingdom-guide" className="rounded-full bg-yellow-400 px-5 py-2.5 font-semibold text-gray-900 hover:bg-yellow-300">Browse all TOTK guides</Link>
-                  <Link prefetch={false} href="/zelda-totk-guides-temples-bosses-armor-quests" className="px-2 py-2.5 font-semibold text-yellow-400 hover:text-yellow-300">Open the guide index →</Link>
-                </div>
-              </div>
+            guidesContent={isTotk ? <TotkGuideExplorer guides={guideArticles} /> : undefined}
+            featuredContent={isTotk ? <div className="space-y-5">
               <TotkBuildsBanner /><TotkRecipesBanner />
             </div> : undefined}
           />
@@ -645,6 +658,7 @@ export default async function GamePage({ params }: Props) {
     return notFound();
   } catch (error) {
     console.error('Error loading game details:', error);
+    if (params.slug === TOTK_GAME_SLUG) throw error;
     return notFound();
   }
 } 

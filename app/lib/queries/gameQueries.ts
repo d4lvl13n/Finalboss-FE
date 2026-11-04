@@ -54,6 +54,7 @@ export const GET_GAME_TAG_WITH_POSTS = gql`
               slug
             }
           }
+          tags { nodes { slug } }
           author {
             node {
               name

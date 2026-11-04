@@ -1,0 +1,32 @@
+✔ the Cloudflare bundle never dynamically requires the Next middleware manifest (3.963625ms)
+✔ an adapter shape change fails instead of silently leaving the broken loader (1.206125ms)
+✔ the upstream safe middleware loader is accepted unchanged (0.912ms)
+✔ an upstream safe loader does not hide an additional broken loader (0.258416ms)
+✔ cold images redirect to the source for browsers, search and AI agents without reaching any optimizer (21.754917ms)
+✔ malformed, recursive and external redirect sources fail closed (3.403125ms)
+✔ collectors are refused before either image handling or application execution (1.1155ms)
+✔ search, citation, previews, health checks and ordinary visitors retain application access (0.876584ms)
+✔ robots policy remains readable to blocked collectors and advertises the existing sitemaps (0.816208ms)
+✔ a 90-post publication refreshes both pages of posts and every affected guide/game archive (18.74375ms)
+✔ a child-only category assignment still resolves its guide parent (0.546083ms)
+✔ a quiet publication window performs no archive lookups or invalidations (0.256125ms)
+✔ ordinary categories do not become nonexistent guide archive paths (0.232041ms)
+✔ backend failures fail the sweep instead of claiming successful invalidation (0.436917ms)
+✔ oversized backfills are explicit rather than silently dropping articles (1.245875ms)
+✔ a cached legacy redirect still supplies the canonical article destination (2.923958ms)
+✔ real archives and redirects with their own destination remain unchanged (0.568833ms)
+✔ other routes and trailing-slash normalization are never inferred as article redirects (0.815084ms)
+✔ encoded slashes cannot turn the reconstructed destination into another origin (0.283542ms)
+✔ search reaches the final guide in a complete 90-guide collection (2.448292ms)
+✔ published types take precedence and a multi-type guide matches either filter (0.170083ms)
+✔ keywords combine with the selected type, including type labels and excerpts (0.136ms)
+✔ search normalizes case, accents, HTML and British armour spelling (0.271833ms)
+✔ the index remains in All guides and future untagged guides have a fallback (0.494042ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 322.337

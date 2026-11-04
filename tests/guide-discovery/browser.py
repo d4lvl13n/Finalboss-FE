@@ -97,20 +97,20 @@ with sync_playwright() as p:
 
     assert page.goto(BASE + '/game/' + SLUG, wait_until='domcontentloaded', timeout=120000).status == 200
     expect(page.locator('h1')).to_have_text('The Legend of Zelda: Tears of the Kingdom')
-    expect(page.get_by_role('link', name='Browse all TOTK guides', exact=True)).to_have_attribute('href', ARCHIVE)
+    expect(page.get_by_role('link', name='All guides →', exact=True)).to_have_attribute('href', ARCHIVE)
     assert page.locator('a[href="/game/' + SLUG + '/builds"]').count() > 0
     assert page.locator('a[href="/game/' + SLUG + '/recipes"]').count() > 0
     page.screenshot(path=str(OUT / 'hub-desktop.png'))
     for _ in range(8):
-        old = links(page, '[data-game-articles]')
-        more = page.get_by_role('button', name='Load more articles', exact=True)
+        old = links(page, '[data-totk-guide-results]')
+        more = page.get_by_role('button', name='Show more guides', exact=True)
         if more.count() == 0:
             break
         more.click()
-        page.wait_for_function('(n) => new Set([...document.querySelectorAll("[data-game-articles] a[href]")].map(a => a.pathname)).size > n', arg=len(old))
-        print('Hub progress', len(links(page, '[data-game-articles]')), flush=True)
-    assert EXPECTED <= links(page, '[data-game-articles]')
-    expect(page.get_by_role('button', name='Load more articles', exact=True)).to_have_count(0)
+        page.wait_for_function('(n) => new Set([...document.querySelectorAll("[data-totk-guide-results] a[href]")].map(a => a.pathname)).size > n', arg=len(old))
+        print('Hub progress', len(links(page, '[data-totk-guide-results]')), flush=True)
+    assert EXPECTED <= links(page, '[data-totk-guide-results]')
+    expect(page.get_by_role('button', name='Show more guides', exact=True)).to_have_count(0)
     print('Game hub: all 90 guides reachable with existing coverage; correct game identity and section links.', flush=True)
 
     page.set_viewport_size({'width': 390, 'height': 844})
@@ -121,9 +121,9 @@ with sync_playwright() as p:
     page.wait_for_function("new Set([...document.querySelectorAll('[data-guide-articles] a[href]')].map(a => a.pathname)).size > 24")
     page.goto(BASE + '/game/' + SLUG, wait_until='domcontentloaded', timeout=120000)
     assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth')
-    page.get_by_role('link', name='Browse all TOTK guides', exact=True).scroll_into_view_if_needed()
+    page.get_by_role('link', name='All guides →', exact=True).scroll_into_view_if_needed()
     page.screenshot(path=str(OUT / 'hub-mobile.png'))
-    page.get_by_role('link', name='Browse all TOTK guides', exact=True).click()
+    page.get_by_role('link', name='All guides →', exact=True).click()
     page.wait_for_url(BASE + ARCHIVE)
     assert len(links(page, '[data-guide-articles]')) >= 24
     assert not errors, errors

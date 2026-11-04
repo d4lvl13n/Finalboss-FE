@@ -1,0 +1,1104 @@
+{
+  "terms": {
+    "temples": {
+      "id": 8807,
+      "slug": "totk-guide-temples"
+    },
+    "bosses": {
+      "id": 8808,
+      "slug": "totk-guide-bosses"
+    },
+    "quests": {
+      "id": 8809,
+      "slug": "totk-guide-quests"
+    },
+    "armor": {
+      "id": 8810,
+      "slug": "totk-guide-armor"
+    },
+    "weapons": {
+      "id": 8811,
+      "slug": "totk-guide-weapons"
+    },
+    "exploration": {
+      "id": 8812,
+      "slug": "totk-guide-exploration"
+    }
+  },
+  "posts": {
+    "zelda-totk-all-armor-sets-locations-and-set-bonuses": {
+      "id": 125426,
+      "types": [
+        "armor"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8810
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-all-bargainer-statue-locations-and-poe-rewards": {
+      "id": 125430,
+      "types": [
+        "armor",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8810,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-all-great-fairy-locations-and-unlock-quests": {
+      "id": 125434,
+      "types": [
+        "armor",
+        "quests"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8810
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-all-sage-s-will-locations-and-sage-upgrade-guide": {
+      "id": 125438,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-all-skyview-towers-and-how-to-unlock-them": {
+      "id": 125238,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-amiibo-rewards-and-exclusive-unlocks": {
+      "id": 125603,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-best-horses-and-how-to-choose-a-mount": {
+      "id": 125443,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-camera-work-in-the-depths-quest-walkthrough": {
+      "id": 125244,
+      "types": [
+        "quests",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-crisis-at-hyrule-castle-first-visit-walkthrough": {
+      "id": 125318,
+      "types": [
+        "quests"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-crisis-at-hyrule-castle-second-visit-walkthrough": {
+      "id": 125320,
+      "types": [
+        "quests",
+        "bosses"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8809
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-destroy-ganondorf-final-boss-walkthrough": {
+      "id": 125322,
+      "types": [
+        "bosses",
+        "quests"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8809
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-dragon-tears-and-geoglyph-locations-in-story-order": {
+      "id": 125324,
+      "types": [
+        "quests",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-eldin-canyon-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125327,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-eldin-canyon-skyview-tower-region-well-locations": {
+      "id": 125248,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-find-the-fifth-sage-quest-walkthrough": {
+      "id": 125329,
+      "types": [
+        "quests",
+        "armor"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8810
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-fire-temple-walkthrough-and-marbled-gohma-boss-guide": {
+      "id": 125250,
+      "types": [
+        "temples",
+        "bosses"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8807,
+        8808
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-flux-construct-locations-and-how-to-beat-them": {
+      "id": 125458,
+      "types": [
+        "bosses",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-frox-locations-and-how-to-beat-them": {
+      "id": 125461,
+      "types": [
+        "bosses",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-gerudo-canyon-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125339,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-gerudo-canyon-skyview-tower-region-well-locations": {
+      "id": 125254,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-gerudo-highlands-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125343,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-gleeok-locations-and-how-to-beat-them": {
+      "id": 125467,
+      "types": [
+        "bosses",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-gloom-recovery-recipes-and-how-to-restore-broken-hearts": {
+      "id": 125345,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-great-sky-island-caves-and-bubbulfrogs": {
+      "id": 125349,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-guides-temples-bosses-armor-quests": {
+      "id": 125256,
+      "types": [],
+      "previous_tags": [],
+      "tags": [],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-hateno-village-quests-shops-and-unlocks": {
+      "id": 125617,
+      "types": [
+        "quests",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-hestu-locations-and-inventory-expansion": {
+      "id": 125473,
+      "types": [
+        "quests",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-hinox-locations-and-how-to-beat-them": {
+      "id": 125476,
+      "types": [
+        "bosses",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-home-on-arrange-how-to-build-a-house-in-tarrey-town": {
+      "id": 125353,
+      "types": [
+        "quests",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-how-to-enter-the-lost-woods-and-reach-the-deku-tree": {
+      "id": 125479,
+      "types": [
+        "quests",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-how-to-farm-rupees-without-duplication-glitches": {
+      "id": 125481,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-how-to-get-epona": {
+      "id": 125356,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-how-to-get-the-champion-s-leathers": {
+      "id": 125240,
+      "types": [
+        "armor"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8810
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-how-to-get-the-hylian-shield": {
+      "id": 125485,
+      "types": [
+        "weapons"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8811
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-how-to-get-the-master-sword": {
+      "id": 125258,
+      "types": [
+        "weapons",
+        "quests"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8811
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-how-to-get-zelda-s-golden-horse": {
+      "id": 125490,
+      "types": [
+        "quests",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-how-to-rematch-temple-bosses-in-the-depths": {
+      "id": 125493,
+      "types": [
+        "bosses",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-how-to-repair-and-upgrade-weapons-with-rock-octoroks": {
+      "id": 125358,
+      "types": [
+        "weapons"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8811
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-how-to-tame-the-giant-white-stallion": {
+      "id": 125361,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-how-to-unlock-autobuild-at-the-great-abandoned-central-mine": {
+      "id": 125260,
+      "types": [
+        "quests",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-hyrule-castle-equipment-and-treasure-route": {
+      "id": 125500,
+      "types": [
+        "weapons",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8811,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-hyrule-field-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125365,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-hyrule-field-skyview-tower-region-well-locations": {
+      "id": 125264,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-koltin-locations-and-bubbul-gem-rewards": {
+      "id": 125369,
+      "types": [
+        "armor",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8810,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-lightning-temple-walkthrough-and-queen-gibdo-boss-guide": {
+      "id": 125266,
+      "types": [
+        "temples",
+        "bosses"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8807,
+        8808
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-lindor-s-brow-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125373,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-lindor-s-brow-skyview-tower-region-well-locations": {
+      "id": 125270,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-lomei-labyrinth-island-surface-sky-and-depths-walkthrough": {
+      "id": 125511,
+      "types": [
+        "bosses",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-lookout-landing-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125377,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-lookout-landing-skyview-tower-region-well-locations": {
+      "id": 125274,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-lynel-locations-and-how-to-beat-them": {
+      "id": 125516,
+      "types": [
+        "bosses",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-master-kohga-of-the-yiga-clan-all-battles-and-mine-locations": {
+      "id": 125520,
+      "types": [
+        "bosses",
+        "quests"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8809
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-messages-from-an-ancient-era-stone-tablet-locations": {
+      "id": 125524,
+      "types": [
+        "quests",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-molduga-locations-and-how-to-beat-them": {
+      "id": 125527,
+      "types": [
+        "bosses",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-mount-lanayru-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125381,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-north-lomei-labyrinth-surface-sky-and-depths-walkthrough": {
+      "id": 125530,
+      "types": [
+        "bosses",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-pikida-stonegrove-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125385,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-pikida-stonegrove-skyview-tower-region-well-locations": {
+      "id": 125278,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-popla-foothills-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125389,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-popla-foothills-skyview-tower-region-well-locations": {
+      "id": 125282,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-potential-princess-sightings-all-stable-quests": {
+      "id": 125538,
+      "types": [
+        "quests",
+        "armor"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8810
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-rabella-wetlands-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125393,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-rabella-wetlands-skyview-tower-region-well-locations": {
+      "id": 125286,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-riju-of-gerudo-town-quest-walkthrough": {
+      "id": 125395,
+      "types": [
+        "quests"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-rospro-pass-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125399,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-rospro-pass-skyview-tower-region-well-locations": {
+      "id": 125290,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-sahasra-slope-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125403,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-sahasra-slope-skyview-tower-region-well-locations": {
+      "id": 125294,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-satori-cherry-blossom-tree-locations-and-cave-beacons": {
+      "id": 125549,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-schema-stone-and-yiga-schematic-locations": {
+      "id": 125553,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-serenade-to-cotera-great-fairy-quest-walkthrough": {
+      "id": 125557,
+      "types": [
+        "quests",
+        "armor"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8810
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-serenade-to-kaysa-great-fairy-quest-walkthrough": {
+      "id": 125561,
+      "types": [
+        "quests",
+        "armor"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8810
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-serenade-to-mija-great-fairy-quest-walkthrough": {
+      "id": 125565,
+      "types": [
+        "quests",
+        "armor"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8810
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-sidon-of-the-zora-quest-walkthrough": {
+      "id": 125405,
+      "types": [
+        "quests"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-south-lomei-labyrinth-surface-sky-and-depths-walkthrough": {
+      "id": 125568,
+      "types": [
+        "bosses",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-spirit-temple-walkthrough-and-seized-construct-boss-guide": {
+      "id": 125296,
+      "types": [
+        "temples",
+        "bosses"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8807,
+        8808
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-stone-talus-locations-and-how-to-beat-them": {
+      "id": 125575,
+      "types": [
+        "bosses",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8808,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-sundelion-locations-and-farming-routes": {
+      "id": 125407,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-the-duchess-who-disappeared-and-selmie-location": {
+      "id": 125411,
+      "types": [
+        "quests",
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809,
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-thyphlo-ruins-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125414,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-thyphlo-ruins-skyview-tower-region-well-locations": {
+      "id": 125300,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-tulin-of-rito-village-quest-walkthrough": {
+      "id": 125302,
+      "types": [
+        "quests"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-ulri-mountain-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125418,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-ulri-mountain-skyview-tower-region-well-locations": {
+      "id": 125306,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-unique-weapons-how-to-repair-and-reacquire-them": {
+      "id": 125586,
+      "types": [
+        "weapons"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8811
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-upland-zorana-skyview-tower-region-caves-and-bubbulfrogs": {
+      "id": 125422,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-upland-zorana-skyview-tower-region-well-locations": {
+      "id": 125310,
+      "types": [
+        "exploration"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8812
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-water-temple-walkthrough-and-mucktorok-boss-guide": {
+      "id": 125312,
+      "types": [
+        "temples",
+        "bosses"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8807,
+        8808
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-wind-temple-walkthrough-and-colgera-boss-guide": {
+      "id": 125314,
+      "types": [
+        "temples",
+        "bosses"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8807,
+        8808
+      ],
+      "copy_and_publication_preserved": true
+    },
+    "zelda-totk-yunobo-of-goron-city-quest-walkthrough": {
+      "id": 125316,
+      "types": [
+        "quests"
+      ],
+      "previous_tags": [],
+      "tags": [
+        8809
+      ],
+      "copy_and_publication_preserved": true
+    }
+  },
+  "all_pass": true,
+  "articles": 90,
+  "counts": {
+    "temples": 5,
+    "bosses": 19,
+    "quests": 25,
+    "armor": 10,
+    "weapons": 5,
+    "exploration": 64
+  }
+}

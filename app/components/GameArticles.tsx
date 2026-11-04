@@ -13,6 +13,7 @@ export interface GameArticle {
   date?: string;
   featuredImage?: { node: { sourceUrl: string } };
   categories?: { nodes?: { name: string; slug?: string }[] };
+  tags?: { nodes?: { slug: string }[] };
   author?: { node?: { name?: string; avatar?: { url?: string } } };
 }
 
