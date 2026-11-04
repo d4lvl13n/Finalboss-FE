@@ -19,7 +19,7 @@ import TotkRecipesBanner from '@/app/components/totk-recipes/TotkRecipesBanner';
 import { TOTK_GAME_SLUG } from '@/app/lib/totk-builds/types';
 import TotkGuideExplorer from '@/app/components/totk-guides/TotkGuideExplorer';
 import OotGuideExplorer from '@/app/components/oot-guides/OotGuideExplorer';
-import { OOT_GAME_SLUG, OOT_GUIDE_CATEGORY } from '@/app/lib/oot-guides/types';
+import { OOT_GAME_SLUG, OOT_GUIDE_CATEGORY, OOT_IGDB_ID } from '@/app/lib/oot-guides/types';
 import { TOTK_GUIDE_CATEGORY } from '@/app/lib/totk-guides/types';
 import type { GameArticle } from '@/app/components/GameArticles';
 
@@ -43,7 +43,8 @@ export async function generateStaticParams() {
   return all.filter((slug) => (seen.has(slug) ? false : (seen.add(slug), true))).map((slug) => ({ slug }));
 }
 
-function slugifyGameTitle(title: string): string {
+function slugifyGameTitle(title: string, igdbId?: number): string {
+  if (igdbId === OOT_IGDB_ID) return OOT_GAME_SLUG;
   return title
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
@@ -453,7 +454,7 @@ async function getGameTagWithPosts(slug: string) {
 
 async function createGameTagFromIgdb(game: IGDBGame): Promise<string | null> {
   try {
-    const slug = slugifyGameTitle(game.name);
+    const slug = slugifyGameTitle(game.name, game.id);
     const description = buildDescription(game.description) || game.name;
 
     const input: Record<string, unknown> = {
@@ -529,7 +530,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const igdbId = parseInt(params.slug);
     if (!isNaN(igdbId)) {
       const gameData = await igdbGetGameDetails(igdbId);
-      const resolvedSlug = slugifyGameTitle(gameData.name);
+      const resolvedSlug = slugifyGameTitle(gameData.name, gameData.id);
       const resolvedPath = `/game/${resolvedSlug}`;
 
       const description = buildDescription(gameData.description) || gameData.name;
@@ -559,6 +560,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function GamePage({ params }: Props) {
+  // The remake shares its display title with the N64 original, but has its
+  // own canonical hub. Keep this redirect outside the data-error boundary.
+  if (params.slug === String(OOT_IGDB_ID)) permanentRedirect(`/game/${OOT_GAME_SLUG}`);
   try {
     // Local blueprint hub (e.g. Crystal of Atlan) renders the structured hub as
     // the top of this page. Related articles use the original game-tag posts
@@ -649,7 +653,7 @@ export default async function GamePage({ params }: Props) {
     if (!isNaN(igdbId)) {
       const igdbGame = await igdbGetGameDetails(igdbId);
 
-      const resolvedSlug = slugifyGameTitle(igdbGame.name);
+      const resolvedSlug = slugifyGameTitle(igdbGame.name, igdbGame.id);
       const existingTag = await getGameTagBySlug(resolvedSlug);
       if (existingTag?.slug) {
         permanentRedirect(`/game/${resolvedSlug}`);

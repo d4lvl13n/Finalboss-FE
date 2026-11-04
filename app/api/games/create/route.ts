@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import client from '@/app/lib/apolloClient';
 import { getGameDetails } from '@/app/lib/igdb-server';
 import { CREATE_GAME_TAG_WITH_META, GET_GAME_TAG_BY_SLUG } from '@/app/lib/queries/gameQueries';
+import { OOT_GAME_SLUG, OOT_IGDB_ID } from '@/app/lib/oot-guides/types';
 
 export async function POST(request: Request) {
   try {
@@ -27,7 +28,7 @@ export async function POST(request: Request) {
       }
     }
 
-    const slug = rawTitle
+    const slug = Number(igdbId) === OOT_IGDB_ID ? OOT_GAME_SLUG : rawTitle
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')  // Replace non-alphanumeric chars with dash
       .replace(/^-+|-+$/g, '')      // Remove leading/trailing dashes

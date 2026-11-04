@@ -1,4 +1,5 @@
 export const OOT_GAME_SLUG = 'the-legend-of-zelda-ocarina-of-time-switch-2';
+export const OOT_IGDB_ID = 405460;
 export const OOT_GUIDE_CATEGORY = 'zelda-ocarina-of-time-switch-2-guide';
 export const OOT_GUIDE_INDEX = 'zelda-oot-switch-2-walkthrough-guides';
 
