@@ -21,6 +21,8 @@ import TotkGuideExplorer from '@/app/components/totk-guides/TotkGuideExplorer';
 import OotGuideExplorer from '@/app/components/oot-guides/OotGuideExplorer';
 import { OOT_GAME_SLUG, OOT_GUIDE_CATEGORY, OOT_IGDB_ID } from '@/app/lib/oot-guides/types';
 import { TOTK_GUIDE_CATEGORY } from '@/app/lib/totk-guides/types';
+import WanderingSwordGuideExplorer from '@/app/components/wandering-sword-guides/WanderingSwordGuideExplorer';
+import { WANDERING_GAME_SLUG, WANDERING_GUIDE_CATEGORY } from '@/app/lib/wandering-sword-guides/types';
 import type { GameArticle } from '@/app/components/GameArticles';
 
 interface Props {
@@ -419,6 +421,7 @@ async function getGameTagBySlug(slug: string) {
 function gameGuideCategory(slug: string): string | undefined {
   if (slug === TOTK_GAME_SLUG) return TOTK_GUIDE_CATEGORY;
   if (slug === OOT_GAME_SLUG) return OOT_GUIDE_CATEGORY;
+  if (slug === WANDERING_GAME_SLUG) return WANDERING_GUIDE_CATEGORY;
   return undefined;
 }
 
@@ -605,6 +608,7 @@ export default async function GamePage({ params }: Props) {
       const allArticles: GameArticle[] = gameTag.posts?.nodes || [];
       const isTotk = params.slug === TOTK_GAME_SLUG;
       const isOot = params.slug === OOT_GAME_SLUG;
+      const isWanderingSword = params.slug === WANDERING_GAME_SLUG;
       const guideCategory = gameGuideCategory(params.slug);
       const guideArticles = guideCategory ? allArticles.filter((article) => article.categories?.nodes?.some((category) => category.slug === guideCategory)) : [];
       const relatedArticles = guideCategory ? allArticles.filter((article) => !article.categories?.nodes?.some((category) => category.slug === 'gaming-guide' || category.slug === guideCategory)) : allArticles;
@@ -638,7 +642,7 @@ export default async function GamePage({ params }: Props) {
             relatedArticles={relatedArticles}
             gameSlug={params.slug}
             articlesPageInfo={gameTag.posts?.pageInfo}
-            guidesContent={isTotk ? <TotkGuideExplorer guides={guideArticles} /> : isOot ? <OotGuideExplorer guides={guideArticles} /> : undefined}
+            guidesContent={isTotk ? <TotkGuideExplorer guides={guideArticles} /> : isOot ? <OotGuideExplorer guides={guideArticles} /> : isWanderingSword ? <WanderingSwordGuideExplorer guides={guideArticles} /> : undefined}
             featuredContent={isTotk ? <div className="space-y-5">
               <TotkBuildsBanner /><TotkRecipesBanner />
             </div> : undefined}
