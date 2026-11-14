@@ -63,6 +63,10 @@ interface ArticleData {
   featuredImage?: {
     node: {
       sourceUrl: string;
+      thumb?: string | null;
+      large?: string | null;
+      big?: string | null;
+      mediaDetails?: { width?: number | null } | null;
     };
   };
   categories?: {
@@ -288,6 +292,22 @@ export default function ArticleContent({ article, extras }: ArticleContentProps)
   const showUpdatedTimestamp =
     article.modified && new Date(article.modified).getTime() !== new Date(article.date).getTime();
   const featuredImageSrc = normalizeWordPressImageSrc(article.featuredImage?.node.sourceUrl);
+  // Cover in several widths so a laptop or tablet does not download the
+  // 1920px original. WordPress returns the original URL for a size it never
+  // generated (small source image), so duplicates are dropped.
+  const cover = article.featuredImage?.node;
+  const coverSrcSet = cover
+    ? [
+        [cover.thumb, 768],
+        [cover.large, 1024],
+        [cover.big, 1536],
+        [cover.sourceUrl, cover.mediaDetails?.width || 1920],
+      ]
+        .map(([url, width]) => [normalizeWordPressImageSrc((url as string) || undefined), width] as const)
+        .filter(([url], i, all) => url && all.findIndex(([u]) => u === url) === i)
+        .map(([url, width]) => `${url} ${width}w`)
+        .join(', ')
+    : '';
 
   // Detect review category
   const isReview = Boolean(
@@ -321,7 +341,7 @@ export default function ArticleContent({ article, extras }: ArticleContentProps)
       <header className={`fb-lead${featuredImageSrc ? ' fb-lead-art' : ''}`}>
         {featuredImageSrc && (
           <picture className="fb-lead-bg">
-            <source media="(min-width: 640px)" srcSet={featuredImageSrc} />
+            <source media="(min-width: 640px)" srcSet={coverSrcSet || featuredImageSrc} sizes="100vw" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={BLANK_PIXEL} alt={article.title} fetchPriority="high" decoding="async" />
           </picture>

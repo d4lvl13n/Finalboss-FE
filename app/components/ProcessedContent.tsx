@@ -95,6 +95,36 @@ export default function ProcessedContent({
         );
       }
 
+      // YouTube embeds: a plain iframe downloads ~850 KB of player JavaScript on
+      // page load, whether or not anyone presses play. `srcdoc` shows a
+      // thumbnail and a play button instead (no JavaScript at all); the click
+      // navigates the iframe to the real player with autoplay.
+      if (domNode instanceof Element && domNode.name === 'iframe') {
+        const id = /(?:youtube(?:-nocookie)?\.com\/embed\/)([\w-]{6,})/.exec(domNode.attribs?.src || '')?.[1];
+        if (id) {
+          const title = (domNode.attribs?.title || 'YouTube video').replace(/[<>"]/g, '');
+          const player = `https://www.youtube.com/embed/${id}?autoplay=1`;
+          const srcDoc =
+            '<style>*{margin:0;padding:0;overflow:hidden}html,body{height:100%;background:#0e0a1c}' +
+            'a{position:absolute;inset:0}img{width:100%;height:100%;object-fit:cover}' +
+            'span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:84px;height:60px;background:#ffcf24}' +
+            'span:after{content:"";position:absolute;left:33px;top:16px;border:14px solid transparent;border-left:22px solid #150f24;border-right:0}</style>' +
+            `<a href="${player}" aria-label="Play: ${title}"><img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt=""><span></span></a>`;
+          return (
+            <iframe
+              className="fb-video"
+              title={title}
+              src={player}
+              srcDoc={srcDoc}
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          );
+        }
+      }
+
       // Render Pokémon stats card for [pokemon:name] shortcodes
       if (
         domNode instanceof Element &&

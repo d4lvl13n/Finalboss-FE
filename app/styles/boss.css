@@ -172,3 +172,6 @@
 @media (prefers-reduced-motion: reduce) {
   .fb-fight, .fb-bar, .fb-hp::after { animation: none !important; }
 }
+
+/* videos in articles: full column width, space reserved before load */
+.fb-article iframe.fb-video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 0; background: var(--pit); margin: 1.5rem 0; }

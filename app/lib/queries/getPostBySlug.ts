@@ -15,6 +15,10 @@ const POST_FIELDS = `
   featuredImage {
     node {
       sourceUrl
+      # Renditions WordPress already generates (core sizes), for a responsive cover
+      thumb: sourceUrl(size: MEDIUM_LARGE)
+      large: sourceUrl(size: LARGE)
+      big: sourceUrl(size: _1536X1536)
       # Add these fields to see full image data
       mediaDetails {
         width
