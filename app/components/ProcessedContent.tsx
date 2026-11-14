@@ -1,18 +1,20 @@
-"use client";
+import React from 'react';
+import Image from 'next/image';
+import parse, { HTMLReactParserOptions, Element, domToReact, DOMNode } from 'html-react-parser';
 import { headingId } from '../lib/articleHeadings';
-   // components/ProcessedContent.tsx
-   import React, { useEffect, useMemo, useState } from 'react';
-   import Image from 'next/image';
-   import parse, { HTMLReactParserOptions, Element, domToReact, DOMNode } from 'html-react-parser';
-   
-   type MiniPost = { slug: string; title?: string; image?: string };
-   import { PLACEHOLDER_BASE64 } from '../utils/placeholder';
-   import siteConfig from '../lib/siteConfig';
-   import { normalizeWordPressImageSrc } from '../lib/imageUrl';
-   import { stripDocumentTagsFromHtml } from '../lib/wpContent';
-   import PokemonStatsCard from './Pokemon/PokemonStatsCard';
+import { PLACEHOLDER_BASE64 } from '../utils/placeholder';
+import siteConfig from '../lib/siteConfig';
+import { normalizeWordPressImageSrc } from '../lib/imageUrl';
+import { stripDocumentTagsFromHtml } from '../lib/wpContent';
+import PokemonStatsCard from './Pokemon/PokemonStatsCard';
 
-   export default function ProcessedContent({
+/**
+ * Renders WordPress article HTML. This is a SERVER component: the article is
+ * parsed once at generation time and sent as plain HTML. It used to be a client
+ * component, which shipped the HTML parser to every reader and embedded the
+ * whole article a second time in the page as hydration data.
+ */
+export default function ProcessedContent({
   content,
   bare = false,
 }: {
@@ -25,245 +27,137 @@ import { headingId } from '../lib/articleHeadings';
    */
   bare?: boolean;
 }) {
-     const frontendBase = siteConfig.url;
-     const wpGraphql = `${siteConfig.wordpressUrl}/graphql`;
+  const frontendBase = siteConfig.url;
 
-     const relatedHrefs = useMemo(() => {
-       const matches = Array.from(content.matchAll(/<a[^>]*data-gpbot="related-link"[^>]*href="([^"]+)"/g));
-       return matches.map(m => m[1]);
-     }, [content]);
+  const options: HTMLReactParserOptions = {
+    replace: (domNode) => {
+      // Add IDs to headings for Table of Contents.
+      // ID is derived from the heading TEXT only (no positional counter): this
+      // file renders each article SECTION through a separate instance, so a
+      // counter would reset per-section and never match the whole-article
+      // indices TableOfContents computes — that broke every jump-link after the
+      // first H2. A pure text slug is stable across both. (See TableOfContents.tsx.)
+      if (domNode instanceof Element && ['h2', 'h3', 'h4'].includes(domNode.name)) {
+        const id = headingId(domNode);
+        const HeadingTag = domNode.name as 'h2' | 'h3' | 'h4';
+        return (
+          <HeadingTag id={id} className={domNode.attribs?.class}>
+            {domToReact(domNode.children as unknown as DOMNode[], options)}
+          </HeadingTag>
+        );
+      }
 
-     const relatedSlugs = useMemo(() => {
-       return Array.from(new Set(relatedHrefs.map(href => {
-         try {
-           const u = new URL(href);
-           return u.pathname.replace(/^\//, '').replace(/\/$/, '');
-         } catch {
-           return href.replace(/^https?:\/\/[^/]+\//, '').replace(/\/$/, '');
-         }
-       })) ).slice(0, 8);
-     }, [relatedHrefs]);
-
-     const [miniPosts, setMiniPosts] = useState<Record<string, MiniPost>>({});
-
-     useEffect(() => {
-       if (relatedSlugs.length === 0) return;
-       let isCancelled = false;
-       (async () => {
-         try {
-           const query = `query($id: ID!){ post(id: $id, idType: SLUG){ title featuredImage { node { sourceUrl } } } }`;
-           const results = await Promise.all(
-             relatedSlugs.map(async (slug) => {
-               try {
-                 const res = await fetch(wpGraphql, {
-                   method: 'POST',
-                   headers: { 'content-type': 'application/json' },
-                   body: JSON.stringify({ query, variables: { id: slug } }),
-                 });
-                 const json = await res.json();
-                 const post = json?.data?.post;
-                 return {
-                   slug,
-                   title: post?.title,
-                   image: normalizeWordPressImageSrc(post?.featuredImage?.node?.sourceUrl),
-                 } as MiniPost;
-               } catch {
-                 return { slug } as MiniPost;
-               }
-             })
-           );
-           if (!isCancelled) {
-             const map: Record<string, MiniPost> = {};
-             for (const p of results) {
-               map[p.slug] = p;
-             }
-             setMiniPosts(map);
-           }
-         } catch {
-           // ignore fetch errors
-         }
-       })();
-       return () => { isCancelled = true; };
-     }, [relatedSlugs, wpGraphql]);
-
-    const options: HTMLReactParserOptions = {
-      replace: (domNode) => {
-        // Add IDs to headings for Table of Contents.
-        // ID is derived from the heading TEXT only (no positional counter): this
-        // file renders each article SECTION through a separate instance, so a
-        // counter would reset per-section and never match the whole-article
-        // indices TableOfContents computes — that broke every jump-link after the
-        // first H2. A pure text slug is stable across both. (See TableOfContents.tsx.)
-        if (domNode instanceof Element && ['h2', 'h3', 'h4'].includes(domNode.name)) {
-          const id = headingId(domNode);
-
-          const HeadingTag = domNode.name as 'h2' | 'h3' | 'h4';
+      // Convert all internal links from backend to frontend domain
+      if (domNode instanceof Element && domNode.name === 'a') {
+        const href = domNode.attribs?.href || '';
+        if (
+          href.includes(new URL(siteConfig.wordpressUrl).hostname) &&
+          !href.includes('/wp-admin') &&
+          !href.includes('/wp-content/uploads')
+        ) {
+          const normalizedHref = href.replace(siteConfig.wordpressUrl, frontendBase);
           return (
-            <HeadingTag id={id} className={domNode.attribs?.class}>
+            <a
+              href={normalizedHref}
+              className={domNode.attribs?.class}
+              target={domNode.attribs?.target}
+              rel={domNode.attribs?.rel}
+            >
               {domToReact(domNode.children as unknown as DOMNode[], options)}
-            </HeadingTag>
+            </a>
           );
         }
-        
-        // Convert all internal links from backend to frontend domain
-        if (domNode instanceof Element && domNode.name === 'a') {
-          const href = domNode.attribs?.href || '';
-          // Check if it's a backend link that should point to frontend
-          if (href.includes(new URL(siteConfig.wordpressUrl).hostname) && !href.includes('/wp-admin') && !href.includes('/wp-content/uploads')) {
-            const normalizedHref = href.replace(siteConfig.wordpressUrl, frontendBase);
-            return (
-              <a 
-                href={normalizedHref}
-                className={domNode.attribs?.class}
-                target={domNode.attribs?.target}
-                rel={domNode.attribs?.rel}
-              >
-                {domToReact(domNode.children as unknown as DOMNode[], options)}
-              </a>
-            );
-          }
+      }
+
+      if (domNode instanceof Element && domNode.name === 'img') {
+        const { src, alt, width, height } = domNode.attribs;
+        if (!src) return undefined;
+        // Default aspect ratio if not provided
+        const w = parseInt(width) || 800;
+        const h = parseInt(height) || 450;
+        const processedSrc = normalizeWordPressImageSrc(src);
+        if (!processedSrc) return undefined;
+        // Wrapper reserves space so the text never jumps while the image loads
+        return (
+          <div style={{ width: '100%', maxWidth: w, margin: '1.5rem 0' }} className="article-img-wrapper">
+            <Image
+              src={processedSrc}
+              alt={alt || ''}
+              width={w}
+              height={h}
+              style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+              placeholder="blur"
+              blurDataURL={PLACEHOLDER_BASE64}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
+              unoptimized={process.env.NODE_ENV === 'development'}
+            />
+          </div>
+        );
+      }
+
+      // Render Pokémon stats card for [pokemon:name] shortcodes
+      if (
+        domNode instanceof Element &&
+        domNode.name === 'div' &&
+        (domNode.attribs?.class || '').split(' ').includes('fb-pokemon')
+      ) {
+        const pokemonName = domNode.attribs['data-name'];
+        if (pokemonName) {
+          return <PokemonStatsCard name={pokemonName} />;
         }
-        
-        if (domNode instanceof Element && domNode.name === 'img') {
-           const { src, alt, width, height } = domNode.attribs;
-           if (!src) return undefined;
-           // Default aspect ratio if not provided
-           const w = parseInt(width) || 800;
-           const h = parseInt(height) || 450;
-           const processedSrc = normalizeWordPressImageSrc(src);
-           if (!processedSrc) return undefined;
-           // Use a wrapper div to reserve space and prevent blinking
-           return (
-             <div
-               style={{
-                 width: '100%',
-                 maxWidth: w,
-                 margin: '1.5rem 0',
-               }}
-               className="article-img-wrapper"
-             >
-             <Image
-               src={processedSrc}
-               alt={alt || ''}
-                 width={w}
-                 height={h}
-                 style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
-                 placeholder="blur"
-                 blurDataURL={PLACEHOLDER_BASE64}
-               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px"
-               unoptimized={process.env.NODE_ENV === 'development'}
-             />
-             </div>
-           );
-         }
+      }
 
-          // Render Pokémon stats card for [pokemon:name] shortcodes
-          if (
-            domNode instanceof Element &&
-            domNode.name === 'div' &&
-            domNode.attribs &&
-            (domNode.attribs.class || '').split(' ').includes('fb-pokemon')
-          ) {
-            const pokemonName = domNode.attribs['data-name'];
-            if (pokemonName) {
-              return <PokemonStatsCard name={pokemonName} />;
+      // Related-links block authored in WordPress. Rendered as plain links from
+      // the HTML we already have: the old version fetched a thumbnail for each
+      // link from the reader's browser (up to 8 extra WordPress requests per view).
+      if (
+        domNode instanceof Element &&
+        domNode.name === 'div' &&
+        (domNode.attribs?.class || '').split(' ').includes('gpbot-related')
+      ) {
+        const relatedOptions: HTMLReactParserOptions = {
+          replace: (node) => {
+            if (node instanceof Element && node.name === 'h3') {
+              return <h2 className="fb-related-title">{domToReact(node.children as unknown as DOMNode[])}</h2>;
             }
-          }
+            if (node instanceof Element && node.name === 'ul') {
+              return <div className="fb-related-list">{domToReact(node.children as unknown as DOMNode[], relatedOptions)}</div>;
+            }
+            if (node instanceof Element && node.name === 'li') {
+              return <>{domToReact(node.children as unknown as DOMNode[], relatedOptions)}</>;
+            }
+            if (node instanceof Element && node.name === 'a') {
+              const href = node.attribs?.href || '#';
+              return (
+                <a href={href.replace(siteConfig.wordpressUrl, frontendBase)} className="fb-related-link">
+                  {domToReact(node.children as unknown as DOMNode[])}
+                </a>
+              );
+            }
+            return undefined;
+          },
+        };
 
-          // Style and normalize custom related-links block coming from WP
-          if (
-            domNode instanceof Element &&
-            domNode.name === 'div' &&
-            domNode.attribs &&
-            (domNode.attribs.class || '').split(' ').includes('gpbot-related')
-          ) {
-            const relatedOptions: HTMLReactParserOptions = {
-              replace: (node) => {
-                if (node instanceof Element && node.name === 'h3') {
-                  return (
-                    <h2 className="text-center mb-6 text-2xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-200 bg-clip-text text-transparent uppercase tracking-wide">
-                      ⚡ {domToReact(node.children as unknown as DOMNode[])} ⚡
-                    </h2>
-                  );
-                }
-                if (node instanceof Element && node.name === 'ul') {
-                  return (
-                    <div className="space-y-3">
-                      {domToReact(node.children as unknown as DOMNode[], relatedOptions)}
-                    </div>
-                  );
-                }
-                if (node instanceof Element && node.name === 'li') {
-                  return <>{domToReact(node.children as unknown as DOMNode[], relatedOptions)}</>;
-                }
-                if (node instanceof Element && node.name === 'a') {
-                  const href = node.attribs?.href || '#';
-                  const normalized = href.replace(siteConfig.wordpressUrl, frontendBase);
-                  const slug = (() => {
-                    try { const u = new URL(href); return u.pathname.replace(/^\//,'').replace(/\/$/,''); } catch { return href.replace(/^https?:\/\/[^/]+\//,'').replace(/\/$/,''); }
-                  })();
-                  const mini = miniPosts[slug];
-                  const titleFallback = String(domToReact(node.children as unknown as DOMNode[]));
-                  return (
-                    <a 
-                      href={normalized} 
-                      className="group flex items-center gap-4 py-3 px-4 rounded-lg bg-white/5 hover:bg-yellow-400/10 hover:translate-x-2 transition-all duration-300" 
-                      rel="noopener"
-                      style={{ textDecoration: 'none', color: 'inherit' }}
-                    >
-                      {/* Thumbnail */}
-                      {mini?.image && (
-                        <div className="relative h-full w-32 flex-shrink-0 rounded overflow-hidden self-stretch my-[-0.75rem]">
-                          <Image 
-                            src={mini.image} 
-                            alt={mini.title || titleFallback} 
-                            fill 
-                            sizes="128px" 
-                            className="object-cover group-hover:brightness-110 transition-all duration-300" 
-                          />
-                        </div>
-                      )}
-                      
-                      {/* Title */}
-                      <span className="flex-1 text-lg text-white group-hover:text-yellow-400 transition-colors duration-300">
-                        {mini?.title || titleFallback}
-                      </span>
-                    </a>
-                  );
-                }
-                return undefined;
-              },
-            };
+        return (
+          <section className="not-prose fb-related">
+            {domToReact(domNode.children as unknown as DOMNode[], relatedOptions)}
+          </section>
+        );
+      }
+    },
+  };
 
-            return (
-              <section className="not-prose my-8">
-                <div className="bg-gray-900 p-8 rounded-2xl border-l-6 border-yellow-400 shadow-2xl">
-                  {domToReact(domNode.children as unknown as DOMNode[], relatedOptions)}
-                </div>
-              </section>
-            );
-          }
-       },
-     };
+  // Sanitize malformed HTML tags from WordPress (e.g. "emvisual<")
+  // that would crash html-react-parser with "Invalid tag" errors.
+  const sanitized = stripDocumentTagsFromHtml(content)
+    .replace(/<([a-zA-Z]+[^>]*)<(?=[^!])/g, '&lt;$1&lt;') // fix tags containing stray '<'
+    .replace(/<(?![a-zA-Z/!])/g, '&lt;') // fix lone '<' not followed by valid tag start
+    // Convert [pokemon:name] shortcodes to HTML elements for the parser
+    .replace(/\[pokemon:([a-zA-Z0-9-]+)\]/gi, '<div class="fb-pokemon" data-name="$1"></div>');
 
-     // Sanitize malformed HTML tags from WordPress (e.g. "emvisual<")
-     // that would crash html-react-parser with "Invalid tag" errors.
-     const sanitized = stripDocumentTagsFromHtml(content)
-       .replace(/<([a-zA-Z]+[^>]*)<(?=[^!])/g, '&lt;$1&lt;')  // fix tags containing stray '<'
-       .replace(/<(?![a-zA-Z/!])/g, '&lt;')  // fix lone '<' not followed by valid tag start
-       // Convert [pokemon:name] shortcodes to HTML elements for the parser
-       .replace(
-         /\[pokemon:([a-zA-Z0-9-]+)\]/gi,
-         '<div class="fb-pokemon" data-name="$1"></div>'
-       );
+  if (bare) {
+    return <>{parse(sanitized, options)}</>;
+  }
 
-     if (bare) {
-       return <>{parse(sanitized, options)}</>;
-     }
-
-     return (
-       <div className="prose prose-invert max-w-none" suppressHydrationWarning>
-         {parse(sanitized, options)}
-       </div>
-  );
+  return <div className="prose prose-invert max-w-none">{parse(sanitized, options)}</div>;
 }

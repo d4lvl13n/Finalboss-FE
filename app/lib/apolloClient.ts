@@ -13,7 +13,7 @@ const isServer = typeof window === 'undefined';
 const GRAPHQL_ENDPOINT = isLocalDev && !isServer
   ? '/api/wordpress-proxy' // Client-side relative URL is fine
   : isLocalDev && isServer
-  ? 'http://localhost:3000/api/wordpress-proxy' // Server-side needs absolute URL
+  ? `http://localhost:${process.env.PORT || 3000}/api/wordpress-proxy` // Server-side needs absolute URL (Next sets PORT in dev)
   : `${siteConfig.wordpressUrl}/graphql`;
 
 const httpLink = createHttpLink({

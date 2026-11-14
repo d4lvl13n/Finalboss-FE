@@ -16,6 +16,7 @@ export const GET_TECH_ARTICLES = gql`
         featuredImage {
           node {
             sourceUrl
+            thumb: sourceUrl(size: MEDIUM_LARGE)
           }
         }
         author {

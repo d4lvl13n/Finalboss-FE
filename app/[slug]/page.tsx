@@ -2,6 +2,7 @@ import { GET_POST_BY_SLUG, GET_POST_BY_SLUG_WITH_TAGS } from '../lib/queries/get
 import { gql } from '@apollo/client';
 import client from '../lib/apolloClient';
 import ArticleContent from '../components/Article/ArticleContent';
+import { getArticleExtras } from '../lib/articleExtras';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Header from '../components/Header';
@@ -250,6 +251,17 @@ export default async function ArticlePage({ params }: PageProps) {
     }
   }
 
+  // Related content, fetched here on the server so the links are in the HTML
+  // (they used to be loaded by Apollo in the reader's browser). Never throws.
+  const extras = await getArticleExtras({
+    id: article.id,
+    slug: article.slug,
+    date: article.date,
+    categoryId: article.categories?.nodes?.[0]?.databaseId,
+    authorId: article.author?.node?.databaseId,
+    gameSlug: article.gameTags?.nodes?.[0]?.slug,
+  });
+
   // Category-aware structured data: Review (with a real rating) for reviews,
   // NewsArticle for news, Article otherwise — so Google treats each type correctly
   // and we only claim rich-result schema we actually back with on-page data.
@@ -389,7 +401,7 @@ export default async function ArticlePage({ params }: PageProps) {
           }),
         }}
       />
-      <ArticleContent article={article} />
+      <ArticleContent article={article} extras={extras} />
       <Footer />
     </>
   );

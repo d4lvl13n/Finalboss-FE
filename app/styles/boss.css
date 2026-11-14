@@ -1,0 +1,174 @@
+/* FinalBoss redesign — article page.
+   Everything is scoped to .fb-article so routes that still use the old look
+   are untouched. No JavaScript: the health bar is a CSS scroll-driven animation. */
+
+.fb-article {
+  background: var(--night);
+  color: var(--bone);
+  font-family: var(--font-text), system-ui, sans-serif;
+}
+
+/* ---------- lead ---------- */
+/* Phones: a solid brand-yellow slab, no image (the title is the largest
+   element, so first paint does not wait on a download). 640px and up: the
+   cover art fills the band with the title over it. */
+.fb-lead { position: relative; background: var(--gold); color: var(--ink); padding-top: var(--top-h); }
+.fb-lead-bg { display: none; }
+.fb-lead-in { position: relative; z-index: 1; padding-top: 14px; padding-bottom: 26px; }
+.fb-lead nav, .fb-lead nav a, .fb-lead nav span, .fb-lead nav svg { color: inherit; }
+.fb-lead h1 {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(28px, 5vw, 68px);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  margin: 14px 0 16px;
+  max-width: 19ch;
+  text-wrap: balance;
+}
+.fb-dek { font-size: 18px; line-height: 1.45; font-weight: 500; max-width: 58ch; margin: 0 0 16px; }
+.fb-byline { display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 14px; font-weight: 600; }
+.fb-byline a { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (min-width: 640px) {
+  .fb-lead { background: var(--pit); color: var(--bone); }
+  .fb-lead-art { min-height: clamp(420px, 58vh, 600px); display: flex; align-items: flex-end; overflow: hidden; }
+  .fb-lead-art .fb-lead-in { width: 100%; }
+  .fb-lead-bg { display: block; position: absolute; inset: 0; view-transition-name: cover; }
+  .fb-lead-bg img { width: 100%; height: 100%; object-fit: cover; }
+  .fb-lead-art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, var(--night) 2%, rgba(23, 17, 43, 0.72) 45%, rgba(23, 17, 43, 0.15) 85%);
+  }
+  .fb-lead-art h1 { text-shadow: 0 3px 0 #000; }
+  .fb-lead-art .fb-dek, .fb-lead-art .fb-byline, .fb-lead-art nav { text-shadow: 0 1px 0 #000; }
+  .fb-dek { font-size: 21px; }
+  .fb-byline a { color: var(--gold); text-decoration: none; }
+  .fb-byline { font-size: 15px; font-weight: 500; }
+}
+
+/* ---------- boss health bar ---------- */
+@property --life { syntax: '<integer>'; inherits: true; initial-value: 100; }
+.fb-fight { position: sticky; top: var(--top-h); z-index: 30; background: var(--pit); border-bottom: 2px solid var(--line); padding: 10px 0; }
+.fb-boss { font-variant-numeric: tabular-nums; display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; font-family: var(--font-hud), ui-monospace, monospace; font-size: 14px; font-weight: 700; line-height: 1; }
+.fb-boss-name { display: none; color: var(--gold); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 32ch; }
+@media (min-width: 640px) {
+  .fb-boss:has(.fb-boss-name) { grid-template-columns: auto 1fr auto; }
+  .fb-boss-name { display: block; }
+}
+.fb-bar { position: relative; height: 16px; background: #000; border: 2px solid var(--bone); }
+.fb-fill { position: absolute; inset: 0; background: var(--red); transform-origin: left center; }
+.fb-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0, transparent calc(100% / var(--phases, 6) - 2px), #000 calc(100% / var(--phases, 6) - 2px), #000 calc(100% / var(--phases, 6)));
+}
+.fb-hp { min-width: 68px; text-align: right; }
+.fb-hp::after { content: "HP 100%"; }
+@supports (animation-timeline: scroll()) {
+  .fb-fight, .fb-bar, .fb-hp::after {
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: scroll(root);
+    /* Ends a little before the bottom of the page: the footer and reading
+       list should not count as "the fight". */
+    animation-range: 0 calc(100% - 1400px);
+  }
+  .fb-fight { animation-name: fb-drain; }
+  .fb-bar { animation-name: fb-track; }
+  .fb-fill { transform: scaleX(calc(var(--life) / 100)); }
+  .fb-hp::after { counter-reset: hp var(--life); content: "HP " counter(hp) "%"; animation-name: fb-label; }
+}
+@keyframes fb-drain { from { --life: 100; } to { --life: 0; } }
+@keyframes fb-track { 0%, 99.7% { background: #000; } 100% { background: var(--win); } }
+@keyframes fb-label { 0%, 99.7% { color: var(--bone); } 100% { color: var(--win); } }
+
+/* ---------- three-column layout ---------- */
+.fb-cols { display: flex; justify-content: center; gap: 48px; max-width: 1400px; margin: 0 auto; }
+.fb-rail { width: 220px; flex-shrink: 0; padding-top: 28px; }
+.fb-rail .article-toc h2 { font-family: var(--font-hud), monospace; font-size: 16px; font-weight: 700; color: var(--fog); margin: 0 0 10px; letter-spacing: 0; }
+.fb-rail .article-toc a { display: block; padding: 6px 0 6px 14px; border-left: 3px solid var(--line); color: var(--fog); font-size: 14px; line-height: 1.35; }
+.fb-rail .article-toc a:hover { color: var(--gold); border-color: var(--gold); }
+.fb-rail .article-toc li { padding-left: 0 !important; }
+.fb-rail .sticky { max-height: calc(100vh - 120px); overflow-y: auto; }
+
+/* ---------- article body ---------- */
+.fb-article .prose { color: var(--bone); font-family: var(--font-text), system-ui, sans-serif; }
+.fb-article .prose p { line-height: 1.7; margin-bottom: 1.25em; }
+.fb-article .prose h2 {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: var(--bone);
+  border-top: 6px solid var(--gold);
+  padding-top: 0.55em;
+  margin: 2.2em 0 0.7em;
+}
+.fb-article .prose h3 { font-family: var(--font-text), system-ui, sans-serif; font-weight: 700; font-size: 1.3rem; letter-spacing: 0; color: var(--gold); }
+.fb-article .prose h4 { font-family: var(--font-text), system-ui, sans-serif; font-weight: 700; letter-spacing: 0; color: var(--bone); }
+.fb-article .prose a { color: var(--gold); text-decoration-thickness: 1px; }
+.fb-article .prose a:hover { color: #fff; }
+.fb-article .prose strong, .fb-article .prose b { color: #fff; }
+.fb-article .prose blockquote { border-left: 8px solid var(--red); background: var(--stone); padding: 16px 20px; font-style: normal; }
+.fb-article .prose code { background: var(--stone); }
+.fb-article .prose pre { background: var(--pit); }
+.fb-article .prose img { border-radius: 0; }
+.fb-article .prose table { border-collapse: collapse; font-size: 0.92em; }
+.fb-article .prose th { text-align: left; font-family: var(--font-hud), monospace; font-weight: 700; color: var(--gold); padding: 10px 14px; border-bottom: 2px solid var(--gold); }
+.fb-article .prose td { padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.fb-article #article-body .fb-quick-answer { background: var(--gold); color: var(--ink); border: 0; padding: 24px 26px; margin: 0 0 30px; clip-path: var(--notch); font-weight: 600; }
+.fb-article #article-body .fb-quick-answer :is(a, strong, b) { color: var(--ink); }
+.fb-article .article-toc summary { color: var(--gold); }
+.fb-article details.article-toc { border-color: var(--line); }
+.fb-article .prose .custom-pros-cons .pros-section, .fb-article .prose .custom-pros-cons .cons-section { background: var(--stone); border-color: var(--line); border-radius: 0; }
+
+/* WordPress "related links" block inside the article */
+.fb-related { margin: 2em 0; padding: 22px 24px; background: var(--stone); clip-path: var(--notch); }
+.fb-related-title { font-family: var(--font-display), system-ui, sans-serif; font-weight: 400; font-size: 20px; margin: 0 0 10px; }
+.fb-related-link { display: block; padding: 11px 0; border-top: 1px solid var(--line); font-weight: 600; font-size: 17px; line-height: 1.3; color: var(--bone); text-decoration: none; }
+.fb-related-link:hover { color: var(--gold); }
+
+/* ---------- end panel ---------- */
+.fb-win { margin-top: 48px; background: var(--stone); clip-path: var(--notch); padding: 28px 26px 22px; border-top: 8px solid var(--win); }
+.fb-win > h2 { font-family: var(--font-display), system-ui, sans-serif; font-weight: 400; font-size: 28px; line-height: 1.1; color: var(--win); margin: 0 0 4px; letter-spacing: 0; }
+.fb-win > p { color: var(--fog); font-size: 16px; margin: 0 0 14px; }
+.fb-next { margin-top: 18px; }
+.fb-next a { display: block; padding: 13px 0; border-top: 1px solid var(--line); font-weight: 600; font-size: 17px; line-height: 1.3; }
+.fb-next a:hover { color: var(--gold); }
+.fb-source { margin: 28px 0 0; }
+.fb-author { display: flex; align-items: center; gap: 12px; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); font-size: 14px; }
+.fb-author a { color: var(--gold); font-weight: 600; }
+.fb-author-badge { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: var(--stone); clip-path: var(--notch); font-family: var(--font-display), sans-serif; }
+.fb-author-dates { color: var(--fog); }
+
+/* ---------- right rail ---------- */
+.fb-side { border-top: 6px solid var(--gold); padding-top: 12px; }
+.fb-side h2 { font-family: var(--font-display), system-ui, sans-serif; font-weight: 400; font-size: 18px; letter-spacing: 0; margin: 0 0 6px; }
+.fb-side a { display: block; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15px; font-weight: 600; line-height: 1.3; }
+.fb-side a:hover { color: var(--gold); }
+
+/* ---------- reading list under the article ---------- */
+.fb-more { background: var(--pit); border-top: 2px solid var(--line); padding: 56px 0 72px; margin-top: 56px; }
+.fb-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 26px 22px; margin-bottom: 52px; }
+.fb-card { display: block; }
+.fb-card-art { display: block; position: relative; aspect-ratio: 16 / 9; background: var(--stone); clip-path: var(--notch); overflow: hidden; margin-bottom: 12px; }
+.fb-card-meta { display: flex; gap: 12px; align-items: center; font-size: 13px; color: var(--fog); margin-bottom: 4px; }
+.fb-card h3 { font-family: var(--font-text), system-ui, sans-serif; font-size: 18px; font-weight: 600; line-height: 1.25; letter-spacing: 0; margin: 0; }
+.fb-card:hover h3 { color: var(--gold); }
+.fb-seq { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 52px; }
+@media (min-width: 768px) { .fb-seq { grid-template-columns: 1fr 1fr; } }
+.fb-seq-link { display: block; background: var(--stone); padding: 18px 20px; clip-path: var(--notch); }
+.fb-seq-link span { display: block; font-family: var(--font-hud), monospace; font-size: 15px; color: var(--fog); margin-bottom: 4px; }
+.fb-seq-link strong { font-weight: 600; line-height: 1.3; }
+.fb-seq-link:hover strong { color: var(--gold); }
+.fb-seq-next { text-align: right; }
+.fb-more-empty p { color: var(--fog); margin: 0 0 20px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-fight, .fb-bar, .fb-hp::after { animation: none !important; }
+}

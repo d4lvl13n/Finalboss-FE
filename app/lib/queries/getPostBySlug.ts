@@ -25,6 +25,7 @@ const POST_FIELDS = `
   author {
     node {
       id
+      databaseId
       name
       slug
       description
@@ -36,6 +37,7 @@ const POST_FIELDS = `
   categories {
     nodes {
       id
+      databaseId
       name
       slug
     }

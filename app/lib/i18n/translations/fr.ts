@@ -2,6 +2,15 @@
 // Keys mirror en.ts; values are TODO placeholders until real translation.
 export const fr = {
   // ─── Navigation & Header ───
+  boss: {
+    today: "Aujourd'hui sur {name}",
+    comingNext: "Prochaines sorties",
+    calendar: "Ouvrir le calendrier des sorties",
+    day: "jour",
+    days: "jours",
+    watch: "Regarder",
+    newsletter: "Un e-mail par semaine. Seulement ce qui vaut votre temps.",
+  },
   nav: {
     news: 'Actualités',
     reviews: 'Tests',
@@ -132,6 +141,8 @@ export const fr = {
   // ─── Article ───
   article: {
     minRead: 'min de lecture',
+    bossCleared: 'Boss vaincu',
+    bossClearedSub: 'Vous êtes arrivé au bout.',
     adLabel: 'Publicité',
     publishedOn: 'Publié le {date}',
     updatedOn: 'Mis à jour le {date}',

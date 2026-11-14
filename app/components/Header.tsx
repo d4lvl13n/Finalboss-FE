@@ -1,36 +1,10 @@
-'use client';
-
-import React, { useState, useEffect, useRef, ReactNode } from 'react';
-import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
-import { GiGamepadCross } from 'react-icons/gi';
-import { FaSearch, FaTimes, FaBars } from 'react-icons/fa';
-import { useSearch } from './Search/SearchContext';
 import siteConfig from '../lib/siteConfig';
 import { t } from '../lib/i18n';
 import { TOTK_BUILDS_PATH } from '../lib/totk-builds/types';
 import { RECIPES_PATH } from '../lib/totk-recipes/types';
-
-interface MenuItemProps {
-  href: string;
-  children: ReactNode;
-  onClick?: () => void;
-}
-
-const MenuItem: React.FC<MenuItemProps> = ({ href, children, onClick }) => (
-  <motion.div
-    whileHover={{ scale: 1.02 }}
-    whileTap={{ scale: 0.98 }}
-  >
-    <Link prefetch={false} href={href} onClick={onClick}>
-      <span className="block text-white text-xl font-medium hover:text-yellow-400 transition-colors py-3 px-4 rounded-lg hover:bg-white/5 active:bg-white/10">
-        {children}
-      </span>
-    </Link>
-  </motion.div>
-);
+import SearchButton from './Search/SearchButton';
 
 const navItems = [
   { name: t('nav.news'), href: '/gaming' },
@@ -44,323 +18,54 @@ const navItems = [
   { name: t('nav.team'), href: '/authors' },
 ];
 
-const SCROLL_IDLE_TOP = 24;
-const SCROLL_DIRECTION_EPS = 6;
+const moreItems = [
+  { name: t('nav.allArticles'), href: '/articles' },
+  { name: t('nav.totkBuilds'), href: TOTK_BUILDS_PATH },
+  { name: t('nav.totkRecipes'), href: RECIPES_PATH },
+  { name: t('nav.writeForUs'), href: '/write-for-us' },
+  { name: t('nav.aboutUs'), href: '/about' },
+  { name: t('nav.contact'), href: '/contact' },
+];
 
-const Header: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isHeaderHidden, setHeaderHidden] = useState(false);
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isMegaMenuOpen, setMegaMenuOpen] = useState(false);
-  // Portal target only exists client-side; render the overlay after mount.
-  const [isMounted, setIsMounted] = useState(false);
-  useEffect(() => setIsMounted(true), []);
-  const { openSearch } = useSearch();
-  const menuRef = useRef<HTMLDivElement>(null);
-  const lastScrollY = useRef(0);
-
-  useEffect(() => {
-    lastScrollY.current = window.scrollY;
-  }, []);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      setIsScrolled(y > 80);
-
-      if (isMobileMenuOpen || isMegaMenuOpen) {
-        setHeaderHidden(false);
-        lastScrollY.current = y;
-        return;
-      }
-
-      const prev = lastScrollY.current;
-      const delta = y - prev;
-
-      if (y <= SCROLL_IDLE_TOP) {
-        setHeaderHidden(false);
-      } else if (delta > SCROLL_DIRECTION_EPS) {
-        setHeaderHidden(true);
-      } else if (delta < -SCROLL_DIRECTION_EPS) {
-        setHeaderHidden(false);
-      }
-
-      lastScrollY.current = y;
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [isMobileMenuOpen, isMegaMenuOpen]);
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isMobileMenuOpen]);
-
-  const toggleMegaMenu = () => setMegaMenuOpen(!isMegaMenuOpen);
-  const toggleMobileMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
-  const closeMobileMenu = () => setMobileMenuOpen(false);
-
+/**
+ * Site header. Plain HTML and CSS: every link is in the markup, and the phone
+ * menu is a native <details> element, so it opens with no JavaScript at all.
+ * The only interactive piece is the search button (a tiny client component).
+ *
+ * This used to be a client component with scroll listeners, a portal and
+ * framer-motion — which put the animation library in every page's bundle.
+ */
+export default function Header() {
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-[transform,background-color,box-shadow,backdrop-filter] duration-300 ease-out ${
-        isScrolled ? 'bg-gray-900/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
-      } ${isHeaderHidden ? '-translate-y-full pointer-events-none' : 'translate-y-0 pointer-events-auto'}`}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center py-4">
-          {/* Desktop: Mega Menu Button */}
-          <motion.button
-            whileHover={{ scale: 1.1, rotate: 180 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={toggleMegaMenu}
-            className="hidden md:block text-futuristic-blue z-50 mr-4"
-          >
-            {isMegaMenuOpen ? <FaTimes size={28} /> : <GiGamepadCross size={28} />}
-          </motion.button>
-          
-          {/* Mobile: Hamburger Menu Button */}
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={toggleMobileMenu}
-            className="md:hidden text-white z-50 mr-4 p-2 -ml-2"
-            aria-label={t('nav.toggleMenu')}
-          >
-            {isMobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-          </motion.button>
-          
-          <Link prefetch={false} href="/">
-            <Image src={siteConfig.logoPath} width={120} height={40} alt={siteConfig.name} />
-          </Link>
-          
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 ml-8">
-            {navItems.map((item) => (
-              <Link prefetch={false}
-                key={item.name} 
-                href={item.href}
-                className="px-3 py-2 text-sm font-medium text-gray-300 hover:text-yellow-400 transition-colors rounded-lg hover:bg-white/5"
-              >
+    <header className="fb-top">
+      <div className="fb-top-in">
+        <details className="fb-menu">
+          <summary aria-label={t('a11y.menu') === 'a11y.menu' ? 'Menu' : t('a11y.menu')}>
+            <span aria-hidden="true" />
+          </summary>
+          <nav className="fb-menu-panel" aria-label="Menu">
+            {[...navItems, ...moreItems].map((item) => (
+              <Link prefetch={false} key={item.href} href={item.href}>
                 {item.name}
               </Link>
             ))}
           </nav>
-          
-          <div className="ml-auto flex items-center gap-4">
-            <motion.button 
-              onClick={openSearch}
-              className="text-white hover:text-yellow-400 transition-colors p-2"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              aria-label={t('nav.openSearch')}
-            >
-              <FaSearch size={20} />
-            </motion.button>
-          </div>
-        </div>
+        </details>
+
+        <Link prefetch={false} href="/" className="fb-logo">
+          <Image src={siteConfig.logoPath} width={120} height={40} alt={siteConfig.name} priority />
+        </Link>
+
+        <nav className="fb-nav" aria-label="Main">
+          {navItems.map((item) => (
+            <Link prefetch={false} key={item.href} href={item.href}>
+              {item.name}
+            </Link>
+          ))}
+        </nav>
+
+        <SearchButton label={t('nav.openSearch')} />
       </div>
-
-      {/* Mobile Menu Overlay.
-          Rendered through a portal to <body>: the header always carries a
-          translate-y transform (hide-on-scroll), and a transformed ancestor
-          becomes the containing block for position:fixed — inside the header,
-          the panel's h-full resolved to the header bar's ~70px height, which
-          is the long-standing "menu opens inside the header" mobile bug. */}
-      {isMounted && createPortal(
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/60 z-[9998] md:hidden"
-              onClick={closeMobileMenu}
-            />
-            
-            {/* Mobile Menu Panel */}
-            <motion.div
-              initial={{ x: '-100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="fixed top-0 left-0 h-full w-[280px] bg-gray-900 z-[9999] md:hidden overflow-y-auto"
-            >
-              <div className="flex flex-col h-full">
-                {/* Mobile Menu Header */}
-                <div className="flex items-center justify-between p-4 border-b border-gray-800">
-                  <Image src={siteConfig.logoPath} width={100} height={33} alt={siteConfig.name} />
-                  <button 
-                    onClick={closeMobileMenu}
-                    className="p-2 text-gray-400 hover:text-white transition-colors"
-                  >
-                    <FaTimes size={20} />
-                  </button>
-                </div>
-                
-                {/* Mobile Menu Navigation */}
-                <nav className="flex-1 py-4">
-                  {/* No per-item opacity animation: iOS Safari's compositor can
-                      stall animations inside a transform-animated fixed panel,
-                      leaving items stuck invisible (the long-standing "empty
-                      mobile menu" bug — same reason the panel itself must not
-                      combine backdrop-blur with the slide-in transform). */}
-                  {navItems.map((item) => (
-                    <MenuItem key={item.name} href={item.href} onClick={closeMobileMenu}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </nav>
-                
-                {/* Mobile Menu Footer */}
-                <div className="p-4 border-t border-gray-800 space-y-3">
-                  <Link prefetch={false} href={TOTK_BUILDS_PATH} onClick={closeMobileMenu} className="block py-2 text-sm text-yellow-400 hover:text-yellow-300">
-                    {t('nav.totkBuilds')}
-                  </Link>
-                  <Link prefetch={false} href={RECIPES_PATH} onClick={closeMobileMenu} className="block py-2 text-sm text-yellow-400 hover:text-yellow-300">
-                    {t('nav.totkRecipes')}
-                  </Link>
-                  <Link prefetch={false}
-                    href="/write-for-us"
-                    onClick={closeMobileMenu}
-                    className="block text-sm text-gray-400 hover:text-yellow-400 transition-colors py-2"
-                  >
-                    {t('nav.writeForUs')}
-                  </Link>
-                  <Link prefetch={false}
-                    href="/contact"
-                    onClick={closeMobileMenu}
-                    className="block text-sm text-gray-400 hover:text-yellow-400 transition-colors py-2"
-                  >
-                    {t('nav.contact')}
-                  </Link>
-                </div>
-              </div>
-              
-              {/* Accent Line */}
-              <motion.div 
-                className="absolute top-0 right-0 w-1 h-full bg-gradient-to-b from-yellow-400 via-orange-500 to-red-500"
-                initial={{ scaleY: 0 }}
-                animate={{ scaleY: 1 }}
-                transition={{ duration: 0.4, delay: 0.1 }}
-              />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>,
-      document.body)}
-
-      <AnimatePresence>
-        {isMegaMenuOpen && (
-          <motion.div
-            ref={menuRef}
-            className="fixed top-0 left-0 h-screen w-full max-w-md bg-black bg-opacity-90 backdrop-blur-lg text-white p-8 shadow-lg overflow-y-auto"
-            initial={{ x: '-100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          >
-            <div className="h-full flex flex-col">
-              <div className="mb-8">
-                <Image src={siteConfig.logoPath} width={150} height={50} alt={siteConfig.name} />
-              </div>
-              
-              <nav className="flex-grow">
-                <MenuItem href="/gaming">
-                  {t('nav.news')}
-                </MenuItem>
-                <MenuItem href="/games">
-                  {t('nav.games')}
-                </MenuItem>
-                {[
-                  { key: 'nav.reviews', href: '/reviews' },
-                  { key: 'nav.laptops', href: '/gaming-laptops' },
-                  { key: 'nav.laptopGuides', href: '/gaming-laptops/guides' },
-                  { key: 'nav.laptopGlossary', href: '/gaming-laptops/glossary' },
-                  { key: 'nav.handhelds', href: '/handhelds' },
-                  { key: 'nav.handheldCompare', href: '/handhelds/compare' },
-                  { key: 'nav.handheldGuides', href: '/handhelds/guides' },
-                  { key: 'nav.handheldGlossary', href: '/handhelds/glossary' },
-                  { key: 'nav.guides', href: '/guides' },
-                  { key: 'nav.videos', href: '/videos' },
-                  { key: 'nav.technology', href: '/technology' },
-                ].map((item) => (
-                  <MenuItem key={item.href} href={item.href}>
-                    {t(item.key)}
-                  </MenuItem>
-                ))}
-                <MenuItem href={TOTK_BUILDS_PATH}>
-                  {t('nav.totkBuilds')}
-                </MenuItem>
-                <MenuItem href={RECIPES_PATH}>
-                  {t('nav.totkRecipes')}
-                </MenuItem>
-                <MenuItem href="/articles">
-                  {t('nav.allArticles')}
-                </MenuItem>
-                <MenuItem href="/authors">
-                  {t('nav.team')}
-                </MenuItem>
-              </nav>
-              
-              <div className="space-y-12 mb-12">
-                <div className="relative">
-                  <input
-                    type="text"
-                    className="w-full p-3 pl-10 rounded-full bg-gray-800 text-white border-2 border-futuristic-blue focus:outline-none"
-                    placeholder={t('nav.searchPlaceholder')}
-                  />
-                  <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-futuristic-blue" size={18} />
-                </div>
-                <Link prefetch={false} href="/login">
-                  <motion.button
-                    className="w-full bg-futuristic-blue text-black px-4 py-3 rounded-full font-semibold hover:bg-white hover:text-black transition-colors"
-                    whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(0, 191, 255, 0.5)' }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    {t('nav.login')}
-                  </motion.button>
-                </Link>
-              </div>
-
-              <div className="flex justify-between text-sm">
-                {[
-                  { name: t('nav.writeForUs'), href: '/write-for-us' },
-                  { name: t('nav.aboutUs'), href: '/about' },
-                  { name: t('nav.contact'), href: '/contact' }
-                ].map((item) => (
-                  <Link prefetch={false} key={item.name} href={item.href}>
-                    <motion.span 
-                      className="text-gray-400 hover:text-futuristic-blue transition-colors p-2 rounded-lg hover:bg-gray-800 active:bg-gray-700"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      {item.name}
-                    </motion.span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-            <motion.div 
-              className="absolute top-0 right-0 w-1 h-full bg-gradient-to-b from-futuristic-blue via-purple-500 to-pink-500"
-              initial={{ scaleY: 0 }}
-              animate={{ scaleY: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
   );
-};
-
-export default Header;
+}

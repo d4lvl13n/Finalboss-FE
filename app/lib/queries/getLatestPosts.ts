@@ -13,6 +13,7 @@ export const GET_LATEST_POSTS = gql`
         featuredImage {
           node {
             sourceUrl
+            thumb: sourceUrl(size: MEDIUM_LARGE)
           }
         }
         categories {

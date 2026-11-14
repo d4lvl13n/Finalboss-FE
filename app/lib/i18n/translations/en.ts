@@ -1,5 +1,14 @@
 export const en = {
   // ─── Navigation & Header ───
+  boss: {
+    today: "Today on {name}",
+    comingNext: "Coming out next",
+    calendar: "Open the release calendar",
+    day: "day",
+    days: "days",
+    watch: "Watch",
+    newsletter: "One email a week. Only what is worth your time.",
+  },
   nav: {
     news: 'News',
     reviews: 'Reviews',
@@ -130,6 +139,8 @@ export const en = {
   // ─── Article ───
   article: {
     minRead: 'min read',
+    bossCleared: 'Boss cleared',
+    bossClearedSub: 'You made it to the end.',
     adLabel: 'Advertisement',
     publishedOn: 'Published {date}',
     updatedOn: 'Updated {date}',

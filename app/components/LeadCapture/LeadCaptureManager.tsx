@@ -1,30 +1,11 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import ExitIntentModal from './ExitIntentModal';
-import SlideInCTA from './SlideInCTA';
-import { useLeadTrigger } from './useLeadTrigger';
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
 
-const DesktopLeadCapture: React.FC = () => {
-  const { triggered, dismiss } = useLeadTrigger({
-    minTimeOnPage: 5,
-    scrollThreshold: 0.45,
-    timeThreshold: 25,
-  });
-
-  // exit-intent & scroll → full modal (high-intent moments)
-  // time → less intrusive slide-in
-  const showModal = triggered === 'exit-intent' || triggered === 'scroll';
-  const showSlideIn = triggered === 'time';
-
-  return (
-    <AnimatePresence>
-      {showModal && <ExitIntentModal onClose={dismiss} />}
-      {showSlideIn && <SlideInCTA onClose={dismiss} />}
-    </AnimatePresence>
-  );
-};
+// The pop-ups use framer-motion. They only ever show on wide, mouse-driven
+// screens, so the code is fetched there and only there — phones never download it.
+const DesktopLeadCapture = dynamic(() => import('./DesktopLeadCapture'), { ssr: false });
 
 // Mount the trigger only for a wide, fine-pointer device. Hiding its markup
 // with CSS would still start timers and consume the signup cooldown on phones.

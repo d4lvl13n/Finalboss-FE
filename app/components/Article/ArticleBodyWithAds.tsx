@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import TableOfContents from './TableOfContents';
 import { Element, htmlToDOM, type DOMNode } from 'html-react-parser';
@@ -13,7 +11,7 @@ import { stripDocumentTagsFromHtml } from '../../lib/wpContent';
 
 interface ArticleBodyWithAdsProps {
   content: string;
-  sourceSansClassName: string;
+  sourceSansClassName?: string;
   articleTitle: string;
   categoryName: string;
 }
@@ -30,7 +28,7 @@ const AD_EVERY_N_SECTIONS = 3;
  */
 export default function ArticleBodyWithAds({
   content,
-  sourceSansClassName,
+  sourceSansClassName = '',
   articleTitle,
   categoryName,
 }: ArticleBodyWithAdsProps) {
@@ -82,7 +80,7 @@ export default function ArticleBodyWithAds({
     return (
       // Keep the live Journey selector (.flex-1.min-w-0.max-w-3xl) on
       // the prose itself until the dashboard can target #article-body.
-      <div id="article-body" className={`${proseClass} flex-1 min-w-0`} suppressHydrationWarning>
+      <div id="article-body" className={`${proseClass} flex-1 min-w-0`}>
         {!hasIntro && contents}
         {sections.map((sectionHtml, i) => (
           <React.Fragment key={i}>

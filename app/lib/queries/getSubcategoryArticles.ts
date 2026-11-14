@@ -11,11 +11,14 @@ export const GET_SUBCATEGORY_ARTICLES = gql`
         title
         slug
         excerpt
+        date
         featuredImage {
           node {
             sourceUrl
+            thumb: sourceUrl(size: MEDIUM_LARGE)
           }
         }
+        categories { nodes { name slug } }
       }
       pageInfo {
         hasNextPage

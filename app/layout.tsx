@@ -1,12 +1,13 @@
 import './globals.css';
-import { Inter, Space_Grotesk } from 'next/font/google';
+import './styles/site.css';
+import { Dela_Gothic_One, Instrument_Sans } from 'next/font/google';
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import RouteLoader from './components/RouteLoader';
 import { Analytics } from '@vercel/analytics/next';
 import { SearchProvider } from './components/Search/SearchContext';
-import SearchOverlay from './components/Search/SearchOverlay';
+import SearchOverlayLazy from './components/Search/SearchOverlayLazy';
 import LeadCaptureManager from './components/LeadCapture/LeadCaptureManager';
 import AdScriptLoader from './components/AdSense/AdScriptLoader';
 import { ENABLE_AUTO_ADS } from './lib/adsConfig';
@@ -15,20 +16,24 @@ import GAPageviews from './components/GAPageviews';
 import MetaPixel from './components/MetaPixel';
 import siteConfig, { intlLocale } from './lib/siteConfig';
 
-// Optimize font loading
-const inter = Inter({
+// Two families for the whole site, self-hosted by next/font (no request to
+// Google at runtime). Body text is the variable Instrument Sans; display is
+// Dela Gothic One, used for page and section titles only.
+// Do NOT add Pixelify Sans via next/font/google: Google serves it from
+// extension-less "kit" URLs and the production build fails in the font loader.
+const bodyFont = Instrument_Sans({
   subsets: ['latin'],
   display: 'swap',
   preload: true,
-  variable: '--font-body'
+  variable: '--font-body',
 });
 
-const spaceGrotesk = Space_Grotesk({
+const headingFont = Dela_Gothic_One({
   subsets: ['latin'],
+  weight: '400',
   display: 'swap',
   preload: true,
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-heading'
+  variable: '--font-heading',
 });
 
 const websiteStructuredData = {
@@ -83,13 +88,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang={siteConfig.lang} className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang={siteConfig.lang} className={`${bodyFont.variable} ${headingFont.variable}`}>
       <head>
         {/* Preconnects for third-parties to reduce connection latency */}
         <link rel="preconnect" href={siteConfig.wordpressUrl} crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.googleapis.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
@@ -146,11 +149,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="font-body overflow-x-clip w-full">
         <div id="__content" className="overflow-x-clip w-full">
+          <span id="top" />
           <SearchProvider>
             <RouteLoader />
             <LeadCaptureManager />
             {children}
-            <SearchOverlay />
+            <SearchOverlayLazy />
             <BackToTop />
           </SearchProvider>
         </div>

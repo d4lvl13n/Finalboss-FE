@@ -15,6 +15,7 @@ export const GET_LATEST_GUIDES = gql`
         featuredImage {
           node {
             sourceUrl
+            thumb: sourceUrl(size: MEDIUM_LARGE)
           }
         }
       }

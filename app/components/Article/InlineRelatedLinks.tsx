@@ -1,58 +1,19 @@
-'use client';
-
 import Link from 'next/link';
-import Image from 'next/image';
-import { normalizeWordPressImageSrc } from '../../lib/imageUrl';
+import { t } from '../../lib/i18n';
 
-type InlineArticle = {
-  id: string;
-  title: string;
-  slug: string;
-  featuredImage?: {
-    node?: {
-      sourceUrl?: string;
-    };
-  };
-};
+type InlineArticle = { id: string; title: string; slug: string };
 
+/** "Next fights": the reading list inside the end-of-article panel. */
 export default function InlineRelatedLinks({ articles }: { articles: InlineArticle[] }) {
   if (!articles.length) return null;
 
   return (
-    <section className="not-prose my-10">
-      <div className="bg-gray-900/80 border border-yellow-400/30 rounded-2xl p-5 shadow-2xl">
-        <h2 className="text-center text-xl font-bold text-yellow-300 mb-4 tracking-wide">
-          ⚡ Keep Exploring ⚡
-        </h2>
-        <div className="space-y-3">
-          {articles.map((article) => {
-            const imageUrl = normalizeWordPressImageSrc(article.featuredImage?.node?.sourceUrl);
-
-            return (
-              <Link prefetch={false}
-                key={article.id}
-                href={`/${article.slug}`}
-                className="group flex items-center gap-4 rounded-xl bg-white/5 p-3 hover:bg-yellow-400/10 transition-colors"
-              >
-              {imageUrl && (
-                <div className="relative h-16 w-24 flex-shrink-0 overflow-hidden rounded-md">
-                  <Image
-                    src={imageUrl}
-                    alt={article.title}
-                    fill
-                    sizes="96px"
-                    className="object-cover group-hover:scale-105 transition-transform"
-                  />
-                </div>
-              )}
-              <span className="flex-1 text-base font-semibold text-white group-hover:text-yellow-300 transition-colors">
-                {article.title}
-              </span>
-            </Link>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+    <nav className="fb-next" aria-label={t('article.continueReading')}>
+      {articles.map((article) => (
+        <Link prefetch={false} key={article.id} href={`/${article.slug}`}>
+          {article.title}
+        </Link>
+      ))}
+    </nav>
   );
 }

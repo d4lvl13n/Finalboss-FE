@@ -1,6 +1,5 @@
-import GuideCategoryClient from '../../components/Guides/GuideCategoryClient';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import SectionPage from '../../components/Section/SectionPage';
+import type { SectionPost } from '../../lib/sectionQuery';
 import client from '../../lib/apolloClient';
 import { GET_SUBCATEGORY_ARTICLES } from '../../lib/queries/getSubcategoryArticles';
 import { buildPageMetadata } from '../../lib/seo';
@@ -10,18 +9,6 @@ import { permanentRedirect } from 'next/navigation';
 
 interface GuideCategoryProps {
   params: { slug: string };
-}
-
-interface GuideArticle {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  featuredImage?: {
-    node?: {
-      sourceUrl?: string;
-    };
-  };
 }
 
 const getCategory = cache(async (slug: string) => {
@@ -57,9 +44,7 @@ export const dynamic = 'force-static';
 export default async function GuideCategoryPage({ params }: GuideCategoryProps) {
   const baseUrl = siteConfig.url;
   const { title: titleFragment, posts } = await getCategory(params.slug);
-  const initialArticles: GuideArticle[] = posts.nodes;
-  const initialHasNextPage = posts.pageInfo.hasNextPage;
-  const initialEndCursor = posts.pageInfo.endCursor;
+  const initialArticles: SectionPost[] = posts.nodes;
 
   const collectionStructuredData = {
     '@context': 'https://schema.org',
@@ -89,24 +74,20 @@ export default async function GuideCategoryPage({ params }: GuideCategoryProps) 
   };
 
   return (
-    <>
-      <Header />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionStructuredData) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
-      />
-      <GuideCategoryClient
-        slug={params.slug}
-        title={titleFragment}
-        initialArticles={initialArticles}
-        initialHasNextPage={initialHasNextPage}
-        initialEndCursor={initialEndCursor}
-      />
-      <Footer />
-    </>
+    <SectionPage
+      title={`${titleFragment} Guides`}
+      description={`Explore walkthroughs, tips, and strategies for ${titleFragment}.`}
+      data={{
+        posts: initialArticles,
+        hasNextPage: Boolean(posts.pageInfo?.hasNextPage),
+        endCursor: posts.pageInfo?.endCursor ?? null,
+      }}
+      // WordPress accepts the category slug here, so "load more" stays inside this game
+      categoryName={params.slug}
+      chips={[{ name: 'All game guides', href: '/guides' }]}
+    >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionStructuredData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }} />
+    </SectionPage>
   );
 }

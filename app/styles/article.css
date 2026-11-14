@@ -287,7 +287,7 @@
 .article-heading-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:2rem; align-items:center; }
 @media (min-width:640px) { .article-heading-grid { grid-template-columns:minmax(0,1fr) 230px; } }
 @media (min-width:1024px) { .article-heading-grid { grid-template-columns:minmax(0,1fr) 290px; gap:3rem; } }
-#article-body :is(h2,h3,h4) { scroll-margin-top:100px; }
+#article-body :is(h2,h3,h4) { scroll-margin-top:130px; }
 #article-body .fb-quick-answer { border-left:3px solid #fbbf24; background:#182233; padding:20px 24px; margin:0 0 24px; }
 #article-body .fb-quick-answer > :last-child { margin-bottom:0; }
 #article-body figure { max-width:100%; }

@@ -1,5 +1,3 @@
-'use client';
-
 import { articleHeadings } from '../../lib/articleHeadings';
 import { t } from '../../lib/i18n';
 

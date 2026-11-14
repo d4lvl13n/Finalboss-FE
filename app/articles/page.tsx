@@ -1,27 +1,10 @@
-import React, { Suspense } from 'react';
-import Link from 'next/link';
-import { GET_ALL_POSTS } from '../lib/queries/getAllPosts';
-import client from '../lib/apolloClient';
 import { fetchTotalPosts } from '../lib/pagination';
 import { buildPageMetadata } from '../lib/seo';
 import siteConfig from '../lib/siteConfig';
-import AllArticlesPageContent from '../components/AllArticles/AllArticlesPageContent';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import SectionPage from '../components/Section/SectionPage';
+import { fetchSectionPosts, type SectionPost } from '../lib/sectionPosts';
 const baseUrl = siteConfig.url;
 const PAGE_SIZE = 24;
-
-interface ArticleListItem {
-  id: string;
-  title: string;
-  slug: string;
-  excerpt: string;
-  featuredImage?: {
-    node: {
-      sourceUrl: string;
-    };
-  };
-}
 
 // The publish/update cron invalidates this listing every five minutes when needed.
 // An hourly fallback avoids rebuilding it every minute just because it is visited.
@@ -36,29 +19,17 @@ export async function generateMetadata() {
 }
 
 export default async function AllArticlesPage() {
-  let articles: ArticleListItem[] = [];
-  let hasNextPage = false;
-  let endCursor = null;
+  let data = { posts: [] as SectionPost[], hasNextPage: false, endCursor: null as string | null };
   let totalCount = 0;
 
   try {
-    const { data } = await client.query({
-      query: GET_ALL_POSTS,
-      variables: { first: 24 },
-      fetchPolicy: 'no-cache',
-    });
-
-    if (data?.posts?.nodes) {
-      articles = data.posts.nodes;
-      hasNextPage = data.posts.pageInfo?.hasNextPage || false;
-      endCursor = data.posts.pageInfo?.endCursor || null;
-      // Total comes from the REST headers — GraphQL only exposes it via the
-      // offset-pagination plugin, which is no longer active on the backend.
-      totalCount = (await fetchTotalPosts().catch(() => 0)) || articles.length;
-    }
+    data = await fetchSectionPosts(null);
+    // Total comes from the REST headers — GraphQL only exposes it via the
+    // offset-pagination plugin, which is no longer active on the backend.
+    totalCount = (await fetchTotalPosts().catch(() => 0)) || data.posts.length;
   } catch (error) {
     console.error('Error fetching articles:', error);
-    // Continue with empty articles array
+    // Continue with an empty list
   }
 
   const collectionStructuredData = {
@@ -69,14 +40,10 @@ export default async function AllArticlesPage() {
     url: `${baseUrl}/articles`,
     mainEntity: {
       '@type': 'ItemList',
-      itemListElement: articles.map((article, index) => ({
+      itemListElement: data.posts.map((article, index) => ({
         '@type': 'ListItem',
         position: index + 1,
-        item: {
-          '@type': 'Article',
-          name: article.title,
-          url: `${baseUrl}/${article.slug}`,
-        },
+        item: { '@type': 'Article', name: article.title, url: `${baseUrl}/${article.slug}` },
       })),
     },
   };
@@ -84,67 +51,24 @@ export default async function AllArticlesPage() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: `${baseUrl}/`,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Articles',
-        item: `${baseUrl}/articles`,
-      },
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${baseUrl}/` },
+      { '@type': 'ListItem', position: 2, name: 'Articles', item: `${baseUrl}/articles` },
     ],
   };
 
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
 
   return (
-    <>
-      <Header />
-      <Suspense
-        fallback={
-          <section className="py-24 bg-gray-900">
-            <div className="container mx-auto px-4">
-              <div className="h-12 w-64 bg-gray-800 animate-pulse mb-8" />
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {Array.from({ length: 6 }).map((_, idx) => (
-                  <div key={idx} className="h-64 bg-gray-800 animate-pulse rounded-xl" />
-                ))}
-              </div>
-            </div>
-          </section>
-        }
-      >
-        <>
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionStructuredData) }}
-          />
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
-          />
-          <AllArticlesPageContent
-            initialArticles={articles}
-            initialHasNextPage={hasNextPage}
-            initialEndCursor={endCursor}
-          />
-        </>
-      </Suspense>
-      {totalPages > 1 && (
-        <div className="text-center mt-12">
-          <Link
-            href="/articles/page/2"
-            className="inline-flex items-center gap-2 bg-yellow-400 text-black px-6 py-3 rounded-full hover:bg-yellow-300 transition-colors"
-          >
-            Browse older articles →
-          </Link>
-        </div>
-      )}
-      <Footer />
-    </>
+    <SectionPage
+      title="All Articles"
+      description="Explore every article across news, reviews, guides, and technology."
+      data={data}
+      categoryName={null}
+      olderHref={totalPages > 1 ? '/articles/page/2' : undefined}
+      olderLabel="Browse older articles"
+    >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionStructuredData) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }} />
+    </SectionPage>
   );
 }

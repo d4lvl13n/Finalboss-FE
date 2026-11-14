@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  @apply bg-gray-900 text-white;
+  @apply bg-gray-900 text-gray-50;
   overflow-x: clip;
   width: 100%;
   overscroll-behavior-x: none;
@@ -26,26 +26,20 @@ div[id^="aswift_"] {
   box-sizing: border-box !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
+/* Display face for page and section titles only. Card and list titles (h3+)
+   use the text face: Dela Gothic is too wide for long titles in narrow cards. */
+h1, h2 {
   @apply font-heading;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
-
-h1 {
-  font-weight: 700;
-  letter-spacing: -0.03em;
-}
-
-h2 {
-  font-weight: 600;
-  letter-spacing: -0.02em;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
 }
 
 h3, h4, h5, h6 {
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  @apply font-body;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.25;
 }
 
 p {

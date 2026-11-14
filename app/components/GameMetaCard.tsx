@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import { formatDate } from '../utils/formatDate';
 import { t } from '../lib/i18n';

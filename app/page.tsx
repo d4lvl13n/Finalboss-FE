@@ -1,10 +1,8 @@
-// Homepage
-import { Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import Image from 'next/image';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import GameDatabaseSection from './components/GameDatabaseSection';
-import UpcomingGamesCalendar from './components/UpcomingGamesCalendar';
 import { buildPageMetadata } from './lib/seo';
 import siteConfig from './lib/siteConfig';
 import { t } from './lib/i18n';
@@ -14,195 +12,86 @@ import { GET_REVIEWS } from './lib/queries/getReviews';
 import { GET_LATEST_GUIDES } from './lib/queries/getLatestGuides';
 import { GET_TECH_ARTICLES } from './lib/queries/getTechArticles';
 import { youtubeService } from './lib/youtube/service';
+import { getUpcomingGames } from './lib/igdb-server';
+import { normalizeWordPressImageSrc } from './lib/imageUrl';
+import { formatDateShort } from './utils/formatDate';
 import type { YouTubeVideo } from './lib/youtube/config';
+import type { IGDBGame } from './types/igdb';
 
-// Skeleton components with exact dimensions to prevent CLS
-const LatestArticlesSkeleton = () => (
-  <section className="py-10 md:py-16 bg-gray-900">
-    <div className="container mx-auto px-3 md:px-4">
-      <div className="flex items-center mb-6 md:mb-8 h-8 md:h-10">
-        <div className="h-6 md:h-8 w-40 md:w-48 bg-gray-800 rounded" />
-        <div className="flex-grow h-0.5 md:h-1 bg-gray-800 rounded-full ml-3 md:ml-4" />
-        <div className="w-8 h-8 md:w-10 md:h-10 bg-gray-800 rounded-full ml-3 md:ml-4" />
-      </div>
-      <div className="md:hidden">
-        <div className="h-[220px] sm:h-[280px] bg-gray-800 rounded-xl mb-4" />
-        <div className="space-y-2">
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="flex gap-3 p-2 bg-gray-800/30 rounded-lg h-[88px]">
-              <div className="w-20 h-20 bg-gray-700 rounded-lg flex-shrink-0" />
-              <div className="flex-1 space-y-2 py-1">
-                <div className="h-4 bg-gray-700 rounded w-3/4" />
-                <div className="h-4 bg-gray-700 rounded w-full" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="hidden md:flex gap-8">
-        <div className="flex-1 min-w-0">
-          <div className="h-[380px] lg:h-[420px] bg-gray-800 rounded-xl mb-6" />
-          <div className="grid grid-cols-3 gap-4">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-[200px]">
-                <div className="h-[130px] bg-gray-800 rounded-lg mb-2" />
-                <div className="h-4 bg-gray-800 rounded w-3/4 mb-2" />
-                <div className="h-4 bg-gray-800 rounded w-full" />
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="w-80 lg:w-96 flex-shrink-0 space-y-3">
-          <div className="h-6 bg-gray-800 rounded w-20" />
-          {[...Array(10)].map((_, i) => (
-            <div key={i} className="flex gap-3 py-3 border-b border-gray-800/50">
-              <div className="w-14 h-4 bg-gray-800 rounded" />
-              <div className="flex-1 space-y-2">
-                <div className="h-4 bg-gray-800 rounded" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-);
+// The whole home page is rendered on the server as plain HTML: every title and
+// link is in the markup search engines read, and the slanted "boss select"
+// panels open on hover with CSS only. No carousel libraries, no client fetching.
 
-const ReviewsSliderSkeleton = () => (
-  <section className="py-10 md:py-16 bg-gray-900">
-    <div className="container mx-auto px-4">
-      <div className="flex items-center justify-between mb-8 md:mb-10">
-        <div className="flex items-center flex-1">
-          <div className="h-8 md:h-10 w-40 md:w-48 bg-gray-800 rounded" />
-          <div className="flex-grow h-0.5 md:h-1 bg-gray-800 rounded-full ml-4" />
-        </div>
-        <div className="h-10 w-28 bg-gray-800 rounded-full" />
-      </div>
-      <div className="hidden lg:grid lg:grid-cols-5 gap-8">
-        <div className="lg:col-span-3 h-[400px] md:h-[500px] bg-gray-800 rounded-2xl" />
-        <div className="lg:col-span-2 space-y-4">
-          <div className="h-6 w-32 bg-gray-800 rounded" />
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="flex gap-4 p-3 h-[100px]">
-              <div className="w-32 h-24 bg-gray-700 rounded-lg flex-shrink-0" />
-              <div className="flex-1 space-y-2 py-1">
-                <div className="h-3 w-16 bg-gray-700 rounded" />
-                <div className="h-4 bg-gray-700 rounded" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="lg:hidden">
-        <div className="h-[280px] md:h-[400px] bg-gray-800 rounded-2xl mb-4" />
-        <div className="space-y-2">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="flex gap-3 p-2 h-[88px]">
-              <div className="w-20 h-20 bg-gray-700 rounded-lg" />
-              <div className="flex-1 space-y-2 py-1">
-                <div className="h-3 w-16 bg-gray-700 rounded" />
-                <div className="h-4 bg-gray-700 rounded" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-);
+interface Post {
+  id: string;
+  title: string;
+  excerpt?: string;
+  slug: string;
+  date: string;
+  featuredImage?: { node?: { sourceUrl?: string; thumb?: string | null } };
+  categories?: { nodes?: { name: string; slug?: string }[] };
+}
 
-// Section data is fetched server-side in HomePage and passed as initial* props so
-// content and internal links are present in the initial HTML for crawlers.
-const LatestArticles = dynamic(() => import('./components/LatestArticles'), {
-  loading: () => <LatestArticlesSkeleton />,
-  ssr: true
-});
+const plain = (html?: string) => (html ? html.replace(/<[^>]*>/g, ' ').replace(/&[#a-z0-9]+;/gi, ' ').replace(/\s+/g, ' ').trim() : '');
+const image = (post: Post) => normalizeWordPressImageSrc(post.featuredImage?.node?.sourceUrl);
+// 768px version generated by WordPress: enough for cards and list rows.
+const thumb = (post: Post) => normalizeWordPressImageSrc(post.featuredImage?.node?.thumb || post.featuredImage?.node?.sourceUrl);
 
-const ReviewsSlider = dynamic(() => import('./components/ReviewsSlider'), {
-  loading: () => <ReviewsSliderSkeleton />,
-  ssr: true
-});
+/** YouTube ISO-8601 duration ("PT1M5S") as m:ss */
+function clock(iso?: string): string {
+  const m = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/.exec(iso || '');
+  if (!m) return '';
+  const total = Number(m[1] || 0) * 3600 + Number(m[2] || 0) * 60 + Number(m[3] || 0);
+  return total ? `${Math.floor(total / 60)}:${String(total % 60).padStart(2, '0')}` : '';
+}
+const category = (post: Post) => post.categories?.nodes?.[0];
 
-// Group similar sections for better code splitting
-const ContentSections = dynamic(
-  () => import('./components/ContentSections').then(mod => mod.default),
-  {
-    loading: () => (
-      <div className="bg-gray-900 space-y-0">
-        {/* GuidesSection skeleton */}
-        <section className="py-10 md:py-16">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-4">
-                <div className="hidden md:block w-14 h-14 bg-gray-800 rounded-xl" />
-                <div className="h-10 w-48 bg-gray-800 rounded" />
-              </div>
-              <div className="h-10 w-28 bg-gray-800 rounded-full" />
-            </div>
-            <div className="flex gap-5 overflow-hidden">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="flex-shrink-0 w-[280px] md:w-[320px] h-[380px] md:h-[420px] bg-gray-800 rounded-2xl" />
-              ))}
-            </div>
-          </div>
-        </section>
-        {/* TechnologySection skeleton */}
-        <section className="py-10 md:py-16">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-4">
-                <div className="hidden md:block w-14 h-14 bg-gray-800 rounded-lg" />
-                <div className="h-10 w-48 bg-gray-800 rounded" />
-              </div>
-              <div className="h-10 w-28 bg-gray-800 rounded" />
-            </div>
-            <div className="flex gap-5 overflow-hidden">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="flex-shrink-0 w-[300px] md:w-[360px] h-[280px] md:h-[320px] bg-gray-800 rounded-xl border border-gray-700/30" />
-              ))}
-            </div>
-          </div>
-        </section>
-        {/* VideoSection skeleton */}
-        <section className="py-10 md:py-16">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between mb-6">
-              <div className="h-8 w-40 bg-gray-800 rounded" />
-              <div className="h-10 w-28 bg-gray-800 rounded-full" />
-            </div>
-            <div className="flex gap-4 overflow-hidden">
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className="flex-shrink-0 w-[280px] md:w-[360px]">
-                  <div className="aspect-video bg-gray-800 rounded-xl" />
-                  <div className="mt-3 space-y-2">
-                    <div className="h-4 bg-gray-800 rounded w-3/4" />
-                    <div className="h-3 bg-gray-800 rounded w-1/2" />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+function kindClass(post: Post): string {
+  const slug = `${category(post)?.slug || ''} ${category(post)?.name || ''}`.toLowerCase();
+  if (slug.includes('guide')) return 'fb-kind fb-kind-guide';
+  if (slug.includes('review')) return 'fb-kind fb-kind-review';
+  if (slug.includes('tech')) return 'fb-kind fb-kind-tech';
+  return 'fb-kind';
+}
+
+function Kind({ post }: { post: Post }) {
+  const name = category(post)?.name;
+  return name ? <span className={kindClass(post)}>{name}</span> : null;
+}
+
+function Tile({ post, verdict = false }: { post: Post; verdict?: boolean }) {
+  const src = thumb(post);
+  return (
+    <Link prefetch={false} href={`/${post.slug}`} className={verdict ? 'fb-tile fb-verdict' : 'fb-tile'}>
+      <span className="fb-art block">
+        {src && <Image src={src} alt="" fill sizes="(max-width: 640px) 100vw, 340px" style={{ objectFit: 'cover' }} />}
+      </span>
+      <Kind post={post} />
+      <h3>{post.title}</h3>
+      {verdict && <p>{plain(post.excerpt)}</p>}
+    </Link>
+  );
+}
+
+function Band({ id, title, href, children }: { id: string; title: string; href: string; children: React.ReactNode }) {
+  return (
+    <section className="fb-band" id={id}>
+      <div className="fb-head">
+        <h2 className="fb-sec">{title}</h2>
+        <Link prefetch={false} href={href}>
+          {t('common.viewAll')}
+        </Link>
       </div>
-    ),
-    ssr: true
-  }
-);
+      <div className="fb-grid">{children}</div>
+    </section>
+  );
+}
 
-// Newsletter form with reduced priority
-const NewsletterForm = dynamic(() => import('./components/NewsletterForm'), {
-  loading: () => (
-    <div className="max-w-xl mx-auto">
-      <div className="h-14 bg-gray-800/50 rounded-full" />
-      <div className="flex justify-center gap-6 mt-4">
-        {[...Array(3)].map((_, i) => (
-          <div key={i} className="h-4 w-24 bg-gray-800/30 rounded" />
-        ))}
-      </div>
-    </div>
-  ),
-  ssr: false
-});
+function daysUntil(date?: string): number | null {
+  if (!date) return null;
+  const ms = new Date(date).getTime() - Date.now();
+  return Number.isFinite(ms) ? Math.max(0, Math.ceil(ms / 86400000)) : null;
+}
 
 export const revalidate = 3600;
 
@@ -222,12 +111,13 @@ export async function generateMetadata() {
 }
 
 async function getHomePageData() {
-  const [latest, reviews, guides, tech, videos] = await Promise.allSettled([
+  const [latest, reviews, guides, tech, videos, upcoming] = await Promise.allSettled([
     client.query({ query: GET_LATEST_POSTS, variables: { first: 20 }, fetchPolicy: 'no-cache' }),
     client.query({ query: GET_REVIEWS, variables: { first: 10 }, fetchPolicy: 'no-cache' }),
     client.query({ query: GET_LATEST_GUIDES, variables: { first: 8 }, fetchPolicy: 'no-cache' }),
     client.query({ query: GET_TECH_ARTICLES, variables: { first: 8 }, fetchPolicy: 'no-cache' }),
     youtubeService.getChannelUploads(6),
+    getUpcomingGames(4),
   ]);
 
   const nodes = (result: typeof latest) =>
@@ -244,116 +134,170 @@ async function getHomePageData() {
     guides: nodes(guides),
     techArticles: nodes(tech),
     videos: initialVideos,
+    upcoming: upcoming.status === 'fulfilled' ? upcoming.value ?? [] : [],
   };
 }
 
 export default async function HomePage() {
   let data = {
-    latestArticles: [] as any[],
-    reviews: [] as any[],
-    guides: [] as any[],
-    techArticles: [] as any[],
+    latestArticles: [] as Post[],
+    reviews: [] as Post[],
+    guides: [] as Post[],
+    techArticles: [] as Post[],
     videos: [] as YouTubeVideo[],
+    upcoming: [] as IGDBGame[],
   };
   try {
     data = await getHomePageData();
   } catch (error) {
     console.error('Error fetching homepage data:', error);
-    // Sections fall back to client-side fetching when initial data is empty
   }
 
-  try {
-    return (
-      <>
-        <Header />
-        <main className="bg-gray-900 text-white min-h-screen font-body">
-          {/* Spacer for fixed header */}
-          <div className="h-16 md:h-20" />
+  const latest = data.latestArticles;
+  const lead = latest.slice(0, 5);
+  const rest = latest.slice(5, 17);
 
-          <Suspense fallback={<LatestArticlesSkeleton />}>
-            <LatestArticles initialArticles={data.latestArticles} />
-          </Suspense>
+  return (
+    <>
+      <Header />
+      <main className="fb-home">
+        <div className="fb-pick">
+          <div className="fb-wrap">
+            <h1>{t('boss.today', { name: siteConfig.name })}</h1>
+            <nav aria-label={t('footer.categories')}>
+              <Link prefetch={false} href="/guides">{t('nav.guides')}</Link>
+              <Link prefetch={false} href="/reviews">{t('nav.reviews')}</Link>
+              <Link prefetch={false} href="/gaming">{t('nav.news')}</Link>
+              <Link prefetch={false} href="/technology">{t('nav.technology')}</Link>
+              <Link prefetch={false} href="/videos">{t('nav.videos')}</Link>
+            </nav>
+          </div>
+        </div>
 
-          {/* Non-critical content with deferred loading */}
-          <Suspense fallback={<ReviewsSliderSkeleton />}>
-            <ReviewsSlider initialReviews={data.reviews} />
-          </Suspense>
-
-          {/* Group similar sections for better performance */}
-          <ContentSections
-            initialVideos={data.videos}
-            initialTechArticles={data.techArticles}
-            initialGuides={data.guides}
-          />
-
-          {/* Game Database Section */}
-          <Suspense
-            fallback={
-              <div className="py-10 md:py-16 bg-gray-900" style={{ minHeight: '300px' }} />
-            }
-          >
-            <GameDatabaseSection />
-          </Suspense>
-
-          <Suspense
-            fallback={
-              <section className="py-10 md:py-16 bg-gray-900">
-                <div className="container mx-auto px-4">
-                  <div className="h-[420px] rounded-3xl bg-gray-800/60 animate-pulse" />
-                </div>
-              </section>
-            }
-          >
-            <UpcomingGamesCalendar
-              compact
-              limit={6}
-              title="Release Radar"
-              description="The next big launches worth tracking, pulled from IGDB and framed like a proper editorial calendar."
-              href="/games"
-            />
-          </Suspense>
-
-          {/* Newsletter section with reserved space */}
-          <section className="py-12 md:py-20 bg-gradient-to-b from-gray-900 via-gray-900 to-gray-950 relative overflow-hidden">
-            {/* Background decorations */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-400/5 rounded-full blur-3xl" />
-              <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl" />
-            </div>
-            
-            <div className="container mx-auto px-4 text-center relative">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/20 rounded-full px-4 py-1.5 mb-6">
-                <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
-                <span className="text-yellow-400 text-sm font-medium">{t('pages.home.newsletterBadge')}</span>
-              </div>
-              
-              <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
-                <span className="text-white">{t('pages.home.newsletterHeading')}</span>
-                <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">{t('pages.home.newsletterHighlight')}</span>
-              </h2>
-              <p className="text-sm md:text-lg text-gray-400 mb-8 md:mb-10 max-w-2xl mx-auto">
-                {t('pages.home.newsletterDescription')}
-              </p>
-              <Suspense
-                fallback={
-                  <div className="h-[100px] bg-gray-800 rounded-full max-w-xl mx-auto animate-pulse" />
-                }
-              >
-                <NewsletterForm />
-              </Suspense>
+        {lead.length > 0 && (
+          <section className="fb-select" aria-label={t('common.latestArticles')}>
+            <div className="fb-strip">
+              {lead.map((post, i) => {
+                const src = image(post);
+                return (
+                  <Link prefetch={false} key={post.id} href={`/${post.slug}`} className="fb-panel">
+                    {src && (
+                      <Image
+                        src={src}
+                        alt=""
+                        width={1280}
+                        height={720}
+                        priority={i === 0}
+                        loading={i === 0 ? undefined : 'lazy'}
+                        sizes="(max-width: 760px) 100vw, 70vw"
+                      />
+                    )}
+                    <div className="fb-un">
+                      <span className="fb-vert" aria-hidden="true">{post.title}</span>
+                      <div className="fb-info">
+                        <Kind post={post} />
+                        <h2>{post.title}</h2>
+                        <p>{plain(post.excerpt)}</p>
+                        <span className="fb-btn">{t('common.readMore')}</span>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </section>
-        </main>
-        <Footer />
-      </>
-    );
-  } catch (error) {
-    console.error('Error in HomePage:', error);
-    return (
-      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-        <h1 className="text-3xl font-bold">{t('pages.home.error')}</h1>
-      </div>
-    );
-  }
+        )}
+
+        <div className="fb-wrap">
+          <div className="fb-main">
+            <section id="latest">
+              <div className="fb-head">
+                <h2 className="fb-sec">{t('common.latest')}</h2>
+                <Link prefetch={false} href="/articles">{t('common.viewAll')}</Link>
+              </div>
+              {rest.map((post) => {
+                const src = thumb(post);
+                return (
+                  <Link prefetch={false} key={post.id} href={`/${post.slug}`} className="fb-row">
+                    <time dateTime={post.date}>{formatDateShort(post.date).replace(/,? \d{4}$/, '')}</time>
+                    <span className="fb-art">
+                      {src && <Image src={src} alt="" fill sizes="160px" style={{ objectFit: 'cover' }} />}
+                    </span>
+                    <span>
+                      <span className="fb-row-meta"><Kind post={post} /></span>
+                      <h3>{post.title}</h3>
+                    </span>
+                  </Link>
+                );
+              })}
+            </section>
+
+            <aside className="fb-aside">
+              {data.upcoming.length > 0 && (
+                <div className="fb-aside-block" id="radar">
+                  <h2>{t('boss.comingNext')}</h2>
+                  {data.upcoming.map((game) => {
+                    const days = daysUntil(game.release_date);
+                    return (
+                      <div className="fb-rel" key={game.id ?? game.name}>
+                        <b>{game.name}</b>
+                        <span>
+                          {[game.platforms?.slice(0, 2).map((p) => p.name).join(', '), game.release_date && formatDateShort(game.release_date)]
+                            .filter(Boolean)
+                            .join(' — ')}
+                        </span>
+                        {days !== null && (
+                          <i>
+                            {days}
+                            <small>{days === 1 ? t('boss.day') : t('boss.days')}</small>
+                          </i>
+                        )}
+                      </div>
+                    );
+                  })}
+                  <Link prefetch={false} href="/games" className="fb-btn">{t('boss.calendar')}</Link>
+                </div>
+              )}
+            </aside>
+          </div>
+
+          {data.reviews.length > 0 && (
+            <Band id="reviews" title={t('nav.reviews')} href="/reviews">
+              {data.reviews.slice(0, 4).map((post) => <Tile key={post.id} post={post} verdict />)}
+            </Band>
+          )}
+
+          {data.guides.length > 0 && (
+            <Band id="guides" title={t('nav.guides')} href="/guides">
+              {data.guides.slice(0, 4).map((post) => <Tile key={post.id} post={post} />)}
+            </Band>
+          )}
+
+          {data.videos.length > 0 && (
+            <Band id="videos" title={t('nav.videos')} href="/videos">
+              {data.videos.slice(0, 4).map((video) => (
+                <Link prefetch={false} key={video.id} href={`/videos/${video.id}`} className="fb-tile">
+                  <span className="fb-art block">
+                    <Image src={video.thumbnail.url} alt="" fill sizes="(max-width: 640px) 100vw, 340px" style={{ objectFit: 'cover' }} />
+                    {clock(video.duration) && <span className="fb-dur">{clock(video.duration)}</span>}
+                  </span>
+                  <h3>{video.title}</h3>
+                </Link>
+              ))}
+            </Band>
+          )}
+
+          {data.techArticles.length > 0 && (
+            <Band id="technology" title={t('nav.technology')} href="/technology">
+              {data.techArticles.slice(0, 4).map((post) => <Tile key={post.id} post={post} />)}
+            </Band>
+          )}
+        </div>
+
+        <GameDatabaseSection />
+
+      </main>
+      <Footer />
+    </>
+  );
 }

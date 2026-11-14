@@ -1,23 +1,18 @@
-'use client';
-
-import React from 'react';
 import Link from 'next/link';
 import { GameSearch } from './GameSearch';
-import { FaArrowRight } from 'react-icons/fa';
+import { t } from '../lib/i18n';
 
+/** Game search block. Only the search box itself runs in the browser. */
 export default function GameDatabaseSection() {
   return (
-    <section className="py-10 md:py-16 bg-gray-900">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center mb-12">
-          <h2 className="text-4xl font-bold text-yellow-400 mr-4">Game Database</h2>
-          <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
-          <Link href="/games" className="ml-4 bg-yellow-400 text-black p-2 rounded-full hover:bg-yellow-300 transition-colors">
-            <FaArrowRight />
-          </Link>
-        </div>
-        <GameSearch />
+    <section className="fb-games fb-wrap">
+      <div className="fb-head">
+        <h2 className="fb-sec">{t('nav.games')}</h2>
+        <Link prefetch={false} href="/games">
+          {t('common.viewAll')}
+        </Link>
       </div>
+      <GameSearch />
     </section>
   );
-} 
+}
