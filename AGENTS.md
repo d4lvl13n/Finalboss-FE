@@ -7,9 +7,10 @@ FinalBoss.io is a gaming news and reviews website built with Next.js 14 (App Rou
 ## Tech Stack
 
 - **Framework**: Next.js 14 with App Router, React 18, TypeScript
-- **Styling**: Tailwind CSS 3, Framer Motion for animations
-- **Data**: Apollo Client (GraphQL) for WordPress, REST API for IGDB
-- **Deployment**: Vercel
+- **Styling**: Tailwind CSS 3 with the brand palette remapped in `tailwind.config.js`; shared site styles in `app/styles/site.css` (shell, home, section pages) and `app/styles/boss.css` (article). Fonts: Dela Gothic One (titles) + Instrument Sans (text) via `next/font`. Framer Motion survives only in on-demand chunks (search overlay, desktop lead capture, interactive 404) — keep it out of first load.
+- **Data**: Apollo Client (GraphQL) for WordPress on the SERVER only; browser code must use `fetch` (see `app/lib/sectionQuery.ts`) so Apollo never ships in first-load JS. REST API for IGDB
+- **Deployment**: finalboss.io on Cloudflare Workers via OpenNext, deployed from a local machine (build, `node scripts/populate-r2-cache-resumable.mjs`, then `OPEN_NEXT_DEPLOY=true npx wrangler deploy`). finalboss.fr is a Vercel project that auto-deploys on every push to `main`.
+- **Design rule**: pages are server-rendered HTML first; any interaction must work, or degrade cleanly, without JavaScript. The pre-redesign frontend is archived at git tag `legacy-frontend-2026-11-09`.
 - **Backend**: Headless WordPress at `backend.finalboss.io`
 
 ## Project Structure
