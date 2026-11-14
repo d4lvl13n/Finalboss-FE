@@ -1,6 +1,18 @@
 export const en = {
   // ─── Navigation & Header ───
   boss: {
+    newsIntro: "Releases, announcements, esports and community stories: the latest in gaming.",
+    videosIntro: "Our latest videos: trailers, breakdowns and shorts.",
+    older: "Browse older articles",
+    prevPage: "Previous page",
+    nextPage: "Next page",
+    pageOf: "Articles, page {page}",
+    showing: "Showing {from}-{to} of {total} articles.",
+    allSections: "Sections",
+    guidesByGame: "Guides by game",
+    laptopsTitle: "Gaming Laptops 2026",
+    handheldsTitle: "Handheld Gaming PCs 2026",
+    gamesTitle: "Game Database",
     today: "Today on {name}",
     comingNext: "Coming out next",
     calendar: "Open the release calendar",

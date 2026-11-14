@@ -27,7 +27,7 @@ function Meta({ post }: { post: SectionPost }) {
   return (
     <span className="fb-row-meta">
       {name && <span className={kindClass(post)}>{name}</span>}
-      <time dateTime={post.date}>{formatDateShort(post.date)}</time>
+      {post.date && <time dateTime={post.date}>{formatDateShort(post.date)}</time>}
     </span>
   );
 }

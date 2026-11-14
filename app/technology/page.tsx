@@ -2,6 +2,7 @@ import SectionPage from '../components/Section/SectionPage';
 import TechnologyStructuredData from '../components/TechnologyStructuredData';
 import { fetchSectionPosts } from '../lib/sectionPosts';
 import { buildPageMetadata } from '../lib/seo';
+import { t } from '../lib/i18n';
 
 export const revalidate = 3600;
 
@@ -15,7 +16,7 @@ export default async function TechnologyPage() {
   const data = await fetchSectionPosts('Tech');
 
   return (
-    <SectionPage title="Gaming & Tech" description={description} data={data} categoryName="Tech">
+    <SectionPage title={t('tech.title')} description={t('tech.description')} data={data} categoryName="Tech">
       <TechnologyStructuredData articles={data.posts} />
     </SectionPage>
   );

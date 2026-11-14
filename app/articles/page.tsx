@@ -1,6 +1,7 @@
 import { fetchTotalPosts } from '../lib/pagination';
 import { buildPageMetadata } from '../lib/seo';
 import siteConfig from '../lib/siteConfig';
+import { t } from '../lib/i18n';
 import SectionPage from '../components/Section/SectionPage';
 import { fetchSectionPosts, type SectionPost } from '../lib/sectionPosts';
 const baseUrl = siteConfig.url;
@@ -60,12 +61,12 @@ export default async function AllArticlesPage() {
 
   return (
     <SectionPage
-      title="All Articles"
-      description="Explore every article across news, reviews, guides, and technology."
+      title={t('nav.allArticles')}
+      description={t('boss.newsIntro')}
       data={data}
       categoryName={null}
       olderHref={totalPages > 1 ? '/articles/page/2' : undefined}
-      olderLabel="Browse older articles"
+      olderLabel={t('boss.older')}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionStructuredData) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }} />

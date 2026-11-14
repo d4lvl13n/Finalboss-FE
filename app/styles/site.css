@@ -269,3 +269,20 @@
 .fb-rail-nav a:hover { color: var(--gold); }
 .fb-ad-rail:not(:has(> .mv_slot_target:only-child)) { margin: 0 0 30px; }
 .fb-search-top input::-webkit-search-cancel-button { display: none; }
+
+/* section pages built on PageHero: the band itself clears the fixed header */
+.fb-hero-pad { padding-top: calc(var(--top-h) + 34px); }
+.fb-section .fb-section-head.fb-hero-pad { padding-top: 34px; }
+.fb-section-flush .fb-section-head.fb-hero-pad { padding-top: 34px; }
+.fb-section-body { padding-top: 36px; padding-bottom: 80px; }
+.fb-grid-3 { margin-top: 0; }
+@media (min-width: 1024px) { .fb-grid-3 { grid-template-columns: repeat(3, 1fr); } }
+.fb-grid-3 + .fb-ad-slot + .fb-grid-3, .fb-grid-3 + .fb-grid-3 { margin-top: 28px; }
+.fb-feed-narrow { max-width: 980px; }
+.fb-feed-narrow .fb-post:first-child { border-top: 0; }
+.fb-pager { display: flex; justify-content: space-between; gap: 16px; margin-top: 34px; }
+/* product hubs (laptops, handhelds): gold title block inside their own column */
+.fb-hero-inline { background: var(--gold); color: var(--ink); padding: 26px 26px 22px; margin-bottom: 30px; clip-path: var(--notch); }
+.fb-hero-inline h1 { font-size: clamp(28px, 4vw, 48px); line-height: 1; margin: 0 0 10px; color: var(--ink); }
+.fb-hero-inline p { color: var(--ink); font-weight: 500; max-width: 62ch; margin: 0; }
+.fb-hero-inline a { color: var(--ink) !important; text-decoration: underline; text-underline-offset: 3px; }

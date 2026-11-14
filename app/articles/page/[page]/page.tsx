@@ -1,10 +1,16 @@
+import { Fragment } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import Header from '../../../components/Header';
+import Footer from '../../../components/Footer';
+import PageHero from '../../../components/PageHero';
+import PostRow from '../../../components/Section/PostRow';
+import AdSlot, { ROWS_PER_AD } from '../../../components/Section/AdSlot';
+import type { SectionPost } from '../../../lib/sectionQuery';
+import { t } from '../../../lib/i18n';
 import { notFound } from 'next/navigation';
 import { buildPageMetadata } from '../../../lib/seo';
 import siteConfig from '../../../lib/siteConfig';
 import { ARTICLE_PAGE_SIZE, fetchPaginatedArticles } from '../../../lib/pagination';
-import { normalizeWordPressImageSrc } from '../../../lib/imageUrl';
 
 interface PageProps {
   params: { page: string };
@@ -52,56 +58,41 @@ export default async function PaginatedArticlesPage({ params }: PageProps) {
   const hasPrev = pageNumber > 1;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white px-4 py-24">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-yellow-400 text-center">Articles - Page {pageNumber}</h1>
-        <p className="text-center text-gray-400 mb-12">
-          Showing {(pageNumber - 1) * ARTICLE_PAGE_SIZE + 1}-
-          {(pageNumber - 1) * ARTICLE_PAGE_SIZE + articles.length} of {total} articles.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {articles.map((article) => (
-            <Link
-              key={article.id}
-              href={`/${article.slug}`}
-              className="block bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-yellow-400/20 transition-shadow"
-            >
-              <div className="relative h-48">
-                {normalizeWordPressImageSrc(article.featuredImage?.node?.sourceUrl) && (
-                  <Image
-                    src={normalizeWordPressImageSrc(article.featuredImage?.node?.sourceUrl)!}
-                    alt={article.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
-                  />
-                )}
-              </div>
-              <div className="p-6">
-                <h2 className="text-2xl font-semibold mb-3">{article.title}</h2>
-                <div className="text-gray-400 text-sm" dangerouslySetInnerHTML={{ __html: article.excerpt }} />
-              </div>
-            </Link>
+    <>
+      <Header />
+      <main className="fb-section fb-section-flush">
+        <PageHero
+          title={t('boss.pageOf', { page: pageNumber })}
+          description={t('boss.showing', {
+            from: (pageNumber - 1) * ARTICLE_PAGE_SIZE + 1,
+            to: (pageNumber - 1) * ARTICLE_PAGE_SIZE + articles.length,
+            total,
+          })}
+        />
+        <div className="fb-wrap fb-section-body fb-feed-narrow">
+          {articles.map((article, i) => (
+            <Fragment key={article.id}>
+              <PostRow post={article as unknown as SectionPost} />
+              {(i + 1) % ROWS_PER_AD === 0 && i + 1 < articles.length && <AdSlot id={`feed-${(i + 1) / ROWS_PER_AD}`} />}
+            </Fragment>
           ))}
+          <nav className="fb-pager" aria-label="Pagination">
+            {hasPrev ? (
+              <Link prefetch={false} href={pageNumber === 2 ? '/articles' : `/articles/page/${pageNumber - 1}`} className="fb-btn">
+                {t('boss.prevPage')}
+              </Link>
+            ) : (
+              <span />
+            )}
+            {hasNext && (
+              <Link prefetch={false} href={`/articles/page/${pageNumber + 1}`} className="fb-btn">
+                {t('boss.nextPage')}
+              </Link>
+            )}
+          </nav>
         </div>
-        <div className="flex items-center justify-between mt-12">
-          {hasPrev ? (
-            <Link
-              href={pageNumber === 2 ? '/articles' : `/articles/page/${pageNumber - 1}`}
-              className="text-yellow-400 hover:text-yellow-300"
-            >
-              ← Previous Page
-            </Link>
-          ) : (
-            <span />
-          )}
-          {hasNext && (
-            <Link href={`/articles/page/${pageNumber + 1}`} className="text-yellow-400 hover:text-yellow-300">
-              Next Page →
-            </Link>
-          )}
-        </div>
-      </div>
-    </div>
+      </main>
+      <Footer />
+    </>
   );
 }

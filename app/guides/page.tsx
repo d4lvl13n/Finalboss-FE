@@ -5,6 +5,7 @@ import client from '../lib/apolloClient';
 import { fetchSectionPosts } from '../lib/sectionPosts';
 import { buildPageMetadata } from '../lib/seo';
 import siteConfig from '../lib/siteConfig';
+import { t } from '../lib/i18n';
 
 export const revalidate = 3600;
 
@@ -42,12 +43,12 @@ export default async function GuidesPage() {
 
   return (
     <SectionPage
-      title="Game Guides"
-      description={description}
+      title={t('guide.title')}
+      description={t('guide.description')}
       data={data}
       categoryName="gaming-guide"
       chips={subcategories.map((c) => ({ name: c.name.replace(/\s+Guide$/i, ''), href: `/guides/${c.slug}` }))}
-      chipsLabel="Guides by game"
+      chipsLabel={t('boss.guidesByGame')}
     >
       <GuidesStructuredData categories={subcategories} guides={data.posts} />
     </SectionPage>

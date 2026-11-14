@@ -1,4 +1,6 @@
 import { Suspense } from 'react';
+import PageHero from '../components/PageHero';
+import { t } from '../lib/i18n';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { GameSearch } from '../components/GameSearch';
@@ -50,12 +52,9 @@ export default async function GamesPage() {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-900 py-24">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center mb-12">
-            <h1 className="text-5xl font-bold text-yellow-400 mr-4">Game Database</h1>
-            <div className="flex-grow h-1 bg-gradient-to-r from-yellow-400 to-transparent rounded-full glow-effect"></div>
-          </div>
+      <main className="min-h-screen bg-gray-900 pb-24">
+        <PageHero title={t('boss.gamesTitle')} />
+        <div className="container mx-auto px-4 pt-10">
           <Suspense
             fallback={
               <div className="h-48 bg-gray-800 rounded-2xl animate-pulse" />

@@ -4,6 +4,7 @@ import client from '../../lib/apolloClient';
 import { GET_SUBCATEGORY_ARTICLES } from '../../lib/queries/getSubcategoryArticles';
 import { buildPageMetadata } from '../../lib/seo';
 import siteConfig from '../../lib/siteConfig';
+import { t } from '../../lib/i18n';
 import { cache } from 'react';
 import { permanentRedirect } from 'next/navigation';
 
@@ -75,8 +76,8 @@ export default async function GuideCategoryPage({ params }: GuideCategoryProps) 
 
   return (
     <SectionPage
-      title={`${titleFragment} Guides`}
-      description={`Explore walkthroughs, tips, and strategies for ${titleFragment}.`}
+      title={`${t('nav.guides')}: ${titleFragment}`}
+      description={t('guide.description')}
       data={{
         posts: initialArticles,
         hasNextPage: Boolean(posts.pageInfo?.hasNextPage),
@@ -84,7 +85,7 @@ export default async function GuideCategoryPage({ params }: GuideCategoryProps) 
       }}
       // WordPress accepts the category slug here, so "load more" stays inside this game
       categoryName={params.slug}
-      chips={[{ name: 'All game guides', href: '/guides' }]}
+      chips={[{ name: t('guide.allGuides'), href: '/guides' }]}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionStructuredData) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }} />

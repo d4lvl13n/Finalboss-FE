@@ -3,6 +3,18 @@
 export const fr = {
   // ─── Navigation & Header ───
   boss: {
+    newsIntro: "Sorties, annonces, e-sport et vie des communautés : l'actualité du jeu vidéo.",
+    videosIntro: "Nos dernières vidéos : bandes-annonces, analyses et formats courts.",
+    older: "Voir les articles plus anciens",
+    prevPage: "Page précédente",
+    nextPage: "Page suivante",
+    pageOf: "Articles, page {page}",
+    showing: "Articles {from} à {to} sur {total}.",
+    allSections: "Rubriques",
+    guidesByGame: "Guides par jeu",
+    laptopsTitle: "PC portables gamer",
+    handheldsTitle: "Consoles portables PC",
+    gamesTitle: "Base de jeux",
     today: "Aujourd'hui sur {name}",
     comingNext: "Prochaines sorties",
     calendar: "Ouvrir le calendrier des sorties",

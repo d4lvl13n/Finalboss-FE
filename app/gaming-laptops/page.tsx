@@ -5,6 +5,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Header from '@/app/components/Header';
+import { t } from '../lib/i18n';
 import Footer from '@/app/components/Footer';
 import { buildPageMetadata } from '@/app/lib/seo';
 import LaptopCard from '@/app/components/laptops/LaptopCard';
@@ -33,9 +34,9 @@ export default function GamingLaptopsIndex() {
       <Header />
       <main className="min-h-screen bg-gray-950 text-gray-100">
         <div className="mx-auto max-w-6xl px-4 pb-12 pt-24">
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold text-white sm:text-4xl">Gaming Laptops 2026</h1>
-            <p className="mt-2 max-w-2xl text-gray-400">
+          <header className="fb-hero-inline">
+            <h1>{t('boss.laptopsTitle')}</h1>
+            <p>
               {families.length} laptop families with full specs, configurations, reliability notes and
               where-to-buy links — from budget RTX 5050 machines to RTX 5090 flagships.
             </p>

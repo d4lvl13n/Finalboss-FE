@@ -3,6 +3,7 @@ import ReviewsStructuredData from '../components/Reviews/ReviewsStructuredData';
 import { fetchSectionPosts } from '../lib/sectionPosts';
 import { buildPageMetadata } from '../lib/seo';
 import siteConfig from '../lib/siteConfig';
+import { t } from '../lib/i18n';
 
 export const revalidate = 3600;
 
@@ -18,7 +19,7 @@ export default async function ReviewsPage() {
   const data = await fetchSectionPosts('Reviews');
 
   return (
-    <SectionPage title="Game Reviews" description={description} data={data} categoryName="Reviews">
+    <SectionPage title={t('review.title')} description={t('review.description')} data={data} categoryName="Reviews">
       <ReviewsStructuredData reviews={data.posts} />
     </SectionPage>
   );
