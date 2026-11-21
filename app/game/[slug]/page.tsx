@@ -12,6 +12,7 @@ import { fetchAllGameTags } from '@/app/lib/fetchAllGameTags';
 import siteConfig from '@/app/lib/siteConfig';
 import { getGameHub, localGameSlugs, getLocalGameData } from '@/app/lib/game-hub/provider';
 import GameplayHub, { buildGameplayJsonLd } from '@/app/components/game-hub/GameplayHub';
+import Gta6FrenchHub, { gta6FrenchHubDescription } from '@/app/components/game-hub/Gta6FrenchHub';
 import { fetchReadNextArticles, type HubArticle } from '@/app/lib/game-hub/related-articles';
 import { igdbImage, getGamePage } from '@/app/lib/knowledge/client';
 import TotkBuildsBanner from '@/app/components/totk-builds/TotkBuildsBanner';
@@ -35,6 +36,7 @@ const baseUrl = siteConfig.url;
 
 export const revalidate = 86400; // 24h — hub data is registry (refreshed on deploy) + Knowledge API; a day of staleness is fine and spares the WP backend long-tail regeneration load
 const POSTS_PAGE_SIZE = 12;
+const isFrenchGta6Hub = (slug: string) => siteConfig.locale === 'fr' && slug === 'gta-6';
 
 export async function generateStaticParams() {
   const gameTags = await fetchAllGameTags();
@@ -426,15 +428,16 @@ function gameGuideCategory(slug: string): string | undefined {
 }
 
 async function getGameTagWithPosts(slug: string) {
+  const getAllPosts = Boolean(gameGuideCategory(slug)) || isFrenchGta6Hub(slug);
   try {
     const { data, errors } = await client.query({
       query: GET_GAME_TAG_WITH_POSTS,
-      variables: { slug, first: gameGuideCategory(slug) ? 40 : POSTS_PAGE_SIZE, after: null },
+      variables: { slug, first: getAllPosts ? 40 : POSTS_PAGE_SIZE, after: null },
       fetchPolicy: 'no-cache',
     });
     if (errors?.length) throw new Error('Game articles query failed');
     const tag = data?.gameTag;
-    if (!tag || !gameGuideCategory(slug)) return tag || null;
+    if (!tag || !getAllPosts) return tag || null;
     const nodes: GameArticle[] = [...(tag.posts?.nodes || [])];
     let pageInfo = tag.posts?.pageInfo;
     const cursors = new Set<string>();
@@ -450,7 +453,7 @@ async function getGameTagWithPosts(slug: string) {
     return { ...tag, posts: { nodes: nodes.filter((post) => !seen.has(post.id) && Boolean(seen.add(post.id))), pageInfo: { hasNextPage: false, endCursor: pageInfo?.endCursor || null } } };
   } catch (error) {
     console.error('Error fetching game tag posts:', error);
-    if (gameGuideCategory(slug)) throw error;
+    if (getAllPosts) throw error;
     return null;
   }
 }
@@ -498,8 +501,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         const screenshotImage = screenshotId ? igdbImage(screenshotId, 't_1080p') : null;
         const image = screenshotImage || e.imageUrl || igdbImage(e.attributes?.cover_image_id) || undefined;
         return buildPageMetadata({
-          title: `${e.canonicalName} — Classes, Tier List, Codes & Guides`,
-          description: (e.description || `Classes, tier list, codes and guides for ${e.canonicalName}.`).slice(0, 200),
+          title: isFrenchGta6Hub(params.slug)
+            ? 'GTA 6 : soluce, guides et actualités'
+            : `${e.canonicalName} — Classes, Tier List, Codes & Guides`,
+          description: isFrenchGta6Hub(params.slug)
+            ? gta6FrenchHubDescription
+            : (e.description || `Classes, tier list, codes and guides for ${e.canonicalName}.`).slice(0, 200),
           path: `/game/${params.slug}`,
           image,
           ...(screenshotImage ? { imageWidth: 1920, imageHeight: 1080 } : {}),
@@ -574,6 +581,16 @@ export default async function GamePage({ params }: Props) {
     if (localData) {
       const hub = await getGameHub(params.slug);
       if (hub && hub.gameplay) {
+        if (isFrenchGta6Hub(params.slug)) {
+          const tag = await getGameTagWithPosts(params.slug);
+          return (
+            <>
+              <Header />
+              <Gta6FrenchHub hub={hub} articles={tag?.posts?.nodes || []} />
+              <Footer />
+            </>
+          );
+        }
         // KG news is keyed on the Knowledge-API entity, which may differ from
         // the SEO URL slug (e.g. /game/gta-6 → KG entity `grand-theft-auto-vi`).
         const kgSlug = localData.knowledgeSlug ?? params.slug;
