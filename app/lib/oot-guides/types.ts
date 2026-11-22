@@ -2,6 +2,7 @@ export const OOT_GAME_SLUG = 'the-legend-of-zelda-ocarina-of-time-switch-2';
 export const OOT_IGDB_ID = 405460;
 export const OOT_GUIDE_CATEGORY = 'zelda-ocarina-of-time-switch-2-guide';
 export const OOT_GUIDE_INDEX = 'zelda-oot-switch-2-walkthrough-guides';
+export const OOT_GUIDE_INDEX_FR = 'zelda-ocarina-of-time-soluce';
 
 export const GUIDE_TYPES = [
   { id: 'dungeons', label: 'Dungeons' },
@@ -28,7 +29,7 @@ function normalize(value: string): string {
 }
 
 export function guideTypes(article: GuideSearchArticle): GuideType[] {
-  if (article.slug === OOT_GUIDE_INDEX) return [];
+  if (article.slug === OOT_GUIDE_INDEX || article.slug === OOT_GUIDE_INDEX_FR) return [];
   const tags = new Set(article.tags?.nodes?.map((tag) => tag.slug) || []);
   // Saved editorial classifications, including multiple types, are authoritative.
   const saved = GUIDE_TYPES.filter((type) => tags.has('oot-guide-' + type.id)).map((type) => type.id);

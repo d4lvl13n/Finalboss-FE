@@ -236,6 +236,33 @@ export const fr = {
     endOfList: 'Vous avez atteint la fin de la liste.',
   },
 
+  oot: {
+    brandLabel: 'Guides FinalBoss',
+    title: 'Les guides d’Ocarina of Time',
+    intro: 'Retrouvez les donjons, les boss, les quêtes et les objets d’Ocarina of Time sur Switch 2.',
+    index: 'Sommaire de la soluce',
+    search: 'Rechercher dans les guides Ocarina of Time',
+    placeholder: 'Temple de l’Eau, Biggoron, Skulltulas…',
+    clearSearch: 'Effacer la recherche',
+    guideType: 'Type de guide',
+    resultOne: '{count} guide trouvé',
+    results: '{count} guides trouvés',
+    showing: '{count} affichés',
+    clearFilters: 'Effacer les filtres',
+    loadMore: 'Afficher plus de guides',
+    noGuides: 'Aucun guide trouvé',
+    tryAgain: 'Essayez un autre mot-clé ou un autre type de guide.',
+    empty: 'Les guides apparaîtront ici après leur publication.',
+    types: {
+      dungeons: 'Donjons',
+      bosses: 'Boss',
+      quests: 'Quêtes',
+      equipment: 'Équipement',
+      collectibles: 'Objets à collectionner',
+      exploration: 'Exploration',
+    },
+  },
+
   // ─── Guide ───
   guide: {
     title: 'Guides de jeux',

@@ -234,6 +234,33 @@ export const en = {
     endOfList: 'You have reached the end of the list.',
   },
 
+  oot: {
+    brandLabel: 'FinalBoss guides',
+    title: 'Find your next Ocarina of Time guide.',
+    intro: 'Switch 2 dungeon routes, bosses, quests and collectibles. Search the collection or choose a guide type.',
+    index: 'Guide index',
+    search: 'Search Ocarina of Time guides',
+    placeholder: 'Try Water Temple, Biggoron or Skulltulas…',
+    clearSearch: 'Clear search',
+    guideType: 'Guide type',
+    resultOne: '{count} guide found',
+    results: '{count} guides found',
+    showing: 'Showing {count}',
+    clearFilters: 'Clear filters',
+    loadMore: 'Show more guides',
+    noGuides: 'No guides found',
+    tryAgain: 'Try another keyword or guide type.',
+    empty: 'New guides will appear here as they are published.',
+    types: {
+      dungeons: 'Dungeons',
+      bosses: 'Bosses',
+      quests: 'Quests',
+      equipment: 'Equipment',
+      collectibles: 'Collectibles',
+      exploration: 'Exploration',
+    },
+  },
+
   // ─── Guide ───
   guide: {
     title: 'Game Guides',
