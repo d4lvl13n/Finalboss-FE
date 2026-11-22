@@ -12,6 +12,7 @@ import { getBlueprint } from '@/app/lib/game-hub/blueprints';
 import { videoGameJsonLd, itemListJsonLd, breadcrumbJsonLd, faqJsonLd, graph } from '@/app/lib/jsonld';
 
 import TrackViewContent from '@/app/components/TrackViewContent';
+import Gta6MapHubLink from '@/app/components/gta6-map/Gta6MapHubLink';
 import ArticleGridMore from '@/app/components/game-hub/ArticleGridMore';
 import GettingStarted from '@/app/components/game-hub/GettingStarted';
 import FaqSection from '@/app/components/game-hub/FaqSection';
@@ -142,6 +143,7 @@ export default function GameplayHub({
           </Panel>
         )}
 
+        {slug === 'gta-6' && <Gta6MapHubLink locale="en" />}
         <HubNav items={navItems} />
 
         <div className="space-y-12">

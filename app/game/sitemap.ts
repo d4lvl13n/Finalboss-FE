@@ -10,6 +10,7 @@ import { buildPath } from '@/app/lib/totk-builds/types';
 import { TOTK_COLLECTIONS, cataloguePath, paginatedCollectionParams } from '@/app/lib/totk-builds/collections';
 import { TOTK_RECIPES, recipePageParams } from '@/app/lib/totk-recipes/catalogue';
 import { EFFECTS, recipePath, recipesPath, simulatorPath } from '@/app/lib/totk-recipes/types';
+import { gta6MapPath } from '@/app/lib/gta6-map';
 
 export const revalidate = 3600;
 
@@ -47,5 +48,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}${simulatorPath()}`, lastModified: '2026-11-03', changeFrequency: 'monthly' as const, priority: 0.7 },
     ...TOTK_RECIPES.map(recipe => ({ url: `${base}${recipePath(recipe)}`, lastModified: '2026-11-03', changeFrequency: 'monthly' as const, priority: 0.5 })),
   ];
-  return [...hubs, ...entities, ...builds, ...recipes];
+  return [...hubs, { url: `${base}${gta6MapPath}`, changeFrequency: 'weekly', priority: 0.8 }, ...entities, ...builds, ...recipes];
 }

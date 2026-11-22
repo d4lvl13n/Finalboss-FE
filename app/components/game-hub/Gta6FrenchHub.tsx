@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import PostRow from '@/app/components/Section/PostRow';
+import Gta6MapHubLink from '@/app/components/gta6-map/Gta6MapHubLink';
 import TrackViewContent from '@/app/components/TrackViewContent';
 import type { HubArticle } from '@/app/lib/game-hub/related-articles';
 import type { GameHub } from '@/app/lib/game-hub/types';
@@ -84,6 +85,7 @@ export default function Gta6FrenchHub({ hub, articles }: { hub: GameHub; article
               {otherGuides.length > 0 && <a href="#guides" className="hover:underline">Guides pratiques</a>}
               {news.length > 0 && <a href="#actualites" className="hover:underline">Actualités</a>}
             </nav>
+            <Gta6MapHubLink locale="fr" />
           </div>
         </header>
         <ArticleSection id="soluce" title="Soluce du mode Histoire" articles={walkthrough} />
