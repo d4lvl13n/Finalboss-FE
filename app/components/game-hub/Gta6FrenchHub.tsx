@@ -11,7 +11,7 @@ import { videoGameJsonLd } from '@/app/lib/jsonld';
 export const gta6FrenchHubDescription =
   'La soluce de GTA 6 en français, avec les missions étape par étape, les objets manquables, les véhicules, les activités et les dernières actualités.';
 
-const walkthroughSlugs = ['gta-6-soluce', 'gta-6-soluce-chapitre-1', 'gta-6-soluce-chapitre-2'];
+const walkthroughSlugs = ['gta-6-soluce', ...[1, 2, 3, 4, 5].map((chapter) => `gta-6-soluce-chapitre-${chapter}`)];
 const guideCategory = 'gaming-guide';
 
 function ArticleSection({ id, title, articles }: { id: string; title: string; articles: HubArticle[] }) {
