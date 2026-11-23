@@ -1,3 +1,5 @@
+import { additionalLocations, sectorPoints } from './gta6-map-locations';
+
 export const gta6MapPath = '/game/gta-6/map';
 export const leonidaMap = {
   src: 'https://www.rockstargames.com/VI/_next/static/media/Leonida_Map_Poster.08ir77j-.26ny.jpg',
@@ -34,31 +36,65 @@ const guides = {
   },
 };
 
-export type MapCategory = keyof typeof guides;
-export const mapRegions = [
-  'Key Lento', 'Abismo Key', 'Mile Zero', 'Southwind', 'Corsair Key', 'Riquezas Keys',
-  'Grassrivers', 'Hamlet', 'Watson Bay', 'Belpoint', 'Port Gellhorn', 'Vice City',
-  'Vice Beach', 'Catalan Key', 'Featherstone Islands',
-] as const;
-export type MapRegion = (typeof mapRegions)[number];
+export type MapCategory = keyof typeof guides | 'secrets' | 'exploration' | 'activities';
+export type MapRegion = string;
 type Locale = 'en' | 'fr';
 type Translated = Record<Locale, string>;
+
+export const cardCollections = {
+  'Backyard Wrestling': 12,
+  'Delights Dancers': 18,
+  'Vice City Flamingos': 24,
+  'Vice City Narcos': 24,
+  'Vice City Manatees': 24,
+  'Vice City Club De Fútbol': 30,
+  'Liberty City Swingers': 24,
+  'Liberty City Penetrators': 24,
+  'Liberty City Wrath': 24,
+  'Los Santos Corkers': 24,
+  'Los Santos Panic': 24,
+  'Los Santos Pounders': 24,
+  'America’s Next Top Hooker': 24,
+  'Jack of Hearts Dancers': 36,
+  'Nine1Nine Dancers': 36,
+  'The Legends of Ratface': 36,
+  'Right Wing: America’s Hero': 36,
+  'Ed Comics Universe': 36,
+} as const;
+
+export type CardCollection = keyof typeof cardCollections;
+
+export type MapImage = { file: string | Translated; alt: Translated };
 
 interface MapLocation {
   id: string;
   region: MapRegion;
-  category: MapCategory;
+  category: keyof typeof guides;
   position: MapPoint;
   approximate?: boolean;
   name: string | Translated;
   directions: Translated;
   anchor: string;
-  image?: { file: string; alt: Translated };
+  collection?: CardCollection;
+  image?: MapImage;
+}
+
+export interface AddedMapLocation {
+  id: string;
+  name: string | Translated;
+  category: MapCategory;
+  region: MapRegion;
+  collection?: CardCollection;
+  directions: Translated;
+  guide: Translated;
+  position?: MapPoint;
+  image?: MapImage;
 }
 
 const locations: MapLocation[] = [
   {
     id: 'santiago-lopez', region: 'Key Lento', category: 'cards', position: posterPoint(3420, 6310), approximate: true,
+    collection: 'Los Santos Panic',
     name: 'Santiago Lopez',
     directions: {
       en: 'On Peach Palm Drive, enter the yellow-and-white mobile home just west of Jason’s house. The card is on the bedside table in the back bedroom.',
@@ -72,6 +108,7 @@ const locations: MapLocation[] = [
   },
   {
     id: 'the-educated-woman', region: 'Key Lento', category: 'cards', position: posterPoint(3410, 6250), approximate: true,
+    collection: 'Right Wing: America’s Hero',
     name: 'The Educated Woman',
     directions: {
       en: 'Find the red-and-white mobile home on Scuttlebutt Drive in northern Key Lento. The white-bordered card is on the front steps.',
@@ -85,6 +122,7 @@ const locations: MapLocation[] = [
   },
   {
     id: 'marquise-bernard', region: 'Key Lento', category: 'cards', position: posterPoint(3493, 6404),
+    collection: 'Los Santos Panic',
     name: 'Marquise Bernard',
     directions: {
       en: 'Stop at Kenton’s shop in Key Lento. Check the barrel just outside the shop for the card.',
@@ -195,6 +233,7 @@ const locations: MapLocation[] = [
   },
   {
     id: 'maximus-goldbart', region: 'Southwind', category: 'cards', position: posterPoint(1863, 6639),
+    collection: 'Los Santos Pounders',
     name: { en: 'Maximus Goldbart (Silver)', fr: 'Maximus Goldbart (argent)' },
     directions: {
       en: 'Take Cangrejo Street down to the water. Walk underneath the stilt house at the end of the road. Check the TV stand next to the shed.',
@@ -208,6 +247,7 @@ const locations: MapLocation[] = [
   },
   {
     id: 'vicki-starlet-motel', region: 'Port Gellhorn', category: 'cards', position: posterPoint(1900, 2920), approximate: true,
+    collection: 'Delights Dancers',
     name: 'Vicki',
     directions: {
       en: 'During Chapter 2, enter the Starlet Motel reception office and check beside the toilet in the bathroom. Pick up the card before starting Checking Out.',
@@ -217,6 +257,7 @@ const locations: MapLocation[] = [
   },
   {
     id: 'victor-maravilla-starlet-motel', region: 'Port Gellhorn', category: 'cards', position: posterPoint(1900, 2920), approximate: true,
+    collection: 'Los Santos Corkers',
     name: 'Victor Maravilla',
     directions: {
       en: 'At the Starlet Motel in Chapter 2, go to the diner and inspect the refrigerator before Checking Out. Do this while the motel is still your safehouse.',
@@ -230,6 +271,7 @@ const locations: MapLocation[] = [
   },
   {
     id: 'vaccerine-hamlet', region: 'Hamlet', category: 'cards', position: posterPoint(3310, 5560), approximate: true,
+    collection: 'Ed Comics Universe',
     name: 'Vaccerine',
     directions: {
       en: 'At the east edge of Hamlet, find the billboard beside I-97. Climb its maintenance ladder and check the corner of the platform behind the sign.',
@@ -243,6 +285,7 @@ const locations: MapLocation[] = [
   },
   {
     id: 'laki-maivia-cottonmouth', region: 'Grassrivers', category: 'cards', position: posterPoint(2720, 6143), approximate: true,
+    collection: 'Los Santos Pounders',
     name: { en: 'Laki Maivia (Bronze)', fr: 'Laki Maivia (bronze)' },
     directions: {
       en: 'Southwest of Cottonmouth Lake, enter the red-and-white trailer at the camp with a green canopy. Enter 44017 on the black safe under the microwave.',
@@ -252,6 +295,7 @@ const locations: MapLocation[] = [
   },
   {
     id: 'death-of-swallow-marbelle', region: 'Vice City', category: 'cards', position: posterPoint(4020, 3988), approximate: true,
+    collection: 'The Legends of Ratface',
     name: { en: 'Death of Swallow (Purple)', fr: 'Death of Swallow (violet)' },
     directions: {
       en: 'Enter the boarded-up Marbelle Hotel through its rear door on NW 8th St in Crosstown. Look on the cabinet by the stairs.',
@@ -261,6 +305,7 @@ const locations: MapLocation[] = [
   },
   {
     id: 'monalisa-meerwunder', region: 'Featherstone Islands', category: 'cards', position: posterPoint(2310, 1209), approximate: true,
+    collection: 'Jack of Hearts Dancers',
     name: { en: 'MonaLi$a (Silver)', fr: 'MonaLi$a (argent)' },
     directions: {
       en: 'Board the Meerwunder on the northern shore of the southeastern island. Take the outside stairs and yellow ladder, then check the blue bag on the upper landing by the rail.',
@@ -421,36 +466,62 @@ const locations: MapLocation[] = [
 
 export function getMapLocations(locale: Locale) {
   const media = locale === 'fr' ? 'https://backend.finalboss.fr' : 'https://backend.finalboss.io';
-  return locations.map(({ name, directions, image, anchor, ...location }) => ({
+  const originalLocations = locations.map(({ anchor, ...location }) => ({
     ...location,
-    name: typeof name === 'string' ? name : name[locale],
-    directions: directions[locale],
+    precision: location.approximate ? 'approximate' as const : 'pin' as const,
     href: `/${guides[location.category][locale]}#${anchor}`,
-    image: image ? {
-      src: `${media}/wp-content/uploads/2026/11/${image.file}.webp`,
-      alt: image.alt[locale],
-    } : undefined,
   }));
+  const addedLocations = additionalLocations.map(({ guide, position, ...location }) => {
+    const point = position || sectorPoints[location.region];
+    return {
+      ...location,
+      position: point && posterPoint(...point),
+      precision: position ? 'approximate' as const : point ? 'sector' as const : 'unmapped' as const,
+      href: guide[locale],
+    };
+  });
+  return [...originalLocations, ...addedLocations].map(({ name, directions, image, ...location }) => {
+    const file = typeof image?.file === 'string' ? image.file : image?.file[locale];
+    return {
+      ...location,
+      name: typeof name === 'string' ? name : name[locale],
+      directions: directions[locale],
+      image: image && file ? {
+        src: file.startsWith('https://') ? file : `${media}/wp-content/uploads/2026/11/${file}.webp`,
+        alt: image.alt[locale],
+      } : undefined,
+    };
+  });
 }
 
 export type LocalizedMapLocation = ReturnType<typeof getMapLocations>[number];
 
+export function cardCollectionGuide(locale: Locale) {
+  return `/${guides.cards[locale]}#card-sets`;
+}
+
 export const mapLabels = {
   en: {
     title: 'GTA 6 interactive map',
-    description: 'Find collectible cards, luxury watches, flamingos, WAiNK scans and stunt jumps in GTA 6. Filter the map of Leonida and track your finds.',
+    description: 'Find secrets, collectible cards, WAiNK scans and stunt jumps across Leonida. Open location guides, filter by collection and track your finds.',
     backToHub: 'GTA 6 hub',
-    area: 'Leonida Keys',
     mapCredit: 'Official map by Rockstar Games',
     mapUnavailable: 'The base map is temporarily unavailable. Location details are listed below.',
     approximate: 'Approximate pin',
+    sector: 'Area marker · use the directions',
+    unmapped: 'Directions only',
+    mapPrecision: 'Area markers group documented locations whose exact positions are still to be checked.',
+    collection: 'Card collection',
+    allCollections: 'All 18 collections',
+    noCollection: 'No pickup locations are documented for this collection yet.',
+    collectionGuide: 'See all card collections in the guide',
     overview: 'View all of Leonida',
     group: 'Open grouped locations',
     groupBack: 'Back to grouped locations',
     groupZoom: 'Zoom to this group',
     search: 'Search locations',
     searchHint: 'Search by name or landmark',
-    categories: { cards: 'Cards', watches: 'Watches', flamingos: 'Flamingos', jumps: 'Stunt jumps', scans: 'WAiNK scans' },
+    categories: { cards: 'Cards', watches: 'Watches', flamingos: 'Flamingos', jumps: 'Stunt jumps', scans: 'WAiNK scans', secrets: 'Secrets', exploration: 'Exploration', activities: 'Activities' },
     all: 'All',
     allRegions: 'All areas',
     region: 'Area',
@@ -474,19 +545,25 @@ export const mapLabels = {
   },
   fr: {
     title: 'Carte interactive de GTA 6',
-    description: 'Trouvez les cartes, montres de luxe, flamants, scans WAiNK et sauts uniques de GTA 6. Filtrez la carte de Leonida et suivez vos trouvailles.',
+    description: 'Trouvez les secrets, cartes, scans WAiNK et sauts uniques de GTA 6. Filtrez par collection et ouvrez les guides de chaque emplacement.',
     backToHub: 'Hub GTA 6',
-    area: 'Leonida Keys',
     mapCredit: 'Carte officielle de Rockstar Games',
     mapUnavailable: 'Le fond de carte est momentanément indisponible. Retrouvez les fiches dans la liste ci-dessous.',
     approximate: 'Position indicative',
+    sector: 'Repère de secteur · suivez les indications',
+    unmapped: 'Indications sans repère',
+    mapPrecision: 'Les repères de secteur regroupent des lieux documentés dont les coordonnées exactes restent à vérifier.',
+    collection: 'Collection de cartes',
+    allCollections: 'Les 18 collections',
+    noCollection: 'Aucun emplacement de ramassage documenté pour cette collection pour le moment.',
+    collectionGuide: 'Voir les collections dans le guide',
     overview: 'Voir tout Leonida',
     group: 'Ouvrir les emplacements du groupe',
     groupBack: 'Revenir aux emplacements du groupe',
     groupZoom: 'Zoomer sur ce groupe',
     search: 'Rechercher un emplacement',
     searchHint: 'Un nom ou un repère…',
-    categories: { cards: 'Cartes', watches: 'Montres', flamingos: 'Flamants', jumps: 'Sauts uniques', scans: 'Scans WAiNK' },
+    categories: { cards: 'Cartes', watches: 'Montres', flamingos: 'Flamants', jumps: 'Sauts uniques', scans: 'Scans WAiNK', secrets: 'Secrets', exploration: 'Exploration', activities: 'Activités' },
     all: 'Tout',
     allRegions: 'Tous les secteurs',
     region: 'Secteur',

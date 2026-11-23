@@ -2,15 +2,16 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react';
-import { ArrowLeft, ArrowUpRight, Check, ChevronRight, CreditCard, Feather, Link2, Map, MapPin, Minus, Plus, RotateCcw, ScanLine, Search, Timer, Watch, X } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Check, ChevronRight, CreditCard, Feather, Flag, Gem, Link2, Map, MapPin, Minus, Plus, RotateCcw, ScanLine, Search, Timer, Watch, Waves, X } from 'lucide-react';
 
 import AdSlot from '@/app/components/Section/AdSlot';
-import { leonidaMap, mapLabels, mapRegions, type LocalizedMapLocation, type MapCategory, type MapPoint, type MapRegion } from '@/app/lib/gta6-map';
+import { cardCollectionGuide, cardCollections, leonidaMap, mapLabels, type CardCollection, type LocalizedMapLocation, type MapCategory, type MapPoint, type MapRegion } from '@/app/lib/gta6-map';
 import styles from './gta6-map.module.css';
 
-const categoryIcons = { cards: CreditCard, watches: Watch, flamingos: Feather, jumps: Timer, scans: ScanLine };
+const categoryIcons = { cards: CreditCard, watches: Watch, flamingos: Feather, jumps: Timer, scans: ScanLine, secrets: Gem, exploration: Waves, activities: Flag };
 const categories = Object.keys(categoryIcons) as MapCategory[];
 const storageKey = 'finalboss:gta6-map-found:v1';
+const collections = Object.keys(cardCollections) as CardCollection[];
 const markerId = (id: string) => `pin-${id}`;
 const searchable = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
 
@@ -34,6 +35,7 @@ function centerMap(viewport: HTMLDivElement, scene: HTMLDivElement, point: MapPo
 function groupMarkers(locations: LocalizedMapLocation[], width: number, height: number) {
   const groups: MarkerGroup[] = [];
   for (const item of locations) {
+    if (!item.position) continue;
     const [x, y] = item.position;
     const group = groups.find(({ point }) =>
       Math.hypot((point[0] - x) * width / 100, (point[1] - y) * height / 100) < 39,
@@ -62,6 +64,7 @@ export default function Gta6MapExplorer({
   const [found, setFound] = useState<string[]>([]);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState<MapCategory | 'all'>('all');
+  const [collection, setCollection] = useState<CardCollection | 'all'>('all');
   const [region, setRegion] = useState<MapRegion | 'all'>('all');
   const [onlyMissing, setOnlyMissing] = useState(false);
   const [mapFailed, setMapFailed] = useState(false);
@@ -87,6 +90,7 @@ export default function Gta6MapExplorer({
         drawer.current?.close();
         return;
       }
+      if (!item.position) return;
       if (viewport.current && scene.current) centerMap(viewport.current, scene.current, item.position);
       else zoomCenter.current = item.position;
     }
@@ -140,22 +144,25 @@ export default function Gta6MapExplorer({
     closeControl.current?.focus({ preventScroll: true });
   }, [selectedId, openGroup]);
 
+  const regions = Array.from(new Set(locations.map(item => item.region))).sort((a, b) => a.localeCompare(b));
   const term = searchable(query);
+  const activeCollection = category === 'cards' ? collection : 'all';
   const visible = locations.filter(item =>
     (category === 'all' || item.category === category) &&
     (region === 'all' || item.region === region) &&
+    (activeCollection === 'all' || item.collection === activeCollection) &&
     (!onlyMissing || !found.includes(item.id)) &&
-    (!term || searchable(`${item.name} ${item.region} ${t.categories[item.category]} ${item.directions}`).includes(term)),
+    (!term || searchable(`${item.name} ${item.region} ${t.categories[item.category]} ${item.collection ?? ''} ${item.directions}`).includes(term)),
   );
   const selected = locations.find(item => item.id === selectedId);
-  const groups = groupMarkers(visible, width, height);
+  const groups = width && height ? groupMarkers(visible, width, height) : [];
 
   function select(event: MouseEvent<HTMLAnchorElement>, item: LocalizedMapLocation, fromList = false) {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
     opener.current = event.currentTarget;
     showLocation(item);
-    if (fromList && viewport.current && scene.current) {
+    if (fromList && item.position && viewport.current && scene.current) {
       if (viewZoom < keysZoom) changeZoom(null, item.position);
       else centerMap(viewport.current, scene.current, item.position);
     }
@@ -222,9 +229,9 @@ export default function Gta6MapExplorer({
       changeZoom(null, keysCenter);
       return;
     }
-    const points = locations.filter(item => item.region === next);
+    const points = locations.flatMap(item => item.region === next && item.position ? [item.position] : []);
     if (!points.length) return;
-    const sum = points.reduce<MapPoint>((total, { position: [x, y] }) => [total[0] + x, total[1] + y], [0, 0]);
+    const sum = points.reduce<MapPoint>((total, [x, y]) => [total[0] + x, total[1] + y], [0, 0]);
     changeZoom(keysZoom, [sum[0] / points.length, sum[1] / points.length]);
   }
 
@@ -245,6 +252,7 @@ export default function Gta6MapExplorer({
   function clearFilters() {
     setQuery('');
     setCategory('all');
+    setCollection('all');
     setRegion('all');
     setOnlyMissing(false);
     setCopyStatus('');
@@ -275,9 +283,18 @@ export default function Gta6MapExplorer({
               <span className="sr-only">{t.region}</span>
               <select value={region} onChange={event => chooseRegion(event.target.value as MapRegion | 'all')}>
                 <option value="all">{t.allRegions}</option>
-                {mapRegions.map(area => <option key={area} value={area}>{area}</option>)}
+                {regions.map(area => <option key={area} value={area}>{area}</option>)}
               </select>
             </label>
+            {category === 'cards' && (
+              <label>
+                <span className="sr-only">{t.collection}</span>
+                <select value={collection} onChange={event => setCollection(event.target.value as CardCollection | 'all')}>
+                  <option value="all">{t.allCollections}</option>
+                  {collections.map(name => <option key={name} value={name}>{name} ({cardCollections[name]})</option>)}
+                </select>
+              </label>
+            )}
             <button type="button" aria-pressed={onlyMissing} onClick={() => { setOnlyMissing(value => !value); setCopyStatus(''); }}>{t.remaining}</button>
           </div>
         </div>
@@ -315,21 +332,23 @@ export default function Gta6MapExplorer({
                   const [item] = items;
                   const pinStyle = { left: `${point[0]}%`, top: `${point[1]}%` };
                   if (items.length > 1) {
-                    const label = `${t.group} · ${items.map(location => location.name).join(', ')}`;
+                    const names = items.length <= 4 ? items.map(location => location.name).join(', ') : item.region;
+                    const label = `${t.group} · ${items.length} · ${names}`;
+                    const isArea = items.every(location => location.precision === 'sector');
                     return (
                       <button key={item.id} type="button" className={styles.cluster} style={pinStyle}
-                        aria-label={label} aria-haspopup="dialog"
+                        aria-label={label} aria-haspopup="dialog" data-approximate={isArea}
                         onClick={event => { opener.current = event.currentTarget; setOpenGroup({ point, items }); }}>
                         {items.length}
                       </button>
                     );
                   }
                   const Icon = found.includes(item.id) ? Check : categoryIcons[item.category];
-                  const label = [item.name, item.approximate && t.approximate, found.includes(item.id) && t.found].filter(Boolean).join(' · ');
+                  const label = [item.name, item.precision !== 'pin' && t[item.precision], found.includes(item.id) && t.found].filter(Boolean).join(' · ');
                   return (
                     <a key={item.id} href={`#${markerId(item.id)}`} onClick={event => select(event, item)}
                       className={`${styles.marker} ${styles[item.category]}`}
-                      style={pinStyle} data-approximate={item.approximate}
+                      style={pinStyle} data-approximate={item.precision !== 'pin'}
                       aria-haspopup="dialog"
                       aria-current={selected?.id === item.id ? 'location' : undefined} title={label} aria-label={label}>
                       <Icon size={17} aria-hidden="true" />
@@ -343,7 +362,7 @@ export default function Gta6MapExplorer({
               width={leonidaMap.width} height={leonidaMap.height} unoptimized onError={() => setMapFailed(true)} />
           )}
         </div>
-        <p className={styles.scaleNote}><a href={leonidaMap.source}>{t.mapCredit}</a></p>
+        <p className={styles.scaleNote}><a href={leonidaMap.source}>{t.mapCredit}</a> · {t.mapPrecision}</p>
       </div>
 
       <dialog ref={drawer} className={styles.drawer} aria-labelledby="gta6-location-title" onClose={closeDrawer}
@@ -359,7 +378,7 @@ export default function Gta6MapExplorer({
               <div>
                 {selected && (
                   <p className={`${styles.place} ${styles[selected.category]}`}>
-                    <MapPin size={14} aria-hidden="true" /> {selected.region} · {t.categories[selected.category]}{selected.approximate && ` · ${t.approximate}`}
+                    <MapPin size={14} aria-hidden="true" /> {selected.region} · {t.categories[selected.category]}{selected.precision !== 'pin' && ` · ${t[selected.precision]}`}
                   </p>
                 )}
                 <h2 id="gta6-location-title">{selected?.name ?? `${openGroup?.items.length} ${t.stops.toLowerCase()}`}</h2>
@@ -395,7 +414,7 @@ export default function Gta6MapExplorer({
                       <li key={item.id}>
                         <button type="button" className={styles[item.category]} onClick={() => showLocation(item)}>
                           <Icon size={18} aria-hidden="true" />
-                          <span><strong>{item.name}</strong><small>{item.region} · {t.categories[item.category]}</small></span>
+                          <span><strong>{item.name}</strong><small>{item.region} · {item.collection ?? t.categories[item.category]}{item.precision === 'sector' && ` · ${t.sector}`}</small></span>
                           <ChevronRight size={16} aria-hidden="true" />
                         </button>
                       </li>
@@ -423,6 +442,7 @@ export default function Gta6MapExplorer({
         <div className={styles.resultsBar}>
           <h2 id="gta6-map-results">{t.stops} <span>{visible.length}</span></h2>
         </div>
+        {category === 'cards' && <p className={styles.collectionGuide}><a href={cardCollectionGuide(locale)}>{t.collectionGuide}</a></p>}
         <ul className={styles.list}>
           {visible.map(item => {
             const isFound = found.includes(item.id);
@@ -433,7 +453,7 @@ export default function Gta6MapExplorer({
                   aria-haspopup={ready ? 'dialog' : undefined}
                   aria-current={selected?.id === item.id ? 'location' : undefined}>
                   <Icon size={20} aria-hidden="true" />
-                  <span><strong>{item.name}</strong><small>{item.region} · {t.categories[item.category]}{isFound && ` · ${t.found}`}</small></span>
+                  <span><strong>{item.name}</strong><small>{item.region} · {item.collection ?? t.categories[item.category]}{item.precision === 'unmapped' && ` · ${t.unmapped}`}{isFound && ` · ${t.found}`}</small></span>
                 </a>
                 <p>{item.directions}</p>
               </li>
@@ -442,7 +462,7 @@ export default function Gta6MapExplorer({
         </ul>
         {visible.length === 0 && (
           <div className={styles.empty}>
-            <p>{t.empty}</p>
+            <p>{activeCollection !== 'all' && !locations.some(item => item.collection === activeCollection) ? t.noCollection : t.empty}</p>
             <button type="button" onClick={clearFilters}>{t.reset}</button>
           </div>
         )}

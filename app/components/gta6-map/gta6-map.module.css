@@ -133,6 +133,19 @@
 .flamingos { --pin: #ff96be; }
 .jumps { --pin: var(--ice); }
 .scans { --pin: #cbbdff; }
+.secrets { --pin: #ffad7d; }
+.exploration { --pin: #7bddde; }
+.activities { --pin: #a5aaff; }
+
+.cluster[data-approximate="true"] { border-style: dashed; }
+
+.collectionGuide {
+  margin: 0 0 14px;
+  color: var(--gold);
+  font-size: 14px;
+}
+
+.collectionGuide a:hover { text-decoration: underline; }
 
 .categories svg {
   color: var(--pin);
