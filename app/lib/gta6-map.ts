@@ -88,6 +88,7 @@ export interface AddedMapLocation {
   directions: Translated;
   guide: Translated;
   position?: MapPoint;
+  verifiedInVideo?: boolean;
   image?: MapImage;
 }
 
@@ -476,7 +477,7 @@ export function getMapLocations(locale: Locale) {
     return {
       ...location,
       position: point && posterPoint(...point),
-      precision: position ? 'approximate' as const : point ? 'sector' as const : 'unmapped' as const,
+      precision: location.verifiedInVideo ? 'video' as const : position ? 'approximate' as const : point ? 'sector' as const : 'unmapped' as const,
       href: guide[locale],
     };
   });
@@ -487,7 +488,7 @@ export function getMapLocations(locale: Locale) {
       name: typeof name === 'string' ? name : name[locale],
       directions: directions[locale],
       image: image && file ? {
-        src: file.startsWith('https://') ? file : `${media}/wp-content/uploads/2026/11/${file}.webp`,
+        src: file.startsWith('https://') || file.startsWith('/') ? file : `${media}/wp-content/uploads/2026/11/${file}.webp`,
         alt: image.alt[locale],
       } : undefined,
     };
@@ -508,6 +509,8 @@ export const mapLabels = {
     mapCredit: 'Official map by Rockstar Games',
     mapUnavailable: 'The base map is temporarily unavailable. Location details are listed below.',
     approximate: 'Approximate pin',
+    video: 'Position verified in video',
+    coordinateCredit: 'Coordinate reference',
     sector: 'Area marker · use the directions',
     unmapped: 'Directions only',
     mapPrecision: 'Area markers group documented locations whose exact positions are still to be checked.',
@@ -550,6 +553,8 @@ export const mapLabels = {
     mapCredit: 'Carte officielle de Rockstar Games',
     mapUnavailable: 'Le fond de carte est momentanément indisponible. Retrouvez les fiches dans la liste ci-dessous.',
     approximate: 'Position indicative',
+    video: 'Position vérifiée en vidéo',
+    coordinateCredit: 'Référence des coordonnées',
     sector: 'Repère de secteur · suivez les indications',
     unmapped: 'Indications sans repère',
     mapPrecision: 'Les repères de secteur regroupent des lieux documentés dont les coordonnées exactes restent à vérifier.',

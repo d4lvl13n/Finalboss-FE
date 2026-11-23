@@ -482,6 +482,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Balsero",
     directions: {"en": "Drive along the dirt road under the Apollo Aggregates factory near the freighter dock. Launch off the ramp by the barbed wire fence, clearing NW 15th St onto Westbrook Dr in Balsero.", "fr": "Emprunter le chemin de terre sous l’usine Apollo Aggregates près du quai des cargos. Sauter depuis le tremplin près de la clôture en fil de fer barbelé pour franchir NW 15th St et atterrir sur Westbrook Dr à Balsero."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3513.3, 3946.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-apollo-aggregates-south.webp", "alt": {"fr": "Apollo Aggregates South sur la carte de Leonida", "en": "Apollo Aggregates South on the Leonida map"}},
   },
   {
     id: "jump-leone-street",
@@ -490,6 +493,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Balsero",
     directions: {"en": "Launch off the riverside bank on Leone Street in Balsero. Clear the river and land on SR-120 on the north side of the district.", "fr": "Sauter depuis la berge de la rivière sur Leone Street à Balsero. Franchir la rivière et atterrir sur la SR-120 au nord du quartier."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3469.6, 3866.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-leone-street.webp", "alt": {"fr": "Leone Street dans GTA 6, secteur Balsero", "en": "Leone Street in GTA 6 gameplay, Balsero"}},
   },
   {
     id: "jump-blackwell-sandrock",
@@ -498,6 +504,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Bayside",
     directions: {"en": "Start on the ground floor of an unfinished building inside the Blackwell Sandrock Construction site in Bayside. Launch out across NE 3rd Ave.", "fr": "Démarrer au rez-de-chaussée d’un bâtiment en construction sur le site de Blackwell Sandrock Construction à Bayside. Sauter par-dessus NE 3rd Ave."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4066.2, 3770.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-blackwell-sandrock.webp", "alt": {"fr": "Blackwell Sandrock sur la carte de Leonida", "en": "Blackwell Sandrock on the Leonida map"}},
   },
   {
     id: "jump-skorpen-brothers-recycling",
@@ -506,6 +515,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Bluegrass",
     directions: {"en": "Target the boat in the river below for your landing. The launch point sits on a roadside hill between SW 3rd Ave and the Vice-Dale County Water and Sewage plant.", "fr": "Visez le bateau dans la rivière en contrebas pour votre atterrissage. Tremplin situé sur une colline au bord de la route, entre SW 3rd Ave et Vice-Dale County Water and Sewage."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3421.4, 4978.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-skorpen-brothers-recycling.webp", "alt": {"fr": "Skorpen Brothers Recycling sur la carte de Leonida", "en": "Skorpen Brothers Recycling on the Leonida map"}},
   },
   {
     id: "jump-mastodon-u-s-a",
@@ -514,6 +526,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Crosstown",
     directions: {"en": "Enter the cement plant near NE 14th Street in Crosstown. Launch toward the Black Holes billboard and I-97.", "fr": "Entrer dans la cimenterie près de NE 14th Street à Crosstown. Sauter en direction du panneau publicitaire Black Holes et de l’I-97."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4057.9, 3615.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-mastodon-u-s-a.webp", "alt": {"fr": "Mastodon U.S.A sur la carte de Leonida", "en": "Mastodon U.S.A on the Leonida map"}},
   },
   {
     id: "jump-vice-dale-police-parking",
@@ -522,6 +537,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Crosstown",
     directions: {"en": "Drive onto the roof corner of the Vice-Dale Police Department’s parking garage in Crosstown. Launch over the train tracks to set down on NW 8th St.", "fr": "Se placer au coin du toit du parking couvert du Vice-Dale Police Department à Crosstown. Sauter par-dessus les voies ferrées pour atterrir sur NW 8th St."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3931.1, 3965.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-vice-dale-police-parking.webp", "alt": {"fr": "Vice-Dale Police Parking sur la carte de Leonida", "en": "Vice-Dale Police Parking on the Leonida map"}},
   },
   {
     id: "jump-dalton-island-sculpture-park",
@@ -530,6 +548,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Dalton Island",
     directions: {"en": "Clear a gap toward the Ivory Towers apartments from the Big Entrance sculpture in central Dalton Island. Drive directly off the tip of the structure.", "fr": "Franchissez le vide en direction des appartements Ivory Towers depuis la sculpture Big Entrance au centre de Dalton Island. Elancez-vous depuis l’extrémité de la structure."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4943.6, 4751.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-dalton-island-sculpture-park.webp", "alt": {"fr": "Dalton Island Sculpture Park sur la carte de Leonida", "en": "Dalton Island Sculpture Park on the Leonida map"}},
   },
   {
     id: "jump-opulence-construction",
@@ -538,6 +559,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Decor District",
     directions: {"en": "Find the sand pile behind the unfinished Opulence Condominium beside the canal in Decor District. Launch over the water toward NE 19th St Extension.", "fr": "Trouver le tas de sable derrière l’Opulence Condominium en construction, au bord du canal dans Decor District. Sauter au-dessus de l’eau en direction de NE 19th St Extension."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4265.8, 3394.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-opulence-construction.webp", "alt": {"fr": "Opulence Construction sur la carte de Leonida", "en": "Opulence Construction on the Leonida map"}},
   },
   {
     id: "jump-downtown-mvp-park",
@@ -546,6 +570,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Downtown",
     directions: {"en": "Drive through the opening in the metal railing on the top deck of the parking garage located at the end of SE 2nd St. Land the vehicle in lower Downtown Vice City.", "fr": "Traversez l’ouverture dans la barrière métallique au dernier niveau du parking situé au bout de SE 2nd St. Atterrissez dans le bas de Downtown Vice City."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4076.7, 4450.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-downtown-mvp-park.webp", "alt": {"fr": "Downtown MVP Park sur la carte de Leonida", "en": "Downtown MVP Park on the Leonida map"}},
   },
   {
     id: "jump-shoreline-park-amphitheater",
@@ -554,6 +581,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Downtown",
     directions: {"en": "Drive to the end of the hill beside the parking lot behind Shoreline Park Amphitheater in Downtown. Launch through the Black Hole billboard and land on Catalan Way.", "fr": "Rejoindre le bout de la colline près du parking derrière le Shoreline Park Amphitheater à Downtown. Sauter à travers le panneau publicitaire Black Hole pour atterrir sur Catalan Way."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4185.0, 4324.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-shoreline-park-amphitheater.webp", "alt": {"fr": "Shoreline Park Amphitheater sur la carte de Leonida", "en": "Shoreline Park Amphitheater on the Leonida map"}},
   },
   {
     id: "jump-vice-city-parking-department-downtown",
@@ -562,6 +592,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Downtown",
     directions: {"en": "Head to the fifth level of the Vice City Parking Department Downtown garage underneath the I-97 bridge. Launch from the corner of the structure.", "fr": "Se rendre au cinquième niveau du parking du Vice City Parking Department Downtown sous le pont de l’I-97. Sauter depuis le coin de la structure."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3872.8, 4452.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-vice-city-parking-department-downtown.webp", "alt": {"fr": "Vice City Parking Department Downtown sur la carte de Leonida", "en": "Vice City Parking Department Downtown on the Leonida map"}},
   },
   {
     id: "jump-anderson-murphy-construction",
@@ -570,6 +603,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Hamlet",
     directions: {"en": "Aim across the river to land past the water. The ramp lies along a dirt path beside the construction site on the South Vice-Dale County and Hamlet border.", "fr": "Visez au-delà de la rivière pour atterrir après l’eau. Le tremplin se trouve le long d’un chemin de terre à côté du chantier, à la frontière entre South Vice-Dale County et Hamlet."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3408.2, 5354.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-anderson-murphy-construction.webp", "alt": {"fr": "Anderson Murphy Construction sur la carte de Leonida", "en": "Anderson Murphy Construction on the Leonida map"}},
   },
   {
     id: "jump-hamlet-backyard",
@@ -578,6 +614,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Hamlet",
     directions: {"en": "Aim for the LPL parking lot across the street. Launch directly from the backyard of the dilapidated house on Vine St, opposite the LPL Substation Utilities building.", "fr": "Visez le parking de LPL de l’autre côté de la rue. Lancez-vous depuis le jardin arrière de la maison délabrée sur Vine St, en face du bâtiment LPL Substation Utilities."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3141.7, 5436.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-hamlet-backyard.webp", "alt": {"fr": "Hamlet Backyard dans GTA 6, secteur Hamlet", "en": "Hamlet Backyard in GTA 6 gameplay, Hamlet"}},
   },
   {
     id: "jump-interstate-97-east",
@@ -586,6 +625,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "La Perle",
     directions: {"en": "Touch down on Interstate 97 below. Take the launch ramp situated mid-curve on the connecting ramp from I-97 to US-10 in La Perle.", "fr": "Atterrissez sur l’Interstate 97 en contrebas. Prenez le tremplin situé au milieu du virage sur la bretelle reliant I-97 à US-10 à La Perle."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4038.8, 3473.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-interstate-97-east.webp", "alt": {"fr": "Interstate 97 East dans GTA 6, secteur La Perle", "en": "Interstate 97 East in GTA 6 gameplay, La Perle"}},
   },
   {
     id: "jump-interstate-97-west",
@@ -594,6 +636,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "La Perle",
     directions: {"en": "Launch off the side of the ramp connecting I-97 to US-10 in La Perle, located in northern Vice City.", "fr": "Sauter depuis le côté de la bretelle reliant l’I-97 à l’US-10 à La Perle, située au nord de Vice City."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4026.4, 3451.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-interstate-97-west.webp", "alt": {"fr": "Interstate 97 West dans GTA 6, secteur La Perle", "en": "Interstate 97 West in GTA 6 gameplay, La Perle"}},
   },
   {
     id: "jump-la-perle-parking-lot",
@@ -602,6 +647,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "La Perle",
     directions: {"en": "Go to the top floor of the parking garage in western La Perle and find the ramp leaning against a blue shipping container. Launch over onto Saltbank Rd.", "fr": "Se rendre au dernier étage du parking dans l’ouest de La Perle et repérer le tremplin appuyé contre un conteneur bleu. Sauter pour atterrir sur Saltbank Rd."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3816.7, 3664.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-la-perle-parking-lot.webp", "alt": {"fr": "La Perle Parking Lot sur la carte de Leonida", "en": "La Perle Parking Lot on the Leonida map"}},
   },
   {
     id: "jump-valdemar-on-the-river-parking-north",
@@ -610,6 +658,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Little Cuba",
     directions: {"en": "Drive off the open northern edge of the top floor of the parking garage at the Valdemar on the River building in Little Cuba down onto West Royale St.", "fr": "S’élancer depuis le bord nord ouvert du dernier étage du parking du bâtiment Valdemar on the River à Little Cuba pour atterrir sur West Royale Street."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3829.2, 4358.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-valdemar-on-the-river-parking-north.webp", "alt": {"fr": "Valdemar on the River Parking North sur la carte de Leonida", "en": "Valdemar on the River Parking North on the Leonida map"}},
   },
   {
     id: "jump-valdemar-on-the-river-parking-south",
@@ -618,6 +669,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Little Cuba",
     directions: {"en": "Land directly onto West Royale St in Little Cuba. The jump point is on the open eastern edge of the top level of the Valdemar on the River garage.", "fr": "Atterrissez directement sur West Royale St à Little Cuba. Le point de saut se trouve sur le bord est du dernier niveau du parking Valdemar on the River."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3839.0, 4358.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-valdemar-on-the-river-parking-south.webp", "alt": {"fr": "Valdemar on the River Parking South sur la carte de Leonida", "en": "Valdemar on the River Parking South on the Leonida map"}},
   },
   {
     id: "jump-7777-ocean-beach-parking",
@@ -626,6 +680,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Head to the level right below the roof of the Urban Edge Tower garage. Speed across the wooden plank straight onto the Nolan Center garage roof.", "fr": "Allez au niveau situe juste sous le toit du garage de la Urban Edge Tower. Empruntez la planche pour rejoindre le toit du garage du Nolan Center."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4778.4, 3757.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-7777-ocean-beach-parking.webp", "alt": {"fr": "7777 Ocean Beach Parking sur la carte de Leonida", "en": "7777 Ocean Beach Parking on the Leonida map"}},
   },
   {
     id: "jump-cruda-y-asi",
@@ -634,6 +691,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Touch down on Huevo St after launching off the edge of the elevated parking lot situated directly above Cruda y Asi on Spirea Ln.", "fr": "Atterrissez sur Huevo St en vous elancant depuis le bord du parking situe au-dessus de Cruda y Asi sur Spirea Ln."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4798.5, 4071.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-cruda-y-asi.webp", "alt": {"fr": "Cruda Y Asi sur la carte de Leonida", "en": "Cruda Y Asi on the Leonida map"}},
   },
   {
     id: "jump-harrison-harbor-parking",
@@ -642,6 +702,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Drive to the top floor of the Harrison Harbor garage in Ocean Beach. Aim for the small dirt mound positioned in the corner to jump.", "fr": "Rendez-vous au dernier etage du parking de Harrison Harbor a Ocean Beach. Utilisez la petite butte de terre dans le coin comme tremplin."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4774.1, 4136.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-harrison-harbor-parking.webp", "alt": {"fr": "Harrison Harbor Parking sur la carte de Leonida", "en": "Harrison Harbor Parking on the Leonida map"}},
   },
   {
     id: "jump-nolan-center-parking",
@@ -650,6 +713,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Land onto Cabega St by driving off the wooden board in the corner of the top floor of the Nolan Center parking garage.", "fr": "Atterrissez sur Cabega St en franchissant la planche en bois situee dans le coin du dernier etage du parking du Nolan Center."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4795.3, 3795.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-nolan-center-parking.webp", "alt": {"fr": "Nolan Center Parking sur la carte de Leonida", "en": "Nolan Center Parking on the Leonida map"}},
   },
   {
     id: "jump-ocean-beach-mvp-park-north",
@@ -658,6 +724,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Drive off the roof edge of the parking garage connected to the Glasshouse, leaping over the street to land on Oleander Blvd in Vice Beach.", "fr": "S’élancer depuis le bord du toit du parking relié au Glasshouse, en sautant par-dessus la rue pour atterrir sur Oleander Blvd à Vice Beach."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4825.6, 3691.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-ocean-beach-mvp-park-north.webp", "alt": {"fr": "Ocean Beach MVP Park North dans GTA 6, secteur Ocean Beach", "en": "Ocean Beach MVP Park North in GTA 6 gameplay, Ocean Beach"}},
   },
   {
     id: "jump-ocean-beach-mvp-park-south",
@@ -666,6 +735,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Land on Atlantic Ave down in Ocean Beach. Speed off the roof corner of the parking garage right next to the Bohemia Hotel.", "fr": "Atterrissez sur Atlantic Ave à Ocean Beach. Prenez de la vitesse depuis le coin du toit du parking situé juste à côté de l’hôtel Bohemia."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4938.5, 4100.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-ocean-beach-mvp-park-south.webp", "alt": {"fr": "Ocean Beach MVP Park South dans GTA 6, secteur Ocean Beach", "en": "Ocean Beach MVP Park South in GTA 6 gameplay, Ocean Beach"}},
   },
   {
     id: "jump-ocean-beach-marina",
@@ -674,6 +746,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Hit the incline situated between the park and the marina to jump across the water in Ocean Beach.", "fr": "Emprunter l’incliné situé entre le parc et la marina pour sauter par-dessus l’eau à Ocean Beach."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4814.0, 4356.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-ocean-beach-marina.webp", "alt": {"fr": "Ocean Beach Marina dans GTA 6, secteur Ocean Beach", "en": "Ocean Beach Marina in GTA 6 gameplay, Ocean Beach"}},
   },
   {
     id: "jump-ocean-beach-plus-parking",
@@ -682,6 +757,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Land on Thompson Ave in Ocean Beach. Drive straight through the glass pane on the top level of the Indigo St parking garage.", "fr": "Atterrissez sur Thompson Ave à Ocean Beach. Traversez la vitre située au dernier niveau du parking de Indigo St."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4873.1, 4132.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-ocean-beach-plus-parking.webp", "alt": {"fr": "Ocean Beach Plus Parking sur la carte de Leonida", "en": "Ocean Beach Plus Parking on the Leonida map"}},
   },
   {
     id: "jump-sixth-harper-parking",
@@ -690,6 +768,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Drive off the edge of the top level of the Sixth & Harper parking garage, leaping across Indigo St onto the roof of the Ocean Beach Plus parking garage.", "fr": "S’élancer depuis le bord du dernier niveau du parking de Sixth & Harper, en franchissant Indigo St pour atterrir sur le toit du parking Ocean Beach Plus."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4848.1, 4113.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-sixth-harper-parking.webp", "alt": {"fr": "Sixth & Harper Parking sur la carte de Leonida", "en": "Sixth & Harper Parking on the Leonida map"}},
   },
   {
     id: "jump-vice-beach-park-in",
@@ -698,6 +779,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Touch down in the streets of Vice Beach. Steer toward the outer corner on the top floor of the City Picnic Market garage at Thompson Ave and D St.", "fr": "Atterrissez dans les rues de Vice Beach. Dirigez-vous vers le coin extérieur au dernier étage du parking du City Picnic Market, à l’intersection de Thompson Ave et D St."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4908.3, 3823.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-vice-beach-park-in.webp", "alt": {"fr": "Vice Beach Park In sur la carte de Leonida", "en": "Vice Beach Park In on the Leonida map"}},
   },
   {
     id: "jump-vice-beach-police-headquarters",
@@ -706,6 +790,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Go to the roof corner of the parking garage attached to the police headquarters in Ocean Beach. Jump off the ramp aiming down toward Harborside Avenue.", "fr": "Rendez-vous au coin du toit du garage rattaché au poste de police d’Ocean Beach. Sautez depuis la rampe en visant Harborside Avenue en bas."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4788.3, 4115.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-vice-beach-police-headquarters.webp", "alt": {"fr": "Vice Beach Police Headquarters sur la carte de Leonida", "en": "Vice Beach Police Headquarters on the Leonida map"}},
   },
   {
     id: "jump-vice-city-parking-department-ocean-beach",
@@ -714,6 +801,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Launch off the corner edge of the rooftop parking garage above the shops, clearing Grape St to land in the Ocean Beach alleyway.", "fr": "Sauter depuis le coin du toit du parking situé au-dessus des magasins, en franchissant Grape St pour atterrir dans la ruelle d’Ocean Beach."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4922.5, 3995.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-vice-city-parking-department-ocean-beach.webp", "alt": {"fr": "Vice City Parking Department Ocean Beach sur la carte de Leonida", "en": "Vice City Parking Department Ocean Beach on the Leonida map"}},
   },
   {
     id: "jump-dolly-and-darrel-zimmermann-parking",
@@ -722,6 +812,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Penmarch Isle",
     directions: {"en": "Locate the Dolly and Darrel Zimmermann parking garage opposite St. Vitus Medical Center on Penmarch Isle. Launch off the dirt mound tucked in the corner.", "fr": "Trouvez le parking Dolly and Darrel Zimmermann en face du St. Vitus Medical Center sur Penmarch Isle. Sautez depuis la butte de terre au coin."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4687.6, 3511.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-dolly-and-darrel-zimmermann-parking.webp", "alt": {"fr": "Dolly and Darrel Zimmermann Parking sur la carte de Leonida", "en": "Dolly and Darrel Zimmermann Parking on the Leonida map"}},
   },
   {
     id: "jump-mariner-s-highway",
@@ -730,6 +823,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Port VC",
     directions: {"en": "Locate the ramp on the lower bridge section under construction below Mariner’s Highway, heading into Port Vice City from Downtown. Jump and land on Mariner’s Highway.", "fr": "Trouvez la rampe sur la section inférieure du pont en construction sous la Mariner’s Highway, en allant vers Port Vice City depuis Downtown. Sautez et atterrissez sur la Mariner’s Highway."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4238.1, 4444.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-mariner-s-highway.webp", "alt": {"fr": "Mariner’s Highway sur la carte de Leonida", "en": "Mariner’s Highway on the Leonida map"}},
   },
   {
     id: "jump-port-vice-city-plus-parking",
@@ -738,6 +834,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Port VC",
     directions: {"en": "Aim for Basin Dr below by speeding off the ledge on the third floor of the Port Vice City parking structure.", "fr": "Visez Basin Dr en vous elancant depuis le bord du troisieme etage du garage de Port Vice City."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4327.9, 4437.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-port-vice-city-plus-parking.webp", "alt": {"fr": "Port Vice City Plus Parking dans GTA 6, secteur Port VC", "en": "Port Vice City Plus Parking in GTA 6 gameplay, Port VC"}},
   },
   {
     id: "jump-vice-city-parking-department-salton",
@@ -746,6 +845,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Salton",
     directions: {"en": "Drop onto the Interstate after speeding off the wooden board placed at the top corner of the Vice City Parking Department garage in Salton.", "fr": "Atterrissez sur l’Interstate en vous elancant depuis la planche en bois situee au dernier etage du garage du Vice City Parking Department a Salton."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3712.2, 4662.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-vice-city-parking-department-salton.webp", "alt": {"fr": "Vice City Parking Department Salton sur la carte de Leonida", "en": "Vice City Parking Department Salton on the Leonida map"}},
   },
   {
     id: "jump-apollo-aggregates-quarry",
@@ -754,6 +856,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "South Vice-Dale County",
     directions: {"en": "Find the dirt ramp between a building and a flooded pit inside the Apollo Aggregates Quarry in South Vice-Dale County. Jump over Calderone Avenue.", "fr": "Trouvez la rampe en terre entre un bâtiment et une fosse inondée dans la carrière Apollo Aggregates à South Vice-Dale County. Sautez par-dessus Calderone Ave."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3502.1, 5276.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-apollo-aggregates-quarry.webp", "alt": {"fr": "Apollo Aggregates Quarry sur la carte de Leonida", "en": "Apollo Aggregates Quarry on the Leonida map"}},
   },
   {
     id: "jump-peacock-estate",
@@ -762,6 +867,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "South Vice-Dale County",
     directions: {"en": "Find the construction area at the end of the Peacock Estates cul-de-sac. Drive over the small dirt hill along the waterfront to jump.", "fr": "Trouvez le chantier au fond de l’impasse a Peacock Estates. Franchissez la petite butte de terre au bord de l’eau pour sauter."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3746.5, 5231.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-peacock-estate.webp", "alt": {"fr": "Peacock Estate sur la carte de Leonida", "en": "Peacock Estate on the Leonida map"}},
   },
   {
     id: "jump-peregrine-bay-coastal",
@@ -770,6 +878,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "South Vice-Dale County",
     directions: {"en": "Start from the middle of a dirt road inside the construction site on the south side of T.H. Power Station. Jump over the construction trailer.", "fr": "Partez du milieu d’un chemin de terre sur le chantier au sud de la T.H. Power Station. Sautez par-dessus la remorque de chantier."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3544.9, 5764.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-peregrine-bay-coastal.webp", "alt": {"fr": "Peregrine Bay Coastal sur la carte de Leonida", "en": "Peregrine Bay Coastal on the Leonida map"}},
   },
   {
     id: "jump-gator-plaza-parking",
@@ -778,6 +889,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Southside",
     directions: {"en": "Drive off the ramp on the edge of the Gator Plaza parking garage roof in Southside Vice City and land down on SW 10th Avenue.", "fr": "Élancez-vous de la rampe au bord du toit du parking du Gator Plaza à Southside Vice City pour atterrir sur SW 10th Ave."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3534.8, 5168.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-gator-plaza-parking.webp", "alt": {"fr": "Gator Plaza Parking sur la carte de Leonida", "en": "Gator Plaza Parking on the Leonida map"}},
   },
   {
     id: "jump-sw-4th-avenue-construction",
@@ -786,6 +900,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Tequesta",
     directions: {"en": "Drive off the dirt hill at the end of SW 4th Avenue in the construction site, jumping over the river and beneath the train bridge in Tequesta.", "fr": "Élancez-vous depuis la butte de terre située au bout de SW 4th Ave sur le chantier, en sautant par-dessus la rivière et sous le pont ferroviaire à Tequesta."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3872.9, 4531.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-sw-4th-avenue-construction.webp", "alt": {"fr": "SW 4th Avenue Construction sur la carte de Leonida", "en": "SW 4th Avenue Construction on the Leonida map"}},
   },
   {
     id: "jump-tequesta-mvp-park",
@@ -794,6 +911,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Tequesta",
     directions: {"en": "Drop onto SE 2nd Ave in Tequesta by charging through the broken wall section marked with construction signs on the top parking level opposite the Sahara building.", "fr": "Atterrissez sur SE 2nd Ave a Tequesta en traversant le mur brise couvert de panneaux de chantier au sommet du parking en face du Sahara."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3951.1, 4704.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-tequesta-mvp-park.webp", "alt": {"fr": "Tequesta MVP Park sur la carte de Leonida", "en": "Tequesta MVP Park on the Leonida map"}},
   },
   {
     id: "jump-vice-city-parking-department-tequesta",
@@ -802,6 +922,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Tequesta",
     directions: {"en": "Go to the corner of the parking garage roof across from LomBank in Tequesta and launch toward SW 7th Street.", "fr": "Allez au coin du toit du garage en face de LomBank à Tequesta et lancez-vous en direction de SW 7th Street."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3850.9, 4826.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-vice-city-parking-department-tequesta.webp", "alt": {"fr": "Vice City Parking Department Tequesta sur la carte de Leonida", "en": "Vice City Parking Department Tequesta on the Leonida map"}},
   },
   {
     id: "jump-tequesta-park-in",
@@ -810,6 +933,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Tequesta Retreat",
     directions: {"en": "Launch off the ramp on the roof edge of the parking garage attached to Saint Malo II Resort on Tequesta Retreat.", "fr": "Élancez-vous depuis la rampe située au bord du toit du garage rattaché au Saint Malo II Resort sur Tequesta Retreat."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [4147.7, 4625.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-tequesta-park-in.webp", "alt": {"fr": "Tequesta Park In sur la carte de Leonida", "en": "Tequesta Park In on the Leonida map"}},
   },
   {
     id: "jump-banner-hotel-spa-parking",
@@ -818,6 +944,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "VCIA",
     directions: {"en": "Drive off the wooden board at the edge of the top floor of the Banner Hotel & Spa parking garage in eastern VCIA. Land down below on Bayside Dr.", "fr": "Sauter depuis la planche en bois située au bord du dernier étage du parking du Banner Hotel & Spa dans l’est de VCIA. Atterrissez plus bas sur Bayside Dr."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3620.4, 4526.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-banner-hotel-spa-parking.webp", "alt": {"fr": "Banner Hotel & Spa Parking sur la carte de Leonida", "en": "Banner Hotel & Spa Parking on the Leonida map"}},
   },
   {
     id: "jump-cargo-road-construction",
@@ -826,6 +955,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "VCIA",
     directions: {"en": "Drive off the launch ramp in the construction yard next to Cargo Rd in southeastern VCIA. Jump over the small river to land on the opposite side.", "fr": "Prenez le tremplin dans le chantier près de Cargo Rd dans le sud-est de VCIA. Sautez par-dessus la petite rivière pour atterrir."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3588.1, 4853.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-cargo-road-construction.webp", "alt": {"fr": "Cargo Road Construction sur la carte de Leonida", "en": "Cargo Road Construction on the Leonida map"}},
   },
   {
     id: "jump-dth-depot-parking",
@@ -834,6 +966,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "VCIA",
     directions: {"en": "Reach the southeastern section of VCIA and speed off the DTH warehouse roof parking lot to clear the gap onto the Sahara warehouse roof.", "fr": "Allez au sud-est de VCIA et elancez-vous du toit du garage de l’entrepot DTH pour atterrir sur le toit de l’entrepot Sahara."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3558.4, 4714.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-dth-depot-parking.webp", "alt": {"fr": "DTH Depot Parking sur la carte de Leonida", "en": "DTH Depot Parking on the Leonida map"}},
   },
   {
     id: "jump-go-postal",
@@ -842,6 +977,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "VCIA",
     directions: {"en": "Launch from the red and white checkered ramp located in the side area perpendicular to the runway near the Go Postal Airmail & Freight warehouse in southwestern VCIA.", "fr": "Sauter depuis le tremplin à damier rouge et blanc situé dans la zone latérale perpendiculaire à la piste, près de l’entrepôt Go Postal Airmail & Freight dans le sud-ouest de VCIA."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3034.4, 4640.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-go-postal.webp", "alt": {"fr": "Go Postal sur la carte de Leonida", "en": "Go Postal on the Leonida map"}},
   },
   {
     id: "jump-vcia-north-central-gate",
@@ -850,6 +988,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "VCIA",
     directions: {"en": "Take off from the red and white checkered ramp beside the northern runway in VCIA, right near the VCAR hangar.", "fr": "Prenez de l’élan sur le tremplin à damier rouge et blanc situé à côté de la piste nord de VCIA, près du hangar VCAR."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3217.7, 4290.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-vcia-north-central-gate.webp", "alt": {"fr": "VCIA North Central Gate dans GTA 6, secteur VCIA", "en": "VCIA North Central Gate in GTA 6 gameplay, VCIA"}},
   },
   {
     id: "jump-vcia-storage-facility",
@@ -858,6 +999,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "VCIA",
     directions: {"en": "Launch from the edge of the construction area beside the VCIA Storage Facility on the east side of VCIA. Clear El Joven Blvd to land successfully.", "fr": "Sauter depuis le bord de la zone de chantier à côté du VCIA Storage Facility sur le côté est de VCIA. Franchissez El Joven Blvd pour atterrir."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3632.2, 4720.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-vcia-storage-facility.webp", "alt": {"fr": "VCIA Storage Facility sur la carte de Leonida", "en": "VCIA Storage Facility on the Leonida map"}},
   },
   {
     id: "jump-vcia-concourse",
@@ -866,6 +1010,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "VCIA Terminals",
     directions: {"en": "Launch from the dirt hill behind the construction cones on the upper level next to the Concourse along VCIA Circular.", "fr": "Partir de la butte de terre située derrière les cônes de chantier sur le niveau supérieur à côté du Concourse, le long de VCIA Circular."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3524.0, 4596.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-vcia-concourse.webp", "alt": {"fr": "VCIA Concourse sur la carte de Leonida", "en": "VCIA Concourse on the Leonida map"}},
   },
   {
     id: "jump-vcia-gator-parking",
@@ -874,6 +1021,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "VCIA Terminals",
     directions: {"en": "Locate the wooden plank and orange barriers on the roof of the Gator Parking garage. Jump across the gap toward the purple Manatee Parking sign.", "fr": "Repérez la planche en bois et les barrières oranges sur le toit du parking Gator Parking. Sautez par-dessus le vide en direction du panneau violet Manatee Parking."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [3433.1, 4547.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-vcia-gator-parking.webp", "alt": {"fr": "VCIA Gator Parking sur la carte de Leonida", "en": "VCIA Gator Parking on the Leonida map"}},
   },
   {
     id: "jump-hoopla-construction",
@@ -882,6 +1032,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Washington Beach",
     directions: {"en": "Drive down the boardwalk dirt trail between the skyrise site and Albany Hotel in Washington Beach. Hit the dirt mound ramp to land out onto the sand.", "fr": "Empruntez le chemin de terre du boardwalk entre le chantier du gratte-ciel et l’Albany Hotel à Washington Beach. Sautez depuis la butte pour atterrir sur la plage."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [5012.2, 3593.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-hoopla-construction.webp", "alt": {"fr": "Hoopla Construction sur la carte de Leonida", "en": "Hoopla Construction on the Leonida map"}},
   },
   {
     id: "jump-schlott-construction-west-vice-dale-county",
@@ -890,6 +1043,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "West Vice-Dale County",
     directions: {"en": "Head to the Schlott Construction zone at the edge of Buckskin Swamp and West Vice-Dale County. Launch over the river from the large dirt ramp.", "fr": "Rendez-vous sur le chantier Schlott Construction en limite de Buckskin Swamp et West Vice-Dale County. Prenez le grand tremplin de terre pour franchir la rivière."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [2732.9, 4083.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-schlott-construction-west-vice-dale-county.webp", "alt": {"fr": "Schlott Construction West Vice-Dale County sur la carte de Leonida", "en": "Schlott Construction West Vice-Dale County on the Leonida map"}},
   },
   {
     id: "jump-interstate-404",
@@ -898,6 +1054,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "West Vice-Dale County",
     directions: {"en": "Locate the gravel mound alongside Interstate 404 northeast of VCIA in West Vice-Dale County. Launch off this hill to leap across the freeway lanes.", "fr": "Repérez la butte de gravier en bordure de l’Interstate 404 au nord-est de VCIA dans West Vice-Dale County. Prenez l’élan pour franchir l’autoroute."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [2917.8, 4151.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-interstate-404.webp", "alt": {"fr": "Interstate 404 dans GTA 6, secteur West Vice-Dale County", "en": "Interstate 404 in GTA 6 gameplay, West Vice-Dale County"}},
   },
   {
     id: "jump-west-vice-dale-county-landfill",
@@ -906,6 +1065,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "West Vice-Dale County",
     directions: {"en": "Hit the large dirt mound in the center of the West Vice-Dale County Landfill. Jump over the perimeter fence and land on Cargo Rd near VCIA.", "fr": "Prenez la grande butte de terre au milieu de la décharge de West Vice-Dale County. Franchissez la clôture pour atterrir sur Cargo Rd près de VCIA."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-vice-city", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-vice-city"},
+    position: [2825.5, 4250.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-west-vice-dale-county-landfill.webp", "alt": {"fr": "West Vice-Dale County Landfill sur la carte de Leonida", "en": "West Vice-Dale County Landfill on the Leonida map"}},
   },
   {
     id: "jump-goliath-global-quarry-conveyor",
@@ -914,6 +1076,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Breakwater Quarry",
     directions: {"en": "Aim for the roof of the main Goliath Global building in Breakwater Quarry. Hit the prominent dirt heap positioned right in front of the conveyor belt.", "fr": "Visez le toit de l’entrepôt principal Goliath Global à Breakwater Quarry. Elancez-vous depuis la grosse butte située devant le convoyeur."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-keys-mariana", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-keys-mariana"},
+    position: [2669.7, 4513.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-goliath-global-quarry-conveyor.webp", "alt": {"fr": "Goliath Global Quarry Conveyor sur la carte de Leonida", "en": "Goliath Global Quarry Conveyor on the Leonida map"}},
   },
   {
     id: "jump-goliath-global-quarry-heap",
@@ -922,6 +1087,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Breakwater Quarry",
     directions: {"en": "Climb the cliff path in central Breakwater Quarry to find stacked metal sheets. Drive off the sheets to clear the jump.", "fr": "Montez la piste falaise au centre de Breakwater Quarry pour repérer des tôles métalliques. Sautez depuis ces plaques pour valider la cascade."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-keys-mariana", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-keys-mariana"},
+    position: [2637.1, 4700.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-goliath-global-quarry-heap.webp", "alt": {"fr": "Goliath Global Quarry Heap dans GTA 6, secteur Breakwater Quarry", "en": "Goliath Global Quarry Heap in GTA 6 gameplay, Breakwater Quarry"}},
   },
   {
     id: "jump-goliath-global-quarry-storage",
@@ -930,6 +1098,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Breakwater Quarry",
     directions: {"en": "Launch off the large rock pile located next to the road in the middle of Breakwater Quarry in North Mariana County.", "fr": "Sauter depuis le grand tas de roches situé à côté de la route au centre de Breakwater Quarry dans North Mariana County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-keys-mariana", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-keys-mariana"},
+    position: [2749.8, 4676.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-goliath-global-quarry-storage.webp", "alt": {"fr": "Goliath Global Quarry Storage dans GTA 6, secteur Breakwater Quarry", "en": "Goliath Global Quarry Storage in GTA 6 gameplay, Breakwater Quarry"}},
   },
   {
     id: "jump-goliath-global-quarry-railroad",
@@ -938,6 +1109,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Breakwater Quarry",
     directions: {"en": "Find a dirt trail beside the train tracks in southern Breakwater Quarry. Speed up the small mound next to the rails to complete the leap.", "fr": "Trouvez une piste de terre longeant la voie ferrée au sud de Breakwater Quarry. Prenez de la vitesse sur la petite butte à côté des rails."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-keys-mariana", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-keys-mariana"},
+    position: [2714.4, 4888.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-goliath-global-quarry-railroad.webp", "alt": {"fr": "Goliath Global Quarry Railroad sur la carte de Leonida", "en": "Goliath Global Quarry Railroad on the Leonida map"}},
   },
   {
     id: "jump-longneck-trail",
@@ -946,6 +1120,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Grassrivers",
     directions: {"en": "Jump over the broken bridge on the river that feeds into Cottonmouth Lake in the Grassrivers.", "fr": "Franchir le pont brisé sur la rivière se déversant dans Cottonmouth Lake dans les Grassrivers."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-keys-mariana", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-keys-mariana"},
+    position: [3029.8, 6100.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-longneck-trail.webp", "alt": {"fr": "Longneck Trail dans GTA 6, secteur Grassrivers", "en": "Longneck Trail in GTA 6 gameplay, Grassrivers"}},
   },
   {
     id: "jump-southpoint-airfield",
@@ -954,6 +1131,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Grassrivers",
     directions: {"en": "Drive off the small dirt mound out over the water at the southern end of Southpoint Airfield in Mariana County.", "fr": "Sauter depuis la petite butte de terre au-dessus de l’eau à l’extrémité sud de Southpoint Airfield dans Mariana County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-keys-mariana", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-keys-mariana"},
+    position: [3199.3, 5993.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-southpoint-airfield.webp", "alt": {"fr": "Southpoint Airfield sur la carte de Leonida", "en": "Southpoint Airfield on the Leonida map"}},
   },
   {
     id: "jump-us-route-82-construction",
@@ -962,6 +1142,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Grassrivers",
     directions: {"en": "Touch down across the bridge on US Route 82. Drive up the dirt road inside the border construction site between Grassrivers and North Mariana County to launch.", "fr": "Atterrissez de l’autre côté du pont sur la US Route 82. Prenez de l’élan sur le chemin de terre du chantier en frontière de Grassrivers et North Mariana County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-keys-mariana", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-keys-mariana"},
+    position: [2597.3, 5008.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-us-route-82-construction.webp", "alt": {"fr": "US Route 82 Construction sur la carte de Leonida", "en": "US Route 82 Construction on the Leonida map"}},
   },
   {
     id: "jump-key-lento-bridge-east",
@@ -970,6 +1153,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Key Lento",
     directions: {"en": "Drive along the eastern span of the old Key Lento Bridge between Abismo Key and Key Lento. Hit the ramp structure straight ahead.", "fr": "Roulez sur la portion est de l’ancien Key Lento Bridge joignant Abismo Key à Key Lento. Foncez tout droit sur la structure tremplin."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-keys-mariana", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-keys-mariana"},
+    position: [2872.5, 6864.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-key-lento-bridge-east.webp", "alt": {"fr": "Key Lento Bridge East sur la carte de Leonida", "en": "Key Lento Bridge East on the Leonida map"}},
   },
   {
     id: "jump-schlott-construction-key-lento",
@@ -986,6 +1172,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Mount Hailes Country Club",
     directions: {"en": "Drive off the ramped building at the canal edge on the east side of Lake Leonida.", "fr": "Sauter depuis le bâtiment en tremplin situé au bord du canal, du côté est de Lake Leonida."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-keys-mariana", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-keys-mariana"},
+    position: [3725.8, 2506.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-lake-leonida-lock-east.webp", "alt": {"fr": "Lake Leonida Lock East dans GTA 6, secteur Mount Hailes Country Club", "en": "Lake Leonida Lock East in GTA 6 gameplay, Mount Hailes Country Club"}},
   },
   {
     id: "jump-goliath-global-quarry-lakeside",
@@ -994,6 +1183,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "North Mariana County",
     directions: {"en": "Steer toward a large sand pile tucked by a brick wall and construction barriers on the west side of Breakwater Quarry in North Mariana County.", "fr": "Foncez vers un grand tas de sable situé contre un mur en briques et des barrières de chantier, côté ouest de Breakwater Quarry dans North Mariana County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-keys-mariana", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-keys-mariana"},
+    position: [2470.8, 4643.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-goliath-global-quarry-lakeside.webp", "alt": {"fr": "Goliath Global Quarry Lakeside dans GTA 6, secteur North Mariana County", "en": "Goliath Global Quarry Lakeside in GTA 6 gameplay, North Mariana County"}},
   },
   {
     id: "jump-nehrling-river",
@@ -1002,6 +1194,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "North Mariana County",
     directions: {"en": "Launch from the water’s edge in the quarry over a small portion of the Nehrling River in North Mariana County.", "fr": "Sauter depuis le bord de l’eau dans la carrière par-dessus une petite portion de la Nehrling River dans North Mariana County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-keys-mariana", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-keys-mariana"},
+    position: [2360.4, 4359.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-nehrling-river.webp", "alt": {"fr": "Nehrling River sur la carte de Leonida", "en": "Nehrling River on the Leonida map"}},
   },
   {
     id: "jump-kalaga-river",
@@ -1010,6 +1205,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "North Leonard County",
     directions: {"en": "Hit the dirt mound along Tallaloko Lake Rd close to I-297 in North Leonard County.", "fr": "Prenez la bosse de terre sur le côté de Tallaloko Lake Rd, non loin de l’I-297 dans North Leonard County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-leonard", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-leonard"},
+    position: [3221.6, 2058.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-kalaga-river.webp", "alt": {"fr": "Kalaga River dans GTA 6, secteur North Leonard County", "en": "Kalaga River in GTA 6 gameplay, North Leonard County"}},
   },
   {
     id: "jump-the-free-state-of-henry-perculay",
@@ -1018,6 +1216,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "North Leonard County",
     directions: {"en": "Drive off the large dirt ledge overlooking The Free State of Henry Perculay farm situated in North Leonard County.", "fr": "Sauter depuis le grand rebord en terre surplombant la ferme The Free State of Henry Perculay dans North Leonard County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-leonard", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-leonard"},
+    position: [3324.8, 1992.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-the-free-state-of-henry-perculay.webp", "alt": {"fr": "The Free State of Henry Perculay dans GTA 6, secteur North Leonard County", "en": "The Free State of Henry Perculay in GTA 6 gameplay, North Leonard County"}},
   },
   {
     id: "jump-richard-barebone-overpass-north",
@@ -1026,6 +1227,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Richard Barebone State Park",
     directions: {"en": "Launch against traffic from the dirt pile on the side of I-97 within the bridge construction site in Richard Barebone State Park.", "fr": "Sauter à contresens depuis le tas de terre situé sur le côté de l’I-97 dans la zone du pont en construction de Richard Barebone State Park."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-leonard", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-leonard"},
+    position: [4061.3, 2079.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-richard-barebone-overpass-north.webp", "alt": {"fr": "Richard Barebone Overpass North sur la carte de Leonida", "en": "Richard Barebone Overpass North on the Leonida map"}},
   },
   {
     id: "jump-richard-barebone-overpass-south",
@@ -1034,6 +1238,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Richard Barebone State Park",
     directions: {"en": "Drive between traffic off the dirt mound in the middle of I-97 at the bridge construction zone in Richard Barebone State Park.", "fr": "Sauter au milieu de la circulation depuis la butte de terre au centre de l’I-97 sur le chantier du pont à Richard Barebone State Park."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-leonard", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-leonard"},
+    position: [4095.4, 2161.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-richard-barebone-overpass-south.webp", "alt": {"fr": "Richard Barebone Overpass South sur la carte de Leonida", "en": "Richard Barebone Overpass South on the Leonida map"}},
   },
   {
     id: "jump-waste-transfer-services-north",
@@ -1042,6 +1249,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "South Leonard County",
     directions: {"en": "Locate a huge dirt mound near flaming garbage on the north side of the landfill in South Leonard County.", "fr": "Repérez un grand tas de terre près d’ordures enflammées au nord de la décharge dans South Leonard County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-leonard", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-leonard"},
+    position: [3371.8, 3455.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-waste-transfer-services-north.webp", "alt": {"fr": "Waste Transfer Services North sur la carte de Leonida", "en": "Waste Transfer Services North on the Leonida map"}},
   },
   {
     id: "jump-waste-transfer-services-pond",
@@ -1050,6 +1260,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "South Leonard County",
     directions: {"en": "Take the small dirt hill by a pond behind an excavator, across from South Leonard County’s Waste Transfer Services factory.", "fr": "Empruntez la petite colline en terre près d’un étang derrière une pelleteuse, en face du bâtiment de Waste Transfer Services dans South Leonard County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-leonard", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-leonard"},
+    position: [3372.3, 3350.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-waste-transfer-services-pond.webp", "alt": {"fr": "Waste Transfer Services Pond sur la carte de Leonida", "en": "Waste Transfer Services Pond on the Leonida map"}},
   },
   {
     id: "jump-waste-transfer-services-south",
@@ -1058,6 +1271,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "South Leonard County",
     directions: {"en": "Find the massive dirt mound located on the landfill’s south side by a pile of burning trash in South Leonard County.", "fr": "Recherchez l’imposante butte de terre sur le côté sud de la décharge, près de détritus en feu dans South Leonard County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-leonard", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-leonard"},
+    position: [3383.0, 3577.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-waste-transfer-services-south.webp", "alt": {"fr": "Waste Transfer Services South sur la carte de Leonida", "en": "Waste Transfer Services South on the Leonida map"}},
   },
   {
     id: "jump-waste-transfer-services-lake",
@@ -1066,6 +1282,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "South Leonard County",
     directions: {"en": "Drive off the dirt mound at the corner of the service road next to the lake, jumping over the river in South Leonard County.", "fr": "Sauter depuis la butte de terre située à l’angle de la voie de service près du lac, par-dessus la rivière dans le comté de South Leonard."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-leonard", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-leonard"},
+    position: [3495.1, 3327.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-waste-transfer-services-lake.webp", "alt": {"fr": "Waste Transfer Services Lake sur la carte de Leonida", "en": "Waste Transfer Services Lake on the Leonida map"}},
   },
   {
     id: "jump-lake-bonner-construction-east",
@@ -1074,6 +1293,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Waning Sands",
     directions: {"en": "Launch off the large dirt mound located underneath the I-97 bridge over the water.", "fr": "Sauter depuis le grand tas de terre situé sous le pont de l’I-97 au-dessus de l’eau."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-leonard", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-leonard"},
+    position: [4294.2, 3046.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-lake-bonner-construction-east.webp", "alt": {"fr": "Lake Bonner Construction East dans GTA 6, secteur Waning Sands", "en": "Lake Bonner Construction East in GTA 6 gameplay, Waning Sands"}},
   },
   {
     id: "jump-lake-bonner-construction-west",
@@ -1082,6 +1304,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Waning Sands",
     directions: {"en": "Drive behind the Mamey Cir residential area in Waning Sands. The launch ramp is a dirt mound situated right at the T-junction intersection.", "fr": "Rendez-vous derrière les maisons de Mamey Cir à Waning Sands. Le tremplin se situe sur la butte de terre au carrefour en T."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-leonard", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-leonard"},
+    position: [4193.5, 2957.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-lake-bonner-construction-west.webp", "alt": {"fr": "Lake Bonner Construction West dans GTA 6, secteur Waning Sands", "en": "Lake Bonner Construction West in GTA 6 gameplay, Waning Sands"}},
   },
   {
     id: "jump-thundergolf",
@@ -1090,6 +1315,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Waning Sands",
     directions: {"en": "Find the construction site adjacent to the new Thundergolf facility in central Waning Sands. Jump off the large earth mound located there.", "fr": "Trouvez le chantier de construction près du nouveau complexe Thundergolf dans le centre de Waning Sands. Sautez depuis la grande butte de terre."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-leonard", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-leonard"},
+    position: [4192.8, 2641.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-thundergolf.webp", "alt": {"fr": "Thundergolf sur la carte de Leonida", "en": "Thundergolf on the Leonida map"}},
   },
   {
     id: "jump-lake-leonida-lock-south",
@@ -1098,6 +1326,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ambrosia",
     directions: {"en": "Approach the canal edge along the southern district of Lake Leonida. Drive up the inclined building structure to jump off.", "fr": "Approchez de la berge du canal dans la partie sud de Lake Leonida. Empruntez le bâtiment en forme de tremplin pour décoller."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [3435.7, 2754.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-lake-leonida-lock-south.webp", "alt": {"fr": "Lake Leonida Lock South dans GTA 6, secteur Ambrosia", "en": "Lake Leonida Lock South in GTA 6 gameplay, Ambrosia"}},
   },
   {
     id: "jump-lake-leonida-lock-southwest",
@@ -1106,6 +1337,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ambrosia",
     directions: {"en": "Hit the ramped building at the canal edge in southwestern Lake Leonida.", "fr": "Élancez-vous depuis le bâtiment en tremplin situé au bord du canal, dans le secteur sud-ouest de Lake Leonida."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [3344.2, 2720.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-lake-leonida-lock-southwest.webp", "alt": {"fr": "Lake Leonida Lock Southwest dans GTA 6, secteur Ambrosia", "en": "Lake Leonida Lock Southwest in GTA 6 gameplay, Ambrosia"}},
   },
   {
     id: "jump-lake-leonida-lock-west",
@@ -1114,6 +1348,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ambrosia",
     directions: {"en": "Drive off the ramped building at the canal edge on the west side of Lake Leonida in Ambrosia.", "fr": "Sauter depuis le bâtiment en tremplin situé au bord du canal, du côté ouest de Lake Leonida à Ambrosia."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [3267.9, 2464.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-lake-leonida-lock-west.webp", "alt": {"fr": "Lake Leonida Lock West dans GTA 6, secteur Ambrosia", "en": "Lake Leonida Lock West in GTA 6 gameplay, Ambrosia"}},
   },
   {
     id: "jump-south-ambrosia-broken-bridge",
@@ -1122,6 +1359,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ambrosia",
     directions: {"en": "Head to the US-35 border dividing Ambrosia and Emerald Springs. Hit the launch point on the ruined bridge crossing over the river.", "fr": "Rejoignez la frontière entre Ambrosia et Emerald Springs sur la US-35. Prenez de l’élan sur la section de pont détruit au-dessus de la rivière."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [3062.9, 3132.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-south-ambrosia-broken-bridge.webp", "alt": {"fr": "South Ambrosia Broken Bridge sur la carte de Leonida", "en": "South Ambrosia Broken Bridge on the Leonida map"}},
   },
   {
     id: "jump-south-ambrosia-water-treatment",
@@ -1130,6 +1370,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ambrosia",
     directions: {"en": "Travel near Birch St in western Ambrosia toward the Aggro Feed & Farm Supply. Launch off the massive dirt heap beside the farmland access road.", "fr": "Prenez la route traversant les terres agricoles près de Birch St dans l’ouest d’Ambrosia. Décollez depuis le gros tas de terre situé près du chemin."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2975.0, 2804.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-south-ambrosia-water-treatment.webp", "alt": {"fr": "South Ambrosia Water Treatment sur la carte de Leonida", "en": "South Ambrosia Water Treatment on the Leonida map"}},
   },
   {
     id: "jump-axiom-house",
@@ -1138,6 +1381,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Draper Island",
     directions: {"en": "Take the jump from the roadside edge leading into the Axiom House parking lot on Draper Island.", "fr": "Prenez le saut depuis le bord de la route menant au parking d’Axiom House sur Draper Island."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [1342.2, 2328.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-axiom-house.webp", "alt": {"fr": "Axiom House dans GTA 6, secteur Draper Island", "en": "Axiom House in GTA 6 gameplay, Draper Island"}},
   },
   {
     id: "jump-draper-island",
@@ -1146,6 +1392,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Draper Island",
     directions: {"en": "Drive to the end of the parking lot in central Draper Island and launch off the trash pile inside a green shipping container set between eastbound and westbound SR-45.", "fr": "Rendez-vous au fond du parking au centre de Draper Island et élancez-vous depuis le tas de détritus dans le conteneur vert entre les voies est et ouest de la SR-45."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [1493.2, 2338.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-draper-island.webp", "alt": {"fr": "Draper Island sur la carte de Leonida", "en": "Draper Island on the Leonida map"}},
   },
   {
     id: "jump-county-route-62-roadworks",
@@ -1154,6 +1403,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Emerald Springs",
     directions: {"en": "Launch from the large dirt mound over the river beside County Route 62 in northern Emerald Springs.", "fr": "Utilisez la grande butte de terre surplombant la rivière sur le côté de la County Route 62, au nord d’Emerald Springs."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2882.5, 3084.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-county-route-62-roadworks.webp", "alt": {"fr": "County Route 62 Roadworks sur la carte de Leonida", "en": "County Route 62 Roadworks on the Leonida map"}},
   },
   {
     id: "jump-howe-dairy",
@@ -1162,6 +1414,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Emerald Springs",
     directions: {"en": "Go to Howe Dairy farm in the northeastern corner of Emerald Springs. Speed up the big soil pile aimed over the cow barn.", "fr": "Dirigez-vous vers la ferme Howe Dairy au nord-est d’Emerald Springs. Utilisez la grande garenne de terre orientée au-dessus de l’étable à vaches."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2367.3, 3015.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-howe-dairy.webp", "alt": {"fr": "Howe Dairy sur la carte de Leonida", "en": "Howe Dairy on the Leonida map"}},
   },
   {
     id: "jump-kelly-river",
@@ -1170,6 +1425,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Frogswater",
     directions: {"en": "Drive to the end of Magnolia Rd, cross the flower field, and take the small dirt hill jump over the Kelly River on the Ambrosia and Frogswater border.", "fr": "Allez au bout de Magnolia Rd, traversez le champ de fleurs et sautez depuis la petite colline de terre au-dessus de la Kelly River, à la limite entre Ambrosia et Frogswater."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2925.9, 3061.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-kelly-river.webp", "alt": {"fr": "Kelly River sur la carte de Leonida", "en": "Kelly River on the Leonida map"}},
   },
   {
     id: "jump-saputka-river",
@@ -1178,6 +1436,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Frogswater",
     directions: {"en": "Navigate to the field edge running alongside SR-32 in Frogswater. Drive straight up the dirt mound positioned to clear the roadway.", "fr": "Rendez-vous au bord du champ le long de la SR-32 à Frogswater. Prenez le tas de terre dressé en bas de la parcelle pour survoler la route."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2392.6, 2623.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-saputka-river.webp", "alt": {"fr": "Saputka River dans GTA 6, secteur Frogswater", "en": "Saputka River in GTA 6 gameplay, Frogswater"}},
   },
   {
     id: "jump-gellhorn-campsite",
@@ -1186,6 +1447,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Gellhorn",
     directions: {"en": "Visit the campsite situated off CR 62 in Gellhorn. Speed off the large wooden ramp constructed right at the cliff edge.", "fr": "Rejoignez le terrain de camping près de la CR 62 à Gellhorn. Décollez depuis la grande plateforme en bois installée au bord de la falaise."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2132.2, 3138.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-gellhorn-campsite.webp", "alt": {"fr": "Gellhorn Campsite dans GTA 6, secteur Gellhorn", "en": "Gellhorn Campsite in GTA 6 gameplay, Gellhorn"}},
   },
   {
     id: "jump-gellhorn-hilltop",
@@ -1194,6 +1458,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Gellhorn",
     directions: {"en": "Speed down the end of the ATV track east of Port Gellhorn and launch over the trash pit.", "fr": "Arrivez par le bout de la piste de VTT à l’est de Port Gellhorn et sautez par-dessus la fosse à ordures."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2008.5, 3123.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-gellhorn-hilltop.webp", "alt": {"fr": "Gellhorn Hilltop dans GTA 6, secteur Gellhorn", "en": "Gellhorn Hilltop in GTA 6 gameplay, Gellhorn"}},
   },
   {
     id: "jump-gellhorn-international-raceway",
@@ -1202,6 +1469,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Gellhorn",
     directions: {"en": "Head to the southern boundary of the Gellhorn raceway track near I-404. Clear the gap using the raised earth ramp on the side.", "fr": "Rendez-vous au sud du circuit de Gellhorn, non loin de l’I-404. Prenez votre élan sur la butte de terre longeant la piste."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [1878.1, 3782.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-gellhorn-international-raceway.webp", "alt": {"fr": "Gellhorn International Raceway dans GTA 6, secteur Gellhorn", "en": "Gellhorn International Raceway in GTA 6 gameplay, Gellhorn"}},
   },
   {
     id: "jump-gellhorn-roadworks-east",
@@ -1210,6 +1480,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Gellhorn",
     directions: {"en": "Locate the roadworks area next to US-183 in eastern Port Gellhorn. Use the sizable mound of dirt facing the construction zone to jump.", "fr": "Trouvez le chantier routier longeant la US-183 dans l’est de Port Gellhorn. Élancez-vous sur le grand monticule de terre surplombant les travaux."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2185.1, 2871.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-gellhorn-roadworks-east.webp", "alt": {"fr": "Gellhorn Roadworks East dans GTA 6, secteur Gellhorn", "en": "Gellhorn Roadworks East in GTA 6 gameplay, Gellhorn"}},
   },
   {
     id: "jump-starlet-motel-construction",
@@ -1218,6 +1491,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Gellhorn",
     directions: {"en": "Launch off the rock pile inside the roadworks area in front of the Starlet Motel.", "fr": "Élancez-vous depuis le tas de rochers sur le chantier situé en face du Starlet Motel, au bord de la route."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2253.7, 2943.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-starlet-motel-construction.webp", "alt": {"fr": "Starlet Motel Construction sur la carte de Leonida", "en": "Starlet Motel Construction on the Leonida map"}},
   },
   {
     id: "jump-manifest-canyon",
@@ -1226,6 +1502,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Manifest Canyon",
     directions: {"en": "Take off from the ramp beside a trail above an overlook on the cliff edge over the Moonstone Hwy in central Manifest Canyon.", "fr": "Prenez l’envol depuis le tremplin près d’un sentier au-dessus d’un belvédère sur le bord de la falaise surplombant la Moonstone Hwy dans le centre de Manifest Canyon."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2257.1, 2303.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-manifest-canyon.webp", "alt": {"fr": "Manifest Canyon dans GTA 6, secteur Manifest Canyon", "en": "Manifest Canyon in GTA 6 gameplay, Manifest Canyon"}},
   },
   {
     id: "jump-manifest-canyon-trail-east",
@@ -1234,6 +1513,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Manifest Canyon",
     directions: {"en": "Cross a dirt road by launching off a mound along the Manifest Canyon trail, situated near US-70 in the southern sector of the canyon.", "fr": "Franchissez un chemin de terre en vous elançant d’une butte le long de la piste de Manifest Canyon, pres de l’US-70 au sud du canyon."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2295.5, 2430.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-manifest-canyon-trail-east.webp", "alt": {"fr": "Manifest Canyon Trail East sur la carte de Leonida", "en": "Manifest Canyon Trail East on the Leonida map"}},
   },
   {
     id: "jump-manifest-canyon-trail-west",
@@ -1242,6 +1524,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Manifest Canyon",
     directions: {"en": "Fly over the interstate using a dirt mound located on the Manifest Canyon trail, near the US-70 curve in southern Manifest Canyon.", "fr": "Sauter par-dessus l’interstate via une butte de terre située sur la piste de Manifest Canyon, vers le virage de l’US-70 au sud du canyon."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2230.7, 2453.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-manifest-canyon-trail-west.webp", "alt": {"fr": "Manifest Canyon Trail West sur la carte de Leonida", "en": "Manifest Canyon Trail West on the Leonida map"}},
   },
   {
     id: "jump-lake-leonida-lock-northwest",
@@ -1250,6 +1535,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "North Kelly County",
     directions: {"en": "Touch down on Interstate 27 after hitting a dirt hill at the edge of the canal, located by the boat launch on Lake Leonida’s northwest side.", "fr": "Atterrissez sur l’Interstate 27 apres avoir pris une colline de terre au bord du canal, pres de la cale de mise a l’eau au nord-ouest du Lake Leonida."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [3290.1, 2280.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-lake-leonida-lock-northwest.webp", "alt": {"fr": "Lake Leonida Lock Northwest dans GTA 6, secteur North Kelly County", "en": "Lake Leonida Lock Northwest in GTA 6 gameplay, North Kelly County"}},
   },
   {
     id: "jump-north-kelly-county-ledge",
@@ -1258,6 +1546,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "North Kelly County",
     directions: {"en": "Clear a trash-filled ravine from a dirt pile at the end of a unpaved road on the southwest side of North Kelly County.", "fr": "Franchissez un ravin plein d’ordures depuis un tas de terre au bout d’un chemin, dans le sud-ouest de North Kelly County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2638.3, 2398.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-north-kelly-county-ledge.webp", "alt": {"fr": "North Kelly County Ledge sur la carte de Leonida", "en": "North Kelly County Ledge on the Leonida map"}},
   },
   {
     id: "jump-north-kelly-county-railroad",
@@ -1266,6 +1557,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "North Kelly County",
     directions: {"en": "Aim for the train tracks using a dirt mound on the shoulder of the lower dirt road running through North Kelly County.", "fr": "Visez les voies ferrees depuis une butte de terre sur le bas-cote du chemin traversant la partie inferieure de North Kelly County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2533.4, 2431.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-north-kelly-county-railroad.webp", "alt": {"fr": "North Kelly County Railroad sur la carte de Leonida", "en": "North Kelly County Railroad on the Leonida map"}},
   },
   {
     id: "jump-gellhorn-drive-in-theatre",
@@ -1274,6 +1568,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Port Gellhorn",
     directions: {"en": "Launch off the side of the concession stand building at the abandoned Gellhorn Drive-In Theatre in central Port Gellhorn.", "fr": "Sautez depuis le cote du batiment du stand de nourriture du Gellhorn Drive-In Theatre abandonne, au centre de Port Gellhorn."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [1805.5, 2741.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-gellhorn-drive-in-theatre.webp", "alt": {"fr": "Gellhorn Drive-In Theatre sur la carte de Leonida", "en": "Gellhorn Drive-In Theatre on the Leonida map"}},
   },
   {
     id: "jump-gellhorn-roadworks-west",
@@ -1282,6 +1579,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Port Gellhorn",
     directions: {"en": "Enter the roadworks area north of US-183, align with the central dirt mound facing the highway, and jump onto US-183.", "fr": "Entrez sur le chantier au nord de la US-183, alignez-vous avec la butte de terre principale faisant face à la route et atterrissez sur la US-183."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [1995.1, 2780.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-gellhorn-roadworks-west.webp", "alt": {"fr": "Gellhorn Roadworks West sur la carte de Leonida", "en": "Gellhorn Roadworks West on the Leonida map"}},
   },
   {
     id: "jump-port-gellhorn-center-of-praise-purpose",
@@ -1290,6 +1590,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Port Gellhorn",
     directions: {"en": "Direct your jump toward I-404 over the Center of Praise & Purpose by speeding off a construction site dirt mound along US-183.", "fr": "Dirigez votre saut vers l’I-404 au-dessus du Center of Praise & Purpose depuis un tas de terre de chantier sur l’US-183."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [1898.9, 2745.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-port-gellhorn-center-of-praise-purpose.webp", "alt": {"fr": "Port Gellhorn Center of Praise & Purpose sur la carte de Leonida", "en": "Port Gellhorn Center of Praise & Purpose on the Leonida map"}},
   },
   {
     id: "jump-prairie-court",
@@ -1298,6 +1601,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Port Gellhorn",
     directions: {"en": "Drive up the fallen roof at the end of Prairie Ct in Port Gellhorn to launch into the residential backyards.", "fr": "Montez sur le toit effondré au bout de Prairie Ct à Port Gellhorn pour sauter dans le jardin arrière des maisons."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [1807.4, 2827.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-prairie-court.webp", "alt": {"fr": "Prairie Court sur la carte de Leonida", "en": "Prairie Court on the Leonida map"}},
   },
   {
     id: "jump-gellhorn-pylons",
@@ -1306,6 +1612,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "South Kelly County",
     directions: {"en": "Launch from the middle of the dirt path between two electricity poles to clear another dirt road in northern South Kelly County.", "fr": "Élancez-vous depuis le milieu du sentier de terre entre deux pylônes électriques pour franchir un autre chemin de terre dans le nord de South Kelly County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [1944.7, 3805.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-gellhorn-pylons.webp", "alt": {"fr": "Gellhorn Pylons sur la carte de Leonida", "en": "Gellhorn Pylons on the Leonida map"}},
   },
   {
     id: "jump-the-hog-house",
@@ -1314,6 +1623,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "South Kelly County",
     directions: {"en": "Jump from the metal sheet top in the field beside the Hog House bar along US-183 in northern South Kelly County.", "fr": "Sautez depuis la tôle metallique dans le champ a cote du bar Hog House sur l’US-183, au nord de South Kelly County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2202.6, 3829.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-the-hog-house.webp", "alt": {"fr": "The Hog House sur la carte de Leonida", "en": "The Hog House on the Leonida map"}},
   },
   {
     id: "jump-west-vice-dale-county-broken-bridge",
@@ -1322,6 +1634,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "South Kelly County",
     directions: {"en": "Speed across the closed, broken bridge over the river situated on the border between West Vice-Dale County and South Kelly County.", "fr": "Prenez de la vitesse sur le pont fermé et effondré au-dessus de la rivière à la frontière entre West Vice-Dale County et South Kelly County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2359.3, 4195.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-west-vice-dale-county-broken-bridge.webp", "alt": {"fr": "West Vice-Dale County Broken Bridge dans GTA 6, secteur South Kelly County", "en": "West Vice-Dale County Broken Bridge in GTA 6 gameplay, South Kelly County"}},
   },
   {
     id: "jump-mud-club-pond",
@@ -1330,6 +1645,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Thrillbilly Mud Club",
     directions: {"en": "Clear a small pond between two marked tracks inside North Kelly County’s Thrillbilly Mud Club.", "fr": "Traversez un petit etang entre deux pistes delimitees a l’interieur du Thrillbilly Mud Club dans North Kelly County."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [2793.2, 2488.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-mud-club-pond.webp", "alt": {"fr": "Mud Club Pond dans GTA 6, secteur Thrillbilly Mud Club", "en": "Mud Club Pond in GTA 6 gameplay, Thrillbilly Mud Club"}},
   },
   {
     id: "jump-abandoned-radio-station",
@@ -1338,6 +1656,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Wild Hog Point",
     directions: {"en": "Land on Wild Hog Airfield below by speeding off a small hill beside a dead tree and the abandoned radio station at Wild Hog Point.", "fr": "Atterrissez sur le Wild Hog Airfield en contrebas depuis une petite colline pres d’un arbre mort et de la station radio abandonnee a Wild Hog Point."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-gellhorn", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-gellhorn"},
+    position: [1448.8, 3032.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-abandoned-radio-station.webp", "alt": {"fr": "Abandoned Radio Station sur la carte de Leonida", "en": "Abandoned Radio Station on the Leonida map"}},
   },
   {
     id: "jump-bonanza-harbor",
@@ -1346,6 +1667,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Bonanza",
     directions: {"en": "Drive off the ramp beside the main road at Bonanza Harbor, launching over the water towards the fishing hut roof in Bonanza.", "fr": "S’élancer depuis la rampe à côté de la route principale à Bonanza Harbor, en franchissant l’eau en direction du toit de la cabane de pêche à Bonanza."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [2751.6, 1065.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-bonanza-harbor.webp", "alt": {"fr": "Bonanza Harbor dans GTA 6, secteur Bonanza", "en": "Bonanza Harbor in GTA 6 gameplay, Bonanza"}},
   },
   {
     id: "jump-mount-kalaga-visitor-center",
@@ -1354,6 +1678,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Dawson Dam",
     directions: {"en": "Launch from the hillside next to Forest Mill Rd up and over the entire Mount Kalaga Visitor Center.", "fr": "Sauter depuis le flanc de la colline à côté de Forest Mill Rd pour survoler tout le Mount Kalaga Visitor Center."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [3020.2, 1680.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-mount-kalaga-visitor-center.webp", "alt": {"fr": "Mount Kalaga Visitor Center sur la carte de Leonida", "en": "Mount Kalaga Visitor Center on the Leonida map"}},
   },
   {
     id: "jump-grayson-rail-tunnel",
@@ -1362,6 +1689,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Grayson",
     directions: {"en": "Find the dirt hill near Rockledge Rd and the service road crossing the train tracks at the Grayson border. Launch from this hill to clear the railway.", "fr": "Trouvez la colline de terre près de Rockledge Rd et de la voie de service traversant les rails à la frontière de Grayson. Élancez-vous pour franchir les voies."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [2356.4, 1609.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-grayson-rail-tunnel.webp", "alt": {"fr": "Grayson Rail Tunnel sur la carte de Leonida", "en": "Grayson Rail Tunnel on the Leonida map"}},
   },
   {
     id: "jump-kalaga-pond",
@@ -1370,6 +1700,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Mount Kalaga National Park",
     directions: {"en": "Launch off the top of a dirt hill beside the path running down Mount Kalaga National Park toward Kalaga Pond.", "fr": "Sauter depuis le sommet d’une colline de terre à côté du chemin descendant le Mount Kalaga National Park en direction de Kalaga Pond."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [2890.2, 1645.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-kalaga-pond.webp", "alt": {"fr": "Kalaga Pond dans GTA 6, secteur Mount Kalaga National Park", "en": "Kalaga Pond in GTA 6 gameplay, Mount Kalaga National Park"}},
   },
   {
     id: "jump-kalaga-ramp",
@@ -1378,6 +1711,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Mount Kalaga National Park",
     directions: {"en": "Launch off the wooden ramp along the dirt path in the northern area of Mount Kalaga National Park.", "fr": "Sauter depuis la rampe en bois le long du chemin de terre dans la partie nord du Mount Kalaga National Park."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [2709.1, 1718.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-kalaga-ramp.webp", "alt": {"fr": "Kalaga Ramp dans GTA 6, secteur Mount Kalaga National Park", "en": "Kalaga Ramp in GTA 6 gameplay, Mount Kalaga National Park"}},
   },
   {
     id: "jump-kalaga-ridge",
@@ -1386,6 +1722,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Mount Kalaga National Park",
     directions: {"en": "Head to the western sector of Mount Kalaga National Park near the ruins. Drive off the cliff from the end of the dirt path to clear the mountain road.", "fr": "Rendez-vous dans la partie ouest de Kalaga National Park près des ruines. Sentez le bord de la falaise depuis le chemin de terre pour franchir la route."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [2492.3, 1893.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-kalaga-ridge.webp", "alt": {"fr": "Kalaga Ridge sur la carte de Leonida", "en": "Kalaga Ridge on the Leonida map"}},
   },
   {
     id: "jump-west-kalaga-logging",
@@ -1394,6 +1733,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Mount Kalaga National Park",
     directions: {"en": "Drive down Mount Kalaga from the east along Forest Mill Rd. Launch over the ravine to land safely back on the street.", "fr": "Descendez Mount Kalaga par l’est le long de Forest Mill Rd. Sautez par-dessus le ravin pour réatterrir sur la route."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [2921.8, 1689.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-west-kalaga-logging.webp", "alt": {"fr": "West Kalaga Logging dans GTA 6, secteur Mount Kalaga National Park", "en": "West Kalaga Logging in GTA 6 gameplay, Mount Kalaga National Park"}},
   },
   {
     id: "jump-dock-coal-company-freeway",
@@ -1402,6 +1744,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Macalister Gold Mine",
     directions: {"en": "Locate the fallen walkway inside the Dock Coal Company property near US-628. Drive off the high end of the structure to complete the leap.", "fr": "Trouvez la passerelle effondrée sur le terrain de Dock Coal Company près de US-628. Prenez de l’élan sur le haut de la structure pour sauter."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [2991.6, 1458.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-dock-coal-company-freeway.webp", "alt": {"fr": "Dock Coal Company Freeway dans GTA 6, secteur Macalister Gold Mine", "en": "Dock Coal Company Freeway in GTA 6 gameplay, Macalister Gold Mine"}},
   },
   {
     id: "jump-moreau-broken-bridge",
@@ -1410,6 +1755,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Macalister Gold Mine",
     directions: {"en": "Drive off the end of the railroad running from northern Mount Kalaga National Park toward Moreau, leaping over the broken bridge section above US-628.", "fr": "S’élancer depuis l’extrémité de la voie ferrée venant du nord du Mount Kalaga National Park en direction de Moreau, en sautant par-dessus la section brisée du pont au-dessus de l’US-628."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [3118.7, 1364.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-moreau-broken-bridge.webp", "alt": {"fr": "Moreau Broken Bridge sur la carte de Leonida", "en": "Moreau Broken Bridge on the Leonida map"}},
   },
   {
     id: "jump-moreau-coal-mound",
@@ -1418,6 +1766,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Macalister Gold Mine",
     directions: {"en": "Launch off the large coal mound next to the train tracks near US-628 in eastern Moreau.", "fr": "Sauter depuis le grand tas de charbon situé à côté des voies ferrées près de l’US-628 dans l’est de Moreau."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [3055.2, 1356.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-moreau-coal-mound.webp", "alt": {"fr": "Moreau Coal Mound dans GTA 6, secteur Macalister Gold Mine", "en": "Moreau Coal Mound in GTA 6 gameplay, Macalister Gold Mine"}},
   },
   {
     id: "jump-us-route-628",
@@ -1426,6 +1777,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Macalister Gold Mine",
     directions: {"en": "Locate the large dirt mound off Rockledge Rd just before US-628 at the Moreau border. Launch off the pile to cross the area.", "fr": "Trouvez le grand tas de terre près de Rockledge Rd avant US-628 à la frontière de Moreau. Élancez-vous pour traverser la zone."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [3089.9, 1344.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-us-route-628.webp", "alt": {"fr": "US Route 628 sur la carte de Leonida", "en": "US Route 628 on the Leonida map"}},
   },
   {
     id: "jump-kalaga-roadside",
@@ -1434,6 +1788,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Millport",
     directions: {"en": "Drive down the dirt track north of Forest Mill Rd in western Millport. Launch over the main road from the end of the path.", "fr": "Suivez la piste en terre au nord de Forest Mill Rd dans l’ouest de Millport. Sautez par-dessus la route principale depuis le bout du chemin."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [3496.6, 1875.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-kalaga-roadside.webp", "alt": {"fr": "Kalaga Roadside dans GTA 6, secteur Millport", "en": "Kalaga Roadside in GTA 6 gameplay, Millport"}},
   },
   {
     id: "jump-millport-harbor",
@@ -1442,6 +1799,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Millport",
     directions: {"en": "Head to eastern Millport near the Rushwood Logging Port Operations facility. Drive through the green shipping container and use the trash ramp to jump over open water.", "fr": "Allez à l’est de Millport près du bâtiment Rushwood Logging Port Operations. Traversez le conteneur vert et sautez depuis le tas de détritus au-dessus de l’eau."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [3918.2, 1690.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-millport-harbor.webp", "alt": {"fr": "Millport Harbor sur la carte de Leonida", "en": "Millport Harbor on the Leonida map"}},
   },
   {
     id: "jump-macalister-gold-mine",
@@ -1450,6 +1810,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Moreau",
     directions: {"en": "Take the uphill track east of the gold mine off Rockledge Road. Jump using the left side of this trail.", "fr": "Prenez le sentier montant à l’est de la mine depuis Rockledge Road. Sautez en utilisant le côté gauche de cette piste."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [2798.2, 1261.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-macalister-gold-mine.webp", "alt": {"fr": "Macalister Gold Mine sur la carte de Leonida", "en": "Macalister Gold Mine on the Leonida map"}},
   },
   {
     id: "jump-north-moreau-broken-bridge",
@@ -1466,6 +1829,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Mount Kalaga National Park",
     directions: {"en": "Follow the main trail on the east side of the park, then turn onto the small forest path. Use the angled rock at the overlook to jump off the cliff face.", "fr": "Suivez le sentier principal à l’est du parc, puis prenez le petit chemin forestier. Utilisez le rocher incliné au belvédère pour vous lancer dans le vide."},
     guide: {"en": "/gta-6-stunt-jump-locations#stunt-jumps-kalaga", "fr": "/gta-6-emplacements-des-sauts-uniques-dans-et-comment-reussir-les-300-cascades#stunt-jumps-kalaga"},
+    position: [3262.1, 1945.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/jump-mount-kalaga-lookout-point.webp", "alt": {"fr": "Mount Kalaga Lookout Point sur la carte de Leonida", "en": "Mount Kalaga Lookout Point on the Leonida map"}},
   },
   {
     id: "scan-thicc-herbie",
@@ -1482,6 +1848,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ambrosia",
     directions: {"en": "Frame the giant tree situated at the intersection of Magnolia Rd and Sycamore Ave in northwestern Ambrosia.", "fr": "Cadrez l’arbre géant situé à l’intersection de Magnolia Rd et Sycamore Ave dans le nord-ouest d’Ambrosia."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2981.4, 2657.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-old-goliath.webp", "alt": {"fr": "Old Goliath dans GTA 6, secteur Ambrosia", "en": "Old Goliath in GTA 6 gameplay, Ambrosia"}},
   },
   {
     id: "scan-belpoint-lighthouse",
@@ -1490,6 +1859,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Belpoint",
     directions: {"en": "Target the metallic Belpoint Lighthouse located at the southern tip of Belpoint.", "fr": "Visiez le Belpoint Lighthouse en métal situé à la pointe sud de Belpoint."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [1249.2, 4442.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-belpoint-lighthouse.webp", "alt": {"fr": "Belpoint Lighthouse dans GTA 6, secteur Belpoint", "en": "Belpoint Lighthouse in GTA 6 gameplay, Belpoint"}},
   },
   {
     id: "scan-bobcat-key-experimental-home",
@@ -1498,6 +1870,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Bobcat Key",
     directions: {"en": "Center the sunken concrete remains of the Bobcat Key Experimental Home just off the coastline of Bobcat Key.", "fr": "Cadrez les restes immergés en béton de la Bobcat Key Experimental Home juste au large de la côte de Bobcat Key."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [1787.2, 5155.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-bobcat-key-experimental-home.webp", "alt": {"fr": "Bobcat Key Experimental Home dans GTA 6, secteur Bobcat Key", "en": "Bobcat Key Experimental Home in GTA 6 gameplay, Bobcat Key"}},
   },
   {
     id: "scan-bonanza-giant",
@@ -1506,6 +1881,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Bonanza",
     directions: {"en": "Scan the huge wooden statue erected on a forested hill in southern Bonanza.", "fr": "Scannez la grande statue en bois dressée sur une colline boisée au sud de Bonanza."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2689.1, 1192.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-bonanza-giant.webp", "alt": {"fr": "Bonanza Giant dans GTA 6, secteur Bonanza", "en": "Bonanza Giant in GTA 6 gameplay, Bonanza"}},
   },
   {
     id: "scan-courtland-park-stadium",
@@ -1514,6 +1892,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Catalan Key",
     directions: {"en": "Frame the sign placed right in front of the stadium, located centrally on the main island of Catalan Key.", "fr": "Cadrez le panneau placé juste devant le stade, au centre de l’île principale de Catalan Key."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [4144.4, 4973.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-courtland-park-stadium.webp", "alt": {"fr": "Courtland Park Stadium dans GTA 6, secteur Catalan Key", "en": "Courtland Park Stadium in GTA 6 gameplay, Catalan Key"}},
   },
   {
     id: "scan-tallaloko-amphitheater",
@@ -1522,6 +1903,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Dawson Dam",
     directions: {"en": "Head to the center building containing the bell within the amphitheater ruins in eastern Mount Kalaga National Park.", "fr": "Rendez-vous au bâtiment central abritant la cloche au cœur des ruines de l’amphithéâtre, dans l’est de Mount Kalaga National Park."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [3312.3, 1602.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-tallaloko-amphitheater.webp", "alt": {"fr": "Tallaloko Amphitheater dans GTA 6, secteur Dawson Dam", "en": "Tallaloko Amphitheater in GTA 6 gameplay, Dawson Dam"}},
   },
   {
     id: "scan-downtown-periscope",
@@ -1530,6 +1914,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Downtown",
     directions: {"en": "From ground level at the park near Mariner’s Hwy and Catalan Blvd in southeastern Downtown, center the top of the Downtown Periscope overlook.", "fr": "Depuis le sol dans le parc près de Mariner’s Hwy et Catalan Blvd au sud-est de Downtown, cadrez le sommet du belvédère Downtown Periscope."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [4119.8, 4373.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-downtown-periscope.webp", "alt": {"fr": "Downtown Periscope dans GTA 6, secteur Downtown", "en": "Downtown Periscope in GTA 6 gameplay, Downtown"}},
   },
   {
     id: "scan-iaa-s-friends-of-freedom",
@@ -1538,6 +1925,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Downtown",
     directions: {"en": "Photograph the IAA’s Friends Of Freedom wall dedication beside the country displays in the small park in central Downtown.", "fr": "Photographiez la dédicace murale IAA’s Friends Of Freedom à côté des affichages de pays dans le petit parc du centre de Downtown."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [4107.5, 4280.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-iaa-s-friends-of-freedom.webp", "alt": {"fr": "IAA’s Friends Of Freedom dans GTA 6, secteur Downtown", "en": "IAA’s Friends Of Freedom in GTA 6 gameplay, Downtown"}},
   },
   {
     id: "scan-howe-dairy-farm-s-big-udder",
@@ -1546,6 +1936,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Emerald Springs",
     directions: {"en": "Photograph the cow-print silo at Howe Dairy Farm, right beside CR 62 in northwestern Emerald Springs.", "fr": "Photographiez le silo au motif de peau de vache à Howe Dairy Farm, juste à côté de la CR 62 dans le nord-ouest d’Emerald Springs."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2352.7, 2978.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-howe-dairy-farm-s-big-udder.webp", "alt": {"fr": "Howe Dairy Farm’s Big Udder dans GTA 6, secteur Emerald Springs", "en": "Howe Dairy Farm’s Big Udder in GTA 6 gameplay, Emerald Springs"}},
   },
   {
     id: "scan-sky-ride",
@@ -1554,6 +1947,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Emerald Springs",
     directions: {"en": "Scan the upper peak of the amusement ride standing inside the park along Emerald River in Emerald Springs.", "fr": "Scannez le sommet du manège situé dans le parc au bord de l’Emerald River à Emerald Springs."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2671.8, 3264.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-sky-ride.webp", "alt": {"fr": "Sky Ride dans GTA 6, secteur Emerald Springs", "en": "Sky Ride in GTA 6 gameplay, Emerald Springs"}},
   },
   {
     id: "scan-tucker-s-citrus-farms-water-tower",
@@ -1562,6 +1958,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Emerald Springs",
     directions: {"en": "Capture the water tower as seen from inside Tucker’s Citrus Farms in northern Emerald Springs.", "fr": "Capturez le château d’eau vu depuis l’intérieur de Tucker’s Citrus Farms, au nord d’Emerald Springs."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2773.5, 3137.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-tucker-s-citrus-farms-water-tower.webp", "alt": {"fr": "Tucker’s Citrus Farms Water Tower dans GTA 6, secteur Emerald Springs", "en": "Tucker’s Citrus Farms Water Tower in GTA 6 gameplay, Emerald Springs"}},
   },
   {
     id: "scan-aquastadium",
@@ -1570,6 +1969,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Gloriana Key",
     directions: {"en": "Center the camera on the long coastal structure situated at Catalan Bay, along the southern shore of Gloriana Key.", "fr": "Centrez l’appareil sur le long bâtiment côtier situé à Catalan Bay, sur la côte sud de Gloriana Key."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [4465.2, 4945.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-aquastadium.webp", "alt": {"fr": "Aquastadium dans GTA 6, secteur Gloriana Key", "en": "Aquastadium in GTA 6 gameplay, Gloriana Key"}},
   },
   {
     id: "scan-pelican-valley-observation-tower",
@@ -1578,6 +1980,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Grassrivers",
     directions: {"en": "Frame the Pelican Valley Observation Tower from the pedestrian walkway leading up to it, off Sweetbay Rd in eastern Grassrivers.", "fr": "Cadrez la Pelican Valley Observation Tower depuis la passerelle menant à la structure, près de Sweetbay Rd dans l’est de Grassrivers."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2836.1, 5271.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-pelican-valley-observation-tower.webp", "alt": {"fr": "Pelican Valley Observation Tower dans GTA 6, secteur Grassrivers", "en": "Pelican Valley Observation Tower in GTA 6 gameplay, Grassrivers"}},
   },
   {
     id: "scan-grayson-cairns",
@@ -1586,6 +1991,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Mount Kalaga National Park",
     directions: {"en": "Point the camera at the stack of rocks on the hilltop surrounded by four side roads in Mount Kalaga National Park.", "fr": "Pointez l’appareil sur le cairn de pierres au sommet de la colline, entouré par quatre routes secondaires dans le Mount Kalaga National Park."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2646.9, 1867.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-grayson-cairns.webp", "alt": {"fr": "Grayson Cairns dans GTA 6, secteur Mount Kalaga National Park", "en": "Grayson Cairns in GTA 6 gameplay, Mount Kalaga National Park"}},
   },
   {
     id: "scan-kalaga-lookout",
@@ -1594,6 +2002,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Mount Kalaga National Park",
     directions: {"en": "Center your camera on the graffiti-covered rock resting below the ledge amidst mountain ruins in Kalaga National Park.", "fr": "Centrez votre appareil sur le rocher couvert de graffitis sous le rebord, au milieu des ruines montagneuses du parc national de Kalaga."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2703.9, 1836.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-kalaga-lookout.webp", "alt": {"fr": "Kalaga Lookout dans GTA 6, secteur Mount Kalaga National Park", "en": "Kalaga Lookout in GTA 6 gameplay, Mount Kalaga National Park"}},
   },
   {
     id: "scan-badger-r-d-tower",
@@ -1602,6 +2013,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Key Lento",
     directions: {"en": "Focus on the tall concrete Badger R&D Tower standing on the west side of central Key Lento.", "fr": "Ciblez la haute tour en béton de Badger R&D Tower située sur le côté ouest du centre de Key Lento."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [3238.2, 6516.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-badger-r-d-tower.webp", "alt": {"fr": "Badger R&D Tower dans GTA 6, secteur Key Lento", "en": "Badger R&D Tower in GTA 6 gameplay, Key Lento"}},
   },
   {
     id: "scan-st-lucia-lighthouse",
@@ -1610,6 +2024,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Little Hardin Island",
     directions: {"en": "Capture the sign mounted at the base of the lighthouse, on the northern section of Little Hardin Island.", "fr": "Prenez en photo le panneau au pied du phare, dans la zone nord de Little Hardin Island."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [4491.1, 1871.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-st-lucia-lighthouse.webp", "alt": {"fr": "St. Lucia Lighthouse dans GTA 6, secteur Little Hardin Island", "en": "St. Lucia Lighthouse in GTA 6 gameplay, Little Hardin Island"}},
   },
   {
     id: "scan-lawton-co-paper-mill",
@@ -1618,6 +2035,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Macalister Gold Mine",
     directions: {"en": "Photograph the paper mill ruins located in southwestern Moreau close to the river.", "fr": "Photographiez les ruines de la papeterie situées dans le sud-ouest de Moreau, à proximité de la rivière."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2716.1, 1475.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-lawton-co-paper-mill.webp", "alt": {"fr": "Lawton Co. Paper Mill dans GTA 6, secteur Macalister Gold Mine", "en": "Lawton Co. Paper Mill in GTA 6 gameplay, Macalister Gold Mine"}},
   },
   {
     id: "scan-outlaw-s-cabin",
@@ -1626,6 +2046,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Macalister Gold Mine",
     directions: {"en": "Scan the collapsing house situated on a side street right off Rockledge Rd in central Moreau’s mountains.", "fr": "Scannez la maison en ruine située dans une rue secondaire donnant sur Rockledge Rd, dans les montagnes du centre de Moreau."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2909.5, 1189.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-outlaw-s-cabin.webp", "alt": {"fr": "Outlaw’s Cabin dans GTA 6, secteur Macalister Gold Mine", "en": "Outlaw’s Cabin in GTA 6 gameplay, Macalister Gold Mine"}},
   },
   {
     id: "scan-farmer-scrumpy-s-apple-orchard",
@@ -1634,6 +2057,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Manifest Canyon",
     directions: {"en": "Center the camera on the large barn sitting in the middle of the hill, surrounded by the apple orchard.", "fr": "Cadrez la grande grange au milieu de la colline, entourée par le verger de pommiers."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2055.7, 2270.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-farmer-scrumpy-s-apple-orchard.webp", "alt": {"fr": "Farmer Scrumpy’s Apple Orchard dans GTA 6, secteur Manifest Canyon", "en": "Farmer Scrumpy’s Apple Orchard in GTA 6 gameplay, Manifest Canyon"}},
   },
   {
     id: "scan-hoffman-observatory",
@@ -1642,6 +2068,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "North Kelly County",
     directions: {"en": "Take a photo of the derelict observatory built alongside the dirt track in western North Kelly County.", "fr": "Photographiez l’observatoire abandonné qui borde le chemin de terre dans l’ouest de North Kelly County."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2582.7, 2236.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-hoffman-observatory.webp", "alt": {"fr": "Hoffman Observatory dans GTA 6, secteur North Kelly County", "en": "Hoffman Observatory in GTA 6 gameplay, North Kelly County"}},
   },
   {
     id: "scan-derelict-spy-vessel",
@@ -1658,6 +2087,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Port Gellhorn",
     directions: {"en": "Aim at the middle hub of the Ferris wheel inside the abandoned Gellhorn Fun Fair in south Port Gellhorn.", "fr": "Visiez le centre de la grande roue dans le parc abandonné de Gellhorn Fun Fair, au sud de Port Gellhorn."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [1793.6, 3038.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-gellhorn-fun-fair.webp", "alt": {"fr": "Gellhorn Fun Fair dans GTA 6, secteur Port Gellhorn", "en": "Gellhorn Fun Fair in GTA 6 gameplay, Port Gellhorn"}},
   },
   {
     id: "scan-riquezas-keys-radome",
@@ -1674,6 +2106,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Rockridge",
     directions: {"en": "Scan the Fleeca Field stadium sign located right at the main entrance in western Rockridge.", "fr": "Scannez le panneau du stade Fleeca Field situé juste à l’entrée principale dans l’ouest de Rockridge."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [3636.9, 3859.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-fleeca-field.webp", "alt": {"fr": "Fleeca Field sur la carte de Leonida", "en": "Fleeca Field on the Leonida map"}},
   },
   {
     id: "scan-unidentified-building",
@@ -1682,6 +2117,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Sharktooth Island",
     directions: {"en": "Focus on the door leading into the underground tunnel, located on the southernmost island of the Little Hardin chain.", "fr": "Alignez la porte du tunnel souterrain, située sur l’île la plus au sud de l’archipel de Little Hardin."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [4290.8, 2261.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-unidentified-building.webp", "alt": {"fr": "Unidentified Building dans GTA 6, secteur Sharktooth Island", "en": "Unidentified Building in GTA 6 gameplay, Sharktooth Island"}},
   },
   {
     id: "scan-vice-city-sign",
@@ -1690,6 +2128,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "West Vice-Dale County",
     directions: {"en": "Photograph the giant Vice City landmark sign positioned between Three Toe Lake and VCIA within West Vice-Dale County.", "fr": "Photographiez l’enseigne géante Vice City dressée entre Three Toe Lake et VCIA dans West Vice-Dale County."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [2830.2, 4425.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-vice-city-sign.webp", "alt": {"fr": "Vice City Sign dans GTA 6, secteur West Vice-Dale County", "en": "Vice City Sign in GTA 6 gameplay, West Vice-Dale County"}},
   },
   {
     id: "scan-wild-hog-point-radar-base",
@@ -1698,6 +2139,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Wild Hog Point",
     directions: {"en": "Frame the dome atop the radar tower located near the Wild Hog Point airport.", "fr": "Cadrez le dôme au sommet de la tour radar située près de l’aéroport de Wild Hog Point."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-landmarks", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-landmarks"},
+    position: [1424.0, 3032.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-wild-hog-point-radar-base.webp", "alt": {"fr": "Wild Hog Point Radar Base dans GTA 6, secteur Wild Hog Point", "en": "Wild Hog Point Radar Base in GTA 6 gameplay, Wild Hog Point"}},
   },
   {
     id: "scan-catalan-blvd-garden",
@@ -1827,6 +2271,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Salton Memorial Island",
     directions: {"en": "Find the memorial monument standing directly in the center of Salton Memorial Island.", "fr": "Trouvez le monument commémoratif situé en plein centre de Salton Memorial Island."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-sculptures", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-sculptures"},
+    position: [4544.2, 3899.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-blanco-memorial.webp", "alt": {"fr": "Blanco Memorial sur la carte de Leonida", "en": "Blanco Memorial on the Leonida map"}},
   },
   {
     id: "scan-grassrivers-visitor-center-statue",
@@ -1891,6 +2338,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ambrosia",
     directions: {"en": "Scan the lone house located inside the construction area just west of Ambrosia.", "fr": "Scannez la maison isolée située dans la zone de chantier juste à l’ouest d’Ambrosia."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [3045.1, 2843.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-anti-sugar-residence.webp", "alt": {"fr": "Anti Sugar Residence dans GTA 6, secteur Ambrosia", "en": "Anti Sugar Residence in GTA 6 gameplay, Ambrosia"}},
   },
   {
     id: "scan-spaceship-house",
@@ -1899,6 +2349,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ambrosia",
     directions: {"en": "Scan the lunar lander sitting on top of the house at the intersection of Maple Ln and Cedar St, in western Ambrosia.", "fr": "Scannez le module d’atterrissage posé sur le toit de la maison à l’intersection de Maple Ln et Cedar St, à l’ouest d’Ambrosia."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [3043.5, 2720.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-spaceship-house.webp", "alt": {"fr": "Spaceship House dans GTA 6, secteur Ambrosia", "en": "Spaceship House in GTA 6 gameplay, Ambrosia"}},
   },
   {
     id: "scan-belville-topiary",
@@ -1907,6 +2360,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Belville",
     directions: {"en": "Focus on the snake-shaped topiary in the backyard of the white house on Harmony Dr, in southern Belville.", "fr": "Cadrez la sculpture végétale en forme de serpent dans le jardin arrière de la maison blanche sur Harmony Dr, au sud de Belville."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [3827.6, 3261.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-belville-topiary.webp", "alt": {"fr": "Belville Topiary dans GTA 6, secteur Belville", "en": "Belville Topiary in GTA 6 gameplay, Belville"}},
   },
   {
     id: "scan-halloween-house",
@@ -1915,6 +2371,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Capri",
     directions: {"en": "Center the camera on the house decorated for Halloween in central Capri.", "fr": "Centrez l’appareil photo sur la maison décorée pour Halloween au centre de Capri."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [1747.9, 4236.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-halloween-house.webp", "alt": {"fr": "Halloween House dans GTA 6, secteur Capri", "en": "Halloween House in GTA 6 gameplay, Capri"}},
   },
   {
     id: "scan-mermaid-display",
@@ -1923,6 +2382,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Catalan Key",
     directions: {"en": "Frame the mermaid and humanatee inside the display tank located in a back room of a warehouse at the Oceanarium loading area by the Catalan Key docks.", "fr": "Cadrez la sirène et le lamentin dans l’aquarium situé dans une arrière-pièce d’un entrepôt de la zone de chargement de l’Oceanarium, près des docks de Catalan Key."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [4311.0, 4868.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-mermaid-display.webp", "alt": {"fr": "Mermaid Display dans GTA 6, secteur Catalan Key", "en": "Mermaid Display in GTA 6 gameplay, Catalan Key"}},
   },
   {
     id: "scan-big-entrance",
@@ -1931,6 +2393,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Dalton Island",
     directions: {"en": "Frame the information plaque situated underneath the Big Entrance sculpture at the middle of Dalton Island.", "fr": "Cadrez la plaque d’information située sous la sculpture Big Entrance au centre de Dalton Island."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [4940.1, 4761.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-big-entrance.webp", "alt": {"fr": "Big Entrance dans GTA 6, secteur Dalton Island", "en": "Big Entrance in GTA 6 gameplay, Dalton Island"}},
   },
   {
     id: "scan-intriguing-substance",
@@ -1939,6 +2404,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "East Lummox County",
     directions: {"en": "Capture the green ooze seeping from the wall directly beneath the staircase to the sewer access in southern East Lummox County.", "fr": "Capturez la substance verte qui s’écoule du mur directement sous l’escalier menant à l’accès aux égouts, dans le sud d’East Lummox County."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [3755.2, 1649.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-intriguing-substance.webp", "alt": {"fr": "Intriguing Substance dans GTA 6, secteur East Lummox County", "en": "Intriguing Substance in GTA 6 gameplay, East Lummox County"}},
   },
   {
     id: "scan-camp-moonflower",
@@ -1947,6 +2415,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Emerald Springs",
     directions: {"en": "Center the Camp Moonflower sign along Emerald Springs Dr, positioned between Emerald Springs and Buckskin Swamp.", "fr": "Cadrez le panneau de Camp Moonflower le long d’Emerald Springs Dr, situé entre Emerald Springs et Buckskin Swamp."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2698.6, 3547.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-camp-moonflower.webp", "alt": {"fr": "Camp Moonflower dans GTA 6, secteur Emerald Springs", "en": "Camp Moonflower in GTA 6 gameplay, Emerald Springs"}},
   },
   {
     id: "scan-deserted-home",
@@ -1955,6 +2426,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Emerald Springs",
     directions: {"en": "Frame the leaf-covered abandoned house near the swamp in southwestern Emerald Springs.", "fr": "Cadrez la maison abandonnée couverte de feuilles près du marécage, au sud-ouest d’Emerald Springs."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2712.3, 3487.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-deserted-home.webp", "alt": {"fr": "Deserted Home dans GTA 6, secteur Emerald Springs", "en": "Deserted Home in GTA 6 gameplay, Emerald Springs"}},
   },
   {
     id: "scan-selkie-hole",
@@ -1963,6 +2437,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Emerald Springs",
     directions: {"en": "Photograph the light beam as viewed from the dock inside Selkie Hole, in western Emerald Springs.", "fr": "Photographiez le faisceau lumineux depuis le ponton à l’intérieur de Selkie Hole, dans l’ouest d’Emerald Springs."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2544.1, 3241.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-selkie-hole.webp", "alt": {"fr": "Selkie Hole dans GTA 6, secteur Emerald Springs", "en": "Selkie Hole in GTA 6 gameplay, Emerald Springs"}},
   },
   {
     id: "scan-c0-b8-debris",
@@ -1971,6 +2448,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Featherstone Islands",
     directions: {"en": "Frame the buried CO-B8 rocket debris located in the middle of a small island in Featherstone Islands.", "fr": "Cadrez les débris enterrés de la fusée CO-B8 situés au milieu d’un petit îlot de Featherstone Islands."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2019.6, 1371.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-c0-b8-debris.webp", "alt": {"fr": "C0-B8 Debris dans GTA 6, secteur Featherstone Islands", "en": "C0-B8 Debris in GTA 6 gameplay, Featherstone Islands"}},
   },
   {
     id: "scan-c0-b8-fairing",
@@ -1979,6 +2459,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Featherstone Islands",
     directions: {"en": "Photograph the C0-B8 rocket fairing stuck in the ground along the west coast of the large eastern Featherstone island.", "fr": "Photographiez la coiffe de fusée C0-B8 plantée sur la côte ouest de la grande île est des Featherstone Islands."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2211.0, 1285.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-c0-b8-fairing.webp", "alt": {"fr": "C0-B8 Fairing dans GTA 6, secteur Featherstone Islands", "en": "C0-B8 Fairing in GTA 6 gameplay, Featherstone Islands"}},
   },
   {
     id: "scan-wreck-of-the-meerwunder",
@@ -1987,6 +2470,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Featherstone Islands",
     directions: {"en": "Scan the capsized cargo ship resting on the small islands in the central Featherstone Islands.", "fr": "Scannez le cargo chaviré posé sur les petites îles du centre des Featherstone Islands."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2263.3, 1192.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-wreck-of-the-meerwunder.webp", "alt": {"fr": "Wreck Of The Meerwunder dans GTA 6, secteur Featherstone Islands", "en": "Wreck Of The Meerwunder in GTA 6 gameplay, Featherstone Islands"}},
   },
   {
     id: "scan-dino-golf",
@@ -1995,6 +2481,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Frogswater",
     directions: {"en": "Aim at the entrance sign for the abandoned Dino Adventure Golf course, found in southern Frogswater.", "fr": "Visez le panneau d’entrée du parcours abandonné Dino Adventure Golf, situé dans le sud de Frogswater."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2550.4, 2812.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-dino-golf.webp", "alt": {"fr": "Dino Golf dans GTA 6, secteur Frogswater", "en": "Dino Golf in GTA 6 gameplay, Frogswater"}},
   },
   {
     id: "scan-dead-sharks",
@@ -2003,6 +2492,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Grassrivers",
     directions: {"en": "Center your shot on the cluster of dead sharks lying along the coast of the long island in Wetman Bay.", "fr": "Centrez votre prise de vue sur le groupe de requins morts échoués sur la côte de la longue île de Wetman Bay."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2702.8, 6074.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-dead-sharks.webp", "alt": {"fr": "Dead Sharks dans GTA 6, secteur Grassrivers", "en": "Dead Sharks in GTA 6 gameplay, Grassrivers"}},
   },
   {
     id: "scan-no-flusher-homestead",
@@ -2011,6 +2503,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Grassrivers",
     directions: {"en": "Scan the main building of the homestead located on a Y-shaped island in Wetman Bay.", "fr": "Scannez le bâtiment principal du domaine situé sur une île en forme de Y dans Wetman Bay."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2435.2, 5854.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-no-flusher-homestead.webp", "alt": {"fr": "No Flusher Homestead dans GTA 6, secteur Grassrivers", "en": "No Flusher Homestead in GTA 6 gameplay, Grassrivers"}},
   },
   {
     id: "scan-vibrant-pond",
@@ -2019,6 +2514,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Grassrivers",
     directions: {"en": "Position the camera on the advisory sign standing at the lake’s edge beside dead fish, on the southernmost Gullet Marsh island.", "fr": "Positionnez la caméra sur le panneau d’avertissement au bord du lac aux poissons morts, sur l’île la plus au sud de Gullet Marsh."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2969.6, 6208.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-vibrant-pond.webp", "alt": {"fr": "Vibrant Pond dans GTA 6, secteur Grassrivers", "en": "Vibrant Pond in GTA 6 gameplay, Grassrivers"}},
   },
   {
     id: "scan-wetman-bay-carcass",
@@ -2027,6 +2525,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Grassrivers",
     directions: {"en": "Capture the strange creature carcass resting on the southern beach of a central Wetman Bay island.", "fr": "Prenez en photo la carcasse de créature étrange reposant sur la plage sud d’une île centrale de Wetman Bay."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2546.7, 5983.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-wetman-bay-carcass.webp", "alt": {"fr": "Wetman Bay Carcass dans GTA 6, secteur Grassrivers", "en": "Wetman Bay Carcass in GTA 6 gameplay, Grassrivers"}},
   },
   {
     id: "scan-grayson-assembly",
@@ -2035,6 +2536,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Grayson",
     directions: {"en": "Scan the front entrance of the Grayson Assembly building, located in the center of downtown Grayson.", "fr": "Scannez l’entrée principale du bâtiment Grayson Assembly, situé en plein centre-ville de Grayson."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2178.0, 1663.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-grayson-assembly.webp", "alt": {"fr": "Grayson Assembly dans GTA 6, secteur Grayson", "en": "Grayson Assembly in GTA 6 gameplay, Grayson"}},
   },
   {
     id: "scan-pet-cemetery",
@@ -2043,6 +2547,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Grayson",
     directions: {"en": "Photograph the gravestones inside the small pet cemetery located near SR-73 in southern Grayson.", "fr": "Photographiez les pierres tombales du petit cimetière situé à proximité de la SR-73, dans le sud de Grayson."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2136.8, 1761.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-pet-cemetery.webp", "alt": {"fr": "Pet Cemetery dans GTA 6, secteur Grayson", "en": "Pet Cemetery in GTA 6 gameplay, Grayson"}},
   },
   {
     id: "scan-imperial-spanish-ruins",
@@ -2051,6 +2558,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Mount Kalaga National Park",
     directions: {"en": "Photograph the top of the tower as viewed from inside the base of the ruins in western Kalaga National Park.", "fr": "Photographiez le sommet de la tour depuis l’intérieur de la base des ruines, dans l’ouest du Kalaga National Park."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2520.7, 1920.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-imperial-spanish-ruins.webp", "alt": {"fr": "Imperial Spanish Ruins dans GTA 6, secteur Mount Kalaga National Park", "en": "Imperial Spanish Ruins in GTA 6 gameplay, Mount Kalaga National Park"}},
   },
   {
     id: "scan-lovers-lookout",
@@ -2059,6 +2569,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Mount Kalaga National Park",
     directions: {"en": "Aim your camera at the wooden arch positioned at the cliff edge within the forest in southwestern Kalaga National Park.", "fr": "Visez l’arche en bois située au bord de la falaise dans la forêt, au sud-ouest du Kalaga National Park."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2368.3, 2008.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-lovers-lookout.webp", "alt": {"fr": "Lovers Lookout dans GTA 6, secteur Mount Kalaga National Park", "en": "Lovers Lookout in GTA 6 gameplay, Mount Kalaga National Park"}},
   },
   {
     id: "scan-christmas-house",
@@ -2067,6 +2580,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Key Lento",
     directions: {"en": "Capture the house fully covered in Christmas decorations located in central Key Lento.", "fr": "Prenez en photo la maison couverte de décorations de Noël située dans le centre de Key Lento."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [3198.7, 6566.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-christmas-house.webp", "alt": {"fr": "Christmas House dans GTA 6, secteur Key Lento", "en": "Christmas House in GTA 6 gameplay, Key Lento"}},
   },
   {
     id: "scan-plunge-masters-deep-sea-chalet",
@@ -2075,6 +2591,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Key Lento",
     directions: {"en": "Scan the mural decorating the side of the Plunge-Masters B.E.N.D.S Certified Dive Center building in southern Key Lento.", "fr": "Scannez la fresque murale qui orne le côté du centre de plongée Plunge-Masters B.E.N.D.S Certified Dive Center au sud de Key Lento."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [3162.8, 6616.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-plunge-masters-deep-sea-chalet.webp", "alt": {"fr": "Plunge Masters Deep Sea Chalet dans GTA 6, secteur Key Lento", "en": "Plunge Masters Deep Sea Chalet in GTA 6 gameplay, Key Lento"}},
   },
   {
     id: "scan-c0-b8-engine",
@@ -2083,6 +2602,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Macalister Gold Mine",
     directions: {"en": "Frame the buried C0-B8 rocket engine located in the western mountains of Moreau near Macalister Gold Mine.", "fr": "Cadrez le moteur de fusée C0-B8 enfoui dans les montagnes ouest de Moreau, près de Macalister Gold Mine."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2657.9, 1312.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-c0-b8-engine.webp", "alt": {"fr": "C0-B8 Engine dans GTA 6, secteur Macalister Gold Mine", "en": "C0-B8 Engine in GTA 6 gameplay, Macalister Gold Mine"}},
   },
   {
     id: "scan-fossilized-prints",
@@ -2091,6 +2613,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Macalister Gold Mine",
     directions: {"en": "Frame the fossilized footprints embedded in the stone located in the valley beneath the bridge, southwest of Moreau.", "fr": "Cadrez les empreintes fossilisées incrustées dans la pierre située dans la vallée sous le pont, au sud-ouest de Moreau."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2595.6, 1476.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-fossilized-prints.webp", "alt": {"fr": "Fossilized Prints dans GTA 6, secteur Macalister Gold Mine", "en": "Fossilized Prints in GTA 6 gameplay, Macalister Gold Mine"}},
   },
   {
     id: "scan-goose-key-carcass",
@@ -2099,6 +2624,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Mile Zero Air Station",
     directions: {"en": "Focus the camera on the unusual creature carcass stranded along the northern shoreline of Mile Zero Air Station.", "fr": "Focalisez l’appareil sur la carcasse de créature étrange échouée sur la rive nord de Mile Zero Air Station."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [1769.1, 6422.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-goose-key-carcass.webp", "alt": {"fr": "Goose Key Carcass dans GTA 6, secteur Mile Zero Air Station", "en": "Goose Key Carcass in GTA 6 gameplay, Mile Zero Air Station"}},
   },
   {
     id: "scan-promotional-sand-vehicles",
@@ -2107,6 +2635,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Point the camera at the cars sculpted out of sand on the eastern shore of Ocean Beach.", "fr": "Pointez l’appareil photo sur les voitures sculptées dans le sable sur la côte est d’Ocean Beach."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [5002.7, 4130.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-promotional-sand-vehicles.webp", "alt": {"fr": "Promotional Sand Vehicles dans GTA 6, secteur Ocean Beach", "en": "Promotional Sand Vehicles in GTA 6 gameplay, Ocean Beach"}},
   },
   {
     id: "scan-beach-party-site",
@@ -2115,6 +2646,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Permit Keys",
     directions: {"en": "Photograph the small wooden platform located right by the dock along the eastern shore of the central Permit Keys island.", "fr": "Photographiez la petite plateforme en bois située près du quai, sur la côte est de l’île centrale de Permit Keys."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2030.2, 6573.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-beach-party-site.webp", "alt": {"fr": "Beach Party Site dans GTA 6, secteur Permit Keys", "en": "Beach Party Site in GTA 6 gameplay, Permit Keys"}},
   },
   {
     id: "scan-fingerpost",
@@ -2123,6 +2657,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Permit Keys",
     directions: {"en": "Position the fingerpost sign in the center of the frame on the large central island of Permit Keys.", "fr": "Placez le panneau d’affichage au centre du cadre sur la grande île centrale de Permit Keys."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2008.2, 6601.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-fingerpost.webp", "alt": {"fr": "Fingerpost dans GTA 6, secteur Permit Keys", "en": "Fingerpost in GTA 6 gameplay, Permit Keys"}},
   },
   {
     id: "scan-hovercraft-crash",
@@ -2131,6 +2668,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Sandbars",
     directions: {"en": "Snap a photo of the wrecked hovercraft along the northern side of the southern Sandbars island, adjacent to the Gulf of Leonida.", "fr": "Prenez en photo l’aéroglisseur échoué sur la côte nord de l’île sud de Sandbars, près du Gulf of Leonida."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [821.0, 3578.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-hovercraft-crash.webp", "alt": {"fr": "Hovercraft Crash dans GTA 6, secteur Sandbars", "en": "Hovercraft Crash in GTA 6 gameplay, Sandbars"}},
   },
   {
     id: "scan-desert-island-piano",
@@ -2139,6 +2679,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Shoeless Keys",
     directions: {"en": "Target the isolated piano placed directly in the center of the westernmost islet of Shoeless Keys.", "fr": "Visez le piano isolé situé en plein milieu de l’îlot le plus à l’ouest de Shoeless Keys."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2801.5, 6335.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-desert-island-piano.webp", "alt": {"fr": "Desert Island Piano dans GTA 6, secteur Shoeless Keys", "en": "Desert Island Piano in GTA 6 gameplay, Shoeless Keys"}},
   },
   {
     id: "scan-fairy-lane",
@@ -2147,6 +2690,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "South West Lummox County",
     directions: {"en": "Center the camera on the red fairy house with open doors situated midway between the two forest arches in South West Lummox County.", "fr": "Centrez l’appareil sur la petite maison de fée rouge aux portes ouvertes, située à mi-chemin entre les deux arches forestières de South West Lummox County."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2200.2, 1776.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-fairy-lane.webp", "alt": {"fr": "Fairy Lane dans GTA 6, secteur South West Lummox County", "en": "Fairy Lane in GTA 6 gameplay, South West Lummox County"}},
   },
   {
     id: "scan-unidentified-animal-pen-uap",
@@ -2155,6 +2701,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Watson Bay",
     directions: {"en": "Frame the UFO-shaped animal barn situated in the backyard of the light-blue house on Kingston Rd in northern Watson Bay.", "fr": "Cadrez l’étable en forme de OVNIS située dans le jardin arrière de la maison bleu clair sur Kingston Rd, au nord de Watson Bay."},
     guide: {"en": "/gta-6-waink-scan-locations#waink-curiosities", "fr": "/gta-6-emplacements-des-scans-waink-dans-monuments-sculptures-et-tags-no-flusher#waink-curiosities"},
+    position: [2402.7, 5339.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/scan-unidentified-animal-pen-uap.webp", "alt": {"fr": "Unidentified Animal Pen (Uap) dans GTA 6, secteur Watson Bay", "en": "Unidentified Animal Pen (Uap) in GTA 6 gameplay, Watson Bay"}},
   },
   {
     id: "scan-bean-machine",
@@ -2318,6 +2867,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head to the control building overlooking the train yard in northern Balsero. Grab the Perla card sitting on an electrical box against the building wall.", "fr": "Dirigez-vous vers le bâtiment de contrôle qui surplombe la gare de triage au nord de Balsero. Ramassez la carte Perla posée sur un boîtier électrique contre le mur du bâtiment."},
     guide: {"en": "/gta-6-collectible-cards#card-set-delights", "fr": "/gta-6-cartes-a-collectionner#card-set-delights"},
     collection: "Delights Dancers",
+    position: [3369.2, 3702.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-delights-dancers-perla-standard-balsero.webp", "alt": {"fr": "Perla dans GTA 6, secteur Balsero", "en": "Perla in GTA 6 gameplay, Balsero"}},
   },
   {
     id: "card-delights-dancers-nevaeh-standard-bonanza",
@@ -2345,6 +2897,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Locate the stone balcony inside the Downtown alley branching off East Royale St. The collectible rests on the floor underneath a chair.", "fr": "Trouvez le balcon en pierre dans l’impasse débouchant sur East Royale St à Downtown. La carte repose au sol sous une chaise."},
     guide: {"en": "/gta-6-collectible-cards#card-set-delights", "fr": "/gta-6-cartes-a-collectionner#card-set-delights"},
     collection: "Delights Dancers",
+    position: [4062.6, 4313.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-delights-dancers-crystal-standard-downtown.webp", "alt": {"fr": "Crystal dans GTA 6, secteur Downtown", "en": "Crystal in GTA 6 gameplay, Downtown"}},
   },
   {
     id: "card-delights-dancers-nicole-standard-hamlet",
@@ -2354,6 +2909,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Visit the middle block on Formosa Ave in central Hamlet. Walk into the second apartment from the far right to pick up the card from the bedside end table.", "fr": "Visitez le bloc central sur Formosa Ave au cœur de Hamlet. Entrez dans le deuxième appartement en partant de la droite pour ramasser la carte située sur le bout de canapé près du lit."},
     guide: {"en": "/gta-6-collectible-cards#card-set-delights", "fr": "/gta-6-cartes-a-collectionner#card-set-delights"},
     collection: "Delights Dancers",
+    position: [3236.3, 5446.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-delights-dancers-nicole-standard-hamlet.webp", "alt": {"fr": "Nicole dans GTA 6, secteur Hamlet", "en": "Nicole in GTA 6 gameplay, Hamlet"}},
   },
   {
     id: "card-delights-dancers-thelma-standard-key-lento",
@@ -2363,6 +2921,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Ascend the tower next to the Badger warehouse in central Key Lento. The Thelma card is on a desk in the top control room.", "fr": "Montez dans la tour située à côté de l’entrepôt Badger au centre de Key Lento. La carte Thelma se trouve sur un bureau dans la salle de contrôle au sommet."},
     guide: {"en": "/gta-6-collectible-cards#card-set-delights", "fr": "/gta-6-cartes-a-collectionner#card-set-delights"},
     collection: "Delights Dancers",
+    position: [3255.0, 6519.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-delights-dancers-thelma-standard-key-lento.webp", "alt": {"fr": "Thelma dans GTA 6, secteur Key Lento", "en": "Thelma in GTA 6 gameplay, Key Lento"}},
   },
   {
     id: "card-delights-dancers-daisy-standard-la-perle",
@@ -2372,6 +2933,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head to the back of the northern La Perle Xero station to enter the kitchenette. Look for the card pinned directly onto the wall corkboard.", "fr": "Rendez-vous à l’arrière de la station Xero au nord de La Perle pour entrer dans la kitchenette. Cherchez la carte épinglée sur le panneau en liège au mur."},
     guide: {"en": "/gta-6-collectible-cards#card-set-delights", "fr": "/gta-6-cartes-a-collectionner#card-set-delights"},
     collection: "Delights Dancers",
+    position: [4013.2, 3531.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-delights-dancers-daisy-standard-la-perle.webp", "alt": {"fr": "Daisy dans GTA 6, secteur La Perle", "en": "Daisy in GTA 6 gameplay, La Perle"}},
   },
   {
     id: "card-delights-dancers-lucky-standard-la-perle",
@@ -2381,6 +2945,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Enter the mobile home situated at Caledonia Blvd and NW 9th Ave in La Perle. The card sits on a bedroom dresser beside the bed.", "fr": "Entrez dans le mobil-home situé à l’angle de Caledonia Blvd et NW 9th Ave à La Perle. La carte se trouve sur la commode à côté du lit."},
     guide: {"en": "/gta-6-collectible-cards#card-set-delights", "fr": "/gta-6-cartes-a-collectionner#card-set-delights"},
     collection: "Delights Dancers",
+    position: [3968.9, 3663.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-delights-dancers-lucky-standard-la-perle.webp", "alt": {"fr": "Lucky dans GTA 6, secteur La Perle", "en": "Lucky in GTA 6 gameplay, La Perle"}},
   },
   {
     id: "card-delights-dancers-kandi-standard-little-cuba",
@@ -2399,6 +2966,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Visit the lifeguard stand along the south coast of Vice Beach in Ocean Beach. The Lance card is lying on the desk inside.", "fr": "Rendez-vous au poste de secours le long de la côte sud de Vice Beach à Ocean Beach. La carte Lance se trouve sur le bureau à l’intérieur."},
     guide: {"en": "/gta-6-collectible-cards#card-set-delights", "fr": "/gta-6-cartes-a-collectionner#card-set-delights"},
     collection: "Delights Dancers",
+    position: [5061.4, 4436.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-delights-dancers-lance-standard-ocean-beach.webp", "alt": {"fr": "Lance dans GTA 6, secteur Ocean Beach", "en": "Lance in GTA 6 gameplay, Ocean Beach"}},
   },
   {
     id: "card-delights-dancers-harley-standard-port-gellhorn",
@@ -2408,6 +2978,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go inside the Delights Cabaret in Port Gellhorn. Collect the Harley card resting on a seat against the wall.", "fr": "Entrez dans le Delights Cabaret à Port Gellhorn. Ramassez la carte Harley posée sur un siège contre le mur."},
     guide: {"en": "/gta-6-collectible-cards#card-set-delights", "fr": "/gta-6-cartes-a-collectionner#card-set-delights"},
     collection: "Delights Dancers",
+    position: [1858.9, 2907.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-delights-dancers-harley-standard-port-gellhorn.webp", "alt": {"fr": "Harley dans GTA 6, secteur Port Gellhorn", "en": "Harley in GTA 6 gameplay, Port Gellhorn"}},
   },
   {
     id: "card-delights-dancers-jason-standard-port-gellhorn",
@@ -2417,6 +2990,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head into the Delights Cabaret in Port Gellhorn after receiving the reopening text in Chapter 3. Find the Jason card on the bathroom counter.", "fr": "Rendez-vous au Delights Cabaret à Port Gellhorn après avoir reçu le message de réouverture au chapitre 3. Trouvez la carte Jason sur le meuble lavabo des toilettes."},
     guide: {"en": "/gta-6-collectible-cards#card-set-delights", "fr": "/gta-6-cartes-a-collectionner#card-set-delights"},
     collection: "Delights Dancers",
+    position: [1849.6, 2903.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-delights-dancers-jason-standard-port-gellhorn.webp", "alt": {"fr": "Jason dans GTA 6, secteur Port Gellhorn", "en": "Jason in GTA 6 gameplay, Port Gellhorn"}},
   },
   {
     id: "card-delights-dancers-tracy-standard-salton",
@@ -2444,6 +3020,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Climb onto the roof of the Vice-Dale County Water and Sewage building along the VCIA-Southside line. The item lies near the outer roof edge.", "fr": "Montez sur le toit du bâtiment Vice-Dale County Water and Sewage le long de la ligne VCIA-Southside. L’objet se trouve au rebord du toit."},
     guide: {"en": "/gta-6-collectible-cards#card-set-delights", "fr": "/gta-6-cartes-a-collectionner#card-set-delights"},
     collection: "Delights Dancers",
+    position: [3432.6, 4954.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-delights-dancers-mario-standard-southside.webp", "alt": {"fr": "Mario dans GTA 6, secteur Southside", "en": "Mario in GTA 6 gameplay, Southside"}},
   },
   {
     id: "card-delights-dancers-cyrus-standard-vcia",
@@ -2453,6 +3032,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to the top floor of Park Apartments in eastern VCIA. The Cyrus card is attached to the side of the fridge in the kitchenette of the second-to-last apartment on the right.", "fr": "Allez au dernier étage de Park Apartments dans l’est de VCIA. La carte Cyrus est fixée sur le côté du réfrigérateur dans la kitchenette du deuxième appartement en partant de la droite."},
     guide: {"en": "/gta-6-collectible-cards#card-set-delights", "fr": "/gta-6-cartes-a-collectionner#card-set-delights"},
     collection: "Delights Dancers",
+    position: [3629.7, 4472.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-delights-dancers-cyrus-standard-vcia.webp", "alt": {"fr": "Cyrus sur la carte de Leonida", "en": "Cyrus on the Leonida map"}},
   },
   {
     id: "card-delights-dancers-chip-standard-watson-bay",
@@ -2462,6 +3044,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Travel to the northern island of Watson Bay and access a riverside house along Kingston Rd. Check the top of the bathroom toilet to find the card.", "fr": "Rendez-vous sur l’île nord de Watson Bay et entrez dans une maison au bord de la rivière sur Kingston Rd. Inspectez les toilettes de la salle de bain pour trouver la carte."},
     guide: {"en": "/gta-6-collectible-cards#card-set-delights", "fr": "/gta-6-cartes-a-collectionner#card-set-delights"},
     collection: "Delights Dancers",
+    position: [2393.2, 5375.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-delights-dancers-chip-standard-watson-bay.webp", "alt": {"fr": "Chip dans GTA 6, secteur Watson Bay", "en": "Chip in GTA 6 gameplay, Watson Bay"}},
   },
   {
     id: "card-nine1nine-dancers-jesenia-bronze-balsero",
@@ -2471,6 +3056,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Search the Vice-Dale County Water Analysis and Testing lot situated off SR-120 in northeastern Balsero. Climb tank AC-2C to find the Jesenia Bronze card tucked under a lawn chair.", "fr": "Fouillez le terrain de Vice-Dale County Water Analysis and Testing situé le long de SR-120 au nord-est de Balsero. Montez sur la cuve AC-2C pour ramasser la carte Jesenia Bronze sous une chaise pliante."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3683.2, 3681.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-jesenia-bronze-balsero.webp", "alt": {"fr": "Jesenia · Bronze dans GTA 6, secteur Balsero", "en": "Jesenia · Bronze in GTA 6 gameplay, Balsero"}},
   },
   {
     id: "card-nine1nine-dancers-louise-gold-balsero",
@@ -2480,6 +3068,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to Merlin’s Palace Casino on NW 15th Ave in southern Balsero. Climb to the parapet of the northern tower to retrieve the card.", "fr": "Allez au Merlin’s Palace Casino sur NW 15th Ave dans le sud de Balsero. Montez sur le parapet de la tour nord pour récupérer la carte."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3338.9, 4098.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-louise-gold-balsero.webp", "alt": {"fr": "Louise · Or sur la carte de Leonida", "en": "Louise · Gold on the Leonida map"}},
   },
   {
     id: "card-nine1nine-dancers-louise-silver-belville",
@@ -2489,6 +3080,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Visit the small rest area close to the dock in northern Belville, south of Lake Leonida. The Silver Louise card rests on the toilet next to a gnome inside the men’s restroom.", "fr": "Rendez-vous à la petite aire de repos près du quai, au nord de Belville et au sud de Lake Leonida. La carte Louise Argent se trouve sur les toilettes, à côté d’un nain de jardin dans les toilettes hommes."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3651.7, 2622.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-louise-silver-belville.webp", "alt": {"fr": "Louise · Argent dans GTA 6, secteur Belville", "en": "Louise · Silver in GTA 6 gameplay, Belville"}},
   },
   {
     id: "card-nine1nine-dancers-clarissa-gold-breakwater-quarry",
@@ -2498,6 +3092,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Reach the upper roof edge of the Leonida Industrial Services factory in western Breakwater Quarry. The Clarissa Gold card is tucked beneath a lawn chair.", "fr": "Rejoignez le bord du toit supérieur de l’usine Leonida Industrial Services à l’ouest de Breakwater Quarry. La carte Clarissa Gold repose sous une chaise pliante."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [2454.2, 4782.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-clarissa-gold-breakwater-quarry.webp", "alt": {"fr": "Clarissa · Or dans GTA 6, secteur Breakwater Quarry", "en": "Clarissa · Gold in GTA 6 gameplay, Breakwater Quarry"}},
   },
   {
     id: "card-nine1nine-dancers-amie-deep-red-buckskin-swamp",
@@ -2507,6 +3104,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Search a bench seat inside a small picnic area located in the middle of Buckskin Swamp to collect the card.", "fr": "Cherchez sur le banc d’une petite aire de pique-nique située au milieu de Buckskin Swamp pour ramasser la carte."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [2705.0, 3776.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-amie-deep-red-buckskin-swamp.webp", "alt": {"fr": "Amie · Rouge foncé dans GTA 6, secteur Buckskin Swamp", "en": "Amie · Deep Red in GTA 6 gameplay, Buckskin Swamp"}},
   },
   {
     id: "card-nine1nine-dancers-amie-purple-capri",
@@ -2516,6 +3116,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Find the card on an outdoor bed located on the back balcony of a colorful house along Vela Rota Dr in northwestern Capri.", "fr": "Trouvez la carte sur un lit d’extérieur situé sur le balcon arrière d’une maison colorée le long de Vela Rota Dr, au nord-ouest de Capri."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [1544.9, 4017.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-amie-purple-capri.webp", "alt": {"fr": "Amie · Violet dans GTA 6, secteur Capri", "en": "Amie · Purple in GTA 6 gameplay, Capri"}},
   },
   {
     id: "card-nine1nine-dancers-clarissa-silver-capri",
@@ -2525,6 +3128,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Search the garage counter inside a yellow villa on the northwestern peninsula of Capri. The Clarissa Silver card is placed right next to a magazine.", "fr": "Inspectez le comptoir du garage d’une villa jaune située sur la péninsule nord-ouest de Capri. La carte Clarissa Silver se trouve à côté d’un magazine."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [1486.5, 3990.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-clarissa-silver-capri.webp", "alt": {"fr": "Clarissa · Argent dans GTA 6, secteur Capri", "en": "Clarissa · Silver in GTA 6 gameplay, Capri"}},
   },
   {
     id: "card-nine1nine-dancers-meghan-bronze-crosstown",
@@ -2534,6 +3140,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to the upper storage room right next to Vice City Pawn off NE 3rd Ave in Crosstown. Check the second shelf of a storage unit for the Meghan Bronze card.", "fr": "Accédez à la réserve supérieure située à côté de Vice City Pawn près de NE 3rd Ave à Crosstown. Vous trouverez la carte Meghan Bronze sur la deuxième étagère d’un meuble."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3993.9, 3811.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-meghan-bronze-crosstown.webp", "alt": {"fr": "Meghan · Bronze dans GTA 6, secteur Crosstown", "en": "Meghan · Bronze in GTA 6 gameplay, Crosstown"}},
   },
   {
     id: "card-nine1nine-dancers-lavinia-deep-red-draper-island",
@@ -2543,6 +3152,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Enter the Xero Draper Refinery Engineering Maintenance warehouse in northern Draper Island. The card is on the desk inside the office.", "fr": "Entrez dans l’entrepôt Xero Draper Refinery Engineering Maintenance au nord de Draper Island. La carte est posée sur le bureau dans le bureau."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [1421.2, 2222.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-lavinia-deep-red-draper-island.webp", "alt": {"fr": "Lavinia · Rouge foncé dans GTA 6, secteur Draper Island", "en": "Lavinia · Deep Red in GTA 6 gameplay, Draper Island"}},
   },
   {
     id: "card-nine1nine-dancers-braelynn-pink-gellhorn-international-raceway",
@@ -2552,6 +3164,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Travel to Gellhorn International Raceway in southwestern Gellhorn. Locate the Xero Gas sign along the track to grab the Pink Braelynn card underneath a bong on the ledge behind it.", "fr": "Rendez-vous au Gellhorn International Raceway dans le sud-ouest de Gellhorn. Repérez le panneau Xero Gas le long de la piste pour ramasser la carte Braelynn Rose sous un bang, sur le rebord situé derrière."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [1756.0, 3602.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-braelynn-pink-gellhorn-international-raceway.webp", "alt": {"fr": "Braelynn · Rose dans GTA 6, secteur Gellhorn International Raceway", "en": "Braelynn · Pink in GTA 6 gameplay, Gellhorn International Raceway"}},
   },
   {
     id: "card-nine1nine-dancers-serena-silver-grayson",
@@ -2561,6 +3176,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head to the beach southwest of Grayson to pick up the Silver Serena card resting on a brown leather chair.", "fr": "Rendez-vous sur la plage au sud-ouest de Grayson pour ramasser la carte Silver Serena posée sur une fauteuil en cuir marron."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [2032.0, 1782.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-serena-silver-grayson.webp", "alt": {"fr": "Serena · Argent dans GTA 6, secteur Grayson", "en": "Serena · Silver in GTA 6 gameplay, Grayson"}},
   },
   {
     id: "card-nine1nine-dancers-serena-bronze-kalaga-national-park",
@@ -2570,6 +3188,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head to the dilapidated barn along Forest Mill Rd in eastern Mount Kalaga National Park. The card sits directly on the ground beside a blue outdoor couch.", "fr": "Rendez-vous à la grange délabrée le long de Forest Mill Rd, à l’est de Mount Kalaga National Park. La carte se trouve à même le sol, à côté d’un canapé bleu en extérieur."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3329.6, 1823.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-serena-bronze-kalaga-national-park.webp", "alt": {"fr": "Serena · Bronze dans GTA 6, secteur Mount Kalaga National Park", "en": "Serena · Bronze in GTA 6 gameplay, Mount Kalaga National Park"}},
   },
   {
     id: "card-nine1nine-dancers-amie-pink-key-lento",
@@ -2579,6 +3200,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Enter the Rusty Anchor bar in northern Key Lento. Pick up the card sitting on the toilet inside the men’s restroom.", "fr": "Entrez dans le bar Rusty Anchor dans le nord de Key Lento. Récupérez la carte posée sur les toilettes dans le petit coin des hommes."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3401.0, 6226.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-amie-pink-key-lento.webp", "alt": {"fr": "Amie · Rose dans GTA 6, secteur Key Lento", "en": "Amie · Pink in GTA 6 gameplay, Key Lento"}},
   },
   {
     id: "card-nine1nine-dancers-georgia-purple-key-lento",
@@ -2588,6 +3212,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Find the Steven Strachan Construction building on Sunbelt Hwy in central Key Lento. Go into the storage room located behind it and collect the Purple Georgia card from the stack of boxes.", "fr": "Rendez-vous au bâtiment Steven Strachan Construction sur Sunbelt Hwy, dans le centre de Key Lento. Allez dans la réserve située derrière et ramassez la carte Georgia Violette sur la pile de cartons."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3311.1, 6508.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-georgia-purple-key-lento.webp", "alt": {"fr": "Georgia · Violet dans GTA 6, secteur Key Lento", "en": "Georgia · Purple in GTA 6 gameplay, Key Lento"}},
   },
   {
     id: "card-nine1nine-dancers-georgia-pink-la-perle",
@@ -2597,6 +3224,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Enter the rundown house at NW 11th St and NW 11th Pl in southern La Perle. The card is tucked into a sleeping bag on a mattress inside.", "fr": "Entrez dans la maison délabrée située à l’intersection de NW 11th St et NW 11th Pl dans le sud de La Perle. La carte est glissée dans un sac de couchage sur un matelas à l’intérieur."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3807.2, 3758.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-georgia-pink-la-perle.webp", "alt": {"fr": "Georgia · Rose dans GTA 6, secteur La Perle", "en": "Georgia · Pink in GTA 6 gameplay, La Perle"}},
   },
   {
     id: "card-nine1nine-dancers-clarissa-bronze-little-cuba",
@@ -2606,6 +3236,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head to the yellow apartment building along NW 3rd Ave in southern Little Cuba. The Clarissa Bronze card rests on the roof beside two lawn chairs.", "fr": "Rendez-vous au bâtiment résidentiel jaune sur NW 3rd Ave, au sud de Little Cuba. La carte Clarissa Bronze repose sur le toit à côté de deux chaises pliantes."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3822.0, 4335.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-clarissa-bronze-little-cuba.webp", "alt": {"fr": "Clarissa · Bronze dans GTA 6, secteur Little Cuba", "en": "Clarissa · Bronze in GTA 6 gameplay, Little Cuba"}},
   },
   {
     id: "card-nine1nine-dancers-chrissie-deep-red-macalister-gold-mine",
@@ -2615,6 +3248,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Enter the mountain cave at the Macalister Gold Mine in Moreau. Look for the Deep Red Chrissie card on a red blanket among trash.", "fr": "Entrez dans la grotte de la montagne à Macalister Gold Mine dans Moreau. Cherchez la carte Deep Red Chrissie sur une couverture rouge au milieu des détritus."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [2814.2, 1344.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-chrissie-deep-red-macalister-gold-mine.webp", "alt": {"fr": "Chrissie · Rouge foncé dans GTA 6, secteur Macalister Gold Mine", "en": "Chrissie · Deep Red in GTA 6 gameplay, Macalister Gold Mine"}},
   },
   {
     id: "card-nine1nine-dancers-lavinia-purple-macalister-gold-mine",
@@ -2624,6 +3260,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Search the red crashed railcar sitting in the river near the tracks in southern Moreau. The Purple Lavinia card is located on an interior shelf.", "fr": "Fouillez le wagon rouge accidenté situé dans la rivière près des voies dans le sud de Moreau. La carte Purple Lavinia se trouve sur une étagère à l’intérieur."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [2816.5, 1451.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-lavinia-purple-macalister-gold-mine.webp", "alt": {"fr": "Lavinia · Violet dans GTA 6, secteur Macalister Gold Mine", "en": "Lavinia · Purple in GTA 6 gameplay, Macalister Gold Mine"}},
   },
   {
     id: "card-nine1nine-dancers-chrissie-purple-manifest-canyon",
@@ -2633,6 +3272,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head into the mountain cave near the railroad tracks in Manifest Canyon. Pick up the Purple Chrissie card beside a crate at the small campsite inside.", "fr": "Entrez dans la grotte traversant la montagne près des voies ferrées dans Manifest Canyon. Ramassez la carte Chrissie Violette à côté d’une caisse, dans le petit campement à l’intérieur."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [2296.4, 2263.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-chrissie-purple-manifest-canyon.webp", "alt": {"fr": "Chrissie · Violet dans GTA 6, secteur Manifest Canyon", "en": "Chrissie · Purple in GTA 6 gameplay, Manifest Canyon"}},
   },
   {
     id: "card-nine1nine-dancers-braelynn-purple-millport",
@@ -2642,6 +3284,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head to the top floor of the ruined church off Bear Hollow Dr in Millport. The Purple Braelynn card is lying beside a mattress.", "fr": "Rendez-vous au dernier étage de l’église en ruine près de Bear Hollow Dr à Millport. La carte Purple Braelynn se trouve à côté d’un matelas."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3737.7, 1798.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-braelynn-purple-millport.webp", "alt": {"fr": "Braelynn · Violet dans GTA 6, secteur Millport", "en": "Braelynn · Purple in GTA 6 gameplay, Millport"}},
   },
   {
     id: "card-nine1nine-dancers-georgia-deep-red-millport",
@@ -2651,6 +3296,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Look for a white trailer off Forest Mill Rd in Millport. The Deep Red Georgia card sits under a lawn chair on the front patio, right next to the entrance.", "fr": "Cherchez un mobil-home blanc près de Forest Mill Rd à Millport. La carte Georgia Rouge Foncé se trouve sous une chaise longue sur le patio avant, juste à côté de la porte."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3893.0, 1872.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-georgia-deep-red-millport.webp", "alt": {"fr": "Georgia · Rouge foncé dans GTA 6, secteur Millport", "en": "Georgia · Deep Red in GTA 6 gameplay, Millport"}},
   },
   {
     id: "card-nine1nine-dancers-lavinia-pink-millport",
@@ -2660,6 +3308,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to the abandoned Lotto, Beer, Groceries station at the corner of Chestnut Dr and Forest Mill Rd in Millport. The Pink Lavinia card is on a barrel in the back room.", "fr": "Allez à la station abandonnée Lotto, Beer, Groceries à l’angle de Chestnut Dr et Forest Mill Rd à Millport. La carte Pink Lavinia est posée sur un tonneau dans la pièce arrière."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3823.6, 1837.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-lavinia-pink-millport.webp", "alt": {"fr": "Lavinia · Rose dans GTA 6, secteur Millport", "en": "Lavinia · Pink in GTA 6 gameplay, Millport"}},
   },
   {
     id: "card-nine1nine-dancers-braelynn-deep-red-north-kelly-county",
@@ -2669,6 +3320,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head off the dirt road in North Kelly County to find an abandoned observatory. The card is next to a magazine on the top floor.", "fr": "Quittez le chemin de terre dans North Kelly County pour trouver un observatoire abandonné. La carte se trouve à côté d’un magazine au dernier étage."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [2582.9, 2237.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-braelynn-deep-red-north-kelly-county.webp", "alt": {"fr": "Braelynn · Rouge foncé dans GTA 6, secteur North Kelly County", "en": "Braelynn · Deep Red in GTA 6 gameplay, North Kelly County"}},
   },
   {
     id: "card-nine1nine-dancers-julia-gold-ocean-beach",
@@ -2678,6 +3332,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Visit the middle rooftop courtyard at the Ocean Beach Apartments on Huevo St. The Julia Gold card sits beside a bed between two magazines.", "fr": "Allez dans la cour intérieure sur le toit des Ocean Beach Apartments sur Huevo St. La carte Julia Gold se trouve près d’un lit entre deux magazines."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [4827.4, 4051.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-julia-gold-ocean-beach.webp", "alt": {"fr": "Julia · Or dans GTA 6, secteur Ocean Beach", "en": "Julia · Gold in GTA 6 gameplay, Ocean Beach"}},
   },
   {
     id: "card-nine1nine-dancers-julia-silver-peacock-bay",
@@ -2687,6 +3344,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Climb up to the roof of Bounty Plaza on SW 5th Ave in northern Peacock Bay. The Julia Silver card rests directly on the overlook railing.", "fr": "Montez sur le toit de Bounty Plaza sur SW 5th Ave dans le nord de Peacock Bay. La carte Julia Silver est posée sur la rebarbe du belvédère."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3770.7, 4886.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-julia-silver-peacock-bay.webp", "alt": {"fr": "Julia · Argent dans GTA 6, secteur Peacock Bay", "en": "Julia · Silver in GTA 6 gameplay, Peacock Bay"}},
   },
   {
     id: "card-nine1nine-dancers-serena-gold-peacock-estates",
@@ -2696,6 +3356,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to the mansion on Palladia Ln in southern Peacock Estates. Enter the detached garage filled with mannequins to find the card on the counter.", "fr": "Rendez-vous au manoir sur Palladia Ln dans le sud de Peacock Estates. Entrez dans le garage indépendant rempli de mannequins pour trouver la carte sur le comptoir."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3830.8, 5292.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-serena-gold-peacock-estates.webp", "alt": {"fr": "Serena · Or dans GTA 6, secteur Peacock Estates", "en": "Serena · Gold in GTA 6 gameplay, Peacock Estates"}},
   },
   {
     id: "card-nine1nine-dancers-jesenia-silver-permit-keys",
@@ -2705,6 +3368,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head to the sandbar surrounded by boats off the northern coast of Permit Keys. Search the table beneath an umbrella to collect the Silver Jesenia card.", "fr": "Dirigez-vous vers le banc de sable entouré de bateaux au large de la côte nord de Permit Keys. Inspectez la table sous un parasol pour ramasser la carte Jesenia Argent."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [2163.8, 6491.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-jesenia-silver-permit-keys.webp", "alt": {"fr": "Jesenia · Argent dans GTA 6, secteur Permit Keys", "en": "Jesenia · Silver in GTA 6 gameplay, Permit Keys"}},
   },
   {
     id: "card-nine1nine-dancers-chrissie-pink-port-gellhorn",
@@ -2714,6 +3380,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Enter the red trailer situated on Baywood Rd in Port Gellhorn. Search the corner chair to find the Pink Chrissie card tucked directly into its cushion.", "fr": "Entrez dans le mobil-home rouge situé sur Baywood Rd à Port Gellhorn. Fouillez la chaise dans le coin pour trouver la carte Chrissie Rose coincée dans le coussin."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [1806.2, 2798.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-chrissie-pink-port-gellhorn.webp", "alt": {"fr": "Chrissie · Rose dans GTA 6, secteur Port Gellhorn", "en": "Chrissie · Pink in GTA 6 gameplay, Port Gellhorn"}},
   },
   {
     id: "card-nine1nine-dancers-lenora-pink-rockridge",
@@ -2723,6 +3392,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Enter apartment 21 on the top floor of the colorful complex along Rialto Cswy in northeastern Rockridge. The Lenora Pink card is on a table beside a moving box and wall graffiti.", "fr": "Entrez dans l’appartement 21 au dernier étage du complexe coloré sur Rialto Cswy au nord-est de Rockridge. La carte Lenora Pink attend sur une table à côté d’un carton de déménagement."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3869.7, 3858.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-lenora-pink-rockridge.webp", "alt": {"fr": "Lenora · Rose dans GTA 6, secteur Rockridge", "en": "Lenora · Pink in GTA 6 gameplay, Rockridge"}},
   },
   {
     id: "card-nine1nine-dancers-louise-bronze-salton",
@@ -2732,6 +3404,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Locate the abandoned building overlooking a courtyard on Westbrook Dr in eastern Salton. The Louise Bronze card lies right on the edge of its top roof.", "fr": "Repérez le bâtiment abandonné surplombant une cour sur Westbrook Dr à l’est de Salton. La carte Louise Bronze est posée au bord du toit supérieur."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3814.6, 4489.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-louise-bronze-salton.webp", "alt": {"fr": "Louise · Bronze dans GTA 6, secteur Salton", "en": "Louise · Bronze in GTA 6 gameplay, Salton"}},
   },
   {
     id: "card-nine1nine-dancers-meghan-gold-south-kelly-county",
@@ -2741,6 +3416,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Locate the King Gator Adventure Golf sign in the median of US-183 in South Kelly County. Climb to the top of the tower behind it to grab the Gold Meghan card.", "fr": "Repérez le panneau King Gator Adventure Golf sur me terre-plein central de US-183 dans South Kelly County. Montez au sommet de la tour derrière pour récupérer la carte Meghan Or."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [2261.4, 3811.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-meghan-gold-south-kelly-county.webp", "alt": {"fr": "Meghan · Or dans GTA 6, secteur South Kelly County", "en": "Meghan · Gold in GTA 6 gameplay, South Kelly County"}},
   },
   {
     id: "card-nine1nine-dancers-lenora-purple-tequesta",
@@ -2750,6 +3428,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go behind Basix Food & Pharmacy on SW 4th Ave in northern Tequesta. The card is on the handrail at the top of the stairs leading to the side door.", "fr": "Allez derrière le Basix Food & Pharmacy sur SW 4th Ave dans le nord de Tequesta. La carte est sur la rampe en haut des escaliers menant à la porte latérale."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [3858.1, 4556.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-lenora-purple-tequesta.webp", "alt": {"fr": "Lenora · Violet dans GTA 6, secteur Tequesta", "en": "Lenora · Purple in GTA 6 gameplay, Tequesta"}},
   },
   {
     id: "card-nine1nine-dancers-lenora-deep-red-tequesta-retreat",
@@ -2759,6 +3440,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to the Saint Malo | Condominiums located near Bayside Dr on Tequesta Retreat. Locate the Lenora Deep Red card lying on a yellow couch at ground level.", "fr": "Dirigez-vous vers Saint Malo | Condominiums près de Bayside Dr sur Tequesta Retreat. La carte Lenora Deep Red repose sur un canapé jaune à la base du bâtiment."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [4134.3, 4644.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-lenora-deep-red-tequesta-retreat.webp", "alt": {"fr": "Lenora · Rouge foncé dans GTA 6, secteur Tequesta Retreat", "en": "Lenora · Deep Red in GTA 6 gameplay, Tequesta Retreat"}},
   },
   {
     id: "card-nine1nine-dancers-jesenia-gold-vespucci-island",
@@ -2768,6 +3452,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to the second floor of the modern mansion on Vespucci Island’s northwestern coast. Find the card on the TV stand beside the receiver.", "fr": "Rendez-vous au deuxième étage du manoir moderne sur la côte nord-ouest de Vespucci Island. Trouvez la carte sur le meuble TV à côté du récepteur."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [4402.6, 3720.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-jesenia-gold-vespucci-island.webp", "alt": {"fr": "Jesenia · Or dans GTA 6, secteur Vespucci Island", "en": "Jesenia · Gold in GTA 6 gameplay, Vespucci Island"}},
   },
   {
     id: "card-nine1nine-dancers-meghan-silver-vinewood-beach",
@@ -2777,6 +3464,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to the beach along the southern seawall in southeastern Waning Sands. Look under a gnome next to a mattress to grab the Silver Meghan card.", "fr": "Allez sur la plage le long de la digue sud, au sud-est de Waning Sands. Regardez sous un nain de jardin à côté d’un matelas pour ramasser la carte Meghan Argent."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [4617.7, 2968.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-meghan-silver-vinewood-beach.webp", "alt": {"fr": "Meghan · Argent dans GTA 6, secteur Vinewood Beach", "en": "Meghan · Silver in GTA 6 gameplay, Vinewood Beach"}},
   },
   {
     id: "card-nine1nine-dancers-julia-bronze-wild-hog-point",
@@ -2786,6 +3476,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to the airport in Wild Hog Point and locate the small shack beside the air-traffic control tower. The Bronze Julia card is on the floor next to a magazine.", "fr": "Rendez-vous à l’aéroport de Wild Hog Point et repérez la petite cabane à côté de la tour de contrôle. La carte Julia Bronze se trouve au sol à côté d’un magazine."},
     guide: {"en": "/gta-6-collectible-cards#card-set-nine", "fr": "/gta-6-cartes-a-collectionner#card-set-nine"},
     collection: "Nine1Nine Dancers",
+    position: [1523.7, 2966.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-nine1nine-dancers-julia-bronze-wild-hog-point.webp", "alt": {"fr": "Julia · Bronze dans GTA 6, secteur Wild Hog Point", "en": "Julia · Bronze in GTA 6 gameplay, Wild Hog Point"}},
   },
   {
     id: "card-jack-of-hearts-dancers-monalisa-gold-abismo-key",
@@ -2795,6 +3488,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head to a small island southeast of Abismo Key and grab the card under a single chair near a beached boat.", "fr": "Rendez-vous sur une petite île au sud-est d’Abismo Key et ramassez la carte sous une chaise isolée près d’un bateau échoué."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [2888.1, 7226.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-monalisa-gold-abismo-key.webp", "alt": {"fr": "Monalisa · Or dans GTA 6, secteur Abismo Key", "en": "Monalisa · Gold in GTA 6 gameplay, Abismo Key"}},
   },
   {
     id: "card-jack-of-hearts-dancers-zaria-ririluckett-bronze-balsero",
@@ -2813,6 +3509,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to Uncle Jack’s Liquor at Velo Fino Dr and Catalan Blvd in Bayside. The Gold Vanessa card is inside the safe in the back room.", "fr": "Rendez-vous chez Uncle Jack’s Liquor à l’angle de Velo Fino Dr et Catalan Blvd dans Bayside. La carte Gold Vanessa est à l’intérieur du coffre-fort dans la pièce du fond."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [4093.4, 3772.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-vanessa-gold-bayside.webp", "alt": {"fr": "Vanessa · Or dans GTA 6, secteur Bayside", "en": "Vanessa · Gold in GTA 6 gameplay, Bayside"}},
   },
   {
     id: "card-jack-of-hearts-dancers-kelly-pink-belville",
@@ -2822,6 +3521,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Enter the Xero station on Caledonia Blvd in southern Belville. The card lies on the floor inside the rear employee restroom.", "fr": "Entrez dans la station Xero sur Caledonia Blvd dans le sud de Belville. La carte se trouve sur le sol à l’intérieur des toilettes du personnel à l’arrière."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3712.9, 3304.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-kelly-pink-belville.webp", "alt": {"fr": "Kelly · Rose dans GTA 6, secteur Belville", "en": "Kelly · Pink in GTA 6 gameplay, Belville"}},
   },
   {
     id: "card-jack-of-hearts-dancers-malena-deep-red-belville",
@@ -2831,6 +3533,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to the yellow house at the corner of Prosperity St and Grace Ave in western Belville. The card rests under a mannequin’s hand on a bedroom workbench.", "fr": "Rendez-vous dans la maison jaune à l’angle de Prosperity St et Grace Ave à l’ouest de Belville. La carte repose sous la main d’un mannequin sur un établi de la chambre."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3650.4, 3144.7],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-malena-deep-red-belville.webp", "alt": {"fr": "Malena · Rouge foncé dans GTA 6, secteur Belville", "en": "Malena · Deep Red in GTA 6 gameplay, Belville"}},
   },
   {
     id: "card-jack-of-hearts-dancers-jada-watts-silver-bobcat-key",
@@ -2840,6 +3545,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Search the southern coast of Bobcat Key. Look in the sand in front of a fishing gnome sitting on a beach-chair toilet.", "fr": "Explorez la côte sud de Bobcat Key. Cherchez dans le sable devant un nain de jardin pêcheur assis sur une chaise de plage toilettes."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [2159.9, 5402.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-jada-watts-silver-bobcat-key.webp", "alt": {"fr": "Jada Watts · Argent dans GTA 6, secteur Bobcat Key", "en": "Jada Watts · Silver in GTA 6 gameplay, Bobcat Key"}},
   },
   {
     id: "card-jack-of-hearts-dancers-kadisha-deep-red-breakwater-quarry",
@@ -2849,6 +3557,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Find the card inside a derelict railcar beside the tracks in southern Breakwater Quarry, placed next to a backpack.", "fr": "Trouvez la carte à l’intérieur d’un wagon abandonné le long des voies ferrées dans le sud de Breakwater Quarry, posée à côté d’un sac à dos."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [2704.7, 4880.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-kadisha-deep-red-breakwater-quarry.webp", "alt": {"fr": "Kadisha · Rouge foncé dans GTA 6, secteur Breakwater Quarry", "en": "Kadisha · Deep Red in GTA 6 gameplay, Breakwater Quarry"}},
   },
   {
     id: "card-jack-of-hearts-dancers-lexi-campbell-silver-buckskin-swamp",
@@ -2858,6 +3569,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Enter Cougar’s Cave on Cargo Rd in Buckskin Swamp. Look for the card resting on the desk corner in the private room.", "fr": "Entrez dans le Cougar’s Cave sur Cargo Rd dans Buckskin Swamp. La carte repose sur le coin du bureau dans la salle privée."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [2993.1, 3933.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-lexi-campbell-silver-buckskin-swamp.webp", "alt": {"fr": "Lexi Campbell · Argent dans GTA 6, secteur Buckskin Swamp", "en": "Lexi Campbell · Silver in GTA 6 gameplay, Buckskin Swamp"}},
   },
   {
     id: "card-jack-of-hearts-dancers-brianna-blue-purple-capri",
@@ -2867,6 +3581,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Visit the Xero station at US-183 and South Cunningham Dr in southeastern Capri. Check the corkboard inside the rear staff break room.", "fr": "Rendez-vous à la station Xero située entre US-183 et South Cunningham Dr dans le sud-est de Capri. Regardez le tableau d’affichage dans la salle de pause du personnel à l’arrière."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [1791.5, 4325.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-brianna-blue-purple-capri.webp", "alt": {"fr": "Brianna Blue · Violet dans GTA 6, secteur Capri", "en": "Brianna Blue · Purple in GTA 6 gameplay, Capri"}},
   },
   {
     id: "card-jack-of-hearts-dancers-pricilla-pace-gold-capri",
@@ -2876,6 +3593,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Locate the Leonida Brewing Company warehouse between Sweetbay Rd and the railroad in Capri. Climb to the top of the rear tower to grab the card.", "fr": "Localisez l’entrepôt de la Leonida Brewing Company entre Sweetbay Rd et la voie ferrée à Capri. Montez au sommet de la tour arrière pour prendre la carte."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [1843.6, 4062.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-pricilla-pace-gold-capri.webp", "alt": {"fr": "Pricilla Pace · Or dans GTA 6, secteur Capri", "en": "Pricilla Pace · Gold in GTA 6 gameplay, Capri"}},
   },
   {
     id: "card-jack-of-hearts-dancers-malena-pink-dawson-dam",
@@ -2885,6 +3605,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Climb to the fire-watch tower in the mountains of northeastern Mount Kalaga National Park. The Pink Malena card sits on a wall ledge.", "fr": "Montez jusqu’à la tour de guet incendie dans les montagnes du nord-est du Mount Kalaga National Park. La carte Malena Rose repose sur un rebord de mur."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3098.8, 1583.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-malena-pink-dawson-dam.webp", "alt": {"fr": "Malena · Rose dans GTA 6, secteur Dawson Dam", "en": "Malena · Pink in GTA 6 gameplay, Dawson Dam"}},
   },
   {
     id: "card-jack-of-hearts-dancers-malena-purple-emerald-springs",
@@ -2894,6 +3617,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Locate the building next to the cell tower by Hickory Rd in southeastern Emerald Springs. Climb the spiral staircase to find the card lying in front of the top door.", "fr": "Trouvez le bâtiment à côté de l’antenne relais près de Hickory Rd, au sud-est d’Emerald Springs. Montez l’escalier en colimaçon pour trouver la carte posée devant la porte du haut."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3052.8, 3571.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-malena-purple-emerald-springs.webp", "alt": {"fr": "Malena · Violet dans GTA 6, secteur Emerald Springs", "en": "Malena · Purple in GTA 6 gameplay, Emerald Springs"}},
   },
   {
     id: "card-jack-of-hearts-dancers-jada-watts-gold-gellhorn",
@@ -2903,6 +3629,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Climb the radio tower beside CR 62 in eastern Gellhorn. The card sits on the corner of the top platform.", "fr": "Montez au sommet de la tour radio près de la CR 62 à l’est de Gellhorn. La carte se trouve sur le coin de la plate-forme supérieure."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [2273.2, 3096.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-jada-watts-gold-gellhorn.webp", "alt": {"fr": "Jada Watts · Or dans GTA 6, secteur Gellhorn", "en": "Jada Watts · Gold in GTA 6 gameplay, Gellhorn"}},
   },
   {
     id: "card-jack-of-hearts-dancers-kadisha-purple-gellhorn",
@@ -2912,6 +3641,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Locate an abandoned garage off Butternut Rd in northern Gellhorn to find the card sitting on the windowsill.", "fr": "Trouvez un garage abandonné près de Butternut Rd au nord de Gellhorn pour récupérer la carte posée sur le rebord de la fenêtre."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [2124.3, 3011.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-kadisha-purple-gellhorn.webp", "alt": {"fr": "Kadisha · Violet dans GTA 6, secteur Gellhorn", "en": "Kadisha · Purple in GTA 6 gameplay, Gellhorn"}},
   },
   {
     id: "card-jack-of-hearts-dancers-brianna-blue-deep-red-grassrivers",
@@ -2921,6 +3653,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Travel to an island compound in northwestern Pelican Valley. The card sits on a shelf at the back of a shed.", "fr": "Rendez-vous dans une propriété sur une île au nord-ouest de Pelican Valley. La carte repose sur une étagère au fond d’un cabanon."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [2699.3, 5669.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-brianna-blue-deep-red-grassrivers.webp", "alt": {"fr": "Brianna Blue · Rouge foncé dans GTA 6, secteur Grassrivers", "en": "Brianna Blue · Deep Red in GTA 6 gameplay, Grassrivers"}},
   },
   {
     id: "card-jack-of-hearts-dancers-lexi-campbell-bronze-kalaga-national-park",
@@ -2930,6 +3665,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Search the woods along the border between North Leonard County and Mount Kalaga. Enter the underground bunker and collect the Bronze Lexi Campbell card resting on a dirty mattress in the corner.", "fr": "Cherchez dans les bois le long de la frontière entre North Leonard County et Mount Kalaga. Entrez dans le bunker souterrain et ramassez la carte Lexi Campbell Bronze posée sur un matelas sale dans un coin."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3432.2, 1945.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-lexi-campbell-bronze-kalaga-national-park.webp", "alt": {"fr": "Lexi Campbell · Bronze dans GTA 6, secteur Mount Kalaga National Park", "en": "Lexi Campbell · Bronze in GTA 6 gameplay, Mount Kalaga National Park"}},
   },
   {
     id: "card-jack-of-hearts-dancers-pricilla-pace-bronze-kalaga-national-park",
@@ -2939,6 +3677,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Find the worn pink house off Sassafrass Rd in northeastern Mount Kalaga National Park. The Bronze Pricilla Pace card is resting on the porch rail.", "fr": "Trouvez la maison rose délabrée près de Sassafrass Rd au nord-est du Mount Kalaga National Park. La carte Pricilla Pace Bronze se trouve sur la rambarde du porche."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3198.4, 1440.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-pricilla-pace-bronze-kalaga-national-park.webp", "alt": {"fr": "Pricilla Pace · Bronze dans GTA 6, secteur Mount Kalaga National Park", "en": "Pricilla Pace · Bronze in GTA 6 gameplay, Mount Kalaga National Park"}},
   },
   {
     id: "card-jack-of-hearts-dancers-christel-deep-red-la-perle",
@@ -2948,6 +3689,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head to the Imperial Plaza apartments located on NW 9th Ave in La Perle. The card rests on the rooftop railing.", "fr": "Rendez-vous aux appartements Imperial Plaza situés sur NW 9th Ave à La Perle. La carte repose sur le garde-corps du toit."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3929.2, 3724.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-christel-deep-red-la-perle.webp", "alt": {"fr": "Christel · Rouge foncé dans GTA 6, secteur La Perle", "en": "Christel · Deep Red in GTA 6 gameplay, La Perle"}},
   },
   {
     id: "card-jack-of-hearts-dancers-zaria-ririluckett-gold-little-hardin-island",
@@ -2957,6 +3701,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head to the small peninsula at the southern tip of Little Hardin Island and pick up the card stuck in the sand beside a lone chair.", "fr": "Rendez-vous sur la petite péninsule à la pointe sud de Little Hardin Island et ramassez la carte plantée dans le sable à côté d’une chaise isolée."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [4331.6, 2126.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-zaria-ririluckett-gold-little-hardin-island.webp", "alt": {"fr": "Zaria Ririluckett · Or dans GTA 6, secteur Little Hardin Island", "en": "Zaria Ririluckett · Gold in GTA 6 gameplay, Little Hardin Island"}},
   },
   {
     id: "card-jack-of-hearts-dancers-brianna-blue-pink-macalister-gold-mine",
@@ -2966,6 +3713,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Locate the wrecked cabin off Rockledge Rd in northern Moreau. Inside, check the magazine tucked under a chair in the corner to find the Pink Brianna Blue card.", "fr": "Trouvez la cabane en ruine située près de Rockledge Rd au nord de Moreau. À l’intérieur, examinez le magazine glissé sous une chaise dans le coin pour trouver la carte Brianna Blue Rose."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [2917.9, 1187.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-brianna-blue-pink-macalister-gold-mine.webp", "alt": {"fr": "Brianna Blue · Rose dans GTA 6, secteur Macalister Gold Mine", "en": "Brianna Blue · Pink in GTA 6 gameplay, Macalister Gold Mine"}},
   },
   {
     id: "card-jack-of-hearts-dancers-vanessa-bronze-north-leonard-county",
@@ -2975,6 +3725,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head to the farm lot in northern North Leonard County. The card sits on a wall shelf inside the outhouse shed.", "fr": "Rendez-vous sur le terrain agricole au nord de North Leonard County. La carte se trouve sur une étagère murale, à l’intérieur de l’appentis."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3378.6, 2005.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-vanessa-bronze-north-leonard-county.webp", "alt": {"fr": "Vanessa · Bronze dans GTA 6, secteur North Leonard County", "en": "Vanessa · Bronze in GTA 6 gameplay, North Leonard County"}},
   },
   {
     id: "card-jack-of-hearts-dancers-christel-purple-ocean-beach",
@@ -2984,6 +3737,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Climb to the roof of the Sixth & Harper building at Shorefront Ave and Seaview Blvd in Ocean Beach. Look under a chair located above the elevators for the Purple Christel card.", "fr": "Montez sur le toit de l’immeuble Sixth & Harper à l’angle de Shorefront Ave et Seaview Blvd dans Ocean Beach. Cherchez la carte Purple Christel sous une chaise située au-dessus des ascenseurs."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [4854.1, 4130.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-christel-purple-ocean-beach.webp", "alt": {"fr": "Christel · Violet dans GTA 6, secteur Ocean Beach", "en": "Christel · Purple in GTA 6 gameplay, Ocean Beach"}},
   },
   {
     id: "card-jack-of-hearts-dancers-jemila-purple-ocean-beach",
@@ -2993,6 +3749,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head behind Fairbanks Pharmacy in Ocean Beach and go to the room at the top of the stairs. The Purple Jemila card is on the floor under an electrical box.", "fr": "Allez derrière Fairbanks Pharmacy à Ocean Beach et rejoignez la pièce au sommet des escaliers. La carte Purple Jemila est posée au sol, sous un boîtier électrique."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [4938.0, 3881.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-jemila-purple-ocean-beach.webp", "alt": {"fr": "Jemila · Violet dans GTA 6, secteur Ocean Beach", "en": "Jemila · Purple in GTA 6 gameplay, Ocean Beach"}},
   },
   {
     id: "card-jack-of-hearts-dancers-jemila-pink-peacock-bay",
@@ -3002,6 +3761,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Find the yellow L-shaped apartment building on SW 5th Ave in western Peacock Bay. The card is on the rooftop rail.", "fr": "Trouvez l’immeuble d’habitation jaune en L sur SW 5th Ave dans l’ouest de Peacock Bay. La carte se trouve sur le garde-corps du toit."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3708.7, 5013.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-jemila-pink-peacock-bay.webp", "alt": {"fr": "Jemila · Rose dans GTA 6, secteur Peacock Bay", "en": "Jemila · Pink in GTA 6 gameplay, Peacock Bay"}},
   },
   {
     id: "card-jack-of-hearts-dancers-pricilla-pace-silver-permit-keys",
@@ -3011,6 +3773,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Head to the north beach of the central island in Permit Keys. The card rests on the ledge of a small public library box.", "fr": "Dirigez-vous vers la plage nord de l’île centrale de Permit Keys. La carte repose sur le rebord d’une petite boîte à livres."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [2027.2, 6562.5],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-pricilla-pace-silver-permit-keys.webp", "alt": {"fr": "Pricilla Pace · Argent dans GTA 6, secteur Permit Keys", "en": "Pricilla Pace · Silver in GTA 6 gameplay, Permit Keys"}},
   },
   {
     id: "card-jack-of-hearts-dancers-jada-watts-bronze-port-gellhorn",
@@ -3020,6 +3785,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Enter the brown house on Pennwort St in western Port Gellhorn to find the card on the bedside end table.", "fr": "Entrez dans la maison brune sur Pennwort St à l’ouest de Port Gellhorn pour trouver la carte sur la table de chevet."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [1645.6, 2832.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-jada-watts-bronze-port-gellhorn.webp", "alt": {"fr": "Jada Watts · Bronze dans GTA 6, secteur Port Gellhorn", "en": "Jada Watts · Bronze in GTA 6 gameplay, Port Gellhorn"}},
   },
   {
     id: "card-jack-of-hearts-dancers-kelly-deep-red-port-gellhorn",
@@ -3029,6 +3797,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Search the red-and-white trailer along a side road off Gellhorn Ave in northern Port Gellhorn. Open the bottom dresser drawer to collect the card.", "fr": "Fouillez la caravane rouge et blanche située le long d’une rue secondaire près de Gellhorn Ave, au nord de Port Gellhorn. Ouvrez le tiroir inférieur de la commode pour ramasser la carte."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [1829.0, 2603.1],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-kelly-deep-red-port-gellhorn.webp", "alt": {"fr": "Kelly · Rouge foncé dans GTA 6, secteur Port Gellhorn", "en": "Kelly · Deep Red in GTA 6 gameplay, Port Gellhorn"}},
   },
   {
     id: "card-jack-of-hearts-dancers-lexi-campbell-gold-port-gellhorn",
@@ -3038,6 +3809,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to the abandoned Gellhorn Drive-In on Gellhorn Ave in central Port Gellhorn. Open the safe inside the annex building’s storage room.", "fr": "Rendez-vous au Gellhorn Drive-In abandonné sur Gellhorn Ave, au centre de Port Gellhorn. Ouvrez le coffre-fort situé dans la réserve du bâtiment annexe."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [1793.0, 2758.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-lexi-campbell-gold-port-gellhorn.webp", "alt": {"fr": "Lexi Campbell · Or dans GTA 6, secteur Port Gellhorn", "en": "Lexi Campbell · Gold in GTA 6 gameplay, Port Gellhorn"}},
   },
   {
     id: "card-jack-of-hearts-dancers-zaria-ririluckett-silver-port-gellhorn",
@@ -3047,6 +3821,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to southern Port Gellhorn and find the yellow abandoned railcar. Search inside the corner next to a backpack to grab the Silver Zaria Ririluckett card.", "fr": "Allez au sud de Port Gellhorn et localisez le wagon abandonné jaune. Cherchez dans le coin à côté d’un sac à dos pour ramasser la carte Zaria Ririluckett Argent."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [1774.0, 2935.0],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-zaria-ririluckett-silver-port-gellhorn.webp", "alt": {"fr": "Zaria Ririluckett · Argent dans GTA 6, secteur Port Gellhorn", "en": "Zaria Ririluckett · Silver in GTA 6 gameplay, Port Gellhorn"}},
   },
   {
     id: "card-jack-of-hearts-dancers-jemila-deep-red-rockridge",
@@ -3056,6 +3833,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Locate Lisette’s Food Store on NW 10th Ave in Rockridge. The Deep Red Jemila card is on the upper balcony rail directly above the store sign.", "fr": "Trouvez le magasin Lisette’s Food Store sur NW 10th Ave à Rockridge. La carte Deep Red Jemila se trouve sur la rambarde du balcon supérieur, juste au-dessus de l’enseigne."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3767.3, 3857.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-jemila-deep-red-rockridge.webp", "alt": {"fr": "Jemila · Rouge foncé dans GTA 6, secteur Rockridge", "en": "Jemila · Deep Red in GTA 6 gameplay, Rockridge"}},
   },
   {
     id: "card-jack-of-hearts-dancers-christel-pink-salton",
@@ -3065,6 +3845,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to the RON station on NW 15th Ave in northern Salton. The Pink Christel card is sitting on the staff toilet in the back.", "fr": "Allez à la station RON sur NW 15th Ave, dans le nord de Salton. La carte Pink Christel se trouve sur les toilettes du personnel à l’arrière."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3505.0, 4185.4],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-christel-pink-salton.webp", "alt": {"fr": "Christel · Rose dans GTA 6, secteur Salton", "en": "Christel · Pink in GTA 6 gameplay, Salton"}},
   },
   {
     id: "card-jack-of-hearts-dancers-kelly-purple-salton",
@@ -3074,6 +3857,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Locate the stack of red shipping containers near the I-97 bridge on the Tequesta-Salton line. The Purple Kelly card is hidden under a chair on top of the containers.", "fr": "Repérez la pile de conteneurs de chantier rouges près du pont de l’I-97, sur la limite entre Tequesta et Salton. La carte Purple Kelly se trouve sous une chaise au sommet des conteneurs."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3804.5, 4613.6],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-kelly-purple-salton.webp", "alt": {"fr": "Kelly · Violet dans GTA 6, secteur Salton", "en": "Kelly · Purple in GTA 6 gameplay, Salton"}},
   },
   {
     id: "card-jack-of-hearts-dancers-vanessa-silver-salton",
@@ -3083,6 +3869,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Climb to the top roof of the Juliet Terrance Apartments on SW 8th Ave in southern Salton. Search the small surrounding ledge for the card.", "fr": "Montez sur le toit supérieur des appartements Juliet Terrance sur SW 8th Ave dans le sud de Salton. Cherchez la carte sur le petit rebord environnant."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3731.6, 4689.3],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-vanessa-silver-salton.webp", "alt": {"fr": "Vanessa · Argent dans GTA 6, secteur Salton", "en": "Vanessa · Silver in GTA 6 gameplay, Salton"}},
   },
   {
     id: "card-jack-of-hearts-dancers-monali-a-bronze-south-kelly-county",
@@ -3092,6 +3881,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Explore the trail system in southern South Kelly County. The Bronze Monali$A card is located inside the men’s restroom.", "fr": "Explorez le réseau de sentiers au sud de South Kelly County. La carte Monali$A Bronze se trouve à l’intérieur des toilettes pour hommes."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [2228.4, 4156.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-monali-a-bronze-south-kelly-county.webp", "alt": {"fr": "Monali$A · Bronze dans GTA 6, secteur South Kelly County", "en": "Monali$A · Bronze in GTA 6 gameplay, South Kelly County"}},
   },
   {
     id: "card-jack-of-hearts-dancers-kadisha-pink-vcia",
@@ -3101,6 +3893,9 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to eastern VCIA under the US-35 ramp along SW 19th St. Enter the red trailer to find the card on a dirty bedroom mattress.", "fr": "Allez dans l’est de VCIA sous la bretelle d’accès US-35 le long de SW 19th St. Entrez dans la caravane rouge pour trouver la carte sur un matelas sale de la chambre."},
     guide: {"en": "/gta-6-collectible-cards#card-set-jack", "fr": "/gta-6-cartes-a-collectionner#card-set-jack"},
     collection: "Jack of Hearts Dancers",
+    position: [3682.0, 4490.2],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/card-jack-of-hearts-dancers-kadisha-pink-vcia.webp", "alt": {"fr": "Kadisha · Rose dans GTA 6, secteur VCIA", "en": "Kadisha · Pink in GTA 6 gameplay, VCIA"}},
   },
   {
     id: "gellhorn-fun-fair-right-wing",
@@ -3698,6 +4493,8 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "SE 2nd Ave, Piker Financial Center. Go to the roof and climb the radio mast. From the sign at the top, look down and photograph the colorful roof.", "fr": "SE 2nd Ave, Piker Financial Center. Montez sur le toit, puis sur le pylône radio. Depuis le panneau en haut du pylône, visez le toit coloré en contrebas."},
     guide: {"en": "/gta-6-ahol-street-art-murals#1010-murals", "fr": "/gta-6-street-art-dahol-et-fresques-de-1010-scans-toits-et-itineraire-de-depart#1010-murals"},
     image: {"file": {"en": "https://backend.finalboss.io/wp-content/uploads/2026/11/gta-6-1010-compliance-theater-piker-radio-tower.webp", "fr": "https://backend.finalboss.fr/wp-content/uploads/2026/11/gta-6-1010-compliance-theater-piker-radio-tower.webp"}, "alt": {"en": "View from the Piker Financial Center radio tower toward the painted roof", "fr": "Vue depuis le pylône du Piker Financial Center vers le toit peint"}},
+    position: [4056.3, 4429.5],
+    verifiedInVideo: true,
   },
   {
     id: "mural-extraction-service",
@@ -3707,6 +4504,8 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Go to New Quay Plaza on SE 1st Ave. Find the mark at the roof’s corner and aim down at the rooftop painted in curved bands of color.", "fr": "Allez au New Quay Plaza, sur SE 1st Ave. Rejoignez la marque dans l’angle du toit et cadrez le toit aux bandes colorées en contrebas."},
     guide: {"en": "/gta-6-ahol-street-art-murals#1010-murals", "fr": "/gta-6-street-art-dahol-et-fresques-de-1010-scans-toits-et-itineraire-de-depart#1010-murals"},
     image: {"file": {"en": "https://backend.finalboss.io/wp-content/uploads/2026/11/gta-6-1010-extraction-service-new-quay-plaza-roof.webp", "fr": "https://backend.finalboss.fr/wp-content/uploads/2026/11/gta-6-1010-extraction-service-new-quay-plaza-roof.webp"}, "alt": {"en": "Colorful roof below New Quay Plaza in Downtown Vice City", "fr": "Toit aux bandes colorées sous le New Quay Plaza à Downtown Vice City"}},
+    position: [4061.8, 4295.9],
+    verifiedInVideo: true,
   },
   {
     id: "mural-loophole-architecture",
@@ -3716,6 +4515,8 @@ export const additionalLocations: AddedMapLocation[] = [
     directions: {"en": "Find Parlor Apartments at Northbrook Drive and Santiago Avenue. From the roof marker, point across the street and down into the round building with the rainbow rings.", "fr": "Trouvez les Parlor Apartments au croisement de Northbrook Drive et Santiago Avenue. Depuis la marque sur le toit, cadrez le bâtiment circulaire aux anneaux multicolores de l’autre côté de la rue."},
     guide: {"en": "/gta-6-ahol-street-art-murals#1010-murals", "fr": "/gta-6-street-art-dahol-et-fresques-de-1010-scans-toits-et-itineraire-de-depart#1010-murals"},
     image: {"file": {"en": "https://backend.finalboss.io/wp-content/uploads/2026/11/gta-6-1010-loophole-architecture-parlor-apartments.webp", "fr": "https://backend.finalboss.fr/wp-content/uploads/2026/11/gta-6-1010-loophole-architecture-parlor-apartments.webp"}, "alt": {"en": "Rainbow rings across the street from the marked Parlor Apartments roof", "fr": "Anneaux multicolores de l’autre côté de la rue depuis le toit des Parlor Apartments"}},
+    position: [3743.1, 3971.3],
+    verifiedInVideo: true,
   },
   {
     id: "mural-privatized-pains-socialized-gains",
@@ -3724,6 +4525,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Ocean Beach",
     directions: {"en": "Go to Barlow Street in northwest Ocean Beach. Stand on the sidewalk mark and photograph the painted side of the public garage.", "fr": "Allez sur Barlow Street, dans le nord-ouest d’Ocean Beach. Placez-vous sur la marque du trottoir et photographiez la façade peinte du parking public."},
     guide: {"en": "/gta-6-ahol-street-art-murals#1010-murals", "fr": "/gta-6-street-art-dahol-et-fresques-de-1010-scans-toits-et-itineraire-de-depart#1010-murals"},
+    position: [4761.2, 3738.8],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/mural-privatized-pains-socialized-gains.webp", "alt": {"fr": "1010 · Privatized Pains Socialized Gains sur la carte de Leonida", "en": "1010 · Privatized Pains Socialized Gains on the Leonida map"}},
   },
   {
     id: "mural-you-signed-the-terms-conditions",
@@ -3732,6 +4536,9 @@ export const additionalLocations: AddedMapLocation[] = [
     region: "Crosstown",
     directions: {"en": "Find the sidewalk mark on NE 2nd Avenue. Aim at the elevated station. Take the shot as the painted train arrives at the platform.", "fr": "Repérez la marque au sol sur NE 2nd Avenue. Cadrez la gare aérienne et prenez la photo quand la rame peinte arrive au quai."},
     guide: {"en": "/gta-6-ahol-street-art-murals#1010-murals", "fr": "/gta-6-street-art-dahol-et-fresques-de-1010-scans-toits-et-itineraire-de-depart#1010-murals"},
+    position: [3993.3, 3886.9],
+    verifiedInVideo: true,
+    image: {"file": "/gta-6-map/locations/mural-you-signed-the-terms-conditions.webp", "alt": {"fr": "1010 · You Signed the Terms & Conditions dans GTA 6, secteur Crosstown", "en": "1010 · You Signed the Terms & Conditions in GTA 6 gameplay, Crosstown"}},
   },
   {
     id: "wreck-nuestra-senora-del-ocio",

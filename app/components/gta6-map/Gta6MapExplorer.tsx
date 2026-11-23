@@ -348,7 +348,7 @@ export default function Gta6MapExplorer({
                   return (
                     <a key={item.id} href={`#${markerId(item.id)}`} onClick={event => select(event, item)}
                       className={`${styles.marker} ${styles[item.category]}`}
-                      style={pinStyle} data-approximate={item.precision !== 'pin'}
+                      style={pinStyle} data-approximate={item.precision === 'approximate' || item.precision === 'sector'}
                       aria-haspopup="dialog"
                       aria-current={selected?.id === item.id ? 'location' : undefined} title={label} aria-label={label}>
                       <Icon size={17} aria-hidden="true" />
@@ -362,7 +362,13 @@ export default function Gta6MapExplorer({
               width={leonidaMap.width} height={leonidaMap.height} unoptimized onError={() => setMapFailed(true)} />
           )}
         </div>
-        <p className={styles.scaleNote}><a href={leonidaMap.source}>{t.mapCredit}</a> · {t.mapPrecision}</p>
+        <p className={styles.scaleNote}>
+          <a href={leonidaMap.source}>{t.mapCredit}</a> · {t.mapPrecision}
+          <br />
+          {t.coordinateCredit} <a href="https://github.com/fbritoferreira/gta6">Open GTA 6 Map</a> (
+          <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>) ·
+          {' '}<a href="https://progressbar.gg/gta6/map/">Progress Bar</a>
+        </p>
       </div>
 
       <dialog ref={drawer} className={styles.drawer} aria-labelledby="gta6-location-title" onClose={closeDrawer}
