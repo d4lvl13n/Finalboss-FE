@@ -374,6 +374,16 @@ export const sectorPoints: Partial<Record<string, MapPoint>> = {
 
 export const additionalLocations: AddedMapLocation[] = [
   {
+    id: "tootsie-howe-dairy",
+    name: {"en": "Tootsie the talking cow", "fr": "Tootsie, la vache qui parle"},
+    category: "secrets",
+    region: "Emerald Springs",
+    directions: {"en": "Check the farm roads west of Ambrosia near Howe Dairy. Look for the dairy farmer beside a dark livestock trailer opposite the orange grove.", "fr": "À l’ouest d’Ambrosia, cherchez le fermier près de Howe Dairy. Sa remorque à bétail sombre est garée en face de l’orangeraie."},
+    guide: {"en": "/gta-6-free-or-load-tootsie#tootsie-location", "fr": "/gta-6-liberer-ou-faire-monter-tootsie#tootsie-location"},
+    position: [2352.7, 2978.6],
+    image: {"file": {"en": "https://backend.finalboss.io/wp-content/uploads/2026/11/gta-6-tootsie-howe-dairy-trailer.webp", "fr": "https://backend.finalboss.fr/wp-content/uploads/2026/11/gta-6-tootsie-remorque-howe-dairy.webp"}, "alt": {"en": "The farmer, Tootsie and the livestock trailer by the Howe Dairy sign in GTA 6", "fr": "Le fermier et Tootsie près de la remorque et du panneau Howe Dairy dans GTA 6"}},
+  },
+  {
     id: "tallaloko-backrooms",
     name: {"en": "Backrooms entrance", "fr": "Entrée des Backrooms"},
     category: "secrets",
