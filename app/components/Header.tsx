@@ -12,6 +12,7 @@ const navItems = [
   { name: t('nav.laptops'), href: '/gaming-laptops' },
   { name: t('nav.handhelds'), href: '/handhelds' },
   { name: t('nav.guides'), href: '/guides' },
+  { name: 'GTA 6', href: '/game/gta-6' },
   { name: t('nav.technology'), href: '/technology' },
   { name: t('nav.videos'), href: '/videos' },
   { name: t('nav.games'), href: '/games' },

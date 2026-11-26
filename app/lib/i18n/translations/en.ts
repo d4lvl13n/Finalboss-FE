@@ -25,6 +25,7 @@ export const en = {
     news: 'News',
     reviews: 'Reviews',
     guides: 'Guides',
+    gta6Guides: 'GTA 6 Guides',
     technology: 'Technology',
     videos: 'Videos',
     games: 'Games',

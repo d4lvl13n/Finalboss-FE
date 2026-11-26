@@ -20,6 +20,7 @@ const categories = [
   { href: '/articles', label: t('nav.news') },
   { href: '/reviews', label: t('nav.reviews') },
   { href: '/guides', label: t('nav.guides') },
+  { href: '/game/gta-6', label: t('nav.gta6Guides') },
   { href: '/games', label: t('nav.games') },
   { href: TOTK_BUILDS_PATH, label: t('nav.totkBuilds') },
   { href: RECIPES_PATH, label: t('nav.totkRecipes') },

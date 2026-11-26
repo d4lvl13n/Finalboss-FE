@@ -12,7 +12,7 @@ import { fetchAllGameTags } from '@/app/lib/fetchAllGameTags';
 import siteConfig from '@/app/lib/siteConfig';
 import { getGameHub, localGameSlugs, getLocalGameData } from '@/app/lib/game-hub/provider';
 import GameplayHub, { buildGameplayJsonLd } from '@/app/components/game-hub/GameplayHub';
-import Gta6FrenchHub, { gta6FrenchHubDescription } from '@/app/components/game-hub/Gta6FrenchHub';
+import Gta6Hub, { gta6HubCopy } from '@/app/components/game-hub/Gta6Hub';
 import { fetchReadNextArticles, type HubArticle } from '@/app/lib/game-hub/related-articles';
 import { igdbImage, getGamePage } from '@/app/lib/knowledge/client';
 import TotkBuildsBanner from '@/app/components/totk-builds/TotkBuildsBanner';
@@ -36,7 +36,7 @@ const baseUrl = siteConfig.url;
 
 export const revalidate = 86400; // 24h — hub data is registry (refreshed on deploy) + Knowledge API; a day of staleness is fine and spares the WP backend long-tail regeneration load
 const POSTS_PAGE_SIZE = 12;
-const isFrenchGta6Hub = (slug: string) => siteConfig.locale === 'fr' && slug === 'gta-6';
+const isGta6Hub = (slug: string) => slug === 'gta-6';
 
 export async function generateStaticParams() {
   const gameTags = await fetchAllGameTags();
@@ -428,7 +428,7 @@ function gameGuideCategory(slug: string): string | undefined {
 }
 
 async function getGameTagWithPosts(slug: string) {
-  const getAllPosts = Boolean(gameGuideCategory(slug)) || isFrenchGta6Hub(slug);
+  const getAllPosts = Boolean(gameGuideCategory(slug)) || isGta6Hub(slug);
   try {
     const { data, errors } = await client.query({
       query: GET_GAME_TAG_WITH_POSTS,
@@ -501,11 +501,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         const screenshotImage = screenshotId ? igdbImage(screenshotId, 't_1080p') : null;
         const image = screenshotImage || e.imageUrl || igdbImage(e.attributes?.cover_image_id) || undefined;
         return buildPageMetadata({
-          title: isFrenchGta6Hub(params.slug)
-            ? 'GTA 6 : soluce, guides et actualités'
+          title: isGta6Hub(params.slug)
+            ? gta6HubCopy[siteConfig.locale].title
             : `${e.canonicalName} — Classes, Tier List, Codes & Guides`,
-          description: isFrenchGta6Hub(params.slug)
-            ? gta6FrenchHubDescription
+          description: isGta6Hub(params.slug)
+            ? gta6HubCopy[siteConfig.locale].description
             : (e.description || `Classes, tier list, codes and guides for ${e.canonicalName}.`).slice(0, 200),
           path: `/game/${params.slug}`,
           image,
@@ -581,12 +581,12 @@ export default async function GamePage({ params }: Props) {
     if (localData) {
       const hub = await getGameHub(params.slug);
       if (hub && hub.gameplay) {
-        if (isFrenchGta6Hub(params.slug)) {
+        if (isGta6Hub(params.slug)) {
           const tag = await getGameTagWithPosts(params.slug);
           return (
             <>
               <Header />
-              <Gta6FrenchHub hub={hub} articles={tag?.posts?.nodes || []} />
+              <Gta6Hub hub={hub} articles={tag?.posts?.nodes || []} locale={siteConfig.locale} />
               <Footer />
             </>
           );

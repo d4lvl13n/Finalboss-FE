@@ -27,6 +27,7 @@ export const fr = {
     news: 'Actualités',
     reviews: 'Tests',
     guides: 'Guides',
+    gta6Guides: 'Guides GTA 6',
     technology: 'Technologie',
     videos: 'Vidéos',
     games: 'Jeux',
